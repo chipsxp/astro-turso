@@ -1,0 +1,192 @@
+---
+// Public author registration page — no AdminLayout (pre-auth, standalone)
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Apply for Author Access — The Happy Feeling Scriptorium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600;1,9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Fira+Code:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      @import "../styles/pages/admin-login.css";
+
+      /* Register-specific overrides */
+      .login-panel {
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-panels">
+      <!-- Left: Kirby krackle hero panel -->
+      <div class="hero-panel" aria-hidden="true">
+        <p class="hero-issue">The Happy Feeling Scriptorium — Vol. 1</p>
+        <h1 class="hero-title">Join the<br />Scriptorium</h1>
+        <p class="hero-tagline">
+          Apply for author access<br />and tell your story
+        </p>
+      </div>
+
+      <!-- Right: Registration form panel -->
+      <div class="login-panel">
+        <span class="login-caption">Author Application</span>
+
+        <div class="login-form-wrap">
+          <div id="error-msg" role="alert"></div>
+          <div id="success-msg" style="display:none"></div>
+
+          <form id="register-form" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="email">Email address</label>
+              <input
+                class="form-input"
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="password">Password</label>
+              <input
+                class="form-input"
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                placeholder="8 characters minimum"
+                required
+              />
+            </div>
+
+            <div class="form-group form-group--compact">
+              <label class="form-label" for="confirm-password"
+                >Confirm password</label
+              >
+              <input
+                class="form-input"
+                id="confirm-password"
+                name="confirm-password"
+                type="password"
+                autocomplete="new-password"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <hr class="form-divider" />
+
+            <button class="btn-enter" id="submit-btn" type="submit">
+              Submit Application
+            </button>
+          </form>
+
+          <p class="login-footer">
+            Already have an account? <a href="/admin">Sign in</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById("register-form") as HTMLFormElement;
+      const errorEl = document.getElementById("error-msg") as HTMLDivElement;
+      const successEl = document.getElementById(
+        "success-msg",
+      ) as HTMLDivElement;
+      const submitBtn = document.getElementById(
+        "submit-btn",
+      ) as HTMLButtonElement;
+
+      function showError(msg: string) {
+        errorEl.textContent = msg;
+        errorEl.style.display = "block";
+        successEl.style.display = "none";
+      }
+
+      function clearError() {
+        errorEl.style.display = "none";
+        errorEl.textContent = "";
+      }
+
+      function showSuccess(msg: string) {
+        successEl.textContent = msg;
+        successEl.style.cssText =
+          "display:block;padding:12px 14px;border:2px solid var(--success,#34c070);color:var(--success,#34c070);font-family:var(--font-mono);font-size:0.8rem;margin-bottom:16px;";
+        form.style.display = "none";
+        errorEl.style.display = "none";
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        clearError();
+
+        const email = (
+          form.elements.namedItem("email") as HTMLInputElement
+        ).value.trim();
+        const password = (
+          form.elements.namedItem("password") as HTMLInputElement
+        ).value;
+        const confirmPassword = (
+          form.elements.namedItem("confirm-password") as HTMLInputElement
+        ).value;
+
+        if (!email || !password || !confirmPassword) {
+          showError("All fields are required.");
+          return;
+        }
+
+        if (password.length < 8) {
+          showError("Password must be at least 8 characters.");
+          return;
+        }
+
+        if (password !== confirmPassword) {
+          showError("Passwords do not match.");
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting…";
+
+        try {
+          const res = await fetch("/api/auth/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            showError(data.error ?? "Registration failed. Please try again.");
+            return;
+          }
+
+          showSuccess(
+            data.message ??
+              "Application submitted! An admin will review your account shortly.",
+          );
+        } catch {
+          showError("Network error. Please try again.");
+        } finally {
+          submitBtn.disabled = false;
+          if (submitBtn.textContent === "Submitting…") {
+            submitBtn.textContent = "Submit Application";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

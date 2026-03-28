@@ -1,0 +1,217 @@
+---
+import BlogLayout from "../layouts/BlogLayout.astro";
+
+const siteUrl = import.meta.env.SITE_URL ?? "";
+const canonicalUrl = `${siteUrl}/contact-us`;
+const supportEmail = "support@happyfeelingprints.com";
+---
+
+<BlogLayout
+  title="Contact Us — The Happy Feeling Scriptorium"
+  description="Send a message to The Happy Feeling Scriptorium team."
+  canonicalUrl={canonicalUrl}
+>
+  <main class="page-wrap contact-page">
+    <h1>Contact Us</h1>
+    <p class="contact-page__intro">
+      Send us a message and we’ll get back to you as soon as possible. Your
+      questions are always welcome; whether it’s about our Artists, our
+      services, your orders, or just to say Hi!
+    </p>
+
+    <form id="contact-form" class="contact-form" novalidate>
+      <label for="contact-name">Name</label>
+      <input
+        id="contact-name"
+        name="name"
+        type="text"
+        maxlength="100"
+        required
+      />
+
+      <label for="contact-email">Email</label>
+      <input id="contact-email" name="email" type="email" required />
+
+      <label for="contact-message">Message</label>
+      <textarea
+        id="contact-message"
+        name="message"
+        rows="8"
+        minlength="10"
+        maxlength="5000"
+        required></textarea>
+
+      <input
+        class="contact-form__honeypot"
+        type="text"
+        name="website"
+        autocomplete="off"
+        tabindex="-1"
+        aria-hidden="true"
+      />
+
+      <div class="contact-form__actions">
+        <button id="contact-submit" type="submit">Send Message</button>
+      </div>
+
+      <p id="contact-status" class="contact-form__status" aria-live="polite">
+      </p>
+    </form>
+
+    <p class="contact-page__fallback">
+      Prefer email directly? Reach us at
+      <a href={`mailto:${supportEmail}`}>{supportEmail}</a>
+    </p>
+  </main>
+</BlogLayout>
+
+<style>
+  .contact-page {
+    max-width: 780px;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .contact-page h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .contact-page__intro {
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .contact-form {
+    display: grid;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 18px;
+  }
+
+  .contact-form label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-status);
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text);
+    padding: 10px 12px;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+  }
+
+  .contact-form textarea {
+    resize: vertical;
+  }
+
+  .contact-form__honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .contact-form__actions {
+    margin-top: 6px;
+  }
+
+  .contact-form button {
+    border: 1px solid var(--border);
+    background: var(--accent);
+    color: var(--comic-black);
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .contact-form button:hover {
+    filter: brightness(1.06);
+  }
+
+  .contact-form button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .contact-form__status {
+    min-height: 1.2em;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+
+  .contact-page__fallback {
+    margin-top: 14px;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 560px) {
+    .contact-form {
+      padding: 14px;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const submitButton = document.getElementById(
+    "contact-submit",
+  ) as HTMLButtonElement;
+  const statusEl = document.getElementById(
+    "contact-status",
+  ) as HTMLParagraphElement;
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    submitButton.disabled = true;
+    statusEl.textContent = "Sending...";
+
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get("name") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      message: String(formData.get("message") ?? "").trim(),
+      website: String(formData.get("website") ?? "").trim(),
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        statusEl.textContent =
+          data.error ?? "Could not send your message right now.";
+        submitButton.disabled = false;
+        return;
+      }
+
+      statusEl.textContent = "Message sent. Thank you!";
+      form.reset();
+      submitButton.disabled = false;
+    } catch {
+      statusEl.textContent = "Could not send your message right now.";
+      submitButton.disabled = false;
+    }
+  });
+</script>

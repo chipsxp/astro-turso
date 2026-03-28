@@ -1,0 +1,46 @@
+---
+import BlogLayout from "../layouts/BlogLayout.astro";
+
+const siteUrl = import.meta.env.SITE_URL ?? "";
+const canonicalUrl = `${siteUrl}/privacy-policy`;
+---
+
+<BlogLayout
+  title="Privacy Policy — The Happy Feeling Scriptorium"
+  description="Privacy policy for The Happy Feeling Scriptorium."
+  canonicalUrl={canonicalUrl}
+>
+  <main class="page-wrap static-page">
+    <h1>Privacy Policy</h1>
+    <p>
+      We respect your privacy. This site only uses data needed to operate,
+      maintain, and improve the experience.
+    </p>
+    <p>
+      If you contact us directly, any information you provide is used only for
+      communication and support purposes.
+    </p>
+    <p>Policy updates may be posted on this page as the site evolves.</p>
+  </main>
+</BlogLayout>
+
+<style>
+  .static-page {
+    max-width: 780px;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .static-page h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 18px;
+    color: var(--text);
+  }
+
+  .static-page p {
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+</style>

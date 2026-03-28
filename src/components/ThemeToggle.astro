@@ -1,0 +1,41 @@
+---
+// ThemeToggle — switches between dark (Noir Edition) and light (Golden Age) themes.
+// CSS in global.css controls which icon is visible via [data-theme] selector.
+// The inline script handles clicks and syncs aria-label with the active theme.
+---
+
+<button
+  class="theme-toggle"
+  id="theme-toggle"
+  aria-label="Switch to light theme"
+  title="Toggle dark / light theme"
+>
+  <span class="theme-toggle__icon theme-toggle__sun" aria-hidden="true">☀</span>
+  <span class="theme-toggle__icon theme-toggle__moon" aria-hidden="true">☾</span
+  >
+</button>
+
+<script is:inline>
+  (function () {
+    var btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+
+    function syncLabel(theme) {
+      btn.setAttribute(
+        "aria-label",
+        theme === "dark" ? "Switch to light theme" : "Switch to dark theme",
+      );
+    }
+
+    // Sync aria-label with whatever theme the anti-FOUC script already applied
+    syncLabel(document.documentElement.dataset.theme || "dark");
+
+    btn.addEventListener("click", function () {
+      var html = document.documentElement;
+      var next = html.dataset.theme === "dark" ? "light" : "dark";
+      html.dataset.theme = next;
+      localStorage.setItem("scriptorium_theme", next);
+      syncLabel(next);
+    });
+  })();
+</script>

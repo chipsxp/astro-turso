@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.astro/
+dev-__dist/
+dev2-__dist/
+coverage/
+*.tsbuildinfo
+
+# Private docs and AI assistant materials
+docs/
+.agents/
+.claude/
+.github/
+devtools/
+AGENTS.md
+CLAUDE.md
+
+# Environment variables
+.env
+.env.*
+!.env.example
+!.env.template
+.htaccess
+
+# Secrets and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.jks
+*.kdbx
+secrets.*
+*.secrets.*
+
+# Logs
+npm-debug.log*
+*.log
+
+# Editor
+.vscode/settings.json

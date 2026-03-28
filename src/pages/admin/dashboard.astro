@@ -1,0 +1,357 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import PanelGallery from "../../components/admin/PanelGallery";
+---
+
+<AdminLayout title="Dashboard">
+  <div class="page-header">
+    <div>
+      <p class="page-header__eyebrow">Content Archive</p>
+      <h1 class="page-header__title">All <em>Articles</em></h1>
+    </div>
+    <a href="/admin/articles/new" class="btn btn-primary">+ New Article</a>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <button class="btn btn-ghost filter-btn active" data-filter="all"
+      >All</button
+    >
+    <button class="btn btn-ghost filter-btn" data-filter="published"
+      >Published</button
+    >
+    <button class="btn btn-ghost filter-btn" data-filter="draft">Drafts</button>
+    <span class="filter-bar__spacer"></span>
+    <button
+      id="cleanup-uploads-btn"
+      type="button"
+      class="btn btn-ghost filter-btn">Cleanup Uploads</button
+    >
+  </div>
+
+  <!-- State: loading -->
+  <div id="state-loading" class="state-caption">
+    <span class="state-caption__label">Accessing Archives…</span>
+  </div>
+
+  <!-- State: error -->
+  <div id="state-error" class="alert alert--error is-hidden"></div>
+
+  <!-- State: empty -->
+  <div id="state-empty" class="state-empty is-hidden">
+    <span class="state-empty__impact">NOTHING HERE</span>
+    <p class="state-empty__sub">
+      The scriptorium is empty. No articles match this filter.
+    </p>
+  </div>
+
+  <!-- ─── Homepage Panels ─── -->
+  <div class="page-header" style="margin-top: 48px;">
+    <div>
+      <p class="page-header__eyebrow">Weekly Rotation</p>
+      <h2 class="page-header__title">Homepage <em>Panels</em></h2>
+    </div>
+  </div>
+  <PanelGallery
+    client:load
+    cloudName={import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME}
+  />
+
+  <!-- Article table panel -->
+  <div id="state-table" class="card is-hidden">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Author</th>
+            <th>Created</th>
+            <th>Tags</th>
+            <th class="table-actions-col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="articles-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</AdminLayout>
+
+<style is:global>
+  @import "../../styles/pages/admin-dashboard.css";
+  @import "../../styles/components/panel-gallery.css";
+</style>
+
+<script>
+  type Article = {
+    id: number;
+    title: string;
+    slug: string;
+    status: "published" | "draft";
+    author_email: string | null;
+    created_at: string;
+    tags: string[];
+  };
+
+  let allArticles: Article[] = [];
+  let currentFilter = "all";
+  let toastTimer: number | null = null;
+  let armedDeleteSlug: string | null = null;
+  let armedDeleteBtn: HTMLButtonElement | null = null;
+  let armedDeleteTimer: number | null = null;
+
+  const stateLoading = document.getElementById("state-loading")!;
+  const stateError = document.getElementById("state-error")!;
+  const stateEmpty = document.getElementById("state-empty")!;
+  const stateTable = document.getElementById("state-table")!;
+  const tbody = document.getElementById("articles-tbody")!;
+  const cleanupUploadsBtn = document.getElementById(
+    "cleanup-uploads-btn",
+  ) as HTMLButtonElement;
+
+  function ensureToastStack(): HTMLDivElement {
+    let stack = document.getElementById("toast-stack") as HTMLDivElement | null;
+    if (!stack) {
+      stack = document.createElement("div");
+      stack.id = "toast-stack";
+      stack.className = "toast-stack";
+      document.body.appendChild(stack);
+    }
+
+    return stack;
+  }
+
+  function showToast(message: string, type: "success" | "error") {
+    const stack = ensureToastStack();
+    stack.innerHTML = `<div class="toast toast--${type}">${message}</div>`;
+    stack.classList.add("is-visible");
+
+    if (toastTimer) window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => {
+      stack.classList.remove("is-visible");
+    }, 2600);
+  }
+
+  function clearArmedDelete() {
+    if (armedDeleteBtn) armedDeleteBtn.textContent = "Delete";
+    armedDeleteBtn = null;
+    armedDeleteSlug = null;
+    if (armedDeleteTimer) {
+      window.clearTimeout(armedDeleteTimer);
+      armedDeleteTimer = null;
+    }
+  }
+
+  function formatDate(iso: string): string {
+    try {
+      return new Date(iso).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
+    } catch {
+      return iso.split("T")[0] ?? iso;
+    }
+  }
+
+  function escapeHtml(str: string): string {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function renderRows(articles: Article[]) {
+    if (articles.length === 0) {
+      stateTable.style.display = "none";
+      stateEmpty.style.display = "block";
+      return;
+    }
+    stateEmpty.style.display = "none";
+    stateTable.style.display = "block";
+
+    tbody.innerHTML = articles
+      .map((a) => {
+        const tags = (a.tags ?? [])
+          .map(
+            (t: string) =>
+              `<span class="badge badge--draft dashboard-tag-badge">${escapeHtml(t)}</span>`,
+          )
+          .join("");
+
+        return `
+          <tr>
+            <td>
+              <a href="/admin/articles/${escapeHtml(a.slug)}" class="dashboard-article-link">
+                ${escapeHtml(a.title)}
+              </a>
+              <div class="dashboard-article-slug">${escapeHtml(a.slug)}</div>
+            </td>
+            <td>
+              <span class="badge badge--${a.status}">${a.status}</span>
+            </td>
+            <td class="dashboard-author-cell">${escapeHtml(a.author_email ?? "—")}</td>
+            <td class="dashboard-date-cell">${formatDate(a.created_at)}</td>
+            <td>${tags || '<span class="dashboard-empty-tags">—</span>'}</td>
+            <td class="table-actions-col">
+              <div class="dashboard-actions-wrap">
+                <a href="/blog/${escapeHtml(a.slug)}" target="_blank" class="btn btn-ghost dashboard-action-btn">View</a>
+                <a href="/admin/articles/${escapeHtml(a.slug)}" class="btn btn-ghost dashboard-action-btn">Edit</a>
+                <button
+                  class="btn btn-danger delete-btn dashboard-action-btn"
+                  data-slug="${escapeHtml(a.slug)}"
+                  data-title="${escapeHtml(a.title)}"
+                >Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      })
+      .join("");
+
+    tbody.querySelectorAll<HTMLButtonElement>(".delete-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const slug = btn.dataset.slug ?? "";
+        const title = btn.dataset.title ?? slug;
+        handleDelete(slug, title, btn);
+      });
+    });
+  }
+
+  function applyFilter() {
+    const filtered =
+      currentFilter === "all"
+        ? allArticles
+        : allArticles.filter((a) => a.status === currentFilter);
+    renderRows(filtered);
+  }
+
+  async function loadArticles() {
+    stateLoading.style.display = "block";
+    stateError.style.display = "none";
+    stateTable.style.display = "none";
+    stateEmpty.style.display = "none";
+
+    try {
+      const res = await fetch("/api/admin/articles");
+
+      if (res.status === 401) {
+        window.location.href = "/admin";
+        return;
+      }
+
+      if (!res.ok) {
+        throw new Error(`Server error ${res.status}`);
+      }
+
+      const data = await res.json();
+      allArticles = data.articles ?? [];
+      stateLoading.style.display = "none";
+      applyFilter();
+    } catch (err: any) {
+      stateLoading.style.display = "none";
+      stateError.style.display = "block";
+      stateError.textContent = err.message ?? "Failed to load articles.";
+    }
+  }
+
+  async function handleDelete(
+    slug: string,
+    title: string,
+    button: HTMLButtonElement,
+  ) {
+    if (armedDeleteSlug !== slug) {
+      clearArmedDelete();
+      armedDeleteSlug = slug;
+      armedDeleteBtn = button;
+      button.textContent = "Confirm";
+      showToast(`Click Confirm to delete "${title}".`, "error");
+      armedDeleteTimer = window.setTimeout(() => {
+        clearArmedDelete();
+      }, 3500);
+      return;
+    }
+
+    clearArmedDelete();
+
+    try {
+      const res = await fetch(`/api/articles/${slug}`, {
+        method: "DELETE",
+      });
+
+      if (res.status === 401) {
+        window.location.href = "/admin";
+        return;
+      }
+
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        showToast(d.error ?? "Delete failed.", "error");
+        return;
+      }
+
+      allArticles = allArticles.filter((a) => a.slug !== slug);
+      applyFilter();
+      showToast("Article deleted successfully.", "success");
+    } catch {
+      showToast("Network error. Could not delete article.", "error");
+    }
+  }
+
+  async function runUploadCleanup() {
+    showToast(
+      "Cleanup targets all unsaved draft uploads across users.",
+      "error",
+    );
+
+    cleanupUploadsBtn.disabled = true;
+    cleanupUploadsBtn.textContent = "Cleaning…";
+
+    try {
+      const res = await fetch("/api/admin/uploads/cleanup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ scope: "all_unconsumed" }),
+      });
+
+      if (res.status === 401) {
+        window.location.href = "/admin";
+        return;
+      }
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        showToast(data.error ?? "Cleanup failed.", "error");
+        return;
+      }
+
+      showToast(
+        `Cleanup done: ${Number(data.sessions_deleted ?? 0)} sessions, ${Number(data.media_deleted ?? 0)} media removed${Number(data.cdn_delete_failures ?? 0) ? `, ${Number(data.cdn_delete_failures)} CDN failures` : ""}.`,
+        Number(data.cdn_delete_failures ?? 0) > 0 ? "error" : "success",
+      );
+    } catch {
+      showToast("Network error during cleanup.", "error");
+    } finally {
+      cleanupUploadsBtn.disabled = false;
+      cleanupUploadsBtn.textContent = "Cleanup Uploads";
+    }
+  }
+
+  document.querySelectorAll<HTMLButtonElement>(".filter-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentFilter = btn.dataset.filter ?? "all";
+      applyFilter();
+    });
+  });
+
+  cleanupUploadsBtn.addEventListener("click", runUploadCleanup);
+
+  loadArticles();
+</script>

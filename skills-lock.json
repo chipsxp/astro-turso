@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "eraser-diagrams": {
+      "source": "eraserlabs/eraser-io",
+      "sourceType": "github",
+      "computedHash": "91b1d3f574d293b3ebef11a7612c55e6382c264047653be35b2773245e1d234c"
+    },
+    "use-railway": {
+      "source": "railwayapp/railway-skills",
+      "sourceType": "github",
+      "computedHash": "276b1889ce15a894d12d0c6d9aa434aea228a41b5565c69f2b214871b540f063"
+    }
+  }
+}

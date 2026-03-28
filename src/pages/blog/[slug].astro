@@ -1,0 +1,454 @@
+---
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import SocialShare from "../../components/SocialShare.astro";
+import { db } from "../../lib/db";
+import { getMediaByArticle } from "../../lib/media";
+import { buildCloudinaryImageUrl } from "../../lib/cloudinary";
+
+const siteUrl = import.meta.env.SITE_URL ?? "";
+const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
+
+const { slug } = Astro.params;
+
+// ── Sequence diagram Flow 4: 3 sequential DB calls ──
+
+// 1. SELECT article WHERE slug + status = published
+const articleResult = await db.execute(
+  `SELECT a.id, a.title, a.slug, a.body, a.description,
+          a.created_at, a.updated_at, a.author_id,
+          u.email AS author_email,
+          c.name AS category_name
+   FROM articles a
+   LEFT JOIN users u ON u.id = a.author_id
+   LEFT JOIN categories c ON c.id = a.category_id
+   WHERE a.slug = ? AND a.status = 'published'`,
+  [slug],
+);
+
+const articleRow = articleResult.rows[0];
+
+if (!articleRow) {
+  return Astro.redirect("/blog", 302);
+}
+
+const articleId = Number(articleRow.id);
+
+// 2. SELECT media WHERE article_id
+const media = await getMediaByArticle(articleId);
+
+// 3. SELECT tags JOIN article_tags WHERE article_id
+const tagsResult = await db.execute(
+  `SELECT t.name, t.slug AS tag_slug
+   FROM tags t
+   JOIN article_tags at ON at.tag_id = t.id
+   WHERE at.article_id = ?
+   ORDER BY t.name ASC`,
+  [articleId],
+);
+
+// ── Shape the data ──
+type Media = {
+  id: number;
+  resource_type: "image" | "video";
+  public_id: string | null;
+  url: string;
+  alt_text: string;
+  width: number | null;
+  height: number | null;
+  duration: number | null;
+};
+type Tag = { name: string; tag_slug: string };
+
+const article = {
+  id: articleId,
+  title: String(articleRow.title),
+  slug: String(articleRow.slug),
+  body: String(articleRow.body),
+  description: articleRow.description ? String(articleRow.description) : null,
+  created_at: String(articleRow.created_at),
+  updated_at: String(articleRow.updated_at),
+  author_id: Number(articleRow.author_id),
+  author_email: articleRow.author_email
+    ? String(articleRow.author_email)
+    : null,
+  category_name: articleRow.category_name
+    ? String(articleRow.category_name)
+    : null,
+};
+
+const articleMedia: Media[] = media.map((item) => ({
+  id: item.id,
+  resource_type: item.resource_type,
+  public_id: item.public_id,
+  url: item.url,
+  alt_text: item.alt_text,
+  width: item.width,
+  height: item.height,
+  duration: item.duration,
+}));
+
+function getDeliveredImageUrl(item: Media, preset: "hero" | "inline"): string {
+  if (!item.public_id || !cloudName) {
+    return item.url;
+  }
+
+  try {
+    return buildCloudinaryImageUrl({
+      cloudName,
+      publicId: item.public_id,
+      preset,
+      width: item.width ?? undefined,
+    });
+  } catch {
+    return item.url;
+  }
+}
+
+const HERO_BREAKPOINTS = [480, 768, 1024, 1280, 1600];
+const INLINE_BREAKPOINTS = [320, 480, 640, 768, 960];
+
+function getResponsiveBreakpoints(item: Media, preset: "hero" | "inline") {
+  const base = preset === "hero" ? HERO_BREAKPOINTS : INLINE_BREAKPOINTS;
+  if (!item.width || item.width < 1) return base;
+
+  const filtered = base.filter((value) => value <= item.width!);
+  return filtered.length > 0 ? filtered : [Math.max(1, item.width)];
+}
+
+function getResponsiveSrcSet(
+  item: Media,
+  preset: "hero" | "inline",
+): string | undefined {
+  if (!item.public_id || !cloudName) return undefined;
+
+  try {
+    const breakpoints = getResponsiveBreakpoints(item, preset);
+    return breakpoints
+      .map((breakpoint) => {
+        const url = buildCloudinaryImageUrl({
+          cloudName,
+          publicId: item.public_id!,
+          preset,
+          width: breakpoint,
+        });
+        return `${url} ${breakpoint}w`;
+      })
+      .join(", ");
+  } catch {
+    return undefined;
+  }
+}
+
+function getResponsiveSizes(preset: "hero" | "inline"): string {
+  if (preset === "hero") {
+    return "(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1024px";
+  }
+
+  return "(max-width: 768px) 92vw, 700px";
+}
+
+const tags: Tag[] = tagsResult.rows.map((r: Record<string, unknown>) => ({
+  name: String(r.name),
+  tag_slug: String(r.tag_slug),
+}));
+
+// Hero media = first media asset. OG image prefers the first image asset.
+const heroMedia = articleMedia[0] ?? null;
+const socialImage =
+  articleMedia.find((item) => item.resource_type === "image") ?? null;
+
+function formatDate(iso: string): string {
+  try {
+    return new Date(iso).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  } catch {
+    return iso.split("T")[0] ?? iso;
+  }
+}
+
+// Convert plain-text body paragraphs to HTML paragraphs
+// (Phase 10 can upgrade to full Markdown if needed)
+function bodyToHtml(text: string): string {
+  const blockTagPattern =
+    /^\s*<(ul|ol|li|figure|img|h1|h2|h3|h4|h5|h6|blockquote|pre|table|hr|p|div|section|article)\b/i;
+
+  return text
+    .split(/\n{2,}/)
+    .map((para) => para.trim())
+    .filter(Boolean)
+    .map((para) =>
+      blockTagPattern.test(para)
+        ? para
+        : `<p>${para.replace(/\n/g, "<br>")}</p>`,
+    )
+    .join("\n");
+}
+
+const bodyHtml = bodyToHtml(article.body);
+const pageTitle = `${article.title} — The Scriptorium`;
+const canonicalUrl = `${siteUrl}/blog/${article.slug}`;
+const ogImage = socialImage
+  ? getDeliveredImageUrl(socialImage, "hero")
+  : undefined;
+const ogImageAlt = socialImage?.alt_text ?? undefined;
+const ogImageWidth = socialImage?.width ?? undefined;
+const ogImageHeight = socialImage?.height ?? undefined;
+const tagNames = tags.map((t) => t.name);
+const fbAppId = import.meta.env.PUBLIC_FB_APP_ID || undefined;
+---
+
+<BlogLayout
+  title={pageTitle}
+  description={article.description ?? undefined}
+  canonicalUrl={canonicalUrl}
+  ogType="article"
+  ogImage={ogImage}
+  ogImageAlt={ogImageAlt}
+  ogImageWidth={ogImageWidth}
+  ogImageHeight={ogImageHeight}
+  publishedTime={article.created_at}
+  modifiedTime={article.updated_at}
+  author={article.author_email ?? undefined}
+  section={article.category_name ?? undefined}
+  tags={tagNames}
+  fbAppId={fbAppId}
+>
+  <article class="article-wrap">
+    <!-- Article header -->
+    <header class="article-header page-wrap">
+      <div class="content-col">
+        <!-- Tags above title -->
+        {
+          tags.length > 0 && (
+            <div class="article-tags-top">
+              {tags.map((tag) => (
+                <a href={`/blog?tag=${tag.tag_slug}`} class="tag-badge">
+                  {tag.name}
+                </a>
+              ))}
+            </div>
+          )
+        }
+
+        <h1 class="article-title">{article.title}</h1>
+
+        {
+          article.description && (
+            <p class="article-lede">{article.description}</p>
+          )
+        }
+
+        <div class="article-byline">
+          {
+            article.author_email && (
+              <span class="article-byline__author">
+                {article.author_email.split("@")[0]}
+              </span>
+            )
+          }
+          <time class="article-byline__date" datetime={article.created_at}>
+            {formatDate(article.created_at)}
+          </time>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero media -->
+    {
+      heroMedia && (
+        <div class="hero-image-wrap page-wrap">
+          <div class="content-col">
+            <figure class="hero-image">
+              {heroMedia.resource_type === "image" ? (
+                <img
+                  src={getDeliveredImageUrl(heroMedia, "hero")}
+                  srcset={getResponsiveSrcSet(heroMedia, "hero")}
+                  sizes={getResponsiveSizes("hero")}
+                  alt={heroMedia.alt_text}
+                  loading="eager"
+                  decoding="async"
+                />
+              ) : (
+                <video controls preload="metadata" src={heroMedia.url} />
+              )}
+              <figcaption class="hero-image__caption">
+                {heroMedia.alt_text}
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      )
+    }
+
+    <!-- Ornamental divider -->
+    <div class="rule-wrap page-wrap" aria-hidden="true">
+      <div class="content-col">
+        <div class="rule-inner">
+          <span class="rule-line"></span>
+          <span class="rule-glyph">✦</span>
+          <span class="rule-line"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Article body -->
+    <div class="article-body page-wrap">
+      <div class="content-col">
+        <div class="prose" set:html={bodyHtml} />
+      </div>
+    </div>
+
+    <!-- Inline media (secondary — skip hero already shown) -->
+    {
+      articleMedia.length > 1 && (
+        <div class="article-images page-wrap">
+          <div class="content-col">
+            <div class="image-grid">
+              {articleMedia.slice(1).map((item) => (
+                <figure class="image-grid__item">
+                  {item.resource_type === "image" ? (
+                    <img
+                      src={getDeliveredImageUrl(item, "inline")}
+                      srcset={getResponsiveSrcSet(item, "inline")}
+                      sizes={getResponsiveSizes("inline")}
+                      alt={item.alt_text}
+                      loading="lazy"
+                      decoding="async"
+                      class="js-lightbox-inline-image"
+                    />
+                  ) : (
+                    <video controls preload="metadata" src={item.url} />
+                  )}
+                  <figcaption>{item.alt_text}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    <!-- Article footer -->
+    <footer class="article-footer page-wrap">
+      <div class="content-col">
+        <div class="rule-inner rule-inner--footer" aria-hidden="true">
+          <span class="rule-line"></span>
+          <span class="rule-glyph">✦</span>
+          <span class="rule-line"></span>
+        </div>
+
+        <!-- Social share -->
+        <div class="article-share-wrap">
+          <SocialShare
+            title={article.title}
+            url={canonicalUrl}
+            description={article.description ?? undefined}
+            image={ogImage}
+            tags={tagNames}
+            authorId={article.author_id}
+            articleId={article.id}
+          />
+        </div>
+
+        <div class="article-footer__inner">
+          <!-- Tags -->
+          {
+            tags.length > 0 && (
+              <div class="article-footer__tags">
+                {tags.map((tag) => (
+                  <a href={`/blog?tag=${tag.tag_slug}`} class="tag-badge">
+                    {tag.name}
+                  </a>
+                ))}
+              </div>
+            )
+          }
+
+          <!-- Back link -->
+          <a href="/blog" class="back-link">← All articles</a>
+        </div>
+      </div>
+    </footer>
+  </article>
+
+  <div class="media-lightbox is-hidden" id="media-lightbox" aria-hidden="true">
+    <button
+      type="button"
+      class="media-lightbox__backdrop"
+      id="media-lightbox-backdrop"
+      aria-label="Close image viewer"></button>
+    <div
+      class="media-lightbox__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Image viewer"
+    >
+      <button
+        type="button"
+        class="media-lightbox__close"
+        id="media-lightbox-close"
+        aria-label="Close image viewer"
+      >
+        ×
+      </button>
+      <img id="media-lightbox-image" src="" alt="" />
+    </div>
+  </div>
+</BlogLayout>
+
+<style>
+  @import "../../styles/pages/blog-article.css";
+</style>
+
+<script>
+  const lightbox = document.getElementById("media-lightbox") as HTMLDivElement;
+  const lightboxImage = document.getElementById(
+    "media-lightbox-image",
+  ) as HTMLImageElement;
+  const lightboxClose = document.getElementById(
+    "media-lightbox-close",
+  ) as HTMLButtonElement;
+  const lightboxBackdrop = document.getElementById(
+    "media-lightbox-backdrop",
+  ) as HTMLButtonElement;
+  const imageTriggers = Array.from(
+    document.querySelectorAll(".js-lightbox-inline-image"),
+  ) as HTMLImageElement[];
+
+  function lockScroll(lock: boolean) {
+    document.body.classList.toggle("lightbox-open", lock);
+  }
+
+  function openLightbox(source: HTMLImageElement) {
+    lightboxImage.src = source.currentSrc || source.src;
+    lightboxImage.alt = source.alt || "Article image";
+    lightbox.classList.remove("is-hidden");
+    lightbox.setAttribute("aria-hidden", "false");
+    lockScroll(true);
+    lightboxClose.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.classList.add("is-hidden");
+    lightbox.setAttribute("aria-hidden", "true");
+    lightboxImage.src = "";
+    lightboxImage.alt = "";
+    lockScroll(false);
+  }
+
+  imageTriggers.forEach((image) => {
+    image.addEventListener("click", () => openLightbox(image));
+  });
+
+  lightboxClose.addEventListener("click", closeLightbox);
+  lightboxBackdrop.addEventListener("click", closeLightbox);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !lightbox.classList.contains("is-hidden")) {
+      closeLightbox();
+    }
+  });
+</script>

@@ -1,0 +1,334 @@
+---
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import { ensureCategorySchema, listCategories } from "../../lib/categories";
+import { db } from "../../lib/db";
+
+const siteUrl = import.meta.env.SITE_URL ?? "";
+const canonicalUrl = `${siteUrl}/blog`;
+const selectedCategorySlug =
+  Astro.url.searchParams.get("category")?.trim() ?? "";
+const selectedTagSlug = Astro.url.searchParams.get("tag")?.trim() ?? "";
+
+const primaryCategoryLinks = [
+  { name: "For Artists", slug: "for-artists" },
+  { name: "Comic Creators", slug: "comic-creators" },
+  { name: "For Illustrators", slug: "for-illustrators" },
+];
+
+await ensureCategorySchema();
+
+const categories = await listCategories();
+const activeCategory =
+  categories.find((category) => category.slug === selectedCategorySlug) ?? null;
+
+const availableTagsResult = await db.execute(
+  `SELECT DISTINCT t.name, t.slug AS tag_slug
+   FROM tags t
+   JOIN article_tags at ON at.tag_id = t.id
+   JOIN articles a ON a.id = at.article_id
+   LEFT JOIN categories c ON c.id = a.category_id
+   WHERE a.status = 'published'
+   ${activeCategory ? "AND c.slug = ?" : ""}
+   ORDER BY t.name ASC`,
+  activeCategory ? [activeCategory.slug] : undefined,
+);
+
+type AvailableTag = { name: string; slug: string };
+
+const availableTags: AvailableTag[] = availableTagsResult.rows.map(
+  (row: Record<string, unknown>) => ({
+    name: String(row.name),
+    slug: String(row.tag_slug),
+  }),
+);
+
+const activeTag =
+  availableTags.find((tag) => tag.slug === selectedTagSlug) ?? null;
+
+const activeTagLabel = activeTag
+  ? activeTag.name
+  : selectedTagSlug
+    ? selectedTagSlug
+        .split("-")
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(" ")
+    : null;
+
+const articleQueryParams: string[] = [];
+if (activeCategory) {
+  articleQueryParams.push(activeCategory.slug);
+}
+if (selectedTagSlug) {
+  articleQueryParams.push(selectedTagSlug);
+}
+
+// ── Server-side DB query — published articles only ──
+const articlesResult = await db.execute(
+  `SELECT a.id, a.title, a.slug, a.description, a.created_at,
+          u.email AS author_email,
+          c.id AS category_id,
+          c.name AS category_name,
+          c.slug AS category_slug
+   FROM articles a
+   LEFT JOIN users u ON u.id = a.author_id
+   LEFT JOIN categories c ON c.id = a.category_id
+   WHERE a.status = 'published'
+   ${activeCategory ? "AND c.slug = ?" : ""}
+   ${
+     selectedTagSlug
+       ? "AND EXISTS (SELECT 1 FROM article_tags at2 JOIN tags t2 ON t2.id = at2.tag_id WHERE at2.article_id = a.id AND t2.slug = ?)"
+       : ""
+   }
+   ORDER BY a.created_at DESC`,
+  articleQueryParams.length > 0 ? articleQueryParams : undefined,
+);
+
+// Fetch all tags in one query and group by article_id
+const tagsResult = await db.execute(
+  `SELECT at.article_id, t.name, t.slug AS tag_slug
+   FROM article_tags at
+   JOIN tags t ON t.id = at.tag_id`,
+);
+
+const tagMap: Record<number, { name: string; slug: string }[]> = {};
+for (const row of tagsResult.rows) {
+  const aid = Number(row.article_id);
+  if (!tagMap[aid]) tagMap[aid] = [];
+  tagMap[aid].push({ name: String(row.name), slug: String(row.tag_slug) });
+}
+
+type Article = {
+  id: number;
+  title: string;
+  slug: string;
+  description: string | null;
+  created_at: string;
+  author_email: string | null;
+  tags: { name: string; slug: string }[];
+  category: { id: number; name: string; slug: string } | null;
+};
+
+const articles: Article[] = articlesResult.rows.map(
+  (row: Record<string, unknown>) => ({
+    id: Number(row.id),
+    title: String(row.title),
+    slug: String(row.slug),
+    description: row.description ? String(row.description) : null,
+    created_at: String(row.created_at),
+    author_email: row.author_email ? String(row.author_email) : null,
+    tags: tagMap[Number(row.id)] ?? [],
+    category:
+      row.category_id == null
+        ? null
+        : {
+            id: Number(row.category_id),
+            name: String(row.category_name),
+            slug: String(row.category_slug),
+          },
+  }),
+);
+
+function buildArchiveUrl(categorySlug?: string, tagSlug?: string): string {
+  const params = new URLSearchParams();
+
+  if (categorySlug) {
+    params.set("category", categorySlug);
+  }
+
+  if (tagSlug) {
+    params.set("tag", tagSlug);
+  }
+
+  const queryString = params.toString();
+  return queryString ? `/blog?${queryString}` : "/blog";
+}
+
+function formatDate(iso: string): string {
+  try {
+    return new Date(iso).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+  } catch {
+    return iso.split("T")[0] ?? iso;
+  }
+}
+---
+
+<BlogLayout
+  title="The Happy Feeling Prints — Archive"
+  description="Explore the archive of The Happy Feeling Scriptorium, a creative blog for artists, illustrators, comic creators, and superhero portrait artists. Deep-dives into technique drawings, studio processes, material reviews, and the raw honesty of making art every day."
+  canonicalUrl={canonicalUrl}
+  ogType="website"
+>
+  <div class="page-wrap">
+    <!-- Archive header -->
+    <section class="archive-header">
+      <p class="archive-eyebrow">Archive</p>
+      <h1 class="archive-title">The <em>Happy Feeling Scriptorium</em></h1>
+      {
+        articles.length > 0 && (
+          <p class="archive-count">
+            {articles.length} {articles.length === 1 ? "article" : "articles"}{" "}
+            published
+          </p>
+        )
+      }
+
+      <nav class="archive-category-strip" aria-label="Browse by category">
+        <a
+          href={buildArchiveUrl()}
+          class:list={["archive-category-chip", !activeCategory && "is-active"]}
+        >
+          All
+        </a>
+        {
+          primaryCategoryLinks.map((categoryLink) => (
+            <a
+              href={buildArchiveUrl(categoryLink.slug)}
+              class:list={[
+                "archive-category-chip",
+                activeCategory?.slug === categoryLink.slug && "is-active",
+              ]}
+            >
+              {categoryLink.name}
+            </a>
+          ))
+        }
+      </nav>
+
+      <form class="archive-filter" method="get" action="/blog">
+        <label class="archive-filter__label" for="category-filter">
+          Category Filter
+        </label>
+        <select
+          id="category-filter"
+          class="archive-filter__select"
+          name="category"
+        >
+          <option value="">All Categories</option>
+          {
+            categories.map((category) => (
+              <option
+                value={category.slug}
+                selected={activeCategory?.slug === category.slug}
+              >
+                {category.name}
+              </option>
+            ))
+          }
+        </select>
+        <label class="archive-filter__label" for="tag-filter">
+          Tag Filter
+        </label>
+        <select id="tag-filter" class="archive-filter__select" name="tag">
+          <option value="">All Tags</option>
+          {
+            availableTags.map((tag: AvailableTag) => (
+              <option value={tag.slug} selected={selectedTagSlug === tag.slug}>
+                {tag.name}
+              </option>
+            ))
+          }
+        </select>
+        <div class="archive-filter__actions">
+          <button type="submit" class="archive-filter__submit">Apply</button>
+          {
+            (activeCategory || selectedTagSlug) && (
+              <a href="/blog" class="archive-filter__clear">
+                Clear
+              </a>
+            )
+          }
+        </div>
+      </form>
+
+      {
+        (activeCategory || activeTagLabel) && (
+          <p class="archive-active-filter" role="status" aria-live="polite">
+            {activeCategory && <span>Category: {activeCategory.name}</span>}
+            {activeCategory && activeTagLabel && (
+              <span aria-hidden="true"> · </span>
+            )}
+            {activeTagLabel && <span>Tag: {activeTagLabel}</span>}
+          </p>
+        )
+      }
+    </section>
+
+    <!-- Horizontal rule -->
+    <div class="rule-wrap" aria-hidden="true">
+      <span class="rule-line"></span>
+      <span class="rule-glyph">✦</span>
+      <span class="rule-line"></span>
+    </div>
+
+    <!-- Article list -->
+    {
+      articles.length === 0 ? (
+        <div class="empty-state">
+          <p>
+            The Happy Feeling Scriptorium is quiet — no articles have been
+            published yet.
+          </p>
+        </div>
+      ) : (
+        <ol class="article-list" reversed>
+          {articles.map((article) => (
+            <li class="article-card">
+              <div class="article-card__meta">
+                <time class="article-card__date" datetime={article.created_at}>
+                  {formatDate(article.created_at)}
+                </time>
+                {article.category && (
+                  <span class="article-card__category">
+                    {article.category.name}
+                  </span>
+                )}
+                {article.author_email && (
+                  <span class="article-card__author">
+                    {article.author_email.split("@")[0]}
+                  </span>
+                )}
+              </div>
+
+              <h2 class="article-card__title">
+                <a href={`/blog/${article.slug}`}>{article.title}</a>
+              </h2>
+
+              {article.description && (
+                <p class="article-card__desc">{article.description}</p>
+              )}
+
+              <div class="article-card__footer">
+                {article.tags.length > 0 && (
+                  <div class="article-card__tags">
+                    {article.tags.map((tag) => (
+                      <a
+                        href={buildArchiveUrl(activeCategory?.slug, tag.slug)}
+                        class="tag-badge"
+                      >
+                        {tag.name}
+                      </a>
+                    ))}
+                  </div>
+                )}
+                <a
+                  href={`/blog/${article.slug}`}
+                  class="article-card__read-link"
+                >
+                  Read article →
+                </a>
+              </div>
+            </li>
+          ))}
+        </ol>
+      )
+    }
+  </div>
+</BlogLayout>
+
+<style>
+  @import "../../styles/pages/blog-index.css";
+</style>

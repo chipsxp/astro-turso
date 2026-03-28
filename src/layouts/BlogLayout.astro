@@ -1,0 +1,113 @@
+---
+import SEOMeta from "../components/SEOMeta.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import "../styles/global.css";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  ogType?: "website" | "article";
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
+  ogImageType?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  section?: string;
+  tags?: string[];
+  fbAppId?: string;
+}
+
+const {
+  title = "The Happy Feeling Scriptorium",
+  description,
+  canonicalUrl,
+  ogType = "website",
+  ogImage,
+  ogImageAlt,
+  ogImageWidth,
+  ogImageHeight,
+  ogImageType,
+  publishedTime,
+  modifiedTime,
+  author,
+  section,
+  tags,
+  fbAppId,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (function () {
+        var t = localStorage.getItem("scriptorium_theme");
+        document.documentElement.dataset.theme =
+          t ||
+          (window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark");
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SEOMeta
+      title={title}
+      description={description}
+      canonicalUrl={canonicalUrl}
+      ogType={ogType}
+      ogImage={ogImage}
+      ogImageAlt={ogImageAlt}
+      ogImageWidth={ogImageWidth}
+      ogImageHeight={ogImageHeight}
+      ogImageType={ogImageType}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+      author={author}
+      section={section}
+      tags={tags}
+      fbAppId={fbAppId}
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600;1,9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Fira+Code:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a href="/blog" class="site-wordmark">The Happy Feeling Scriptorium</a>
+        <nav class="site-nav">
+          <a href="/blog">Gallery Blog</a>
+          <a href="/upcoming-events">Upcoming Events</a>
+          <ThemeToggle />
+        </nav>
+      </div>
+    </header>
+
+    <slot />
+
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <span class="site-footer__copy">
+          The Happy Feeling Scriptorium &mdash; &copy; {
+            new Date().getFullYear()
+          }
+        </span>
+        <nav class="site-footer__nav" aria-label="Footer links">
+          <a href="/admin" class="site-footer__signin">Sign In</a>
+          <a href="/about-us">About Us</a>
+          <a href="/contact-us">Contact Us</a>
+          <a href="/privacy-policy">Privacy Policy</a>
+        </nav>
+        <span class="site-footer__copy">Built with Astro &amp; Turso</span>
+      </div>
+    </footer>
+  </body>
+</html>

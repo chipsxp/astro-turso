@@ -1,0 +1,314 @@
+---
+export interface Props {
+  title: string;
+  url: string; // full canonical URL of the article
+  description?: string;
+  image?: string; // cover image URL — used by Pinterest
+  tags?: string[]; // article tags → hashtags for X
+  authorId: number; // panel is hidden until client confirms viewer is author/admin
+  articleId: number; // used to log share events to /api/share
+}
+
+const {
+  title,
+  url,
+  description,
+  image = "",
+  tags = [],
+  authorId,
+  articleId,
+} = Astro.props;
+
+// Server-side auth gate: only render the panel for the article's author or an admin
+const user = Astro.locals.user;
+const isAuthorized =
+  user != null &&
+  (user.role === "admin" || String(user.id) === String(authorId));
+
+// ── Build encoded share parameters ──────────────────────────────────────────
+const enc = encodeURIComponent;
+
+const hashtags = tags
+  .map((t) => t.replace(/\s+/g, ""))
+  .filter(Boolean)
+  .slice(0, 5) // X caps hashtag count at ~5 before truncation
+  .join(",");
+
+const shareText = enc(`${title} ${url}`);
+const tweetText = enc(title);
+const encodedUrl = enc(url);
+const encodedTitle = enc(title);
+const encodedDesc = enc(description ?? title);
+const encodedImage = image ? enc(image) : "";
+
+// ── Platform definitions ─────────────────────────────────────────────────────
+interface Platform {
+  id: string;
+  label: string;
+  color: string; // brand hover color
+  method: "intent" | "clipboard";
+  shareUrl?: string; // method=intent
+  clipboardText?: string; // method=clipboard
+  openUrl?: string; // method=clipboard — opens after copy
+  svg: string; // inner SVG markup (paths)
+}
+
+const platforms: Platform[] = [
+  {
+    id: "facebook",
+    label: "Facebook",
+    color: "#1877f2",
+    method: "intent",
+    shareUrl: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+    svg: `<path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073c0 6.027 4.388 11.026 10.125 11.927v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.791-4.697 4.533-4.697 1.313 0 2.686.236 2.686.236v2.97h-1.513c-1.49 0-1.956.93-1.956 1.883v2.272h3.328l-.532 3.49h-2.796v8.437C19.612 23.099 24 18.1 24 12.073z"/>`,
+  },
+  {
+    id: "x",
+    label: "X",
+    color: "#000",
+    method: "intent",
+    shareUrl: `https://twitter.com/intent/tweet?text=${tweetText}&url=${encodedUrl}${hashtags ? `&hashtags=${hashtags}` : ""}`,
+    svg: `<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.265 5.634L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>`,
+  },
+  {
+    id: "linkedin",
+    label: "LinkedIn",
+    color: "#0a66c2",
+    method: "intent",
+    shareUrl: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}&summary=${encodedDesc}`,
+    svg: `<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>`,
+  },
+  {
+    id: "reddit",
+    label: "Reddit",
+    color: "#ff4500",
+    method: "intent",
+    shareUrl: `https://reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`,
+    svg: `<path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>`,
+  },
+  {
+    id: "pinterest",
+    label: "Pinterest",
+    color: "#e60023",
+    method: "intent",
+    shareUrl: `https://pinterest.com/pin/create/button/?url=${encodedUrl}${encodedImage ? `&media=${encodedImage}` : ""}&description=${encodedTitle}`,
+    svg: `<path d="M0 12C0 5.373 5.373 0 12 0s12 5.373 12 12c0 5.084-3.163 9.426-7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>`,
+  },
+  {
+    id: "whatsapp",
+    label: "WhatsApp",
+    color: "#25d366",
+    method: "intent",
+    shareUrl: `https://wa.me/?text=${shareText}`,
+    svg: `<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>`,
+  },
+  {
+    id: "threads",
+    label: "Threads",
+    color: "#000",
+    method: "intent",
+    shareUrl: `https://www.threads.net/intent/post?text=${shareText}`,
+    svg: `<path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.028-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.586-1.308-.883-2.359-.89h-.029c-.844 0-1.992.232-2.721 1.32L7.734 7.847c.98-1.454 2.568-2.256 4.478-2.256h.044c3.194.02 5.097 1.975 5.287 5.388.108.046.216.094.321.142 1.49.7 2.58 1.761 3.154 3.07.797 1.829.64 4.335-1.352 6.291-1.951 1.942-4.249 2.437-6.48 2.518z"/>`,
+  },
+  {
+    id: "bluesky",
+    label: "Bluesky",
+    color: "#0085ff",
+    method: "intent",
+    shareUrl: `https://bsky.app/intent/compose?text=${shareText}`,
+    svg: `<path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/>`,
+  },
+  {
+    // No web share intent exists for Instagram — copy URL + open app
+    id: "instagram",
+    label: "Instagram",
+    color: "#e1306c",
+    method: "clipboard",
+    clipboardText: `${title} ${url}`,
+    openUrl: "https://www.instagram.com",
+    svg: `<path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12c0 3.259.014 3.668.072 4.948.058 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24c3.259 0 3.668-.014 4.948-.072 1.277-.058 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.948 0-3.259-.014-3.667-.072-4.947-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>`,
+  },
+  {
+    // No share intent for Medium — copy URL + open new-story page
+    id: "medium",
+    label: "Medium",
+    color: "#000",
+    method: "clipboard",
+    clipboardText: `${title}\n\n${url}`,
+    openUrl: "https://medium.com/new-story",
+    svg: `<path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>`,
+  },
+];
+---
+
+{
+  isAuthorized && (
+    <div
+      id="share-panel"
+      class="share-panel share-panel--visible"
+      data-article-id={String(articleId)}
+      aria-hidden="false"
+      aria-label="Share this article"
+    >
+      <div class="share-panel__header">
+        <span class="share-panel__title">Share this article</span>
+        <span class="share-panel__hint">
+          Click any platform to share immediately
+        </span>
+      </div>
+
+      <div
+        class="share-panel__grid"
+        role="group"
+        aria-label="Share to a platform"
+      >
+        {platforms.map((p) => (
+          <button
+            type="button"
+            class={`share-btn share-btn--${p.id}`}
+            data-platform={p.id}
+            data-method={p.method}
+            data-share-url={p.shareUrl ?? ""}
+            data-clipboard-text={p.clipboardText ?? ""}
+            data-open-url={p.openUrl ?? ""}
+            data-color={p.color}
+            data-label={p.label}
+            aria-label={
+              p.method === "intent"
+                ? `Share on ${p.label}`
+                : `Copy link and open ${p.label}`
+            }
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="14"
+              height="14"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <Fragment set:html={p.svg} />
+            </svg>
+            <span class="share-btn__label">{p.label}</span>
+          </button>
+        ))}
+      </div>
+
+      <p
+        id="share-clipboard-tip"
+        class="share-clipboard-tip"
+        role="status"
+        aria-live="polite"
+      />
+    </div>
+  )
+}
+
+<style>
+  @import "../styles/components/social-share.css";
+</style>
+
+<script>
+  // ── Auth gate ──────────────────────────────────────────────────────────────
+
+  const panel = document.getElementById("share-panel") as HTMLDivElement | null;
+  if (!panel) throw new Error("share-panel not found");
+
+  const articleId = Number(panel.dataset.articleId ?? "0");
+
+  // ── UI helpers ─────────────────────────────────────────────────────────────
+
+  const tipEl = document.getElementById(
+    "share-clipboard-tip",
+  ) as HTMLParagraphElement;
+
+  function showTip(msg: string): void {
+    tipEl.textContent = msg;
+    tipEl.classList.add("share-clipboard-tip--visible");
+    setTimeout(() => {
+      tipEl.textContent = "";
+      tipEl.classList.remove("share-clipboard-tip--visible");
+    }, 4000);
+  }
+
+  function flashButton(btn: HTMLButtonElement, label: string): void {
+    const labelEl = btn.querySelector<HTMLSpanElement>(".share-btn__label");
+    if (!labelEl) return;
+    const original = labelEl.textContent ?? label;
+    btn.classList.add("share-btn--done");
+    labelEl.textContent = "Shared!";
+    setTimeout(() => {
+      btn.classList.remove("share-btn--done");
+      labelEl.textContent = original;
+    }, 2000);
+  }
+
+  // ── Share analytics logger ─────────────────────────────────────────────────
+
+  async function logShare(platform: string): Promise<void> {
+    try {
+      await fetch("/api/share", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ article_id: articleId, platform }),
+      });
+    } catch {
+      // Analytics failure must never block the share action
+    }
+  }
+
+  // ── Apply brand colors from data-color attribute ───────────────────────────
+
+  const shareBtns = panel.querySelectorAll<HTMLButtonElement>(".share-btn");
+
+  shareBtns.forEach((btn) => {
+    const color = btn.dataset.color;
+    if (color) btn.style.setProperty("--btn-brand-color", color);
+  });
+
+  const controller = new AbortController();
+
+  shareBtns.forEach((btn) => {
+    btn.addEventListener(
+      "click",
+      async () => {
+        const method = btn.dataset.method;
+        const platform = btn.dataset.platform ?? "";
+        const label = btn.dataset.label ?? platform;
+
+        if (method === "intent") {
+          const shareUrl = btn.dataset.shareUrl;
+          if (!shareUrl) return;
+          void logShare(platform);
+          window.open(
+            shareUrl,
+            "_blank",
+            "width=600,height=500,noopener,noreferrer",
+          );
+          flashButton(btn, label);
+        } else if (method === "clipboard") {
+          const text = btn.dataset.clipboardText ?? "";
+          const openUrl = btn.dataset.openUrl ?? "";
+          void logShare(platform);
+
+          try {
+            await navigator.clipboard.writeText(text);
+            showTip(`Link copied for ${label} — paste it in your new post.`);
+          } catch {
+            showTip(
+              `Could not auto-copy for ${label} — copy the URL manually.`,
+            );
+          }
+
+          if (openUrl) {
+            window.open(openUrl, "_blank", "noopener,noreferrer");
+          }
+
+          flashButton(btn, label);
+        }
+      },
+      { signal: controller.signal },
+    );
+  });
+</script>

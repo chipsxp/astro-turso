@@ -1,0 +1,378 @@
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--comic-black);
+        min-height: 100vh;
+        display: flex;
+        align-items: stretch;
+        font-family: var(--font-mono);
+        color: var(--text);
+        animation: pageIn 0.4s cubic-bezier(0.23, 1, 0.32, 1) both;
+      }
+
+      @keyframes pageIn {
+        from {
+          opacity: 0;
+          transform: scale(0.97);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* ─── Two-panel layout ─── */
+      .login-panels {
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        width: 100%;
+        gap: var(--panel-gap);
+      }
+
+      /* ─── Left: Hero panel ─── */
+      .hero-panel {
+        background-color: var(--kirby-blue);
+        background-image:
+          radial-gradient(
+            circle 3px at 12% 18%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 2px at 28% 8%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 4px at 45% 25%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 2px at 62% 12%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 3px at 78% 30%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 2px at 90% 8%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 3px at 8% 42%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 2px at 22% 55%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 4px at 38% 68%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 2px at 55% 50%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 3px at 70% 65%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 2px at 85% 48%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 4px at 15% 80%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 2px at 32% 88%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 3px at 50% 82%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 2px at 68% 90%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 3px at 82% 78%,
+            var(--comic-black) 100%,
+            transparent 0
+          ),
+          radial-gradient(
+            circle 2px at 95% 92%,
+            var(--comic-black) 100%,
+            transparent 0
+          );
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 60px 48px;
+        position: relative;
+        overflow: hidden;
+        border-right: var(--panel-gap) solid var(--comic-black);
+        animation: krackle-breathe 3.2s ease-in-out infinite;
+      }
+
+      @keyframes krackle-breathe {
+        0%,
+        100% {
+          background-size: 100% 100%;
+        }
+        50% {
+          background-size: 101.8% 101.8%;
+        }
+      }
+
+      /* Gold accent strip at top */
+      .hero-panel::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--accent);
+      }
+
+      /* Side chapter label */
+      .hero-panel::after {
+        content: "CHAPTER 01";
+        position: absolute;
+        left: 16px;
+        bottom: 48px;
+        font-family: var(--font-mono);
+        font-size: 0.5rem;
+        font-weight: 700;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(232, 184, 109, 0.3);
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+      }
+
+      .hero-issue {
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: rgba(232, 184, 109, 0.5);
+        margin-bottom: 24px;
+      }
+
+      .hero-title {
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 6vw, 5.5rem);
+        font-weight: 700;
+        font-style: italic;
+        color: var(--accent);
+        line-height: 0.9;
+        text-shadow:
+          3px 3px 0 var(--comic-black),
+          5px 5px 0 rgba(0, 0, 0, 0.4);
+        margin-bottom: 20px;
+      }
+
+      .hero-tagline {
+        font-family: var(--font-mono);
+        font-size: 0.98rem;
+        font-weight: 400;
+        letter-spacing: 0.12em;
+        color: rgba(212, 207, 198, 0.6);
+        text-transform: uppercase;
+        max-width: 280px;
+        line-height: 1.8;
+      }
+
+      /* ─── Right: Login panel ─── */
+      .login-panel {
+        background: var(--surface);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 60px 40px;
+        position: relative;
+      }
+
+      /* Caption box header strip */
+      .login-caption {
+        background: var(--accent);
+        color: var(--comic-black);
+        font-family: var(--font-mono);
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding: 6px 16px;
+        margin-bottom: 0;
+        display: block;
+      }
+
+      .login-form-wrap {
+        border: 2px solid var(--border);
+        border-top: none;
+        padding: 32px;
+        background: var(--bg);
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 20px;
+      }
+
+      .form-group--compact {
+        margin-bottom: 0;
+      }
+
+      .form-label {
+        font-size: 0.57rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .form-input {
+        background: var(--surface-2);
+        border: 2px solid var(--border);
+        color: var(--text);
+        font-family: var(--font-mono);
+        font-size: 0.88rem;
+        padding: 11px 14px;
+        width: 100%;
+        transition:
+          border-color 0.12s,
+          box-shadow 0.12s;
+        outline: none;
+        border-radius: 0;
+      }
+
+      .form-input:focus {
+        border-color: var(--accent);
+        box-shadow: 2px 2px 0 var(--comic-black);
+      }
+
+      .form-input::placeholder {
+        color: var(--text-status);
+      }
+
+      /* Divider between fields and button */
+      .form-divider {
+        border: none;
+        border-top: 3px solid var(--comic-black);
+        margin: 24px 0 20px;
+      }
+
+      /* Error caption box */
+      #error-msg {
+        display: none;
+        background: rgba(192, 57, 43, 0.1);
+        border: 2px solid var(--danger);
+        border-left: 4px solid var(--danger);
+        color: #e74c3c;
+        padding: 10px 14px;
+        font-size: 0.75rem;
+        letter-spacing: 0.04em;
+        margin-bottom: 18px;
+      }
+
+      /* CTA button — impact style */
+      .btn-enter {
+        width: 100%;
+        padding: 14px 16px;
+        background: var(--accent);
+        color: var(--comic-black);
+        border: 2px solid var(--comic-black);
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        font-style: italic;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        transition:
+          box-shadow 0.1s,
+          transform 0.1s,
+          background 0.1s;
+        box-shadow: 4px 4px 0 var(--comic-black);
+        text-shadow: none;
+      }
+
+      .btn-enter:hover {
+        background: var(--impact-yellow);
+        box-shadow: 6px 6px 0 var(--comic-black);
+        transform: translate(-2px, -2px);
+      }
+
+      .btn-enter:active {
+        box-shadow: 1px 1px 0 var(--comic-black);
+        transform: translate(3px, 3px);
+      }
+
+      .btn-enter:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: 2px 2px 0 var(--comic-black);
+      }
+
+      /* Footer caption */
+      .login-footer {
+        margin-top: 20px;
+        font-size: 0.52rem;
+        letter-spacing: 0.18em;
+        color: var(--text-status);
+        text-transform: uppercase;
+        text-align: center;
+        padding: 8px;
+        border: 1px solid var(--text-status);
+      }
+
+      /* ─── Responsive ─── */
+      @media (max-width: 768px) {
+        .login-panels {
+          grid-template-columns: 1fr;
+        }
+        .hero-panel {
+          min-height: 280px;
+          border-right: none;
+          border-bottom: var(--panel-gap) solid var(--comic-black);
+          padding: 40px 32px;
+        }
+        .hero-panel::after {
+          display: none;
+        }
+        .hero-title {
+          font-size: 2.8rem;
+        }
+        .login-panel {
+          padding: 40px 24px;
+        }
+      }
+    

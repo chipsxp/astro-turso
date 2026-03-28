@@ -1,0 +1,234 @@
+---
+import SplashScreen from "../components/SplashScreen";
+import BlogLayout from "../layouts/BlogLayout.astro";
+import { ensureCategorySchema } from "../lib/categories";
+import { db } from "../lib/db";
+import { getPanelImageMap } from "../lib/panels";
+
+const PRIMARY_CATEGORY_SLUGS = [
+  "for-artists",
+  "for-illustrators",
+  "comic-creators",
+];
+
+await ensureCategorySchema();
+const panelImages = await getPanelImageMap();
+
+const categoryCountResult = await db.execute(
+  `SELECT c.slug, COUNT(a.id) AS article_count
+   FROM categories c
+   LEFT JOIN articles a ON a.category_id = c.id AND a.status = 'published'
+   WHERE c.slug IN (?, ?, ?)
+   GROUP BY c.slug`,
+  PRIMARY_CATEGORY_SLUGS,
+);
+
+const publishedCountByCategory = Object.fromEntries(
+  PRIMARY_CATEGORY_SLUGS.map((slug) => [slug, 0]),
+) as Record<string, number>;
+
+for (const row of categoryCountResult.rows) {
+  const slug = String(row.slug);
+  if (slug in publishedCountByCategory) {
+    publishedCountByCategory[slug] = Number(row.article_count ?? 0);
+  }
+}
+
+function formatArticleCount(count: number): string {
+  return `${count} ${count === 1 ? "article" : "articles"}`;
+}
+---
+
+<BlogLayout
+  title="Happy Feeling Scriptorium — Art. Comics. Illustration."
+  description="ChipsXP Proudly Presents: A creative blog for artists, illustrators, comic creators, and superhero portrait artists."
+>
+  <!-- Splash screen — client-only React island -->
+  <SplashScreen
+    client:only="react"
+    panelImageUrl={panelImages["panel-04"] ?? undefined}
+  />
+
+  <!-- ─── Hero diptych ─── -->
+  <section class="hero">
+    <div class="hero__left">
+      <span class="hero__eyebrow">ChipsXP Proudly Presents</span>
+      <h2 class="hero__title">
+        <span class="hero__title-the">The</span>
+        Happy Feeling Scriptorium
+      </h2>
+      <p class="hero__sub">
+        A creative home for artists, illustrators,<br />
+        comic creators, and superhero portrait artists.
+      </p>
+      <a href="/blog" class="hero__cta">Read the Archive →</a>
+    </div>
+
+    <div class="hero__right" aria-hidden="true">
+      <div class="panel-deco">
+        {/* Panel 01 — top-left */}
+        {
+          panelImages["panel-01"] ? (
+            <div class="panel-deco__frame panel-deco__frame--has-image">
+              <img
+                class="panel-deco__img"
+                src={panelImages["panel-01"]!}
+                alt=""
+                aria-hidden="true"
+                loading="eager"
+              />
+              <div
+                class="panel-deco__inner"
+                style="position:relative;z-index:1"
+              >
+                <span class="panel-deco__label">Panel&nbsp;01</span>
+                <span class="panel-deco__impact">POW!</span>
+              </div>
+            </div>
+          ) : (
+            <div class="panel-deco__frame">
+              <div class="panel-deco__inner">
+                <span class="panel-deco__label">Panel&nbsp;01</span>
+                <span class="panel-deco__impact">POW!</span>
+              </div>
+            </div>
+          )
+        }
+
+        {/* Panel 02 — top-right (kirby blue + dots when no image) */}
+        {
+          panelImages["panel-02"] ? (
+            <div class="panel-deco__frame panel-deco__frame--has-image">
+              <img
+                class="panel-deco__img"
+                src={panelImages["panel-02"]!}
+                alt=""
+                aria-hidden="true"
+                loading="eager"
+              />
+              <div
+                class="panel-deco__inner panel-deco__inner--b"
+                style="position:relative;z-index:1"
+              >
+                <span class="panel-deco__label">Panel&nbsp;02</span>
+              </div>
+            </div>
+          ) : (
+            <div class="panel-deco__frame panel-deco__frame--b">
+              <div class="panel-deco__inner panel-deco__inner--b">
+                <span class="panel-deco__label">Panel&nbsp;02</span>
+              </div>
+            </div>
+          )
+        }
+
+        {
+          /* Panel 03 — bottom wide (spans 2 cols; --c preserved for grid-column) */
+        }
+        {
+          panelImages["panel-03"] ? (
+            <div class="panel-deco__frame panel-deco__frame--c panel-deco__frame--has-image">
+              <img
+                class="panel-deco__img"
+                src={panelImages["panel-03"]!}
+                alt=""
+                aria-hidden="true"
+                loading="eager"
+              />
+              <div
+                class="panel-deco__inner panel-deco__inner--c"
+                style="position:relative;z-index:1"
+              >
+                <span class="panel-deco__label">Panel&nbsp;03</span>
+                <span class="panel-deco__zap">ZAP!</span>
+              </div>
+            </div>
+          ) : (
+            <div class="panel-deco__frame panel-deco__frame--c">
+              <div class="panel-deco__inner panel-deco__inner--c">
+                <span class="panel-deco__label">Panel&nbsp;03</span>
+                <span class="panel-deco__zap">ZAP!</span>
+              </div>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Panel grid — three pillars ─── -->
+  <section class="pillars">
+    <div class="pillars__grid">
+      <article class="pillar">
+        <div class="pillar__accent-strip"></div>
+        <div class="pillar__body">
+          <span class="pillar__eyebrow">Chapter I</span>
+          <div class="pillar__icon" aria-hidden="true">✏️</div>
+          <h3 class="pillar__heading">For Artists</h3>
+          <p class="pillar__count">
+            {formatArticleCount(publishedCountByCategory["for-artists"])}
+          </p>
+          <p class="pillar__copy">
+            Technique deep-dives, studio process, material reviews, and the raw
+            honesty of making art every day.
+          </p>
+          <a href="/blog?category=for-artists" class="pillar__link">Explore →</a
+          >
+        </div>
+      </article>
+
+      <article class="pillar pillar--center">
+        <div class="pillar__accent-strip"></div>
+        <div class="pillar__body">
+          <span class="pillar__eyebrow">Chapter II</span>
+          <div class="pillar__icon" aria-hidden="true">🎨</div>
+          <h3 class="pillar__heading">For Illustrators</h3>
+          <p class="pillar__count">
+            {formatArticleCount(publishedCountByCategory["for-illustrators"])}
+          </p>
+          <p class="pillar__copy">
+            Sequential storytelling, panel composition, character design sheets,
+            and the grammar of the comic page.
+          </p>
+          <a href="/blog?category=for-illustrators" class="pillar__link"
+            >Explore →</a
+          >
+        </div>
+      </article>
+
+      <article class="pillar">
+        <div class="pillar__accent-strip"></div>
+        <div class="pillar__body">
+          <span class="pillar__eyebrow">Chapter III</span>
+          <div class="pillar__icon" aria-hidden="true">🦸</div>
+          <h3 class="pillar__heading">For Comic Creators</h3>
+          <p class="pillar__count">
+            {formatArticleCount(publishedCountByCategory["comic-creators"])}
+          </p>
+          <p class="pillar__copy">
+            Action portrait breakdowns, dynamic pose studies, color theory for
+            capes and cowls, and origin story craft.
+          </p>
+          <a href="/blog?category=comic-creators" class="pillar__link"
+            >Explore →</a
+          >
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ─── Manifesto strip ─── -->
+  <section class="manifesto">
+    <div class="manifesto__inner">
+      <blockquote class="manifesto__quote">
+        &ldquo;Every panel is a world.<br />Every brushstroke, a
+        statement.&rdquo;
+      </blockquote>
+      <a href="/blog" class="manifesto__cta">Start Reading →</a>
+    </div>
+  </section>
+</BlogLayout>
+
+<style>
+  @import "../styles/pages/home.css";
+</style>

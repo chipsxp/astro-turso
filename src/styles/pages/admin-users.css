@@ -1,0 +1,156 @@
+/* ─── Admin Users Management Page ─── */
+
+/* Status badge chips */
+.status-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border: 1.5px solid currentColor;
+}
+
+.status-badge--pending {
+    color: var(--impact-yellow);
+    border-color: var(--impact-yellow);
+    background: rgba(248, 224, 64, 0.08);
+}
+
+.status-badge--active {
+    color: var(--success);
+    border-color: var(--success);
+    background: rgba(52, 192, 112, 0.08);
+}
+
+.status-badge--suspended {
+    color: var(--danger);
+    border-color: var(--danger);
+    background: rgba(224, 64, 48, 0.08);
+}
+
+/* Role badge */
+.role-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border: 1.5px solid var(--border);
+    color: var(--text-muted);
+}
+
+.role-badge--admin {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+}
+
+/* Action buttons in table rows */
+.action-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.btn-action {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-action:hover:not(:disabled) {
+    background: var(--surface-2);
+    border-color: var(--accent-dim);
+    color: var(--accent);
+}
+
+.btn-action:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-action--approve {
+    border-color: var(--success);
+    color: var(--success);
+}
+
+.btn-action--approve:hover:not(:disabled) {
+    background: rgba(52, 192, 112, 0.12);
+    border-color: var(--success);
+    color: var(--success);
+}
+
+.btn-action--danger {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.btn-action--danger:hover:not(:disabled) {
+    background: rgba(224, 64, 48, 0.12);
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.btn-action--promote {
+    border-color: var(--accent-dim);
+    color: var(--accent);
+}
+
+.btn-action--promote:hover:not(:disabled) {
+    background: rgba(242, 200, 90, 0.1);
+}
+
+/* Pending indicator on the page header */
+.pending-count {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 1px 8px;
+    background: var(--impact-yellow);
+    color: var(--comic-black);
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+/* Toast notification */
+.user-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 200;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 10px 18px;
+    border: 2px solid var(--success);
+    background: var(--surface);
+    color: var(--success);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+}
+
+.user-toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.user-toast--error {
+    border-color: var(--danger);
+    color: var(--danger);
+}

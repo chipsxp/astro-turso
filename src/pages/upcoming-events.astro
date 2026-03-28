@@ -1,0 +1,30 @@
+---
+import BlogLayout from "../layouts/BlogLayout.astro";
+
+const siteUrl = import.meta.env.SITE_URL ?? "";
+const canonicalUrl = `${siteUrl}/upcoming-events`;
+---
+
+<BlogLayout
+  title="Upcoming Events — The Happy Feeling Scriptorium"
+  description="Upcoming events from The Happy Feeling Scriptorium."
+  canonicalUrl={canonicalUrl}
+>
+  <main class="page-wrap static-page">
+    <h1>Upcoming Events</h1>
+  </main>
+</BlogLayout>
+
+<style>
+  .static-page {
+    max-width: 780px;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .static-page h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--text);
+  }
+</style>

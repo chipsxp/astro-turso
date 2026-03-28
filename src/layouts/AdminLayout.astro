@@ -1,0 +1,324 @@
+---
+export interface Props {
+  title?: string;
+  bodyClass?: string;
+}
+import "../styles/global.css";
+import ThemeToggle from "../components/ThemeToggle.astro";
+
+const user = Astro.locals.user;
+if (!user) return Astro.redirect("/admin");
+
+const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (function () {
+        var t = localStorage.getItem("scriptorium_theme");
+        document.documentElement.dataset.theme =
+          t ||
+          (window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark");
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} — The Happy Feeling Scriptorium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600;1,9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Fira+Code:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      @import "../styles/layouts/admin-layout.css";
+    </style>
+  </head>
+  <body class={bodyClass}>
+    <div class="shell">
+      <!-- Top bar -->
+      <header class="topbar">
+        <div class="topbar__wordmark">
+          <button
+            class="menu-toggle"
+            id="menu-toggle"
+            aria-label="Open navigation"
+          >
+            <span class="menu-toggle__bar"></span>
+            <span class="menu-toggle__bar"></span>
+            <span class="menu-toggle__bar"></span>
+          </button>
+          <span class="topbar__wordmark-text"
+            >The Happy Feeling Scriptorium</span
+          >
+          <span class="topbar__wordmark-badge">Admin</span>
+        </div>
+        <div class="topbar__actions">
+          <ThemeToggle />
+          <span class="topbar__user" id="topbar-user"
+            >{user.role.toUpperCase()}</span
+          >
+          <button id="logout-btn">Sign out</button>
+        </div>
+      </header>
+
+      <!-- Sidebar -->
+      <nav class="sidebar" aria-label="Admin navigation" id="sidebar">
+        <div class="nav-section">
+          <span class="nav-section__label">Content</span>
+          <a href="/admin/dashboard" class="nav-item" id="nav-dashboard">
+            <svg class="nav-item__icon" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M2 3h12v1.5H2V3zm0 3h12v1.5H2V6zm0 3h8v1.5H2V9z"></path>
+            </svg>
+            Articles
+          </a>
+          <a href="/admin/articles/new" class="nav-item" id="nav-new">
+            <svg class="nav-item__icon" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M8 2v12M2 8h12"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                fill="none"></path>
+            </svg>
+            New Article
+          </a>
+        </div>
+
+        <hr class="nav-divider" />
+
+        <div class="nav-section">
+          <span class="nav-section__label">Management</span>
+          <a href="/admin/users" class="nav-item" id="nav-users">
+            <svg class="nav-item__icon" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm10-9.5a.5.5 0 0 1 .5.5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1V5a.5.5 0 0 1 .5-.5z"
+              ></path>
+            </svg>
+            Users
+          </a>
+        </div>
+
+        <hr class="nav-divider" />
+
+        <div class="nav-section">
+          <span class="nav-section__label">Site</span>
+          <a href="/blog" target="_blank" class="nav-item">
+            <svg
+              class="nav-item__icon"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+            >
+              <path d="M7 3H3v10h10V9M10 2h4v4M14 2l-6 6"></path>
+            </svg>
+            View Blog
+          </a>
+        </div>
+      </nav>
+
+      <!-- Mobile sidebar overlay -->
+      <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+      <!-- Main content slot -->
+      <main class="main">
+        <slot />
+      </main>
+    </div>
+
+    <!-- Global admin JS -->
+    <script is:inline>
+      document
+        .getElementById("logout-btn")
+        .addEventListener("click", async function () {
+          await fetch("/api/auth/logout", { method: "POST" });
+          window.location.href = "/admin";
+        });
+
+      // Mobile sidebar toggle
+      (function () {
+        var toggle = document.getElementById("menu-toggle");
+        var sidebar = document.getElementById("sidebar");
+        var overlay = document.getElementById("sidebar-overlay");
+        if (!toggle || !sidebar || !overlay) return;
+
+        function openSidebar() {
+          sidebar.classList.add("mobile-open");
+          overlay.classList.add("mobile-open");
+          toggle.setAttribute("aria-expanded", "true");
+        }
+
+        function closeSidebar() {
+          sidebar.classList.remove("mobile-open");
+          overlay.classList.remove("mobile-open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+
+        toggle.addEventListener("click", function () {
+          if (sidebar.classList.contains("mobile-open")) {
+            closeSidebar();
+          } else {
+            openSidebar();
+          }
+        });
+
+        overlay.addEventListener("click", closeSidebar);
+
+        // Close sidebar on nav link click (mobile UX)
+        sidebar.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", closeSidebar);
+        });
+      })();
+
+      (function () {
+        var path = window.location.pathname;
+        var map = {
+          "/admin/dashboard": "nav-dashboard",
+          "/admin/articles/new": "nav-new",
+        };
+        if (
+          path.startsWith("/admin/articles/") &&
+          path !== "/admin/articles/new"
+        ) {
+          path = "/admin/dashboard";
+        }
+        var id = map[path];
+        if (id) {
+          var el = document.getElementById(id);
+          if (el) el.classList.add("active");
+        }
+      })();
+    </script>
+
+    <!-- Editor input dialog — shared across all article editor pages -->
+    <div id="editor-dialog-backdrop" class="editor-dialog-backdrop" hidden>
+    </div>
+    <div
+      id="editor-dialog"
+      class="editor-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="editor-dialog-title"
+      hidden
+    >
+      <div class="editor-dialog__accent-strip"></div>
+      <div class="editor-dialog__head">
+        <span class="editor-dialog__eyebrow">Article Editor</span>
+        <strong id="editor-dialog-title" class="editor-dialog__title"></strong>
+      </div>
+      <div id="editor-dialog-fields" class="editor-dialog__fields"></div>
+      <div class="editor-dialog__actions">
+        <button type="button" id="editor-dialog-ok" class="editor-dialog__ok"
+          >Insert</button
+        >
+        <button
+          type="button"
+          id="editor-dialog-cancel"
+          class="editor-dialog__cancel">Cancel</button
+        >
+      </div>
+    </div>
+    <script is:inline>
+      window.showEditorDialog = function (config) {
+        return new Promise(function (resolve) {
+          var backdrop = document.getElementById("editor-dialog-backdrop");
+          var dialog = document.getElementById("editor-dialog");
+          var titleEl = document.getElementById("editor-dialog-title");
+          var fieldsEl = document.getElementById("editor-dialog-fields");
+          var okBtn = document.getElementById("editor-dialog-ok");
+          var cancelBtn = document.getElementById("editor-dialog-cancel");
+
+          titleEl.textContent = config.title || "Insert";
+          fieldsEl.innerHTML = "";
+
+          (config.fields || []).forEach(function (field) {
+            var group = document.createElement("div");
+            group.className = "form-group";
+
+            var label = document.createElement("label");
+            label.className = "form-label";
+            label.setAttribute("for", "edialog-" + field.id);
+            label.textContent = field.label;
+            group.appendChild(label);
+
+            if (field.type === "select") {
+              var sel = document.createElement("select");
+              sel.className = "form-select";
+              sel.id = "edialog-" + field.id;
+              sel.name = field.id;
+              (field.options || []).forEach(function (opt) {
+                var option = document.createElement("option");
+                option.value = opt.value;
+                option.textContent = opt.label;
+                if (String(opt.value) === String(field.default)) {
+                  option.selected = true;
+                }
+                sel.appendChild(option);
+              });
+              group.appendChild(sel);
+            } else {
+              var inp = document.createElement("input");
+              inp.className = "form-input";
+              inp.id = "edialog-" + field.id;
+              inp.name = field.id;
+              inp.type = field.type || "text";
+              inp.value = field.default || "";
+              if (field.placeholder) inp.placeholder = field.placeholder;
+              group.appendChild(inp);
+            }
+
+            fieldsEl.appendChild(group);
+          });
+
+          backdrop.hidden = false;
+          dialog.hidden = false;
+          var firstInput = fieldsEl.querySelector("input, select");
+          if (firstInput) {
+            firstInput.focus();
+            if (firstInput.tagName === "INPUT") firstInput.select();
+          }
+
+          function collect() {
+            var result = {};
+            (config.fields || []).forEach(function (field) {
+              var el = document.getElementById("edialog-" + field.id);
+              result[field.id] = el ? el.value : "";
+            });
+            return result;
+          }
+
+          function close(value) {
+            backdrop.hidden = true;
+            dialog.hidden = true;
+            okBtn.removeEventListener("click", onOk);
+            cancelBtn.removeEventListener("click", onCancel);
+            document.removeEventListener("keydown", onKey);
+            backdrop.removeEventListener("click", onCancel);
+            resolve(value);
+          }
+
+          function onOk() {
+            close(collect());
+          }
+          function onCancel() {
+            close(null);
+          }
+          function onKey(e) {
+            if (e.key === "Escape") onCancel();
+          }
+
+          okBtn.addEventListener("click", onOk);
+          cancelBtn.addEventListener("click", onCancel);
+          document.addEventListener("keydown", onKey);
+          backdrop.addEventListener("click", onCancel);
+        });
+      };
+    </script>
+  </body>
+</html>
