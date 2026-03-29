@@ -821,7 +821,7 @@ const { slug } = Astro.params;
     }
 
     try {
-      const dataUri = await new Promise<string>((resolve, reject) => {
+      const dataUri = await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
         reader.onerror = reject;
@@ -1355,7 +1355,7 @@ const { slug } = Astro.params;
     uploadStatus.textContent = "Uploading…";
 
     try {
-      const dataUri = await new Promise<string>((resolve, reject) => {
+      const dataUri = await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result);
         reader.onerror = reject;
