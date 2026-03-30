@@ -28,55 +28,39 @@ export const onRequest = defineMiddleware(async (context, next) => {
       WRITE_METHODS.has(method) &&
       !PUBLIC_PATHS.includes(pathname));
 
-  if (!needsAuth) {
-    return addSecurityHeaders(await next());
-  }
-
-  // --- Extract token from HttpOnly cookie ---
+  // --- Always attempt to identify the logged-in user from the cookie ---
+  // This runs on every route so that public pages (e.g. /blog/[slug]) can
+  // still access Astro.locals.user and render auth-aware UI (e.g. SocialShare).
   const cookieHeader = context.request.headers.get("Cookie") ?? "";
   const tokenMatch = cookieHeader.match(/(?:^|;\s*)auth_token=([^;]+)/);
   const token = tokenMatch?.[1] ?? null;
 
-  const isApiRoute = pathname.startsWith("/api/");
-
-  if (!token) {
-    if (isApiRoute) return unauthorized("Missing or invalid session");
-    return context.redirect("/admin", 302);
+  if (token) {
+    try {
+      const { payload } = await jwtVerify(token, JWT_SECRET_KEY);
+      const userId = Number(String(payload.sub ?? ""));
+      if (Number.isInteger(userId) && userId >= 1) {
+        const userResult = await db.execute(
+          "SELECT id, role, status FROM users WHERE id = ?",
+          [userId],
+        );
+        const userRow = userResult.rows[0];
+        if (userRow && String(userRow.status) === "active") {
+          context.locals.user = {
+            id: String(userRow.id),
+            role: String(userRow.role),
+          };
+        }
+      }
+    } catch {
+      // Invalid or expired token — locals.user stays undefined
+    }
   }
 
-  // --- Verify token signature / expiry ---
-  try {
-    const { payload } = await jwtVerify(token, JWT_SECRET_KEY);
-
-    const subject = String(payload.sub ?? "");
-    const userId = Number(subject);
-    if (!Number.isInteger(userId) || userId < 1) {
-      if (isApiRoute) return unauthorized("Invalid session user");
-      return context.redirect("/admin", 302);
-    }
-
-    const userResult = await db.execute(
-      "SELECT id, role, status FROM users WHERE id = ?",
-      [userId],
-    );
-    const userRow = userResult.rows[0];
-
-    if (!userRow) {
-      if (isApiRoute) return unauthorized("Session user not found");
-      return context.redirect("/admin", 302);
-    }
-
-    if (String(userRow.status) !== "active") {
-      if (isApiRoute) return unauthorized("Account is not active");
-      return context.redirect("/admin", 302);
-    }
-
-    context.locals.user = {
-      id: String(userRow.id),
-      role: String(userRow.role),
-    };
-  } catch {
-    if (isApiRoute) return unauthorized("Invalid or expired token");
+  // --- Enforce auth on protected routes ---
+  if (needsAuth && !context.locals.user) {
+    const isApiRoute = pathname.startsWith("/api/");
+    if (isApiRoute) return unauthorized("Missing or invalid session");
     return context.redirect("/admin", 302);
   }
 

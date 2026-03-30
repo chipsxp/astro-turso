@@ -208,10 +208,11 @@ const platforms: Platform[] = [
 </style>
 
 <script>
+  (function () {
   // ── Auth gate ──────────────────────────────────────────────────────────────
 
   const panel = document.getElementById("share-panel") as HTMLDivElement | null;
-  if (!panel) throw new Error("share-panel not found");
+  if (!panel) return; // panel is intentionally absent for non-authorized visitors
 
   const articleId = Number(panel.dataset.articleId ?? "0");
 
@@ -311,4 +312,5 @@ const platforms: Platform[] = [
       { signal: controller.signal },
     );
   });
+  })();
 </script>
