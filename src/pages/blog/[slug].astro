@@ -5,7 +5,7 @@ import { db } from "../../lib/db";
 import { getMediaByArticle } from "../../lib/media";
 import { buildCloudinaryImageUrl } from "../../lib/cloudinary";
 
-const siteUrl = import.meta.env.SITE_URL ?? "";
+const siteUrl = process.env.SITE_URL || Astro.url.origin;
 const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
 
 const { slug } = Astro.params;

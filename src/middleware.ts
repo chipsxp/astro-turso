@@ -60,14 +60,14 @@ export const onRequest = defineMiddleware(async (context, next) => {
   // --- Enforce auth on protected routes ---
   if (needsAuth && !context.locals.user) {
     const isApiRoute = pathname.startsWith("/api/");
-    if (isApiRoute) return unauthorized("Missing or invalid session");
+    if (isApiRoute) return unauthorized("Missing or invalid session", pathname);
     return context.redirect("/admin", 302);
   }
 
-  return addSecurityHeaders(await next());
+  return addSecurityHeaders(await next(), pathname);
 });
 
-function addSecurityHeaders(response: Response): Response {
+function addSecurityHeaders(response: Response, pathname: string): Response {
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("X-Frame-Options", "DENY");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
@@ -75,14 +75,36 @@ function addSecurityHeaders(response: Response): Response {
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=()",
   );
+
+  // HSTS — force HTTPS for 2 years on this domain and all subdomains.
+  // Do NOT add `; preload` until the domain is submitted to hstspreload.org.
+  response.headers.set(
+    "Strict-Transport-Security",
+    "max-age=63072000; includeSubDomains",
+  );
+
+  // CSP Phase 1 — Report-Only (audit, no blocking).
+  // Violations appear in browser DevTools → Console as "[Report Only] Refused to..."
+  // Phase 2: compute sha256 hash of the anti-FOUC inline script in BlogLayout.astro
+  // and switch to enforced Content-Security-Policy with per-pathname split.
+  // Admin pages will keep 'unsafe-inline' due to define:vars in [slug].astro.
+  const isAdmin = pathname.startsWith("/admin");
+  // sha256 hash of the anti-FOUC is:inline script in BlogLayout.astro
+  const fouc = "'sha256-HPPfxiskdCPpqDyDMT/Cc9sakRhGIC0x+o5OZyk+BdM='";
+  const csp = isAdmin
+    ? `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https://res.cloudinary.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';`
+    : `default-src 'self'; script-src 'self' ${fouc}; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: blob: https://res.cloudinary.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';`;
+  response.headers.set("Content-Security-Policy-Report-Only", csp);
+
   return response;
 }
 
-function unauthorized(message: string): Response {
+function unauthorized(message: string, pathname: string): Response {
   return addSecurityHeaders(
     new Response(JSON.stringify({ error: message }), {
       status: 401,
       headers: { "Content-Type": "application/json" },
     }),
+    pathname,
   );
 }

@@ -17,6 +17,7 @@ docs/
 devtools/
 AGENTS.md
 CLAUDE.md
+dist.zip
 
 # Environment variables
 .env

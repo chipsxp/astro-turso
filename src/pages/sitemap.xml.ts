@@ -2,19 +2,19 @@ import type { APIRoute } from "astro";
 import { db } from "../lib/db";
 
 export const GET: APIRoute = async () => {
-  const siteUrl = import.meta.env.SITE_URL ?? "";
+  const siteUrl = process.env.SITE_URL ?? "";
 
   // Fetch all published article slugs and their last-modified dates
   const result = await db.execute(
     `SELECT slug, updated_at, created_at
      FROM articles
      WHERE status = 'published'
-     ORDER BY updated_at DESC`
+     ORDER BY updated_at DESC`,
   );
 
   const articleUrls = result.rows
     .map((row: Record<string, unknown>) => {
-      const slug    = String(row.slug);
+      const slug = String(row.slug);
       const lastmod = String(row.updated_at ?? row.created_at).split("T")[0];
       return `
   <url>
