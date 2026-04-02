@@ -94,18 +94,19 @@
 .panel-deco {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
+  grid-template-rows: minmax(0, 1fr) minmax(0, 0.62fr);
   gap: 3px;
   background: var(--comic-black);
   border: 3px solid var(--comic-black);
   box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
   width: 100%;
   max-width: 640px;
+  aspect-ratio: 4 / 3;
 }
 
 .panel-deco__frame {
   background: var(--surface-2);
-  aspect-ratio: 1;
+  min-height: 0;
 }
 
 .panel-deco__frame--b {
@@ -122,8 +123,6 @@
 
 .panel-deco__frame--c {
   grid-column: span 2;
-  aspect-ratio: auto;
-  min-height: 90px;
   background: var(--surface);
 }
 
@@ -368,6 +367,10 @@
 
   .hero__right {
     padding: 32px 24px;
+  }
+
+  .panel-deco {
+    aspect-ratio: 5 / 4;
   }
 
   .pillars__grid {

@@ -189,7 +189,11 @@ import PanelGallery from "../../components/admin/PanelGallery";
               <div class="dashboard-article-slug">${escapeHtml(a.slug)}</div>
             </td>
             <td>
-              <span class="badge badge--${a.status}">${a.status}</span>
+              <span
+                class="badge badge--${a.status}"
+                title="${a.status === "published" ? "Published" : "Draft"}"
+                aria-label="${a.status === "published" ? "Published" : "Draft"}"
+              >${a.status === "published" ? "P" : "D"}</span>
             </td>
             <td class="dashboard-author-cell">${escapeHtml(a.author_email ?? "—")}</td>
             <td class="dashboard-date-cell">${formatDate(a.created_at)}</td>

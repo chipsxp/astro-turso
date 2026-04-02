@@ -103,6 +103,11 @@
   font-size: 0.8rem;
   color: var(--text-muted);
   font-family: var(--font-mono);
+  max-width: 110px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.25;
 }
 
 .dashboard-date-cell {
@@ -119,13 +124,14 @@
 
 .dashboard-actions-wrap {
   display: flex;
-  justify-content: flex-end;
-  gap: 6px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
 }
 
 .dashboard-action-btn {
-  font-size: 0.6rem;
-  padding: 4px 9px;
+  font-size: 0.54rem;
+  padding: 3px 7px;
 }
 
 .toast-stack {
@@ -170,6 +176,7 @@
 
 /* Hide Author + Tags columns on small screens */
 @media (max-width: 640px) {
+
   #state-table th:nth-child(3),
   #state-table td:nth-child(3),
   #state-table th:nth-child(5),
@@ -180,14 +187,9 @@
 
 /* Also hide Created on very small screens */
 @media (max-width: 440px) {
+
   #state-table th:nth-child(4),
   #state-table td:nth-child(4) {
     display: none;
-  }
-
-  /* Let action buttons wrap */
-  #state-table td:last-child > div {
-    flex-wrap: wrap;
-    gap: 4px !important;
   }
 }
