@@ -1,5 +1,7 @@
 # The Happy Feeling Scriptorium
 
+![Version](https://img.shields.io/badge/version-1.0.0-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
+
 Astro SSR blog and admin panel for publishing articles, managing media, and running a small author workflow on top of Turso and Cloudinary.
 
 This repository is meant to be practical for developers who want to learn from it, run it locally, or adapt it for their own content site.
@@ -264,3 +266,65 @@ If you are new to Astro or full-stack content apps, start in this order:
 - This project uses Astro server output, not a static-only export
 - The app expects real service credentials for Turso, Cloudinary, and Resend
 - HTTPS is mandatory in production for login to work correctly
+
+---
+
+## Changelog
+
+### [1.0.0] — 2026-04-06 — Base Platform Release
+
+First stable release. Core blogging platform, admin workflow, and security baseline are complete.
+
+**Core Platform**
+
+- Astro 5 SSR with `@astrojs/node` standalone adapter
+- Turso (libSQL serverless) database with named-column row normalization
+- JWT authentication via HttpOnly `SameSite=Strict` cookie — no `localStorage` tokens
+- Role-based access control: `admin` and `author` roles
+- Quill 2 WYSIWYG editor with toolbar (bold/italic/underline, color, blockquote, code-block, h2/h3, lists, link/image), in-editor image resize via `quill-resize-module`
+
+**Media Architecture**
+
+- `images` table — inline editor images stored as base64 payloads, served via `/api/inline-images/{id}` with immutable caching. On article save, Quill base64 data URIs are auto-extracted and rewritten to stable URLs — authors see no change in the editor
+- `media` table — Cloudinary-backed cloud uploads only (images + videos). These two storage systems are strictly separate
+- Server-side article body guardrails: 1.75 MB body cap, max 4 inline images, 300 KB per inline image, 1.2 MB total inline image bytes per submission
+
+**Security Hardening**
+
+- HSTS (`max-age=63072000; includeSubDomains`) in middleware and `.htaccess`
+- Content Security Policy (Report-Only Phase 1): strict hash-based CSP for public routes, `'unsafe-inline'` for admin routes
+- In-memory rate limiting on login (10 fails/IP/15 min), register (5/IP/60 min), contact (5/IP/60 min)
+- `security.checkOrigin: false` with `SameSite=Strict` CSRF coverage (required for TLS-terminating proxies on Railway and LiteSpeed)
+- Middleware two-phase pattern: identity resolution on every route, enforcement only on protected routes
+
+**Public Features**
+
+- Blog listing and article pages with responsive Cloudinary image delivery
+- Open Graph + Twitter Card meta (full `article:*` object tags, image dimensions, per-tag entries)
+- 10-platform social share panel for authors (Facebook, X, Instagram, WhatsApp, Pinterest, Reddit, Threads, LinkedIn, Medium, Bluesky) with per-platform analytics
+- Dark/light theme toggle with Golden Age Comics light palette; FOUC-free anti-flash script
+- Contact form with Resend email delivery and honeypot protection
+- Sitemap at `/sitemap.xml`
+
+**Admin Dashboard**
+
+- Article create / edit / publish / delete with Quill editor
+- Media upload panel (Cloudinary) with upload session staging
+- Panel gallery with slot assignment (hero, splash)
+- User management (admin: promote, suspend; author: own account view)
+- Share analytics per article
+
+**Infrastructure**
+
+- Railway deployment (primary) with Fastly CDN TLS termination
+- cPanel / LiteSpeed LAMP deployment (secondary, documented in `docs/DEPLOY-CPANEL.md`)
+
+---
+
+### Planned Releases
+
+| Version   | Feature               | Status  |
+| --------- | --------------------- | ------- |
+| **1.1.0** | Upcoming Events page  | Planned |
+| **1.2.0** | Art Sales / Shop page | Planned |
+| **1.3.0** | _(to be determined)_  | Planned |

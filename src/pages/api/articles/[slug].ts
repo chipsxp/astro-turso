@@ -5,6 +5,11 @@ import {
   resolveCategoryId,
 } from "../../../lib/categories";
 import { db } from "../../../lib/db";
+import {
+  cleanupUnusedInlineImages,
+  deleteInlineImagesByIds,
+  persistInlineImagesInBody,
+} from "../../../lib/inline-images";
 import { deleteMediaByArticle, getMediaByArticle } from "../../../lib/media";
 
 // --- Helpers ---
@@ -22,6 +27,55 @@ function toSlug(str: string): string {
     .trim()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+const MAX_ARTICLE_BODY_BYTES = 1835008; // 1.75 MB
+const MAX_INLINE_IMAGE_COUNT = 4;
+const MAX_INLINE_IMAGE_BYTES = 300 * 1024; // 300 KB per inline image
+const MAX_INLINE_IMAGE_TOTAL_BYTES = 1200 * 1024; // 1200 KB total
+
+function estimateBase64DecodedBytes(base64Data: string): number {
+  const normalized = base64Data.replace(/\s+/g, "");
+  const padding = normalized.endsWith("==")
+    ? 2
+    : normalized.endsWith("=")
+      ? 1
+      : 0;
+
+  return Math.max(0, Math.floor((normalized.length * 3) / 4) - padding);
+}
+
+function validateArticleBody(body: string): string | null {
+  const bodyBytes = new TextEncoder().encode(body).length;
+  if (bodyBytes > MAX_ARTICLE_BODY_BYTES) {
+    return "Article body is too large (max 1.75 MB).";
+  }
+
+  const inlineMatches = Array.from(
+    body.matchAll(/data:image\/[a-z0-9.+-]+;base64,([A-Za-z0-9+/=\r\n]+)/gi),
+  );
+
+  if (inlineMatches.length > MAX_INLINE_IMAGE_COUNT) {
+    return "Too many inline images in article body (max 4). Please use media upload for additional images.";
+  }
+
+  let inlineDecodedTotal = 0;
+  for (const match of inlineMatches) {
+    const base64Data = match[1] ?? "";
+    const decodedSize = estimateBase64DecodedBytes(base64Data);
+
+    if (decodedSize > MAX_INLINE_IMAGE_BYTES) {
+      return "An inline image in article body is too large (max 300 KB decoded per image). Please use media upload instead of large base64 embeds.";
+    }
+
+    inlineDecodedTotal += decodedSize;
+  }
+
+  if (inlineDecodedTotal > MAX_INLINE_IMAGE_TOTAL_BYTES) {
+    return "Inline image payload in article body is too large (max 1200 KB decoded total). Please use media upload instead of large base64 embeds.";
+  }
+
+  return null;
 }
 
 // --- GET /api/articles/[slug] — public, published articles only ---
@@ -94,6 +148,8 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
   const { slug } = params;
   if (!slug) return json({ error: "Missing slug" }, 400);
 
+  let createdInlineImageIdsForRollback: number[] = [];
+
   let data: Record<string, any>;
   try {
     await ensureCategorySchema();
@@ -115,6 +171,7 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
     if (!existing.rows[0]) return json({ error: "Article not found" }, 404);
 
     const articleId = Number(existing.rows[0].id);
+    let rewrittenBodyForCleanup: string | null = null;
 
     // Build SET clause from only the fields that were provided
     const fields: string[] = [];
@@ -129,8 +186,21 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
       values.push(String(data.slug).trim());
     }
     if (data.body !== undefined) {
+      const normalizedBody = String(data.body).trim();
+      const bodyValidationError = validateArticleBody(normalizedBody);
+      if (bodyValidationError) {
+        return json({ error: bodyValidationError }, 400);
+      }
+
+      const inlinePersistResult = await persistInlineImagesInBody(
+        articleId,
+        normalizedBody,
+      );
+      rewrittenBodyForCleanup = inlinePersistResult.body;
+      createdInlineImageIdsForRollback =
+        inlinePersistResult.createdInlineImageIds;
       fields.push("body = ?");
-      values.push(String(data.body).trim());
+      values.push(inlinePersistResult.body);
     }
     if (data.description !== undefined) {
       fields.push("description = ?");
@@ -167,6 +237,10 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
       );
     }
 
+    if (rewrittenBodyForCleanup !== null) {
+      await cleanupUnusedInlineImages(articleId, rewrittenBodyForCleanup);
+    }
+
     // Re-link tags when provided — wipe existing links and rebuild
     if (Array.isArray(data.tags)) {
       await db.execute("DELETE FROM article_tags WHERE article_id = ?", [
@@ -201,6 +275,14 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
 
     return json({ updated: true }, 200);
   } catch (err: any) {
+    if (createdInlineImageIdsForRollback.length > 0) {
+      try {
+        await deleteInlineImagesByIds(createdInlineImageIdsForRollback);
+      } catch {
+        // Best-effort rollback for inline image rows.
+      }
+    }
+
     if (err?.message?.includes("UNIQUE constraint failed")) {
       return json({ error: "An article with that slug already exists" }, 409);
     }

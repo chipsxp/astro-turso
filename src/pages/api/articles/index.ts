@@ -6,6 +6,10 @@ import {
 } from "../../../lib/categories";
 import { db } from "../../../lib/db";
 import {
+  deleteInlineImagesByIds,
+  persistInlineImagesInBody,
+} from "../../../lib/inline-images";
+import {
   attachUploadSessionMediaToArticle,
   ensureUploadSessionSchema,
   getActiveUploadSessionForUser,
@@ -27,6 +31,55 @@ function toSlug(str: string): string {
     .trim()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+const MAX_ARTICLE_BODY_BYTES = 1835008; // 1.75 MB
+const MAX_INLINE_IMAGE_COUNT = 4;
+const MAX_INLINE_IMAGE_BYTES = 300 * 1024; // 300 KB per inline image
+const MAX_INLINE_IMAGE_TOTAL_BYTES = 1200 * 1024; // 1200 KB total
+
+function estimateBase64DecodedBytes(base64Data: string): number {
+  const normalized = base64Data.replace(/\s+/g, "");
+  const padding = normalized.endsWith("==")
+    ? 2
+    : normalized.endsWith("=")
+      ? 1
+      : 0;
+
+  return Math.max(0, Math.floor((normalized.length * 3) / 4) - padding);
+}
+
+function validateArticleBody(body: string): string | null {
+  const bodyBytes = new TextEncoder().encode(body).length;
+  if (bodyBytes > MAX_ARTICLE_BODY_BYTES) {
+    return "Article body is too large (max 1.75 MB).";
+  }
+
+  const inlineMatches = Array.from(
+    body.matchAll(/data:image\/[a-z0-9.+-]+;base64,([A-Za-z0-9+/=\r\n]+)/gi),
+  );
+
+  if (inlineMatches.length > MAX_INLINE_IMAGE_COUNT) {
+    return "Too many inline images in article body (max 4). Please use media upload for additional images.";
+  }
+
+  let inlineDecodedTotal = 0;
+  for (const match of inlineMatches) {
+    const base64Data = match[1] ?? "";
+    const decodedSize = estimateBase64DecodedBytes(base64Data);
+
+    if (decodedSize > MAX_INLINE_IMAGE_BYTES) {
+      return "An inline image in article body is too large (max 300 KB decoded per image). Please use media upload instead of large base64 embeds.";
+    }
+
+    inlineDecodedTotal += decodedSize;
+  }
+
+  if (inlineDecodedTotal > MAX_INLINE_IMAGE_TOTAL_BYTES) {
+    return "Inline image payload in article body is too large (max 1200 KB decoded total). Please use media upload instead of large base64 embeds.";
+  }
+
+  return null;
 }
 
 // --- GET /api/articles — public list of published articles ---
@@ -125,6 +178,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return json({ error: "title and body are required" }, 400);
   }
 
+  const bodyValidationError = validateArticleBody(body);
+  if (bodyValidationError) {
+    return json({ error: bodyValidationError }, 400);
+  }
+
   if (!slug) {
     return json({ error: "Could not derive a slug from the given title" }, 400);
   }
@@ -144,6 +202,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
   }
 
+  let createdInlineImageIds: number[] = [];
+
   try {
     // 1. INSERT article
     const articleResult = await db.execute(
@@ -161,6 +221,21 @@ export const POST: APIRoute = async ({ request, locals }) => {
     );
 
     const articleId = Number(articleResult.lastInsertRowid);
+
+    // Convert inline data:image payloads into images table records and
+    // rewrite the body to stable inline-image URLs.
+    const inlinePersistResult = await persistInlineImagesInBody(
+      articleId,
+      body,
+    );
+    createdInlineImageIds = inlinePersistResult.createdInlineImageIds;
+    if (inlinePersistResult.body !== body) {
+      await db.execute(
+        "UPDATE articles SET body = ?, updated_at = datetime('now') WHERE id = ?",
+        [inlinePersistResult.body, articleId],
+      );
+      body = inlinePersistResult.body;
+    }
 
     // 2. Upsert tags + link to article (sequence diagram Flow 2, step 3)
     for (const tagName of tags) {
@@ -199,6 +274,14 @@ export const POST: APIRoute = async ({ request, locals }) => {
       201,
     );
   } catch (err: any) {
+    if (createdInlineImageIds.length > 0) {
+      try {
+        await deleteInlineImagesByIds(createdInlineImageIds);
+      } catch {
+        // Best-effort rollback for inline image rows.
+      }
+    }
+
     if (err?.message?.includes("UNIQUE constraint failed")) {
       return json({ error: "An article with that slug already exists" }, 409);
     }

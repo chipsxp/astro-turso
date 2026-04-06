@@ -34,9 +34,9 @@ _4 files loaded_
 └─ [`api-route-review.prompt.md`](.github/prompts/api-route-review.prompt.md)<br>
 User Data<br>
 Extension: GitHub.copilot-chat<br>
-├─ [`savePrompt.prompt.md`](../../.vscode/extensions/github.copilot-chat-0.41.2/assets/prompts/savePrompt.prompt.md)<br>
-├─ [`plan.prompt.md`](../../.vscode/extensions/github.copilot-chat-0.41.2/assets/prompts/plan.prompt.md)<br>
-└─ [`init.prompt.md`](../../.vscode/extensions/github.copilot-chat-0.41.2/assets/prompts/init.prompt.md)<br>
+├─ [`savePrompt.prompt.md`](../../.vscode/extensions/github.copilot-chat-0.42.3/assets/prompts/savePrompt.prompt.md)<br>
+├─ [`plan.prompt.md`](../../.vscode/extensions/github.copilot-chat-0.42.3/assets/prompts/plan.prompt.md)<br>
+└─ [`init.prompt.md`](../../.vscode/extensions/github.copilot-chat-0.42.3/assets/prompts/init.prompt.md)<br>
 
 **Skills**<br>
 _4 skills loaded_

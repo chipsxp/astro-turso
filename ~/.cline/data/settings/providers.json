@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "lastUsedProvider": "cline",
+  "providers": {
+    "cline": {
+      "settings": {
+        "provider": "cline",
+        "model": "anthropic/claude-sonnet-4.6"
+      },
+      "updatedAt": "2026-04-04T23:17:25.008Z",
+      "tokenSource": "manual"
+    }
+  }
+}

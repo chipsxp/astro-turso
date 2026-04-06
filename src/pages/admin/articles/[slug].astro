@@ -2,6 +2,7 @@
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 import AdminMediaGallery from "../../../components/admin/AdminMediaGallery";
 const { slug } = Astro.params;
+const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
 ---
 
 <AdminLayout title={`Edit — ${slug}`}>
@@ -52,175 +53,33 @@ const { slug } = Astro.params;
           </div>
 
           <div class="form-group form-group--compact">
-            <label class="form-label" for="body">Body *</label>
-            <div class="editor-toolbar" aria-label="Body editor toolbar">
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="bold">Bold</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="italic">Italic</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="link">Link</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="quote">Quote</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="heading">Heading</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="underline">Underline</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="unordered-list">Bulleted List</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="ordered-list">Numbered List</button
-              >
-              <label class="editor-toolbar__color-wrap" for="editor-text-color">
-                Text Color
-                <input
-                  id="editor-text-color"
-                  class="editor-toolbar__color"
-                  type="color"
-                  value="#6f89ff"
-                  aria-label="Choose text color"
-                />
-              </label>
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="color">Apply Color</button
-              >
-              <label class="editor-toolbar__color-wrap" for="editor-bg-color">
-                Background
-                <input
-                  id="editor-bg-color"
-                  class="editor-toolbar__color"
-                  type="color"
-                  value="#f8e040"
-                  aria-label="Choose background color"
-                />
-              </label>
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="background-color">Apply Background</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="undo-checkpoint">Undo Step</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="font-size-decrease">A-</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="font-size-increase">A+</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="clear-inline">Clear Inline</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="image-inline">Image Inline</button
-              >
-              <button
-                type="button"
-                class="editor-toolbar__btn"
-                data-editor-action="image-block">Image Block</button
-              >
-            </div>
-            <textarea
-              class="form-textarea form-textarea--body"
-              id="body"
-              name="body"
-              required></textarea>
-            <details
-              class="editor-shortcuts"
-              aria-label="Editor keyboard shortcuts"
-              open
+            <label class="form-label" id="body-editor-label">Body *</label>
+            <div id="editor-toolbar"></div>
+            <div
+              id="body-editor"
+              class="form-textarea form-textarea--body quill-editor"
+              aria-labelledby="body-editor-label"
+              style="background: white; border: 1px solid var(--surface-3); border-radius: 4px; min-height: 400px;"
             >
-              <summary class="editor-shortcuts__title">Keyboard hints</summary>
-              <table class="editor-shortcuts__table">
-                <tbody>
-                  <tr>
-                    <th scope="row">Enter</th>
-                    <td>Create next list item</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Enter on empty item</th>
-                    <td>Exit current list</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tab</th>
-                    <td>Indent selected list item</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Shift + Tab</th>
-                    <td>Outdent selected list item</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Paste list text</th>
-                    <td>Auto-convert into ul/ol markup</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Ctrl/Cmd + Z</th>
-                    <td>Undo previous checkpoint</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Ctrl/Cmd + Shift + Z</th>
-                    <td>Redo checkpoint</td>
-                  </tr>
-                </tbody>
-              </table>
-            </details>
+            </div>
+            <!-- Hidden field for form submission -->
+            <input type="hidden" id="body" name="body" />
             <input
-              id="editor-local-image-file"
-              class="is-hidden"
-              type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+              type="hidden"
+              id="article-slug"
+              name="article-slug"
+              value={slug}
             />
+            <span class="form-hint">Visual editor. Format text directly.</span>
           </div>
         </div>
       </div>
 
       <!-- Right: meta panels -->
       <div class="meta-stack">
-        <!-- Publish panel -->
+        <!-- Status panel -->
         <div class="card card--accent-top">
           <p class="panel-heading">Publish</p>
-
-          <div class="form-group">
-            <label class="form-label" for="category">Category</label>
-            <select class="form-select" id="category" name="category">
-              <option value="">Uncategorized</option>
-            </select>
-          </div>
 
           <div class="form-group">
             <label class="form-label" for="status">Status</label>
@@ -230,9 +89,18 @@ const { slug } = Astro.params;
             </select>
           </div>
 
-          <button class="btn-cta" type="submit" id="submit-btn">
-            Save Changes
-          </button>
+          <div class="form-group">
+            <label class="form-label" for="category">Category</label>
+            <select class="form-select" id="category" name="category">
+              <option value="">Uncategorized</option>
+            </select>
+          </div>
+
+          <div class="form-group form-group--buttons">
+            <button class="btn-cta" type="submit" id="submit-btn">
+              Save Changes
+            </button>
+          </div>
         </div>
 
         <!-- SEO panel -->
@@ -256,33 +124,32 @@ const { slug } = Astro.params;
               id="tags"
               name="tags"
               type="text"
-              placeholder="astro, turso, web dev"
+              placeholder="keyword, topic, label"
             />
             <span class="form-hint">Comma-separated</span>
           </div>
         </div>
 
         <!-- Media panel -->
-        <div class="card">
+        <div class="card" id="media-gallery-wrapper">
           <p class="panel-heading">Media</p>
-
           <AdminMediaGallery
             client:load
-            cloudName={import.meta.env.CLOUDINARY_CLOUD_NAME}
+            cloudName={cloudName}
             galleryId="article-edit-media"
             emptyMessage="No media uploaded yet."
           />
-
           <div class="form-group form-group--spaced-top">
             <label class="form-label" for="img-file">Add Image or Video</label>
             <input
               class="form-input form-input--file"
               id="img-file"
+              name="media-file"
               type="file"
               accept="image/jpeg,image/png,image/webp,image/gif,image/avif,video/mp4,video/webm,video/ogg,video/quicktime"
             />
             <span class="form-hint form-hint--media-size"
-              >Images: max 10 MB. Recommended optimized size: 5–10 MB.</span
+              >Images: max 10 MB. Videos: max 200 MB.</span
             >
           </div>
           <div class="form-group">
@@ -290,6 +157,7 @@ const { slug } = Astro.params;
             <input
               class="form-input"
               id="img-alt"
+              name="media-alt"
               type="text"
               placeholder="Descriptive alt text or short caption"
             />
@@ -302,7 +170,7 @@ const { slug } = Astro.params;
           <div id="upload-status" class="media-panel__upload-status"></div>
         </div>
 
-        <!-- Danger zone panel -->
+        <!-- Danger Zone panel -->
         <div class="card card--danger-top danger-zone">
           <p class="panel-heading panel-heading--danger">Danger Zone</p>
           <p class="danger-zone__note">
@@ -337,1090 +205,473 @@ const { slug } = Astro.params;
 <style>
   @import "../../../styles/pages/admin-article-edit.css";
   @import "../../../styles/pages/blog-article.css";
+
+  :global(.ql-toolbar) {
+    border: 1px solid var(--surface-3);
+    border-radius: 4px 4px 0 0;
+    background: var(--surface-1);
+  }
+
+  :global(.ql-container) {
+    border: 1px solid var(--surface-3);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+
+  :global(.ql-editor) {
+    min-height: 400px;
+    padding: 12px;
+  }
+
+  :global(.ql-editor.ql-blank::before) {
+    color: var(--surface-3);
+    font-style: italic;
+  }
+
+  /* Color + background picker swatches */
+  :global(.ql-snow .ql-picker.ql-color .ql-picker-options),
+  :global(.ql-snow .ql-picker.ql-background .ql-picker-options) {
+    width: 184px;
+    padding: 4px 2px;
+  }
+
+  :global(.ql-snow .ql-color-picker .ql-picker-item) {
+    width: 18px;
+    height: 18px;
+    border-radius: 2px;
+  }
+
+  :global(.ql-snow .ql-custom-color-row) {
+    clear: both;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 6px 2px 2px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  :global(.ql-snow .ql-custom-color-label) {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #666;
+    font-family: "Fira Code", monospace;
+    cursor: pointer;
+  }
+
+  :global(.ql-snow .ql-custom-color-input) {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #bbb;
+    border-radius: 999px;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  :global(.ql-snow .ql-custom-color-input::-webkit-color-swatch-wrapper) {
+    padding: 0;
+    border-radius: 999px;
+  }
+
+  :global(.ql-snow .ql-custom-color-input::-webkit-color-swatch) {
+    border: none;
+    border-radius: 999px;
+  }
+
+  :global(.ql-snow .ql-custom-color-clear) {
+    border: 1px solid #ccc;
+    background: #fff;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 5px;
+    cursor: pointer;
+    line-height: 1;
+    color: #555;
+  }
+
+  :global(html[data-theme="dark"]) {
+    --quill-toolbar-icon: #ccc;
+    --quill-toolbar-icon-active: #4da3ff;
+  }
+
+  :global(html[data-theme="light"]) {
+    --quill-toolbar-icon: #1c1008;
+    --quill-toolbar-icon-active: #1c4268;
+  }
+
+  /* Toolbar icon color adapts to active theme */
+  :global(.ql-toolbar.ql-snow .ql-stroke) {
+    stroke: var(--quill-toolbar-icon) !important;
+  }
+
+  :global(.ql-toolbar.ql-snow .ql-fill) {
+    fill: var(--quill-toolbar-icon) !important;
+  }
+
+  :global(.ql-toolbar.ql-snow button:hover .ql-stroke),
+  :global(.ql-toolbar.ql-snow button:focus .ql-stroke),
+  :global(.ql-toolbar.ql-snow button.ql-active .ql-stroke),
+  :global(.ql-toolbar.ql-snow .ql-picker-label:hover .ql-stroke),
+  :global(.ql-toolbar.ql-snow .ql-picker-label.ql-active .ql-stroke),
+  :global(.ql-toolbar.ql-snow .ql-picker-item:hover .ql-stroke),
+  :global(.ql-toolbar.ql-snow .ql-picker-item.ql-selected .ql-stroke) {
+    stroke: var(--quill-toolbar-icon-active) !important;
+  }
+
+  :global(.ql-toolbar.ql-snow button:hover .ql-fill),
+  :global(.ql-toolbar.ql-snow button:focus .ql-fill),
+  :global(.ql-toolbar.ql-snow button.ql-active .ql-fill),
+  :global(.ql-toolbar.ql-snow .ql-picker-label:hover .ql-fill),
+  :global(.ql-toolbar.ql-snow .ql-picker-label.ql-active .ql-fill),
+  :global(.ql-toolbar.ql-snow .ql-picker-item:hover .ql-fill),
+  :global(.ql-toolbar.ql-snow .ql-picker-item.ql-selected .ql-fill) {
+    fill: var(--quill-toolbar-icon-active) !important;
+  }
+
+  /* Resize plugin controls need explicit styles to render visible handles. */
+  :global(.ql-resize-overlay) {
+    position: absolute;
+    box-sizing: border-box;
+    border: 1px dashed #444;
+    pointer-events: none;
+  }
+
+  :global(.ql-resize-handle) {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border: 1px solid #777;
+    box-sizing: border-box;
+    opacity: 0.85;
+    pointer-events: all;
+    z-index: 6;
+  }
+
+  :global(.ql-resize-handle.tl) {
+    top: -6px;
+    left: -6px;
+    cursor: nwse-resize;
+  }
+
+  :global(.ql-resize-handle.tr) {
+    top: -6px;
+    right: -6px;
+    cursor: nesw-resize;
+  }
+
+  :global(.ql-resize-handle.br) {
+    right: -6px;
+    bottom: -6px;
+    cursor: nwse-resize;
+  }
+
+  :global(.ql-resize-handle.bl) {
+    left: -6px;
+    bottom: -6px;
+    cursor: nesw-resize;
+  }
+
+  :global(.ql-resize-toolbar) {
+    position: absolute;
+    top: -12px;
+    right: 0;
+    left: 0;
+    height: 0;
+    min-width: 120px;
+    text-align: center;
+    color: #333;
+    box-sizing: border-box;
+    cursor: default;
+    pointer-events: all;
+    z-index: 7;
+  }
+
+  :global(.ql-resize-toolbar button) {
+    display: inline-block;
+    min-width: 24px;
+    height: 24px;
+    padding: 2px;
+    background: #fff;
+    border: 1px solid #999;
+    vertical-align: middle;
+  }
+
+  :global(.ql-resize-toolbar button:first-child) {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+
+  :global(.ql-resize-toolbar button:last-child) {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+
+  :global(.ql-resize-toolbar button:not(:first-child)) {
+    border-left: none;
+  }
+
+  :global(.ql-resize-toolbar button.active) {
+    filter: invert(20%);
+  }
+
+  :global(.ql-resize-toolbar svg) {
+    width: 18px;
+  }
+
+  :global(.ql-resize-display) {
+    position: absolute;
+    padding: 4px 8px;
+    text-align: center;
+    background: #fff;
+    color: #333;
+    border: 1px solid #777;
+    box-sizing: border-box;
+    opacity: 0.85;
+    cursor: default;
+    line-height: 1;
+    z-index: 7;
+  }
+
+  :global(.ql-resize-style-left) {
+    float: left;
+    margin: 0 1em 1em 0;
+  }
+
+  :global(.ql-resize-style-center) {
+    display: block;
+    margin: auto;
+    text-align: center;
+  }
+
+  :global(.ql-resize-style-right) {
+    float: right;
+    margin: 0 0 1em 1em;
+  }
+
+  :global(.ql-resize-style-full) {
+    width: 100% !important;
+  }
+
+  :global(.ql-resize-style-full > *) {
+    width: 100%;
+  }
 </style>
 
-<script is:inline define:vars={{ slug }}>
-  let articleId = null;
-  let currentMedia = [];
-  let categoriesReady = false;
-  let toastTimer = null;
-  let deleteArmTimer = null;
-  let articleDeleteArmed = false;
+<script>
+  import type {
+    ApiErrorResponse,
+    ArticleData,
+    ArticleStatus,
+    ArticleTag,
+    ArticleUpdatePayload,
+    CategoriesResponse,
+    MediaDeletedEventDetail,
+    MediaRecord,
+    MediaToastEventDetail,
+    ToastType,
+    UploadResponse,
+  } from "../../../lib/article-editor.types";
+  import { MAX_IMAGE_BYTES, MAX_VIDEO_BYTES } from "../../../lib/media";
+  import { enableCustomColorPickers } from "../../../lib/quill-custom-colors";
 
-  const stateLoading = document.getElementById("state-loading");
-  const stateError = document.getElementById("state-error");
-  const form = document.getElementById("article-form");
-  const submitBtn = document.getElementById("submit-btn");
-  const deleteBtn = document.getElementById("delete-btn");
-  const deleteBtnPanel = document.getElementById("delete-btn-panel");
-  const uploadBtn = document.getElementById("upload-btn");
-  const uploadStatus = document.getElementById("upload-status");
-  const categorySelect = document.getElementById("category");
-  const bodyInput = document.getElementById("body");
-  const editorLocalImageFileInput = document.getElementById(
-    "editor-local-image-file",
-  );
-  const textColorInput = document.getElementById("editor-text-color");
-  const bgColorInput = document.getElementById("editor-bg-color");
-  const toolbarButtons = Array.from(
-    document.querySelectorAll("[data-editor-action]"),
-  );
-  const unorderedListBtn = document.querySelector(
-    '[data-editor-action="unordered-list"]',
-  );
-  const orderedListBtn = document.querySelector(
-    '[data-editor-action="ordered-list"]',
-  );
-  const undoCheckpointBtn = document.querySelector(
-    '[data-editor-action="undo-checkpoint"]',
-  );
-  const undoCheckpoints = [];
-  const redoCheckpoints = [];
-  const MAX_UNDO_CHECKPOINTS = 50;
-  const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
-  const IMAGE_TOO_LARGE_MESSAGE =
-    "Image is too large (max 10 MB). Please optimize it to 5–10 MB before uploading.";
+  type QuillEditor = {
+    root: HTMLElement;
+    on: (eventName: string, handler: () => void) => void;
+    getModule: (name: string) => unknown;
+    getSelection: (focus?: boolean) => unknown;
+    format: (
+      name: "color" | "background",
+      value: string | false,
+      source?: "user" | "api" | "silent",
+    ) => void;
+    focus: () => void;
+  };
 
-  function focusBodyWithCaret(position) {
-    bodyInput.focus();
-    bodyInput.selectionStart = position;
-    bodyInput.selectionEnd = position;
+  let quillEditor: QuillEditor | null = null;
+  let articleData: ArticleData | null = null;
+  let articleId: number | null = null;
+  let currentMedia: MediaRecord[] = [];
+  let toastTimer: number | undefined;
+
+  // Lazy-load Quill styles
+  function loadQuillStyles() {
+    const core = document.createElement("link");
+    core.rel = "stylesheet";
+    core.href = "https://cdn.quilljs.com/1.3.6/quill.core.css";
+    const snow = document.createElement("link");
+    snow.rel = "stylesheet";
+    snow.href = "https://cdn.quilljs.com/1.3.6/quill.snow.css";
+    document.head.appendChild(core);
+    document.head.appendChild(snow);
   }
 
-  function getSelectedText() {
-    const start = bodyInput.selectionStart ?? 0;
-    const end = bodyInput.selectionEnd ?? 0;
-    return bodyInput.value.slice(start, end);
+  function requireElement<T extends HTMLElement>(id: string): T {
+    const element = document.getElementById(id) as T | null;
+    if (!element) {
+      throw new Error(`Missing required element: #${id}`);
+    }
+    return element;
   }
 
-  function replaceSelection(replacement) {
-    const start = bodyInput.selectionStart ?? 0;
-    const end = bodyInput.selectionEnd ?? 0;
-    const currentSelection = bodyInput.value.slice(start, end);
-    if (currentSelection === replacement) return;
-
-    saveUndoCheckpoint();
-    bodyInput.setRangeText(replacement, start, end, "end");
-    focusBodyWithCaret(start + replacement.length);
-    updateToolbarState();
-  }
-
-  function updateUndoButtonState() {
-    if (!undoCheckpointBtn) return;
-    undoCheckpointBtn.disabled = undoCheckpoints.length === 0;
-  }
-
-  function saveUndoCheckpoint(clearRedo = true) {
-    const current = bodyInput.value;
-    if (undoCheckpoints[undoCheckpoints.length - 1] === current) {
-      return;
-    }
-
-    undoCheckpoints.push(current);
-    if (undoCheckpoints.length > MAX_UNDO_CHECKPOINTS) {
-      undoCheckpoints.shift();
-    }
-
-    if (clearRedo) {
-      redoCheckpoints.length = 0;
-    }
-
-    updateUndoButtonState();
-  }
-
-  function undoLastCheckpoint() {
-    const previous = undoCheckpoints.pop();
-    if (previous == null) return;
-
-    const current = bodyInput.value;
-    if (redoCheckpoints[redoCheckpoints.length - 1] !== current) {
-      redoCheckpoints.push(current);
-      if (redoCheckpoints.length > MAX_UNDO_CHECKPOINTS) {
-        redoCheckpoints.shift();
-      }
-    }
-
-    const nextCaret = Math.min(bodyInput.selectionStart ?? 0, previous.length);
-    bodyInput.value = previous;
-    focusBodyWithCaret(nextCaret);
-    updateUndoButtonState();
-    updateToolbarState();
-  }
-
-  function redoLastCheckpoint() {
-    const next = redoCheckpoints.pop();
-    if (next == null) return;
-
-    saveUndoCheckpoint(false);
-
-    const nextCaret = Math.min(bodyInput.selectionStart ?? 0, next.length);
-    bodyInput.value = next;
-    focusBodyWithCaret(nextCaret);
-    updateUndoButtonState();
-    updateToolbarState();
-  }
-
-  function isCaretInsideList(tag) {
-    const cursor = bodyInput.selectionStart ?? 0;
-    const lowerValue = bodyInput.value.toLowerCase();
-    const before = lowerValue.slice(0, cursor);
-    const after = lowerValue.slice(cursor);
-
-    const openIndex = before.lastIndexOf(`<${tag}>`);
-    const closeIndex = before.lastIndexOf(`</${tag}>`);
-
-    return (
-      openIndex !== -1 && openIndex > closeIndex && after.includes(`</${tag}>`)
-    );
-  }
-
-  function updateToolbarState() {
-    const inUnorderedList = isCaretInsideList("ul");
-    const inOrderedList = isCaretInsideList("ol");
-
-    if (unorderedListBtn) {
-      unorderedListBtn.classList.toggle("is-active", inUnorderedList);
-      unorderedListBtn.setAttribute(
-        "aria-pressed",
-        inUnorderedList ? "true" : "false",
-      );
-    }
-
-    if (orderedListBtn) {
-      orderedListBtn.classList.toggle("is-active", inOrderedList);
-      orderedListBtn.setAttribute(
-        "aria-pressed",
-        inOrderedList ? "true" : "false",
-      );
-    }
-  }
-
-  function wrapSelection(prefix, suffix, fallback) {
-    const selection = getSelectedText().trim() || fallback;
-    replaceSelection(`${prefix}${selection}${suffix}`);
-  }
-
-  function clearInlineFormatting() {
-    const selection = getSelectedText();
-    if (!selection) return;
-
-    const cleaned = selection
-      .replace(/<\/?span\b[^>]*>/gi, "")
-      .replace(/<\/?(strong|em|u)\b[^>]*>/gi, "")
-      .replace(/\sstyle=("|')[\s\S]*?\1/gi, "");
-
-    replaceSelection(cleaned);
-  }
-
-  function adjustFontSizeSelection(direction, fallbackSizeRem, fallbackText) {
-    const selection = getSelectedText().trim();
-    const spanMatch = selection.match(
-      /^<span\s+style=("|')([\s\S]*?)\1>([\s\S]*?)<\/span>$/i,
-    );
-
-    if (spanMatch) {
-      const quote = spanMatch[1];
-      const styleValue = spanMatch[2];
-      const innerContent = spanMatch[3];
-      const fontSizeMatch = styleValue.match(
-        /font-size\s*:\s*([0-9]*\.?[0-9]+)\s*(px|rem|em)/i,
-      );
-
-      if (fontSizeMatch) {
-        const currentSize = Number(fontSizeMatch[1]);
-        const unit = fontSizeMatch[2].toLowerCase();
-        const step = unit === "px" ? 2 : 0.125;
-        const minSize = unit === "px" ? 8 : 0.5;
-        const maxSize = unit === "px" ? 72 : 3;
-        const nextSize = Math.max(
-          minSize,
-          Math.min(
-            maxSize,
-            Number((currentSize + step * direction).toFixed(3)),
-          ),
-        );
-        const formattedSize =
-          unit === "px" ? String(Math.round(nextSize)) : String(nextSize);
-
-        const nextStyle = styleValue.replace(
-          /font-size\s*:\s*[0-9]*\.?[0-9]+\s*(px|rem|em)\s*;?/i,
-          `font-size: ${formattedSize}${unit};`,
-        );
-
-        replaceSelection(
-          `<span style=${quote}${nextStyle}${quote}>${innerContent}</span>`,
-        );
-        return;
-      }
-    }
-
-    wrapSelection(
-      `<span style=\"font-size: ${fallbackSizeRem}rem;\">`,
-      "</span>",
-      fallbackText,
-    );
-  }
-
-  function insertList(type) {
-    const selection = getSelectedText().trim();
-
-    const selectedListMatch = selection.match(
-      /^<(ul|ol)>\s*([\s\S]*?)\s*<\/\1>$/i,
-    );
-    if (selectedListMatch) {
-      const sourceTag = selectedListMatch[1].toLowerCase();
-      const sourceType = sourceTag === "ol" ? "ordered-list" : "unordered-list";
-      const listBody = selectedListMatch[2];
-      const items = Array.from(listBody.matchAll(/<li>([\s\S]*?)<\/li>/gi))
-        .map((match) => (match[1] ?? "").trim())
-        .filter((item) => item.length > 0);
-
-      if (items.length) {
-        if (sourceType === type) {
-          replaceSelection(items.join("\n"));
-        } else {
-          const openTag = type === "ordered-list" ? "<ol>" : "<ul>";
-          const closeTag = type === "ordered-list" ? "</ol>" : "</ul>";
-          const switchedMarkup = `${openTag}\n${items.map((item) => `  <li>${item}</li>`).join("\n")}\n${closeTag}`;
-          replaceSelection(switchedMarkup);
-        }
-        return;
-      }
-    }
-
-    const items = (selection || "List item")
-      .split(/\r?\n/)
-      .map((item) => item.trim())
-      .filter((item) => item.length > 0);
-
-    const openTag = type === "ordered-list" ? "<ol>" : "<ul>";
-    const closeTag = type === "ordered-list" ? "</ol>" : "</ul>";
-    const listMarkup = `${openTag}\n${items.map((item) => `  <li>${item}</li>`).join("\n")}\n${closeTag}`;
-
-    replaceSelection(listMarkup);
-  }
-
-  function continueListOnEnter(event) {
-    if (
-      event.key !== "Enter" ||
-      event.shiftKey ||
-      event.ctrlKey ||
-      event.altKey ||
-      event.metaKey ||
-      event.isComposing
-    ) {
-      return;
-    }
-
-    const selectionStart = bodyInput.selectionStart ?? 0;
-    const selectionEnd = bodyInput.selectionEnd ?? 0;
-    if (selectionStart !== selectionEnd) return;
-
-    const value = bodyInput.value;
-    const lineStart = value.lastIndexOf("\n", selectionStart - 1) + 1;
-    const nextLineBreak = value.indexOf("\n", selectionStart);
-    const lineEnd = nextLineBreak === -1 ? value.length : nextLineBreak;
-    const currentLine = value.slice(lineStart, lineEnd);
-
-    const listItemMatch = currentLine.match(/^(\s*)<li>(.*)<\/li>\s*$/);
-    if (!listItemMatch) return;
-
-    event.preventDefault();
-
-    const indent = listItemMatch[1] ?? "";
-    const content = (listItemMatch[2] ?? "").trim();
-
-    if (!content) {
-      saveUndoCheckpoint();
-
-      const removeEnd =
-        lineEnd < value.length && value[lineEnd] === "\n"
-          ? lineEnd + 1
-          : lineEnd;
-      bodyInput.setRangeText("", lineStart, removeEnd, "start");
-
-      const updatedValue = bodyInput.value;
-      const tail = updatedValue.slice(lineStart);
-      const closeMatch = tail.match(/^\s*<\/(ul|ol)>\s*$/m);
-
-      if (!closeMatch || closeMatch.index == null) {
-        focusBodyWithCaret(lineStart);
-        return;
-      }
-
-      const closeLineStart = lineStart + closeMatch.index;
-      const closeLineEnd = updatedValue.indexOf("\n", closeLineStart);
-
-      if (closeLineEnd === -1) {
-        bodyInput.setRangeText(
-          "\n",
-          updatedValue.length,
-          updatedValue.length,
-          "end",
-        );
-        focusBodyWithCaret(updatedValue.length + 1);
-        return;
-      }
-
-      focusBodyWithCaret(closeLineEnd + 1);
-      return;
-    }
-
-    saveUndoCheckpoint();
-
-    const insertText = `\n${indent}<li></li>`;
-    bodyInput.setRangeText(insertText, lineEnd, lineEnd, "end");
-
-    const caretPosition = lineEnd + 1 + indent.length + 4;
-    focusBodyWithCaret(caretPosition);
-  }
-
-  function indentCurrentListItem(outdent) {
-    const selectionStart = bodyInput.selectionStart ?? 0;
-    const selectionEnd = bodyInput.selectionEnd ?? 0;
-    if (selectionStart !== selectionEnd) return false;
-
-    const value = bodyInput.value;
-    const lineStart = value.lastIndexOf("\n", selectionStart - 1) + 1;
-    const nextLineBreak = value.indexOf("\n", selectionStart);
-    const lineEnd = nextLineBreak === -1 ? value.length : nextLineBreak;
-    const currentLine = value.slice(lineStart, lineEnd);
-    const listItemMatch = currentLine.match(/^(\s*)<li>(.*)<\/li>\s*$/);
-    if (!listItemMatch) return false;
-
-    const currentIndent = listItemMatch[1] ?? "";
-    const content = listItemMatch[2] ?? "";
-    const nextIndent = outdent
-      ? currentIndent.replace(/^ {1,2}/, "")
-      : `${currentIndent}  `;
-
-    if (outdent && currentIndent === nextIndent) return true;
-
-    saveUndoCheckpoint();
-
-    const updatedLine = `${nextIndent}<li>${content}</li>`;
-    bodyInput.setRangeText(updatedLine, lineStart, lineEnd, "start");
-
-    const delta = nextIndent.length - currentIndent.length;
-    const caretOffset = Math.max(0, selectionStart - lineStart + delta);
-    focusBodyWithCaret(lineStart + caretOffset);
-    return true;
-  }
-
-  function convertPlainListPaste(text) {
-    const lines = text.split(/\r?\n/);
-    const meaningful = lines.map((line) => line.trim()).filter(Boolean);
-    if (meaningful.length === 0) return null;
-
-    const bulletPattern = /^[-*]\s+(.+)$/;
-    const orderedPattern = /^\d+\.\s+(.+)$/;
-
-    const allBulleted = meaningful.every((line) => bulletPattern.test(line));
-    const allOrdered = meaningful.every((line) => orderedPattern.test(line));
-    if (!allBulleted && !allOrdered) return null;
-
-    const itemPattern = allOrdered ? orderedPattern : bulletPattern;
-    const items = meaningful
-      .map((line) => line.match(itemPattern)?.[1]?.trim() ?? "")
-      .filter((item) => item.length > 0);
-    if (!items.length) return null;
-
-    const openTag = allOrdered ? "<ol>" : "<ul>";
-    const closeTag = allOrdered ? "</ol>" : "</ul>";
-    return `${openTag}\n${items.map((item) => `  <li>${item}</li>`).join("\n")}\n${closeTag}`;
-  }
-
-  function normalizeListMarkup(value) {
-    let normalized = value.replace(
-      /^[ \t]*<li>[ \t]*<\/li>[ \t]*(\r?\n)?/gm,
-      "",
-    );
-
-    let changed = true;
-    while (changed) {
-      const next = normalized
-        .replace(/<ul>\s*<\/ul>/g, "")
-        .replace(/<ol>\s*<\/ol>/g, "");
-      changed = next !== normalized;
-      normalized = next;
-    }
-
-    return normalized;
-  }
-
-  function handleEditorKeydown(event) {
-    if ((event.ctrlKey || event.metaKey) && !event.altKey) {
-      const key = event.key.toLowerCase();
-
-      if (key === "z" && event.shiftKey) {
-        event.preventDefault();
-        redoLastCheckpoint();
-        return;
-      }
-
-      if (key === "z" && !event.shiftKey) {
-        event.preventDefault();
-        undoLastCheckpoint();
-        return;
-      }
-
-      if (key === "y") {
-        event.preventDefault();
-        redoLastCheckpoint();
-        return;
-      }
-    }
-
-    if (event.key === "Tab") {
-      if (indentCurrentListItem(event.shiftKey)) {
-        event.preventDefault();
-      }
-      return;
-    }
-
-    continueListOnEnter(event);
-  }
-
-  function handleEditorPaste(event) {
-    const pastedText = event.clipboardData?.getData("text/plain");
-    if (!pastedText) return;
-
-    const converted = convertPlainListPaste(pastedText);
-    if (!converted) return;
-
-    event.preventDefault();
-    replaceSelection(converted);
-  }
-
-  function pickLocalEditorImageFile() {
-    return new Promise((resolve) => {
-      editorLocalImageFileInput.value = "";
-
-      const handleChange = () => {
-        const file = editorLocalImageFileInput.files?.[0] ?? null;
-        editorLocalImageFileInput.removeEventListener("change", handleChange);
-        resolve(file);
-      };
-
-      editorLocalImageFileInput.addEventListener("change", handleChange, {
-        once: true,
-      });
-      editorLocalImageFileInput.click();
-    });
-  }
-
-  async function uploadLocalEditorImage(file, altText) {
-    if (!validateImageUploadSize(file)) return null;
-
-    if (!articleId) {
-      showToast(
-        "Wait for the article to finish loading before uploading.",
-        "error",
-      );
-      return null;
-    }
-
-    try {
-      const dataUri = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          file_data: dataUri,
-          mime_type: file.type,
-          file_size: file.size,
-          article_id: String(articleId),
-          alt_text: altText,
-        }),
-      });
-
-      const contentType = res.headers.get("content-type") ?? "";
-      const data = contentType.includes("application/json")
-        ? await res.json().catch(() => ({}))
-        : {};
-      if (!res.ok) {
-        showToast(
-          data.error ?? `Local image upload failed (HTTP ${res.status}).`,
-          "error",
-        );
-        return null;
-      }
-
-      if (data.media) {
-        syncMediaGallery([...(currentMedia ?? []), data.media]);
-      }
-
-      return String(data.media_url ?? data.image_url ?? "");
-    } catch {
-      showToast("Network error during local image upload.", "error");
-      return null;
-    }
-  }
-
-  async function insertImage(kind) {
-    const result = await window.showEditorDialog({
-      title:
-        kind === "image-inline" ? "Insert Inline Image" : "Insert Image Block",
-      fields: [
-        {
-          id: "source",
-          label: "Image Source",
-          type: "select",
-          default: "url",
-          options: [
-            { value: "url", label: "Use URL" },
-            { value: "upload", label: "Upload Local Image" },
-          ],
-        },
-        {
-          id: "url",
-          label: "Image URL",
-          type: "url",
-          placeholder: "https://",
-          default: "https://",
-        },
-        {
-          id: "alt",
-          label: "Alt Text",
-          type: "text",
-          placeholder: "Descriptive alt text",
-          default: "",
-        },
-      ],
-    });
-
-    if (!result) return;
-    const source = result.source === "upload" ? "upload" : "url";
-    const altText = result.alt || "Image";
-
-    let imageUrl = "";
-
-    if (source === "upload") {
-      const file = await pickLocalEditorImageFile();
-      if (!file) return;
-      const uploadedUrl = await uploadLocalEditorImage(file, altText);
-      if (!uploadedUrl) return;
-      imageUrl = uploadedUrl;
-    } else {
-      imageUrl = String(result.url ?? "").trim();
-      if (!imageUrl) return;
-    }
-
-    const markup =
-      kind === "image-inline"
-        ? `<img src="${imageUrl}" alt="${altText}" style="max-width: 100%; height: auto; vertical-align: middle;" />`
-        : `<figure>\n  <img src="${imageUrl}" alt="${altText}" style="max-width: 100%; height: auto;" />\n  <figcaption>${altText}</figcaption>\n</figure>`;
-
-    replaceSelection(markup);
-  }
-
-  async function insertLink() {
-    const selected = getSelectedText().trim();
-    const result = await window.showEditorDialog({
-      title: "Insert Link",
-      fields: [
-        {
-          id: "href",
-          label: "URL",
-          type: "url",
-          placeholder: "https://",
-          default: "https://",
-        },
-        {
-          id: "label",
-          label: "Link Text",
-          type: "text",
-          placeholder: "Link text",
-          default: selected || "Link text",
-        },
-      ],
-    });
-    if (!result || !result.href) return;
-    replaceSelection(`<a href="${result.href}">${result.label || "Link"}</a>`);
-  }
-
-  function insertQuote() {
-    const selection = getSelectedText().trim();
-    const quoteText = selection || "Quote text";
-    replaceSelection(`<blockquote>${quoteText}</blockquote>`);
-  }
-
-  async function insertHeading() {
-    const selected = getSelectedText().trim();
-    const result = await window.showEditorDialog({
-      title: "Insert Heading",
-      fields: [
-        {
-          id: "text",
-          label: "Heading Text",
-          type: "text",
-          placeholder: "Section heading",
-          default: selected || "",
-        },
-        {
-          id: "level",
-          label: "Heading Level",
-          type: "select",
-          default: "2",
-          options: [
-            { value: "1", label: "H1 — Page Title" },
-            { value: "2", label: "H2 — Section" },
-            { value: "3", label: "H3 — Sub-Section" },
-            { value: "4", label: "H4 — Detail" },
-            { value: "5", label: "H5 — Minor" },
-            { value: "6", label: "H6 — Smallest" },
-          ],
-        },
-      ],
-    });
-    if (!result || !result.text) return;
-    const level = Math.min(6, Math.max(1, Number(result.level) || 2));
-    replaceSelection(`<h${level}>${result.text}</h${level}>`);
-  }
-
-  async function handleEditorAction(action) {
-    if (action === "bold") {
-      wrapSelection("<strong>", "</strong>", "Bold text");
-      return;
-    }
-    if (action === "italic") {
-      wrapSelection("<em>", "</em>", "Italic text");
-      return;
-    }
-    if (action === "underline") {
-      wrapSelection("<u>", "</u>", "Underlined text");
-      return;
-    }
-    if (action === "link") {
-      await insertLink();
-      return;
-    }
-    if (action === "quote") {
-      insertQuote();
-      return;
-    }
-    if (action === "heading") {
-      await insertHeading();
-      return;
-    }
-    if (action === "color") {
-      const selectedColor = textColorInput.value || "#6f89ff";
-      wrapSelection(
-        `<span style=\"color: ${selectedColor};\">`,
-        "</span>",
-        "Colored text",
-      );
-      return;
-    }
-    if (action === "background-color") {
-      const selectedBackground = bgColorInput.value || "#f8e040";
-      wrapSelection(
-        `<span style=\"background-color: ${selectedBackground};\">`,
-        "</span>",
-        "Highlighted text",
-      );
-      return;
-    }
-    if (action === "undo-checkpoint") {
-      undoLastCheckpoint();
-      return;
-    }
-    if (action === "font-size-increase") {
-      adjustFontSizeSelection(1, 1.125, "Larger text");
-      return;
-    }
-    if (action === "font-size-decrease") {
-      adjustFontSizeSelection(-1, 0.875, "Smaller text");
-      return;
-    }
-    if (action === "clear-inline") {
-      clearInlineFormatting();
-      return;
-    }
-    if (action === "unordered-list" || action === "ordered-list") {
-      insertList(action);
-      return;
-    }
-    if (action === "image-inline" || action === "image-block") {
-      await insertImage(action);
-    }
-  }
-
-  toolbarButtons.forEach((button) => {
-    button.addEventListener("click", async () => {
-      const action = button.dataset.editorAction;
-      if (!action) return;
-      await handleEditorAction(action);
-      updateToolbarState();
-    });
-  });
-
-  bodyInput.addEventListener("keydown", handleEditorKeydown);
-  bodyInput.addEventListener("paste", handleEditorPaste);
-  bodyInput.addEventListener("input", updateToolbarState);
-  bodyInput.addEventListener("click", updateToolbarState);
-  bodyInput.addEventListener("keyup", updateToolbarState);
-  bodyInput.addEventListener("focus", updateToolbarState);
-
-  updateUndoButtonState();
-  updateToolbarState();
-
-  function ensureToastStack() {
-    let stack = document.getElementById("toast-stack");
-    if (!stack) {
-      stack = document.createElement("div");
-      stack.id = "toast-stack";
-      stack.className = "toast-stack";
-      document.body.appendChild(stack);
-    }
-
-    return stack;
-  }
-
-  function showToast(message, type) {
-    const stack = ensureToastStack();
-    stack.innerHTML = `<div class="toast toast--${type}">${message}</div>`;
-    stack.classList.add("is-visible");
-
-    if (toastTimer) {
-      window.clearTimeout(toastTimer);
-    }
-
-    toastTimer = window.setTimeout(() => {
-      stack.classList.remove("is-visible");
-    }, 2600);
-  }
-
-  function validateImageUploadSize(file) {
-    if (!file?.type?.startsWith("image/")) return true;
-    if (file.size <= MAX_IMAGE_BYTES) return true;
-
-    showToast(IMAGE_TOO_LARGE_MESSAGE, "error");
-    return false;
-  }
-
-  function syncMediaGallery(media) {
-    currentMedia = Array.isArray(media) ? media : [];
-    window.dispatchEvent(
-      new CustomEvent("admin-media-sync", {
-        detail: { galleryId: "article-edit-media", media: currentMedia },
-      }),
-    );
-  }
-
-  window.addEventListener("admin-media-deleted", (event) => {
-    const detail = event?.detail ?? {};
-    if (detail.galleryId !== "article-edit-media") return;
-
-    currentMedia = currentMedia.filter((item) => item.id !== detail.mediaId);
-    showToast("Media deleted successfully.", "success");
-  });
-
-  window.addEventListener("admin-media-toast", (event) => {
-    const detail = event?.detail ?? {};
-    if (detail.galleryId !== "article-edit-media") return;
-    showToast(
-      detail.message ?? "Something went wrong while deleting media.",
-      detail.type === "success" ? "success" : "error",
-    );
-  });
-
-  async function loadCategories(selectedCategoryId) {
-    try {
-      const res = await fetch("/api/categories");
-      if (!res.ok) return;
-
-      const data = await res.json();
-      const categories = Array.isArray(data.categories) ? data.categories : [];
-
-      categorySelect.innerHTML = `<option value="">Uncategorized</option>`;
-
-      for (const category of categories) {
-        const option = document.createElement("option");
-        option.value = String(category.id);
-        option.textContent = String(category.name);
-        option.selected =
-          selectedCategoryId != null &&
-          Number(selectedCategoryId) === Number(category.id);
-        categorySelect.appendChild(option);
-      }
-
-      categoriesReady = true;
-    } catch {
-      // Keep editor usable if category lookup fails.
-    }
-  }
+  const form = requireElement<HTMLFormElement>("article-form");
+  const loading = requireElement<HTMLDivElement>("state-loading");
+  const error = requireElement<HTMLDivElement>("state-error");
+  const submitBtn = requireElement<HTMLButtonElement>("submit-btn");
+  const deleteBtn = requireElement<HTMLButtonElement>("delete-btn");
+  const deleteBtnPanel = requireElement<HTMLButtonElement>("delete-btn-panel");
+  const previewBtn = requireElement<HTMLButtonElement>("preview-btn");
+  const draftPreview = requireElement<HTMLDivElement>("draft-preview");
+  const previewScroll = requireElement<HTMLDivElement>("draft-preview-scroll");
+  const previewCloseBtn = requireElement<HTMLButtonElement>("preview-close");
+  const bodyInput = requireElement<HTMLInputElement>("body");
+  const slug = requireElement<HTMLInputElement>("article-slug").value;
 
   async function loadArticle() {
     try {
       const res = await fetch(`/api/admin/articles/${slug}`);
-
       if (res.status === 401) {
         window.location.href = "/admin";
         return;
       }
-
-      if (res.status === 404) {
-        stateLoading.style.display = "none";
-        stateError.textContent = "Article not found.";
-        stateError.style.display = "block";
-        return;
-      }
-
       if (!res.ok) {
-        throw new Error(`Server error ${res.status}`);
+        throw new Error("Failed to load article");
       }
-
-      const a = await res.json();
-      articleId = a.id;
-
-      document.getElementById("title").value = a.title ?? "";
-      document.getElementById("slug-field").value = a.slug ?? "";
-      document.getElementById("body").value = a.body ?? "";
-      document.getElementById("description").value = a.description ?? "";
-      document.getElementById("status").value = a.status ?? "draft";
-      document.getElementById("tags").value = (a.tags ?? [])
-        .map((t) => t.name)
-        .join(", ");
-
-      await loadCategories(a.category?.id ?? null);
-
-      syncMediaGallery(a.media ?? a.images ?? []);
-
-      stateLoading.style.display = "none";
+      const data = (await res.json()) as ArticleData;
+      articleData = data;
+      articleId = Number(data.id) || null;
+      populateForm(data);
+      await initializeEditor(data.body || "");
+      syncMediaGallery(data.media ?? data.images ?? []);
       form.classList.remove("is-hidden");
+      loading.classList.add("is-hidden");
     } catch (err) {
-      stateLoading.style.display = "none";
-      stateError.textContent = err.message ?? "Failed to load article.";
-      stateError.style.display = "block";
+      error.textContent = `Error: ${err instanceof Error ? err.message : "Unknown error"}`;
+      error.classList.remove("is-hidden");
+      loading.classList.add("is-hidden");
     }
   }
 
-  // Save changes
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+  function populateForm(article: ArticleData): void {
+    requireElement<HTMLInputElement>("title").value = article.title || "";
+    requireElement<HTMLInputElement>("slug-field").value = article.slug || "";
+    requireElement<HTMLSelectElement>("status").value =
+      article.status || "draft";
+    requireElement<HTMLTextAreaElement>("description").value =
+      article.description || "";
+    const tagNames = Array.isArray(article.tags)
+      ? article.tags
+          .map((tag: ArticleTag) => {
+            if (typeof tag === "string") return tag;
+            if (tag && typeof tag === "object" && "name" in tag) {
+              const name = tag.name;
+              return typeof name === "string" ? name : "";
+            }
+            return "";
+          })
+          .filter(Boolean)
+      : [];
+    requireElement<HTMLInputElement>("tags").value = tagNames.join(", ");
+    requireElement<HTMLSelectElement>("category").value = article.category_id
+      ? String(article.category_id)
+      : "";
+    bodyInput.value = article.body || "";
+  }
 
-    bodyInput.value = normalizeListMarkup(bodyInput.value);
+  const COMIC_PALETTE = [
+    "#080808",
+    "#1c1008",
+    "#ffffff",
+    "#f3e9db",
+    "#e04030",
+    "#1c4268",
+    "#f2c85a",
+    "#f8e040",
+    "#fffef0",
+    "#f4ede0",
+    "#34c070",
+    "#c09838",
+  ];
 
-    const title = document.getElementById("title").value.trim();
-    const slugVal = document.getElementById("slug-field").value.trim();
-    const body = document.getElementById("body").value.trim();
-    const description = document.getElementById("description").value.trim();
-    const statusVal = document.getElementById("status").value;
-    const categoryVal = categorySelect.value;
-    const tagsRaw = document.getElementById("tags").value;
-    const tags = tagsRaw
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean);
+  async function initializeEditor(initialHtml: string): Promise<void> {
+    // Lazy-load Quill only when editor is needed
+    const [{ default: Quill }, { default: QuillResize }] = await Promise.all([
+      import("quill"),
+      import("quill-resize-module"),
+    ]);
+    loadQuillStyles();
 
-    if (!title || !body) {
-      showToast("Title and body are required.", "error");
-      return;
-    }
+    Quill.register("modules/resize", QuillResize, true);
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Saving…";
-
-    try {
-      const payload = {
-        title,
-        body,
-        status: statusVal,
-        tags,
-      };
-
-      if (categoriesReady) {
-        payload.category_id = categoryVal ? Number(categoryVal) : null;
-      }
-
-      if (slugVal) payload.slug = slugVal;
-      if (description) payload.description = description;
-
-      const res = await fetch(`/api/articles/${slug}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
+    quillEditor = new Quill("#body-editor", {
+      theme: "snow",
+      modules: {
+        toolbar: [
+          ["bold", "italic", "underline"],
+          [{ color: COMIC_PALETTE }, { background: COMIC_PALETTE }],
+          ["blockquote", "code-block"],
+          [{ header: 2 }, { header: 3 }],
+          [{ list: "ordered" }, { list: "bullet" }],
+          ["link", "image"],
+        ],
+        resize: {
+          modules: ["Resize", "DisplaySize", "Toolbar", "Keyboard"],
+          keyboardSelect: true,
+          parchment: {
+            image: {
+              attribute: ["width"],
+              limit: {
+                minWidth: 100,
+              },
+            },
+          },
         },
-        body: JSON.stringify(payload),
-      });
+      },
+      placeholder: "Write your article content here…",
+    });
 
-      if (res.status === 401) {
-        window.location.href = "/admin";
-        return;
-      }
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        showToast(data.error ?? "Save failed.", "error");
-        return;
-      }
-
-      if (slugVal && slugVal !== slug) {
-        window.location.href = `/admin/articles/${slugVal}`;
-        return;
-      }
-
-      showToast("Article saved successfully.", "success");
-    } catch {
-      showToast("Network error. Please try again.", "error");
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Save Changes";
-    }
-  });
-
-  // Delete — shared handler
-  async function handleDelete() {
-    if (!articleDeleteArmed) {
-      articleDeleteArmed = true;
-      if (deleteBtn) deleteBtn.textContent = "Confirm Delete";
-      if (deleteBtnPanel) deleteBtnPanel.textContent = "Confirm Delete";
-      showToast(
-        "Click delete again to permanently remove this article.",
-        "error",
-      );
-
-      if (deleteArmTimer) window.clearTimeout(deleteArmTimer);
-      deleteArmTimer = window.setTimeout(() => {
-        articleDeleteArmed = false;
-        if (deleteBtn) deleteBtn.textContent = "Delete";
-        if (deleteBtnPanel) deleteBtnPanel.textContent = "Delete Article";
-      }, 3500);
-      return;
+    // Set initial content
+    if (initialHtml && quillEditor) {
+      quillEditor.root.innerHTML = initialHtml;
     }
 
-    articleDeleteArmed = false;
-    if (deleteArmTimer) window.clearTimeout(deleteArmTimer);
-    if (deleteBtn) deleteBtn.textContent = "Delete";
-    if (deleteBtnPanel) deleteBtnPanel.textContent = "Delete Article";
+    if (!quillEditor) return;
 
-    try {
-      const res = await fetch(`/api/articles/${slug}`, {
-        method: "DELETE",
-      });
+    const editor = quillEditor;
+    enableCustomColorPickers(editor);
+    editor.root.setAttribute("aria-label", "Article body");
 
-      if (res.status === 401) {
-        window.location.href = "/admin";
-        return;
-      }
-
-      if (!res.ok) {
-        const d = await res.json().catch(() => ({}));
-        showToast(d.error ?? "Delete failed.", "error");
-        return;
-      }
-
-      showToast("Article deleted successfully.", "success");
-      window.setTimeout(() => {
-        window.location.href = "/admin/dashboard";
-      }, 500);
-    } catch {
-      showToast("Network error. Could not delete.", "error");
-    }
+    // Serialize on change
+    editor.on("text-change", () => {
+      const html = editor.root.innerHTML;
+      bodyInput.value = html === "<p><br></p>" ? "" : html;
+    });
   }
 
-  if (deleteBtn) deleteBtn.addEventListener("click", handleDelete);
-  if (deleteBtnPanel) deleteBtnPanel.addEventListener("click", handleDelete);
-
-  // Upload media
-  uploadBtn.addEventListener("click", async () => {
-    if (!articleId) return;
-
-    const fileInput = document.getElementById("img-file");
-    const altInput = document.getElementById("img-alt");
-    const file = fileInput.files?.[0];
-    const alt = altInput.value.trim();
-
-    if (!file) {
-      showToast("Select an image or video file.", "error");
-      return;
-    }
-    if (!validateImageUploadSize(file)) {
-      return;
-    }
-    if (!alt) {
-      showToast("Alt text is required.", "error");
-      return;
-    }
-
-    uploadBtn.disabled = true;
-    uploadStatus.textContent = "Uploading…";
-
-    try {
-      const dataUri = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          file_data: dataUri,
-          mime_type: file.type,
-          file_size: file.size,
-          article_id: String(articleId),
-          alt_text: alt,
-        }),
-      });
-
-      const contentType = res.headers.get("content-type") ?? "";
-      const data = contentType.includes("application/json")
-        ? await res.json().catch(() => ({}))
-        : {};
-
-      if (!res.ok) {
-        showToast(data.error ?? `Upload failed (HTTP ${res.status}).`, "error");
-        return;
-      }
-
-      uploadStatus.textContent = `Uploaded ${data.resource_type ?? "media"} successfully.`;
-      syncMediaGallery([...(currentMedia ?? []), data.media]);
-      showToast("Media uploaded successfully.", "success");
-      fileInput.value = "";
-      altInput.value = "";
-    } catch {
-      showToast("Network error during upload.", "error");
-    } finally {
-      uploadBtn.disabled = false;
-    }
-  });
-
-  // ─── Draft Preview ───
-  const previewBtn = document.getElementById("preview-btn");
-  const draftPreview = document.getElementById("draft-preview");
-  const previewScroll = document.getElementById("draft-preview-scroll");
-  const previewCloseBtn = document.getElementById("preview-close");
-
-  function escapeHtml(str) {
+  function escapeHtml(str: string): string {
     return String(str)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;");
   }
 
-  function escapeAttr(str) {
+  function escapeAttr(str: string): string {
     return String(str).replace(/"/g, "&quot;");
   }
 
-  function previewBodyToHtml(text) {
+  function previewBodyToHtml(text: string): string {
     const blockTagPattern =
-      /^\s*<(ul|ol|li|figure|img|h1|h2|h3|h4|h5|h6|blockquote|pre|table|hr|p|div|section|article)\b/i;
+      /^\s*<(ul|ol|li|figure|img|h1|h2|h3|h4|h5|h6|blockquote|pre|table|hr|p|div|section|article|blockquote)\b/i;
     return text
       .split(/\n{2,}/)
-      .map((para) => para.trim())
+      .map((para: string) => para.trim())
       .filter(Boolean)
-      .map((para) =>
+      .map((para: string) =>
         blockTagPattern.test(para)
           ? para
           : `<p>${para.replace(/\n/g, "<br>")}</p>`,
@@ -1428,10 +679,15 @@ const { slug } = Astro.params;
       .join("\n");
   }
 
-  function buildPreviewHtml(title, description, body, media) {
+  function buildPreviewHtml(
+    title: string,
+    description: string,
+    body: string,
+    media: MediaRecord[],
+  ): string {
     const bodyHtml = previewBodyToHtml(body);
-    const heroMedia = media[0] ?? null;
-    const inlineMedia = media.slice(1);
+    const heroMedia = media?.[0] ?? null;
+    const inlineMedia = media?.slice(1) ?? [];
     const today = new Date().toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
@@ -1482,11 +738,13 @@ const { slug } = Astro.params;
     return html;
   }
 
-  function openPreview() {
-    const title = document.getElementById("title").value.trim();
-    const description = document.getElementById("description").value.trim();
-    const body = bodyInput.value.trim();
-    const html = buildPreviewHtml(title, description, body, currentMedia ?? []);
+  function openPreview(): void {
+    const title = requireElement<HTMLInputElement>("title").value;
+    const description =
+      requireElement<HTMLTextAreaElement>("description").value;
+    const body = bodyInput.value;
+    const media = articleData?.media || [];
+    const html = buildPreviewHtml(title, description, body, media);
     previewScroll.innerHTML = html;
     previewScroll.scrollTop = 0;
     draftPreview.classList.remove("is-hidden");
@@ -1495,21 +753,292 @@ const { slug } = Astro.params;
     previewCloseBtn.focus();
   }
 
-  function closePreview() {
+  function closePreview(): void {
     draftPreview.classList.add("is-hidden");
     draftPreview.setAttribute("aria-hidden", "true");
     document.body.classList.remove("preview-open");
     previewBtn.focus();
   }
 
+  function ensureToastStack(): HTMLDivElement {
+    let stack = document.getElementById("toast-stack");
+    if (!stack) {
+      stack = document.createElement("div");
+      stack.id = "toast-stack";
+      stack.className = "toast-stack";
+      document.body.appendChild(stack);
+    }
+    return stack as HTMLDivElement;
+  }
+
+  function showToast(message: string, type: ToastType): void {
+    const stack = ensureToastStack();
+    stack.innerHTML = `<div class="toast toast--${type}">${message}</div>`;
+    stack.classList.add("is-visible");
+
+    if (toastTimer) window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => {
+      stack.classList.remove("is-visible");
+    }, 2600);
+  }
+
+  function syncMediaGallery(media: MediaRecord[]): void {
+    currentMedia = Array.isArray(media) ? media : [];
+    window.dispatchEvent(
+      new CustomEvent("admin-media-sync", {
+        detail: { galleryId: "article-edit-media", media: currentMedia },
+      }),
+    );
+  }
+
+  window.addEventListener("admin-media-deleted", (event: Event) => {
+    const detail = (event as CustomEvent<MediaDeletedEventDetail>).detail;
+    if (detail.galleryId !== "article-edit-media") return;
+    currentMedia = currentMedia.filter((item) => item.id !== detail.mediaId);
+    showToast("Media deleted successfully.", "success");
+  });
+
+  window.addEventListener("admin-media-toast", (event: Event) => {
+    const detail = (event as CustomEvent<MediaToastEventDetail>).detail;
+    if (detail.galleryId !== "article-edit-media") return;
+    showToast(
+      detail.message ?? "Something went wrong while deleting media.",
+      detail.type === "success" ? "success" : "error",
+    );
+  });
+
   previewBtn.addEventListener("click", openPreview);
   previewCloseBtn.addEventListener("click", closePreview);
-  document.addEventListener("keydown", (e) => {
+  document.addEventListener("keydown", (e: KeyboardEvent) => {
     if (e.key === "Escape" && !draftPreview.classList.contains("is-hidden")) {
       closePreview();
     }
   });
 
-  // Init
+  // Form submission
+  form.addEventListener("submit", async (e: SubmitEvent) => {
+    e.preventDefault();
+
+    const title = requireElement<HTMLInputElement>("title").value.trim();
+    const body = bodyInput.value.trim();
+    const slugField =
+      requireElement<HTMLInputElement>("slug-field").value.trim();
+    const description =
+      requireElement<HTMLTextAreaElement>("description").value.trim() ||
+      undefined;
+    const status = requireElement<HTMLSelectElement>("status")
+      .value as ArticleStatus;
+    const categoryId = requireElement<HTMLSelectElement>("category").value;
+    const tagsRaw = requireElement<HTMLInputElement>("tags").value;
+    const tags = tagsRaw
+      .split(",")
+      .map((t: string) => t.trim())
+      .filter(Boolean);
+
+    if (!title || !body) {
+      showToast("Title and body are required.", "error");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Saving…";
+
+    try {
+      const payload: ArticleUpdatePayload = {
+        title,
+        body,
+        status,
+      };
+      if (slugField) payload.slug = slugField;
+      if (description) payload.description = description;
+      if (tags.length) payload.tags = tags;
+      if (categoryId) payload.category_id = Number(categoryId);
+
+      const res = await fetch(`/api/articles/${slug}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.status === 401) {
+        window.location.href = "/admin";
+        return;
+      }
+
+      const data = (await res.json()) as ApiErrorResponse;
+      if (!res.ok) {
+        showToast(data.error ?? "Failed to save.", "error");
+        return;
+      }
+
+      showToast("Article saved successfully.", "success");
+    } catch (err) {
+      showToast("Network error. Please try again.", "error");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Save Changes";
+    }
+  });
+
+  async function handleDelete(): Promise<void> {
+    if (!confirm("Are you sure? This action cannot be undone.")) return;
+
+    deleteBtn.disabled = true;
+    deleteBtnPanel.disabled = true;
+
+    try {
+      const res = await fetch(`/api/articles/${slug}`, {
+        method: "DELETE",
+      });
+
+      if (res.status === 401) {
+        window.location.href = "/admin";
+        return;
+      }
+
+      if (!res.ok) {
+        const data = (await res.json()) as ApiErrorResponse;
+        showToast(data.error ?? "Failed to delete.", "error");
+        return;
+      }
+
+      showToast("Article deleted. Redirecting…", "success");
+      setTimeout(() => {
+        window.location.href = "/admin/dashboard";
+      }, 1500);
+    } catch {
+      showToast("Network error. Please try again.", "error");
+    } finally {
+      deleteBtn.disabled = false;
+      deleteBtnPanel.disabled = false;
+    }
+  }
+
+  deleteBtn.addEventListener("click", handleDelete);
+  deleteBtnPanel.addEventListener("click", handleDelete);
+
+  async function loadCategories() {
+    try {
+      const res = await fetch("/api/categories");
+      if (!res.ok) return;
+      const data = (await res.json()) as CategoriesResponse;
+      const categories = Array.isArray(data.categories) ? data.categories : [];
+      const categorySelect = requireElement<HTMLSelectElement>("category");
+      categorySelect.innerHTML = `<option value="">Uncategorized</option>`;
+      for (const cat of categories) {
+        categorySelect.insertAdjacentHTML(
+          "beforeend",
+          `<option value="${cat.id}">${cat.name}</option>`,
+        );
+      }
+    } catch {
+      // Keep it functional even if load fails
+    }
+  }
+
+  const uploadBtn = document.getElementById(
+    "upload-btn",
+  ) as HTMLButtonElement | null;
+  if (uploadBtn) {
+    uploadBtn.addEventListener("click", async () => {
+      const fileInput = document.getElementById(
+        "img-file",
+      ) as HTMLInputElement | null;
+      const altInput = document.getElementById(
+        "img-alt",
+      ) as HTMLInputElement | null;
+      const statusDiv = document.getElementById(
+        "upload-status",
+      ) as HTMLDivElement | null;
+      const file = fileInput?.files?.[0];
+
+      if (!file) {
+        showToast("Please select a file to upload.", "error");
+        return;
+      }
+      const altText = altInput?.value?.trim() || "";
+      if (!altText) {
+        showToast("Alt text is required before uploading.", "error");
+        return;
+      }
+      if (!articleId) {
+        showToast(
+          "Wait for the article to finish loading before uploading.",
+          "error",
+        );
+        return;
+      }
+
+      const isVideo = file.type.startsWith("video/");
+      if (file.size > (isVideo ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES)) {
+        showToast(
+          isVideo
+            ? "Video exceeds 100 MB limit."
+            : "Image exceeds 10 MB limit. Please optimize before uploading.",
+          "error",
+        );
+        return;
+      }
+
+      uploadBtn.disabled = true;
+      uploadBtn.textContent = "Uploading…";
+      if (statusDiv) statusDiv.textContent = "Uploading…";
+
+      try {
+        const dataUri = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (typeof reader.result === "string") {
+              resolve(reader.result);
+              return;
+            }
+            reject(new Error("Failed to read file contents."));
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            file_data: dataUri,
+            mime_type: file.type,
+            file_size: file.size,
+            article_id: String(articleId),
+            alt_text: altText,
+          }),
+        });
+
+        if (res.status === 401) {
+          window.location.href = "/admin";
+          return;
+        }
+
+        const data = (await res.json().catch(() => ({}))) as UploadResponse;
+        if (!res.ok) {
+          showToast(data.error ?? "Upload failed.", "error");
+          if (statusDiv) statusDiv.textContent = "";
+          return;
+        }
+
+        if (data.media) {
+          syncMediaGallery([...currentMedia, data.media]);
+        }
+        if (altInput) altInput.value = "";
+        if (fileInput) fileInput.value = "";
+        if (statusDiv) statusDiv.textContent = "";
+        showToast("Media uploaded successfully.", "success");
+      } catch {
+        showToast("Network error during upload.", "error");
+        if (statusDiv) statusDiv.textContent = "";
+      } finally {
+        uploadBtn.disabled = false;
+        uploadBtn.textContent = "Upload Media";
+      }
+    });
+  }
+
   loadArticle();
+  loadCategories();
 </script>

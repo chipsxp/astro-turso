@@ -4,6 +4,7 @@ import SocialShare from "../../components/SocialShare.astro";
 import { db } from "../../lib/db";
 import { getMediaByArticle } from "../../lib/media";
 import { buildCloudinaryImageUrl } from "../../lib/cloudinary";
+import { sanitizeArticleBodyServer } from "../../lib/sanitize-server";
 
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
 const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
@@ -169,13 +170,13 @@ function formatDate(iso: string): string {
   }
 }
 
-// Convert plain-text body paragraphs to HTML paragraphs
+// Convert plain-text body paragraphs to HTML paragraphs + sanitize against XSS
 // (Phase 10 can upgrade to full Markdown if needed)
 function bodyToHtml(text: string): string {
   const blockTagPattern =
     /^\s*<(ul|ol|li|figure|img|h1|h2|h3|h4|h5|h6|blockquote|pre|table|hr|p|div|section|article)\b/i;
 
-  return text
+  const htmlParagraphs = text
     .split(/\n{2,}/)
     .map((para) => para.trim())
     .filter(Boolean)
@@ -185,6 +186,9 @@ function bodyToHtml(text: string): string {
         : `<p>${para.replace(/\n/g, "<br>")}</p>`,
     )
     .join("\n");
+
+  // Sanitize to remove XSS vectors
+  return sanitizeArticleBodyServer(htmlParagraphs);
 }
 
 const bodyHtml = bodyToHtml(article.body);
