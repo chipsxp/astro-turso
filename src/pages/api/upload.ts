@@ -33,6 +33,24 @@ function getAllowedTypesMessage(resourceType: "image" | "video"): string {
   return "Unsupported image type. Allowed: jpeg, png, webp, gif, avif";
 }
 
+function parseDataUri(
+  dataUri: string,
+): { mimeType: string; base64Payload: string } | null {
+  const commaIdx = dataUri.indexOf(",");
+  if (!dataUri.startsWith("data:") || commaIdx === -1) return null;
+  const header = dataUri.slice(5, commaIdx);
+  const parts = header.split(";");
+  const mimeType = parts[0].trim();
+  if (!mimeType || !parts.includes("base64")) return null;
+  const base64Payload = dataUri.slice(commaIdx + 1);
+  return base64Payload ? { mimeType, base64Payload } : null;
+}
+
+function estimateBase64DecodedBytes(base64: string): number {
+  const withoutPadding = base64.replace(/=+$/, "");
+  return Math.floor((withoutPadding.length * 3) / 4);
+}
+
 // --- POST /api/upload — upload media to Cloudinary and record in DB (JWT protected) ---
 // Sequence diagram Flow 3:
 //   JWT verified by middleware →
@@ -55,14 +73,28 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   const fileData = body.file_data as string | null;
-  const mimeType = String(body.mime_type ?? "").trim();
-  const fileSize = Number(body.file_size ?? 0);
+  const declaredMimeType = String(body.mime_type ?? "").trim();
   const articleIdRaw = body.article_id;
   const uploadSessionIdRaw = body.upload_session_id;
   const altText = String(body.alt_text ?? "").trim();
 
   if (!fileData || !altText) {
     return json({ error: "file_data and alt_text are required" }, 400);
+  }
+
+  // --- Parse data URI server-side to derive actual MIME type and byte count ---
+  const parsedUri = parseDataUri(fileData);
+  if (!parsedUri) {
+    return json({ error: "file_data must be a valid base64 data URI" }, 400);
+  }
+  const actualMimeType = parsedUri.mimeType;
+  const actualBytes = estimateBase64DecodedBytes(parsedUri.base64Payload);
+
+  if (declaredMimeType && declaredMimeType !== actualMimeType) {
+    return json(
+      { error: "mime_type does not match the data URI content type" },
+      400,
+    );
   }
 
   const articleIdText = String(articleIdRaw ?? "").trim();
@@ -83,7 +115,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   // --- Validate file type and size ---
-  const resourceType = getResourceTypeFromMimeType(mimeType);
+  const resourceType = getResourceTypeFromMimeType(actualMimeType);
   if (!resourceType) {
     return json(
       {
@@ -96,12 +128,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   const allowedTypes =
     resourceType === "video" ? VIDEO_MIME_TYPES : IMAGE_MIME_TYPES;
-  if (!allowedTypes.has(mimeType)) {
+  if (!allowedTypes.has(actualMimeType)) {
     return json({ error: getAllowedTypesMessage(resourceType) }, 415);
   }
 
   const maxBytes = getFileSizeLimit(resourceType);
-  if (fileSize > maxBytes) {
+  if (actualBytes > maxBytes) {
     if (resourceType === "image") {
       return json(
         {
@@ -163,11 +195,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
     await ensureMediaTable();
   }
 
-  // --- Validate data URI format before sending to Cloudinary ---
-  if (!fileData.startsWith("data:") || !fileData.includes(";base64,")) {
-    return json({ error: "file_data must be a valid base64 data URI" }, 400);
-  }
-
   // --- Upload to Cloudinary via base64 data URI ---
   let uploadResult: {
     secure_url: string;
@@ -199,6 +226,18 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   // --- INSERT into media or upload_session_media ---
+  // If the DB write fails after a successful Cloudinary upload, destroy the
+  // orphaned asset so storage and DB stay in sync.
+  async function rollbackCloudinaryUpload(): Promise<void> {
+    try {
+      await cloudinary.uploader.destroy(uploadResult.public_id, {
+        resource_type: resourceType ?? "image",
+      });
+    } catch (destroyErr) {
+      console.error("Cloudinary rollback destroy failed:", destroyErr);
+    }
+  }
+
   try {
     if (articleId != null) {
       const result = await db.execute(
@@ -272,6 +311,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       200,
     );
   } catch {
+    await rollbackCloudinaryUpload();
     return json({ error: "Database error" }, 500);
   }
 };

@@ -1,10 +1,27 @@
 # The Happy Feeling Scriptorium
 
-![Version](https://img.shields.io/badge/version-1.0.0-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
+![Version](https://img.shields.io/badge/version-1.1.0-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
 
-Astro SSR blog and admin panel for publishing articles, managing media, and running a small author workflow on top of Turso and Cloudinary.
+Astro SSR blog and admin panel for publishing articles, managing events, managing media, and running a small author workflow on top of Turso and Cloudinary.
 
 This repository is meant to be practical for developers who want to learn from it, run it locally, or adapt it for their own content site.
+
+## Branches
+
+| Branch | Version | Description |
+| --- | --- | --- |
+| `main` | 1.0.0 | Base blog platform — no events module |
+| `feature/events` | 1.1.0 | Adds the Upcoming Events module (this branch) |
+
+Clone the branch that matches what you need:
+
+```bash
+# Base platform only
+git clone https://github.com/chipsxp/astro-turso.git
+
+# With Upcoming Events module
+git clone -b feature/events https://github.com/chipsxp/astro-turso.git
+```
 
 ## What This Project Is For
 
@@ -321,10 +338,50 @@ First stable release. Core blogging platform, admin workflow, and security basel
 
 ---
 
+### [1.1.0] — 2026-04-08 — Upcoming Events Module (`feature/events` branch)
+
+Adds a full Upcoming Events system alongside the existing blog and admin workflow.
+
+**Events Public Pages**
+
+- `/events/[slug]` — individual event detail page with full Quill-rendered body, event metadata (date, location, admission), and Cloudinary media support
+- Upcoming Events listing integrated with the public navigation
+
+**Events Admin**
+
+- `/admin/events` — event listing for admins and authors (admins see all; authors see their own)
+- `/admin/events/new` — create event with Quill WYSIWYG editor, date/time picker, location, admission fields, and Cloudinary media panel
+- `/admin/events/[slug]` — edit and publish existing events
+
+**Events API**
+
+- `GET /api/events` — public listing of published upcoming events
+- `GET /api/events/[slug]` — public event detail
+- `GET|POST /api/admin/events` — admin/author-scoped event management
+- `GET|PUT|DELETE /api/admin/events/[slug]` — event CRUD (role-enforced)
+- `POST /api/admin/events/media` — Cloudinary media upload for events
+
+**Database**
+
+- New `events` table: id, title, slug, body, description, author_id, status, event_date, location, admission, created_at, updated_at
+- Run `node --env-file=.env scripts/create-events-table.mjs` to create the table before first use
+
+**Setup Note for This Branch**
+
+After `npm install` and filling in `.env`, run the events table migration:
+
+```bash
+node --env-file=.env scripts/create-events-table.mjs
+```
+
+Then create your admin user and start the server as usual.
+
+---
+
 ### Planned Releases
 
-| Version   | Feature               | Status  |
-| --------- | --------------------- | ------- |
-| **1.1.0** | Upcoming Events page  | Planned |
-| **1.2.0** | Art Sales / Shop page | Planned |
-| **1.3.0** | _(to be determined)_  | Planned |
+| Version   | Feature               | Status    |
+| --------- | --------------------- | --------- |
+| **1.1.0** | Upcoming Events page  | Released  |
+| **1.2.0** | Art Sales / Shop page | Planned   |
+| **1.3.0** | _(to be determined)_  | Planned   |

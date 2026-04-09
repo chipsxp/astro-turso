@@ -125,6 +125,63 @@ img {
   color: var(--text);
 }
 
+/* Quill stores bullet lists as ol > li[data-list="bullet"], so restore bullet semantics on published pages. */
+.article-body .prose ol li[data-list="bullet"] {
+  list-style-type: disc;
+}
+
+.article-body .prose ol li[data-list="ordered"] {
+  list-style-type: decimal;
+}
+
+.article-body .prose h1,
+.article-body .prose h2,
+.article-body .prose h3,
+.article-body .prose h4,
+.article-body .prose h5,
+.article-body .prose h6 {
+  font-family: var(--font-display);
+  color: var(--text);
+  line-height: 1.2;
+  font-weight: 500;
+  margin: 1.6em 0 0.65em;
+}
+
+.article-body .prose h1:first-child,
+.article-body .prose h2:first-child,
+.article-body .prose h3:first-child,
+.article-body .prose h4:first-child,
+.article-body .prose h5:first-child,
+.article-body .prose h6:first-child {
+  margin-top: 0;
+}
+
+.article-body .prose h1 {
+  font-size: clamp(2rem, 4vw, 2.6rem);
+}
+
+.article-body .prose h2 {
+  font-size: clamp(1.6rem, 3vw, 2.05rem);
+}
+
+.article-body .prose h3 {
+  font-size: clamp(1.35rem, 2.3vw, 1.7rem);
+}
+
+.article-body .prose h4 {
+  font-size: 1.3rem;
+}
+
+.article-body .prose h5 {
+  font-size: 1.1rem;
+}
+
+.article-body .prose h6 {
+  font-size: 0.98rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 /* Restore visible blockquote border for rendered article prose (preflight resets borders). */
 .article-body .prose blockquote {
   margin: 0 0 1.4em;

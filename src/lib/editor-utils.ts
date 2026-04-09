@@ -14,6 +14,8 @@ export interface EditorConfig {
   containerId: string;
   initialContent?: string;
   onContentChange?: (html: string) => void;
+  toolbar?: unknown[];
+  placeholder?: string;
 }
 
 /**
@@ -45,17 +47,19 @@ function ensureResizeModuleRegistered() {
 export function initializeEditor(config: EditorConfig): Quill {
   ensureResizeModuleRegistered();
 
+  const toolbar = config.toolbar ?? [
+    ["bold", "italic", "underline"],
+    [{ color: COMIC_PALETTE }, { background: COMIC_PALETTE }],
+    ["blockquote", "code-block"],
+    [{ header: 2 }, { header: 3 }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["link", "image"],
+  ];
+
   const editor = new Quill(`#${config.containerId}`, {
     theme: "snow",
     modules: {
-      toolbar: [
-        ["bold", "italic", "underline"],
-        [{ color: COMIC_PALETTE }, { background: COMIC_PALETTE }],
-        ["blockquote", "code-block"],
-        [{ header: 2 }, { header: 3 }],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["link", "image"],
-      ],
+      toolbar,
       resize: {
         modules: ["Resize", "DisplaySize", "Toolbar", "Keyboard"],
         keyboardSelect: true,
@@ -69,7 +73,7 @@ export function initializeEditor(config: EditorConfig): Quill {
         },
       },
     },
-    placeholder: "Write your article content here…",
+    placeholder: config.placeholder ?? "Write your article content here…",
   });
 
   // Set initial content if provided

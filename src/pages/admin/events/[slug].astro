@@ -1,0 +1,322 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+
+const slug = Astro.params.slug ?? "";
+---
+
+<AdminLayout title="Edit Event">
+  <div class="page-header">
+    <div>
+      <p class="page-header__eyebrow">Events</p>
+      <h1 class="page-header__title">Edit <em>Event</em></h1>
+    </div>
+    <div class="flex" style="gap: 8px; align-items: center;">
+      <a href="/admin/events" class="btn btn-ghost">Back to Events</a>
+      <button type="button" id="preview-btn" class="btn btn-ghost"
+        >Preview Draft</button
+      >
+      <a
+        id="view-link"
+        href={`/events/${slug}`}
+        target="_blank"
+        class="btn btn-ghost">View Public</a
+      >
+    </div>
+  </div>
+
+  <form id="event-form" class="event-form" novalidate data-event-slug={slug}>
+    <div class="editor-grid">
+      <div class="card card--accent-top">
+        <p class="panel-heading">Event Details</p>
+
+        <div class="form-group">
+          <label class="form-label" for="title">Title *Required</label>
+          <input id="title" name="title" class="form-input" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="slug-input">Slug</label>
+          <input id="slug-input" name="slug" class="form-input" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="description">Short Description</label>
+          <textarea id="description" name="description" class="form-textarea"
+          ></textarea>
+        </div>
+
+        <div class="form-group form-group--compact">
+          <label class="form-label" id="body-editor-label"
+            >Event Body *Required</label
+          >
+          <div id="editor-toolbar"></div>
+          <div
+            id="body-editor"
+            class="form-textarea form-textarea--body quill-editor"
+            aria-labelledby="body-editor-label"
+            style="background: white; border: 1px solid var(--surface-3); border-radius: 4px; min-height: 360px;"
+          >
+          </div>
+          <input type="hidden" id="body" name="body" />
+          <span class="form-hint">Visual editor for full event details.</span>
+        </div>
+      </div>
+
+      <div class="meta-stack">
+        <div class="card card--accent-top">
+          <p class="panel-heading">Schedule</p>
+          <div class="form-group">
+            <label class="form-label" for="start_date"
+              >Start Date *Required</label
+            >
+            <input
+              id="start_date"
+              name="start_date"
+              type="date"
+              class="form-input"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="end_date">End Date</label>
+            <input
+              id="end_date"
+              name="end_date"
+              type="date"
+              class="form-input"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="start_time">Start Time (HH:MM)</label
+            >
+            <input
+              id="start_time"
+              name="start_time"
+              type="time"
+              class="form-input"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="end_time">End Time (HH:MM)</label>
+            <input
+              id="end_time"
+              name="end_time"
+              type="time"
+              class="form-input"
+            />
+          </div>
+          <div class="form-group form-group--compact">
+            <label class="form-label" for="is_all_day">All Day</label>
+            <input id="is_all_day" name="is_all_day" type="checkbox" />
+          </div>
+        </div>
+
+        <div class="card card--kirby-top">
+          <p class="panel-heading">Location and Media</p>
+          <div class="form-group">
+            <label class="form-label" for="venue_name">Venue Name</label>
+            <input id="venue_name" name="venue_name" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="venue_address">Venue Address</label>
+            <input id="venue_address" name="venue_address" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="city">City</label>
+            <input id="city" name="city" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="region">Region / State</label>
+            <input id="region" name="region" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="postal_code">Postal Code</label>
+            <input id="postal_code" name="postal_code" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="event_url">External URL</label>
+            <input
+              id="event_url"
+              name="event_url"
+              type="url"
+              class="form-input"
+              placeholder="https://..."
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Featured Hero Media</label>
+            <input
+              type="hidden"
+              id="featured_media_id"
+              name="featured_media_id"
+            />
+            <div id="featured-media-selected" class="media-selected-card">
+              <span class="form-hint">No featured media selected.</span>
+            </div>
+            <button type="button" id="load-media-btn" class="btn btn-ghost"
+              >Browse My Media</button
+            >
+            <div id="media-picker" class="media-picker-grid"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="status">Status</label>
+            <select id="status" name="status" class="form-select">
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button id="submit-btn" class="btn-cta" type="submit"
+              >Save Event</button
+            >
+            <button id="delete-btn" class="btn btn-danger" type="button"
+              >Delete Event</button
+            >
+          </div>
+          <p id="form-status" class="form-status" aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div id="draft-preview" class="draft-preview is-hidden" aria-hidden="true">
+    <div class="draft-preview__bar">
+      <span class="draft-preview__badge">Draft Preview</span>
+      <span class="draft-preview__note"
+        >Previewing current editor content — unsaved changes are included.</span
+      >
+      <button type="button" id="preview-close" class="draft-preview__close-btn"
+        >Back to Editor</button
+      >
+    </div>
+    <div class="draft-preview__scroll" id="draft-preview-scroll"></div>
+  </div>
+</AdminLayout>
+
+<style>
+  @import "../../../styles/pages/admin-article-new.css";
+  @import "../../../styles/pages/blog-article.css";
+
+  .form-status {
+    margin-top: 0.65rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .form-actions {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .media-selected-card {
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+
+  .media-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .media-picker-card {
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    padding: 6px;
+  }
+
+  .media-picker-card.is-selected {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+
+  .media-picker-card img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    margin-bottom: 6px;
+  }
+
+  .media-picker-card button {
+    width: 100%;
+  }
+</style>
+
+<script>
+  import { EventFormManager } from "../../../lib/admin-event-form";
+  import { initializeEditor } from "../../../lib/editor-utils";
+
+  // Keep this script attribute-free so Astro processes imports as a module.
+  const formEl = document.getElementById("event-form") as HTMLFormElement;
+  const eventSlug = formEl.dataset.eventSlug ?? "";
+
+  initializeEditor({
+    containerId: "body-editor",
+    toolbar: [
+      ["bold", "italic", "underline"],
+      [
+        {
+          color: [
+            "#080808",
+            "#1c1008",
+            "#ffffff",
+            "#f3e9db",
+            "#e04030",
+            "#1c4268",
+            "#f2c85a",
+            "#f8e040",
+            "#fffef0",
+            "#f4ede0",
+            "#34c070",
+            "#c09838",
+          ],
+        },
+        {
+          background: [
+            "#080808",
+            "#1c1008",
+            "#ffffff",
+            "#f3e9db",
+            "#e04030",
+            "#1c4268",
+            "#f2c85a",
+            "#f8e040",
+            "#fffef0",
+            "#f4ede0",
+            "#34c070",
+            "#c09838",
+          ],
+        },
+      ],
+      ["blockquote", "code-block"],
+      [{ header: 2 }, { header: 3 }],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link"],
+    ],
+    placeholder: "Write your event details here...",
+    onContentChange: (html) => {
+      const bodyInput = document.getElementById(
+        "body",
+      ) as HTMLInputElement | null;
+      if (bodyInput) bodyInput.value = html;
+    },
+  });
+
+  const manager = new EventFormManager(true, eventSlug);
+  manager.initialize().then(() => {
+    const shouldOpenPreview =
+      new URLSearchParams(window.location.search).get("preview") === "1";
+    if (shouldOpenPreview) {
+      const previewBtn = document.getElementById(
+        "preview-btn",
+      ) as HTMLButtonElement | null;
+      previewBtn?.click();
+    }
+  });
+</script>

@@ -1,0 +1,236 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="Events Dashboard">
+  <div class="page-header">
+    <div>
+      <p class="page-header__eyebrow">Events</p>
+      <h1 class="page-header__title">Manage <em>Events</em></h1>
+    </div>
+    <a href="/admin/events/new" class="btn btn-primary">+ New Event</a>
+  </div>
+
+  <div class="filter-bar">
+    <button class="btn btn-ghost filter-btn active" data-filter="all"
+      >All</button
+    >
+    <button class="btn btn-ghost filter-btn" data-filter="published"
+      >Published</button
+    >
+    <button class="btn btn-ghost filter-btn" data-filter="draft">Drafts</button>
+    <button class="btn btn-ghost filter-btn" data-filter="cancelled"
+      >Cancelled</button
+    >
+  </div>
+
+  <div id="state-loading" class="state-caption">
+    <span class="state-caption__label">Loading Events...</span>
+  </div>
+
+  <div id="state-error" class="alert alert--error is-hidden"></div>
+
+  <div id="state-empty" class="state-empty is-hidden">
+    <span class="state-empty__impact">NO EVENTS</span>
+    <p class="state-empty__sub">No events match this filter yet.</p>
+  </div>
+
+  <div id="state-table" class="card is-hidden">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Owner</th>
+            <th class="table-actions-col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="events-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</AdminLayout>
+
+<style is:global>
+  @import "../../../styles/pages/admin-dashboard.css";
+</style>
+
+<script>
+  type EventItem = {
+    id: number;
+    title: string;
+    slug: string;
+    status: "draft" | "published" | "cancelled";
+    start_date: string;
+    end_date: string | null;
+    venue_name: string | null;
+    city: string | null;
+    owner_email: string | null;
+  };
+
+  const stateLoading = document.getElementById(
+    "state-loading",
+  ) as HTMLDivElement;
+  const stateError = document.getElementById("state-error") as HTMLDivElement;
+  const stateEmpty = document.getElementById("state-empty") as HTMLDivElement;
+  const stateTable = document.getElementById("state-table") as HTMLDivElement;
+  const tbody = document.getElementById(
+    "events-tbody",
+  ) as HTMLTableSectionElement;
+
+  let allEvents: EventItem[] = [];
+  let currentFilter = "all";
+
+  function escapeHtml(str: string): string {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\"/g, "&quot;");
+  }
+
+  function formatDate(isoDate: string): string {
+    const parsed = new Date(`${isoDate}T00:00:00`);
+    if (Number.isNaN(parsed.getTime())) return isoDate;
+    return parsed.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+
+  function renderRows(events: EventItem[]) {
+    if (events.length === 0) {
+      stateTable.style.display = "none";
+      stateEmpty.style.display = "block";
+      return;
+    }
+
+    stateEmpty.style.display = "none";
+    stateTable.style.display = "block";
+
+    tbody.innerHTML = events
+      .map((event) => {
+        const statusLabel =
+          event.status === "published"
+            ? "Published"
+            : event.status === "cancelled"
+              ? "Cancelled"
+              : "Draft";
+
+        const viewHref =
+          event.status === "published"
+            ? `/events/${escapeHtml(event.slug)}`
+            : `/admin/events/${escapeHtml(event.slug)}?preview=1`;
+        const viewTarget =
+          event.status === "published" ? ' target="_blank"' : "";
+        const viewText = event.status === "published" ? "View" : "Preview";
+
+        const dateLabel = event.end_date
+          ? `${formatDate(event.start_date)} to ${formatDate(event.end_date)}`
+          : formatDate(event.start_date);
+
+        const locationLabel = [event.venue_name, event.city]
+          .filter(Boolean)
+          .join(" - ");
+
+        return `
+          <tr>
+            <td>
+              <a href="/admin/events/${escapeHtml(event.slug)}" class="dashboard-article-link">
+                ${escapeHtml(event.title)}
+              </a>
+              <div class="dashboard-article-slug">${escapeHtml(event.slug)}</div>
+            </td>
+            <td>
+              <span class="badge badge--${event.status === "cancelled" ? "draft" : event.status}">${statusLabel}</span>
+            </td>
+            <td class="dashboard-date-cell">${escapeHtml(dateLabel)}</td>
+            <td>${escapeHtml(locationLabel || "-")}</td>
+            <td class="dashboard-author-cell">${escapeHtml(event.owner_email || "-")}</td>
+            <td class="table-actions-col">
+              <div class="dashboard-actions-wrap">
+                <a href="${viewHref}"${viewTarget} class="btn btn-ghost dashboard-action-btn">${viewText}</a>
+                <a href="/admin/events/${escapeHtml(event.slug)}" class="btn btn-ghost dashboard-action-btn">Edit</a>
+                <button class="btn btn-danger dashboard-action-btn delete-btn" data-slug="${escapeHtml(event.slug)}">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      })
+      .join("");
+
+    tbody.querySelectorAll<HTMLButtonElement>(".delete-btn").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const slug = btn.dataset.slug;
+        if (!slug) return;
+        if (!window.confirm("Delete this event?")) return;
+
+        const response = await fetch(`/api/events/${slug}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) {
+          const data = await response.json().catch(() => ({}));
+          alert(data.error ?? "Delete failed.");
+          return;
+        }
+
+        allEvents = allEvents.filter((entry) => entry.slug !== slug);
+        applyFilter();
+      });
+    });
+  }
+
+  function applyFilter() {
+    const events =
+      currentFilter === "all"
+        ? allEvents
+        : allEvents.filter((event) => event.status === currentFilter);
+
+    renderRows(events);
+  }
+
+  async function loadEvents() {
+    stateLoading.style.display = "block";
+    stateError.style.display = "none";
+    stateTable.style.display = "none";
+    stateEmpty.style.display = "none";
+
+    try {
+      const response = await fetch("/api/admin/events");
+      if (response.status === 401) {
+        window.location.href = "/admin";
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`Server error ${response.status}`);
+      }
+
+      const data = await response.json();
+      allEvents = data.events ?? [];
+      stateLoading.style.display = "none";
+      applyFilter();
+    } catch (error: any) {
+      stateLoading.style.display = "none";
+      stateError.style.display = "block";
+      stateError.textContent = error.message ?? "Failed to load events.";
+    }
+  }
+
+  document.querySelectorAll<HTMLButtonElement>(".filter-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll<HTMLButtonElement>(".filter-btn")
+        .forEach((entry) => entry.classList.remove("active"));
+      btn.classList.add("active");
+      currentFilter = btn.dataset.filter ?? "all";
+      applyFilter();
+    });
+  });
+
+  loadEvents();
+</script>

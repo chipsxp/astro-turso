@@ -568,6 +568,269 @@ pre {
   letter-spacing: 0.04em;
 }
 
+/* Shared Quill editor runtime styles for admin pages. */
+.ql-toolbar {
+  border: 1px solid var(--border);
+  border-radius: 4px 4px 0 0;
+  background: var(--surface);
+}
+
+.ql-container {
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.ql-editor {
+  min-height: 400px;
+  padding: 12px;
+}
+
+.ql-editor.ql-blank::before {
+  color: var(--text-status);
+  font-style: italic;
+}
+
+.ql-snow .ql-picker.ql-color .ql-picker-options,
+.ql-snow .ql-picker.ql-background .ql-picker-options {
+  width: 184px;
+  padding: 4px 2px;
+}
+
+.ql-snow .ql-color-picker .ql-picker-item {
+  width: 18px;
+  height: 18px;
+  border-radius: 2px;
+}
+
+.ql-snow .ql-custom-color-row {
+  clear: both;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 2px 2px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.ql-snow .ql-custom-color-label {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  cursor: pointer;
+}
+
+.ql-snow .ql-custom-color-input {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.ql-snow .ql-custom-color-input::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 999px;
+}
+
+.ql-snow .ql-custom-color-input::-webkit-color-swatch {
+  border: none;
+  border-radius: 999px;
+}
+
+.ql-snow .ql-custom-color-clear {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 5px;
+  cursor: pointer;
+  line-height: 1;
+  color: var(--text);
+}
+
+/* Resize plugin controls need explicit styles to render visible handles. */
+.ql-resize-overlay {
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px dashed var(--border);
+  pointer-events: none;
+}
+
+.ql-resize-handle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--text-status);
+  box-sizing: border-box;
+  opacity: 0.85;
+  pointer-events: all;
+  z-index: 6;
+}
+
+.ql-resize-handle.tl {
+  top: -6px;
+  left: -6px;
+  cursor: nwse-resize;
+}
+
+.ql-resize-handle.tr {
+  top: -6px;
+  right: -6px;
+  cursor: nesw-resize;
+}
+
+.ql-resize-handle.br {
+  right: -6px;
+  bottom: -6px;
+  cursor: nwse-resize;
+}
+
+.ql-resize-handle.bl {
+  left: -6px;
+  bottom: -6px;
+  cursor: nesw-resize;
+}
+
+.ql-resize-toolbar {
+  position: absolute;
+  top: -12px;
+  right: 0;
+  left: 0;
+  height: 0;
+  min-width: 120px;
+  text-align: center;
+  color: var(--text);
+  box-sizing: border-box;
+  cursor: default;
+  pointer-events: all;
+  z-index: 7;
+}
+
+.ql-resize-toolbar button {
+  display: inline-block;
+  min-width: 24px;
+  height: 24px;
+  padding: 2px;
+  background: var(--surface-2);
+  border: 1px solid var(--text-status);
+  vertical-align: middle;
+}
+
+.ql-resize-toolbar button:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.ql-resize-toolbar button:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.ql-resize-toolbar button:not(:first-child) {
+  border-left: none;
+}
+
+.ql-resize-toolbar button.active {
+  filter: invert(20%);
+}
+
+.ql-resize-toolbar svg {
+  width: 18px;
+}
+
+.ql-resize-display {
+  position: absolute;
+  padding: 4px 8px;
+  text-align: center;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--text-status);
+  box-sizing: border-box;
+  opacity: 0.85;
+  cursor: default;
+  line-height: 1;
+  z-index: 7;
+}
+
+.ql-resize-style-left {
+  float: left;
+  margin: 0 1em 1em 0;
+}
+
+.ql-resize-style-center {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+
+.ql-resize-style-right {
+  float: right;
+  margin: 0 0 1em 1em;
+}
+
+.ql-resize-style-full {
+  width: 100% !important;
+}
+
+.ql-resize-style-full>* {
+  width: 100%;
+}
+
+/* Quill toolbar icons need global selectors because the toolbar is generated at runtime. */
+html[data-theme="dark"] {
+  --quill-toolbar-icon: #ccc;
+  --quill-toolbar-icon-active: #4da3ff;
+}
+
+html[data-theme="light"] {
+  --quill-toolbar-icon: #1c1008;
+  --quill-toolbar-icon-active: #1c4268;
+}
+
+.ql-toolbar.ql-snow .ql-stroke {
+  stroke: var(--quill-toolbar-icon) !important;
+}
+
+.ql-toolbar.ql-snow .ql-fill,
+.ql-toolbar.ql-snow .ql-stroke.ql-fill {
+  fill: var(--quill-toolbar-icon) !important;
+}
+
+.ql-toolbar.ql-snow .ql-picker,
+.ql-toolbar.ql-snow .ql-picker-label,
+.ql-toolbar.ql-snow .ql-picker-options {
+  color: var(--quill-toolbar-icon) !important;
+}
+
+.ql-toolbar.ql-snow button:hover .ql-stroke,
+.ql-toolbar.ql-snow button:focus .ql-stroke,
+.ql-toolbar.ql-snow button.ql-active .ql-stroke,
+.ql-toolbar.ql-snow .ql-picker-label:hover .ql-stroke,
+.ql-toolbar.ql-snow .ql-picker-label.ql-active .ql-stroke,
+.ql-toolbar.ql-snow .ql-picker-item:hover .ql-stroke,
+.ql-toolbar.ql-snow .ql-picker-item.ql-selected .ql-stroke {
+  stroke: var(--quill-toolbar-icon-active) !important;
+}
+
+.ql-toolbar.ql-snow button:hover .ql-fill,
+.ql-toolbar.ql-snow button:focus .ql-fill,
+.ql-toolbar.ql-snow button.ql-active .ql-fill,
+.ql-toolbar.ql-snow .ql-picker-label:hover .ql-fill,
+.ql-toolbar.ql-snow .ql-picker-label.ql-active .ql-fill,
+.ql-toolbar.ql-snow .ql-picker-item:hover .ql-fill,
+.ql-toolbar.ql-snow .ql-picker-item.ql-selected .ql-fill {
+  fill: var(--quill-toolbar-icon-active) !important;
+}
+
 /* ─── Status badges — comic stamp style ─── */
 .badge {
   display: inline-block;

@@ -1,8 +1,71 @@
 ---
 import BlogLayout from "../layouts/BlogLayout.astro";
+import { buildCloudinaryImageUrl } from "../lib/cloudinary";
+import { db } from "../lib/db";
+import {
+  EVENT_SELECT_FIELDS,
+  ensureEventsSchema,
+  mapEventRow,
+} from "../lib/events";
 
-const siteUrl = import.meta.env.SITE_URL ?? "";
+const siteUrl = process.env.SITE_URL || Astro.url.origin;
+const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
 const canonicalUrl = `${siteUrl}/upcoming-events`;
+
+await ensureEventsSchema();
+
+const result = await db.execute(
+  `SELECT ${EVENT_SELECT_FIELDS}
+   FROM events e
+   LEFT JOIN users u ON u.id = e.owner_id
+   LEFT JOIN media m ON m.id = e.featured_media_id
+   WHERE e.status = 'published'
+     AND date(COALESCE(NULLIF(e.end_date, ''), e.start_date)) >= date('now')
+   ORDER BY date(e.start_date) ASC,
+            COALESCE(time(e.start_time), '23:59') ASC,
+            e.created_at DESC`,
+);
+
+const events = result.rows.map((row: Record<string, unknown>) =>
+  mapEventRow(row),
+);
+
+function formatDate(date: string): string {
+  const parsed = new Date(`${date}T00:00:00`);
+  if (Number.isNaN(parsed.getTime())) return date;
+  return parsed.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function formatTime(time: string | null): string | null {
+  if (!time) return null;
+  const parsed = new Date(`1970-01-01T${time}:00`);
+  if (Number.isNaN(parsed.getTime())) return time;
+  return parsed.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+function getEventImageUrl(
+  publicId: string | null,
+  fallbackUrl: string | null,
+  preset: "hero" | "thumb",
+): string | null {
+  if (!fallbackUrl) return null;
+  if (!publicId || !cloudName) return fallbackUrl;
+  try {
+    return buildCloudinaryImageUrl({ cloudName, publicId, preset });
+  } catch {
+    return fallbackUrl;
+  }
+}
+
+const featuredEvent = events[0] ?? null;
+const remainingEvents = events.slice(1);
 ---
 
 <BlogLayout
@@ -10,21 +73,124 @@ const canonicalUrl = `${siteUrl}/upcoming-events`;
   description="Upcoming events from The Happy Feeling Scriptorium."
   canonicalUrl={canonicalUrl}
 >
-  <main class="page-wrap static-page">
-    <h1>Upcoming Events</h1>
+  <main class="events-page">
+    <section class="events-hero page-wrap">
+      <p class="events-eyebrow">Community Calendar</p>
+      <h1 class="events-title">Upcoming Events</h1>
+      <p class="events-intro">
+        Local gallery shows, awareness showcases, sidewalk art sales, and
+        small-business collaborative exhibitions led by our artists.
+      </p>
+    </section>
+
+    {
+      featuredEvent && (
+        <section
+          class="event-featured page-wrap"
+          aria-label="Featured upcoming event"
+        >
+          <div class="event-featured__content">
+            <p class="event-featured__label">Happening Next</p>
+            <h2 class="event-featured__title">
+              <a href={`/events/${featuredEvent.slug}`}>
+                {featuredEvent.title}
+              </a>
+            </h2>
+            <p class="event-featured__meta">
+              {formatDate(featuredEvent.start_date)}
+              {featuredEvent.end_date &&
+                ` to ${formatDate(featuredEvent.end_date)}`}
+              {featuredEvent.is_all_day
+                ? " • All Day"
+                : featuredEvent.start_time
+                  ? ` • ${formatTime(featuredEvent.start_time)}${featuredEvent.end_time ? ` to ${formatTime(featuredEvent.end_time)}` : ""}`
+                  : ""}
+            </p>
+            {featuredEvent.venue_name && (
+              <p class="event-featured__meta event-featured__meta--location">
+                {featuredEvent.venue_name}
+                {featuredEvent.city && ` • ${featuredEvent.city}`}
+              </p>
+            )}
+            {featuredEvent.description && (
+              <p class="event-featured__description">
+                {featuredEvent.description}
+              </p>
+            )}
+            <a
+              href={`/events/${featuredEvent.slug}`}
+              class="event-featured__cta"
+            >
+              View Event
+            </a>
+          </div>
+          {featuredEvent.featured_media_url && (
+            <div class="event-featured__media">
+              <img
+                src={
+                  getEventImageUrl(
+                    featuredEvent.featured_media_public_id,
+                    featuredEvent.featured_media_url,
+                    "hero",
+                  ) ?? featuredEvent.featured_media_url!
+                }
+                alt={
+                  featuredEvent.featured_media_alt_text ?? featuredEvent.title
+                }
+                loading="lazy"
+              />
+            </div>
+          )}
+        </section>
+      )
+    }
+
+    <section class="events-list page-wrap" aria-label="All upcoming events">
+      <h2 class="events-section-title">On The Calendar</h2>
+      {
+        remainingEvents.length === 0 && !featuredEvent && (
+          <p class="events-empty">
+            New events are being scheduled. Check back soon for upcoming gallery
+            and artist-community gatherings.
+          </p>
+        )
+      }
+      {
+        remainingEvents.map((event: (typeof remainingEvents)[0]) => (
+          <article class="event-card">
+            <p class="event-card__date">
+              {formatDate(event.start_date)}
+              {event.end_date && ` to ${formatDate(event.end_date)}`}
+            </p>
+            <h3 class="event-card__title">
+              <a href={`/events/${event.slug}`}>{event.title}</a>
+            </h3>
+            <p class="event-card__meta">
+              {event.is_all_day
+                ? "All Day"
+                : event.start_time
+                  ? `${formatTime(event.start_time)}${event.end_time ? ` to ${formatTime(event.end_time)}` : ""}`
+                  : "Time announced soon"}
+            </p>
+            {event.venue_name && (
+              <p class="event-card__meta event-card__meta--location">
+                {event.venue_name}
+                {event.city && ` • ${event.city}`}
+              </p>
+            )}
+            {event.description && (
+              <p class="event-card__description">{event.description}</p>
+            )}
+            <a href={`/events/${event.slug}`} class="event-card__cta">
+              View Event
+            </a>
+          </article>
+        ))
+      }
+    </section>
   </main>
 </BlogLayout>
 
 <style>
-  .static-page {
-    max-width: 780px;
-    padding-top: 56px;
-    padding-bottom: 56px;
-  }
-
-  .static-page h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3rem);
-    color: var(--text);
-  }
+  @import "../styles/pages/events.css";
 </style>

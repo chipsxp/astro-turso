@@ -1,0 +1,187 @@
+---
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import { buildCloudinaryImageUrl } from "../../lib/cloudinary";
+import { db } from "../../lib/db";
+import {
+  EVENT_SELECT_FIELDS,
+  ensureEventsSchema,
+  mapEventRow,
+} from "../../lib/events";
+import { sanitizeArticleBodyServer } from "../../lib/sanitize-server";
+
+const siteUrl = process.env.SITE_URL || Astro.url.origin;
+const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
+const slug = Astro.params.slug;
+
+if (!slug) {
+  return Astro.redirect("/upcoming-events", 302);
+}
+
+await ensureEventsSchema();
+
+const result = await db.execute(
+  `SELECT ${EVENT_SELECT_FIELDS}
+   FROM events e
+   LEFT JOIN users u ON u.id = e.owner_id
+   LEFT JOIN media m ON m.id = e.featured_media_id
+   WHERE e.slug = ?
+     AND e.status = 'published'
+   LIMIT 1`,
+  [slug],
+);
+
+const row = result.rows[0] as Record<string, unknown> | undefined;
+if (!row) {
+  return Astro.redirect("/upcoming-events", 302);
+}
+
+const event = mapEventRow(row);
+const canonicalUrl = `${siteUrl}/events/${event.slug}`;
+const sanitizedBody = sanitizeArticleBodyServer(event.body);
+
+function formatDate(date: string): string {
+  const parsed = new Date(`${date}T00:00:00`);
+  if (Number.isNaN(parsed.getTime())) return date;
+  return parsed.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function formatTime(time: string | null): string | null {
+  if (!time) return null;
+  const parsed = new Date(`1970-01-01T${time}:00`);
+  if (Number.isNaN(parsed.getTime())) return time;
+  return parsed.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+const startDateLabel = formatDate(event.start_date);
+const endDateLabel = event.end_date ? formatDate(event.end_date) : null;
+const startTimeLabel = formatTime(event.start_time);
+const endTimeLabel = formatTime(event.end_time);
+
+const timeRangeLabel = event.is_all_day
+  ? "All Day"
+  : startTimeLabel && endTimeLabel
+    ? `${startTimeLabel} to ${endTimeLabel}`
+    : startTimeLabel;
+
+const dateRangeLabel = endDateLabel
+  ? `${startDateLabel} to ${endDateLabel}`
+  : startDateLabel;
+
+const locationParts = [event.venue_name, event.city, event.region].filter(
+  Boolean,
+);
+const locationLabel =
+  locationParts.length > 0 ? locationParts.join(" • ") : null;
+
+function getEventImageUrl(
+  publicId: string | null,
+  fallbackUrl: string | null,
+  preset: "hero" | "thumb",
+): string | null {
+  if (!fallbackUrl) return null;
+  if (!publicId || !cloudName) return fallbackUrl;
+  try {
+    return buildCloudinaryImageUrl({ cloudName, publicId, preset });
+  } catch {
+    return fallbackUrl;
+  }
+}
+
+const pageTitle = `${event.title} — Upcoming Events`;
+const description = event.description ?? `Event details for ${event.title}.`;
+---
+
+<BlogLayout
+  title={pageTitle}
+  description={description}
+  canonicalUrl={canonicalUrl}
+  ogType="article"
+  ogImage={getEventImageUrl(
+    event.featured_media_public_id,
+    event.featured_media_url,
+    "hero",
+  ) ?? undefined}
+  ogImageAlt={event.featured_media_alt_text ?? undefined}
+>
+  <main class="events-page">
+    <section class="events-hero events-hero--detail page-wrap">
+      <p class="events-eyebrow">Featured Event</p>
+      <h1 class="events-title">{event.title}</h1>
+      {event.description && <p class="events-intro">{event.description}</p>}
+      <div class="event-meta-grid">
+        <div class="event-meta-card">
+          <p class="event-meta-label">Date</p>
+          <p class="event-meta-value">{dateRangeLabel}</p>
+        </div>
+        {
+          timeRangeLabel && (
+            <div class="event-meta-card">
+              <p class="event-meta-label">Time</p>
+              <p class="event-meta-value">{timeRangeLabel}</p>
+            </div>
+          )
+        }
+        {
+          locationLabel && (
+            <div class="event-meta-card">
+              <p class="event-meta-label">Location</p>
+              <p class="event-meta-value">{locationLabel}</p>
+            </div>
+          )
+        }
+      </div>
+      <div class="event-actions">
+        <a href="/upcoming-events" class="event-back-link">Back to all events</a
+        >
+        {
+          event.event_url && (
+            <a
+              href={event.event_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="event-cta-link"
+            >
+              Event Website
+            </a>
+          )
+        }
+      </div>
+    </section>
+
+    {
+      event.featured_media_url && (
+        <figure class="event-hero-media page-wrap">
+          <img
+            src={
+              getEventImageUrl(
+                event.featured_media_public_id,
+                event.featured_media_url,
+                "hero",
+              ) ?? event.featured_media_url!
+            }
+            alt={event.featured_media_alt_text ?? event.title}
+            loading="eager"
+          />
+        </figure>
+      )
+    }
+
+    <section class="event-body-wrap page-wrap">
+      <div class="article-body">
+        <div class="prose" set:html={sanitizedBody} />
+      </div>
+    </section>
+  </main>
+</BlogLayout>
+
+<style>
+  @import "../../styles/pages/events.css";
+  @import "../../styles/pages/blog-article.css";
+</style>

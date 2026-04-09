@@ -89,6 +89,25 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
             </svg>
             New Article
           </a>
+          <a href="/admin/events" class="nav-item" id="nav-events">
+            <svg class="nav-item__icon" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M3 2.5h10a1 1 0 0 1 1 1v9A1.5 1.5 0 0 1 12.5 14h-9A1.5 1.5 0 0 1 2 12.5v-9a1 1 0 0 1 1-1zm0 2V12.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V4.5H3zm2 2h6v1.5H5V6.5zm0 3h4v1.5H5V9.5z"
+              ></path>
+            </svg>
+            Events
+          </a>
+          <a href="/admin/events/new" class="nav-item" id="nav-events-new">
+            <svg class="nav-item__icon" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M8 2v12M2 8h12"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                fill="none"></path>
+            </svg>
+            New Event
+          </a>
         </div>
 
         <hr class="nav-divider" />
@@ -183,12 +202,17 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
         var map = {
           "/admin/dashboard": "nav-dashboard",
           "/admin/articles/new": "nav-new",
+          "/admin/events": "nav-events",
+          "/admin/events/new": "nav-events-new",
         };
         if (
           path.startsWith("/admin/articles/") &&
           path !== "/admin/articles/new"
         ) {
           path = "/admin/dashboard";
+        }
+        if (path.startsWith("/admin/events/") && path !== "/admin/events/new") {
+          path = "/admin/events";
         }
         var id = map[path];
         if (id) {
