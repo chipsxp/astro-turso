@@ -7,10 +7,6 @@
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   background-color: var(--bg);
   color: var(--text);
@@ -853,6 +849,24 @@ html[data-theme="light"] {
   background: rgba(112, 106, 96, 0.12);
   color: var(--text-muted);
   border-color: var(--border);
+}
+
+.badge--ended {
+  background: rgba(230, 126, 34, 0.12);
+  color: #e67e22;
+  border-color: rgba(230, 126, 34, 0.4);
+}
+
+.badge--archived {
+  background: rgba(149, 165, 166, 0.12);
+  color: #95a5a6;
+  border-color: rgba(149, 165, 166, 0.4);
+}
+
+.badge--concluded {
+  background: rgba(46, 204, 113, 0.12);
+  color: #2ecc71;
+  border-color: rgba(46, 204, 113, 0.4);
 }
 
 /* ─── Alert messages — caption box style ─── */

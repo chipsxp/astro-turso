@@ -1,0 +1,146 @@
+---
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import { buildCloudinaryImageUrl } from "../../lib/cloudinary";
+import { db } from "../../lib/db";
+import {
+  EVENT_SELECT_FIELDS,
+  ensureEventsSchema,
+  getArchiveBadgeLabel,
+  isEventArchivedPermanently,
+  mapEventRow,
+} from "../../lib/events";
+
+const siteUrl = process.env.SITE_URL || Astro.url.origin;
+const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
+const canonicalUrl = `${siteUrl}/events/archive`;
+
+await ensureEventsSchema();
+
+const result = await db.execute(
+  `SELECT ${EVENT_SELECT_FIELDS}
+   FROM events e
+   LEFT JOIN users u ON u.id = e.owner_id
+   LEFT JOIN media m ON m.id = e.featured_media_id
+   WHERE e.status = 'published'
+   ORDER BY date(e.start_date) DESC,
+            COALESCE(time(e.start_time), '23:59') DESC,
+            e.created_at DESC`,
+);
+
+const allEvents = result.rows.map((row: Record<string, unknown>) =>
+  mapEventRow(row),
+);
+
+// Filter to all concluded events (permanent archive, no time limit)
+const archiveEvents = allEvents.filter(isEventArchivedPermanently);
+
+function formatDate(date: string): string {
+  const parsed = new Date(`${date}T00:00:00`);
+  if (Number.isNaN(parsed.getTime())) return date;
+  return parsed.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function formatTime(time: string | null): string | null {
+  if (!time) return null;
+  const parsed = new Date(`1970-01-01T${time}:00`);
+  if (Number.isNaN(parsed.getTime())) return time;
+  return parsed.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+function getEventImageUrl(
+  publicId: string | null,
+  fallbackUrl: string | null,
+  preset: "hero" | "thumb",
+): string | null {
+  if (!fallbackUrl) return null;
+  if (!publicId || !cloudName) return fallbackUrl;
+  try {
+    return buildCloudinaryImageUrl({ cloudName, publicId, preset });
+  } catch {
+    return fallbackUrl;
+  }
+}
+---
+
+<BlogLayout
+  title="Event Archive — The Happy Feeling Scriptorium"
+  description="Permanently archived concluded events from The Happy Feeling Scriptorium. Browse past events and celebrate what you attended."
+  canonicalUrl={canonicalUrl}
+>
+  <main class="events-page">
+    <section class="events-hero page-wrap">
+      <p class="events-eyebrow">Archive</p>
+      <h1 class="events-title">Event Archive</h1>
+      <p class="events-intro">
+        Concluded events are permanently archived here for reference and
+        celebration. Browse past events to reminisce about what you attended.
+      </p>
+      <p class="events-archive-explore">
+        <a href="/upcoming-events">View Upcoming Events</a>
+      </p>
+    </section>
+
+    <section class="events-archive-list page-wrap" aria-label="Archived events">
+      <h2 class="events-section-title">Concluded Events</h2>
+      {
+        archiveEvents.length === 0 && (
+          <p class="events-empty">
+            No concluded events to display. Check the Upcoming Events page for
+            upcoming activities!
+          </p>
+        )
+      }
+      {
+        archiveEvents.map((event: (typeof archiveEvents)[number]) => {
+          const archiveBadgeLabel = getArchiveBadgeLabel(event);
+          return (
+            <article class="event-card event-card--archived">
+              <div class="event-card__badge-wrap">
+                <span class="badge badge--concluded">{archiveBadgeLabel}</span>
+              </div>
+              <p class="event-card__date">
+                {formatDate(event.start_date)}
+                {event.end_date && ` to ${formatDate(event.end_date)}`}
+              </p>
+              <h3 class="event-card__title">
+                <a href={`/events/${event.slug}`}>{event.title}</a>
+              </h3>
+              {event.venue_name && (
+                <p class="event-card__meta event-card__meta--location">
+                  {event.venue_name}
+                  {event.city && ` • ${event.city}`}
+                </p>
+              )}
+              {event.description && (
+                <p class="event-card__description">{event.description}</p>
+              )}
+              <a href={`/events/${event.slug}`} class="event-card__cta">
+                View Event Details
+              </a>
+            </article>
+          );
+        })
+      }
+    </section>
+  </main>
+</BlogLayout>
+
+<style>
+  @import "../../styles/pages/events.css";
+
+  .events-archive-explore {
+    margin-top: 1rem;
+  }
+
+  .events-archive-explore a {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+</style>

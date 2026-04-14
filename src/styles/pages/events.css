@@ -238,6 +238,104 @@
     padding-top: 1.25rem;
 }
 
+/* ─── Lifecycle Banner & Archive Styles ─── */
+.event-lifecycle-banner {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid;
+    border-radius: 4px;
+}
+
+.event-lifecycle-banner--ended {
+    background: rgba(230, 126, 34, 0.08);
+    border-color: rgba(230, 126, 34, 0.3);
+    color: #e67e22;
+}
+
+.event-lifecycle-banner--archived {
+    background: rgba(149, 165, 166, 0.08);
+    border-color: rgba(149, 165, 166, 0.3);
+    color: #95a5a6;
+}
+
+.event-lifecycle-banner__text {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.event-card--archived {
+    opacity: 0.85;
+}
+
+.event-card__badge-wrap {
+    margin-bottom: 0.5rem;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.26rem 0.56rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+}
+
+.badge--ended {
+    background: rgba(230, 126, 34, 0.12);
+    color: #e67e22;
+    border-color: rgba(230, 126, 34, 0.35);
+}
+
+.badge--archived {
+    background: rgba(149, 165, 166, 0.12);
+    color: #95a5a6;
+    border-color: rgba(149, 165, 166, 0.35);
+}
+
+.badge--concluded {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.18), rgba(241, 196, 15, 0.16));
+    color: #1f8d54;
+    border-color: rgba(46, 204, 113, 0.45);
+}
+
+.archive-header {
+    margin-bottom: 1.5rem;
+}
+
+.archive-intro {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.8rem;
+}
+
+.archive-link {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent-dim);
+}
+
+.archive-link:hover {
+    text-decoration: none;
+    border-bottom-color: var(--accent);
+}
+
+.archive-back-link {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--accent);
+    text-decoration: underline;
+}
+
 @media (max-width: 920px) {
     .event-featured {
         grid-template-columns: 1fr;

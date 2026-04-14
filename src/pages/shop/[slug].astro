@@ -1,0 +1,501 @@
+---
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import { calcSalePrice, formatEtsyPrice, parseTags } from "../../lib/sales";
+import { sanitizePayPalButton } from "../../lib/sanitize-paypal";
+import { sanitizeArticleBodyServer } from "../../lib/sanitize-server";
+
+const { slug } = Astro.params;
+
+let posting: any = null;
+let images: any[] = [];
+let testimonials: any[] = [];
+let reviews: any[] = [];
+let avgRating: number | null = null;
+let notFound = false;
+
+try {
+  const origin = Astro.url.origin;
+  const res = await fetch(`${origin}/api/sales/${slug}`);
+  if (res.status === 404) {
+    notFound = true;
+  } else if (res.ok) {
+    const data = await res.json();
+    posting = data.posting;
+    images = data.images ?? [];
+    testimonials = data.testimonials ?? [];
+    reviews = data.reviews ?? [];
+    avgRating = data.avg_rating ?? null;
+  }
+} catch {
+  notFound = true;
+}
+
+if (notFound) {
+  return Astro.redirect("/shop", 302);
+}
+
+const salePrice = posting ? calcSalePrice(posting) : null;
+const displayPrice =
+  posting?.etsy_price_amount != null
+    ? formatEtsyPrice(
+        posting.etsy_price_amount,
+        posting.etsy_price_divisor,
+        posting.etsy_price_currency,
+      )
+    : null;
+const salePriceStr =
+  salePrice != null
+    ? formatEtsyPrice(
+        Math.round(salePrice * posting.etsy_price_divisor),
+        posting.etsy_price_divisor,
+        posting.etsy_price_currency,
+      )
+    : null;
+
+const coverImage = images[0] ?? null;
+const galleryImages = images.slice(1);
+const tags = parseTags(posting?.tags ?? "[]");
+const safeBody = posting?.body ? sanitizeArticleBodyServer(posting.body) : "";
+const safePayPal = posting?.paypal_button_html
+  ? sanitizePayPalButton(posting.paypal_button_html)
+  : "";
+
+const promoEndDate = posting?.promo_end
+  ? new Date(posting.promo_end).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    })
+  : null;
+---
+
+<BlogLayout
+  title={posting?.title ?? "Shop Item"}
+  description={`Purchase ${posting?.title} from The Scriptorium shop.`}
+  ogImage={coverImage?.url}
+  ogImageAlt={coverImage?.alt_text || posting?.title}
+>
+  <article class="sales-detail page-wrap">
+    <div class="content-col">
+      <!-- Hero Image -->
+      {
+        coverImage && (
+          <div class="sales-hero">
+            <img
+              src={coverImage.url}
+              alt={coverImage.alt_text || posting.title}
+              class="sales-hero__img"
+            />
+          </div>
+        )
+      }
+
+      <!-- Title + Price -->
+      <header class="sales-header">
+        <h1 class="sales-title">{posting.title}</h1>
+
+        <div class="sales-price-panel">
+          {
+            salePrice != null && (
+              <span class="sales-promo-badge">
+                {posting.promo_label ?? "Sale"}
+              </span>
+            )
+          }
+          {
+            salePrice != null && salePriceStr && (
+              <>
+                <span class="sales-sale-price">{salePriceStr}</span>
+                {displayPrice && (
+                  <span class="sales-original-price">{displayPrice}</span>
+                )}
+                {promoEndDate && (
+                  <span class="sales-promo-end">Offer ends {promoEndDate}</span>
+                )}
+              </>
+            )
+          }
+          {
+            salePrice == null && displayPrice && (
+              <span class="sales-price-value">{displayPrice}</span>
+            )
+          }
+        </div>
+
+        {
+          (salePrice != null || displayPrice) && (
+            <p class="sales-price-disclaimer">
+              ⚠️ Promotional pricing shown here is indicative only. The final
+              price is set by the seller at Etsy checkout.
+            </p>
+          )
+        }
+
+        {
+          tags.length > 0 && (
+            <div class="sales-tags">
+              {tags.map((tag) => (
+                <span class="sales-tag">{tag}</span>
+              ))}
+            </div>
+          )
+        }
+      </header>
+
+      <!-- Body content (Quill HTML) -->
+      {safeBody && <div class="sales-body prose" set:html={safeBody} />}
+
+      <!-- Image gallery -->
+      {
+        galleryImages.length > 0 && (
+          <div class="sales-gallery">
+            <h2 class="sales-gallery__heading">More Photos</h2>
+            <div class="sales-gallery__grid">
+              {galleryImages.map((img) => (
+                <figure class="sales-gallery__item">
+                  <img
+                    src={img.url}
+                    alt={img.alt_text || posting.title}
+                    loading="lazy"
+                  />
+                </figure>
+              ))}
+            </div>
+          </div>
+        )
+      }
+
+      <!-- Purchase panel -->
+      <div class="sales-purchase-panel">
+        <h2 class="sales-purchase-panel__heading">Purchase</h2>
+
+        {
+          posting.etsy_listing_url && (
+            <a
+              href={posting.etsy_listing_url}
+              class="btn btn--etsy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Buy on Etsy ↗
+            </a>
+          )
+        }
+
+        {
+          safePayPal && (
+            <div class="sales-paypal-wrap">
+              <p class="sales-paypal-label">Or pay via PayPal:</p>
+              <div set:html={safePayPal} />
+            </div>
+          )
+        }
+      </div>
+
+      <!-- Testimonials -->
+      {
+        testimonials.length > 0 && (
+          <section class="sales-testimonials">
+            <h2 class="sales-section-heading">What Customers Say</h2>
+            <div class="sales-testimonials__list">
+              {testimonials.map((t) => (
+                <blockquote class="sales-testimonial">
+                  <p class="sales-testimonial__quote">"{t.quote}"</p>
+                  <footer class="sales-testimonial__footer">
+                    <strong>{t.author_name}</strong>
+                    {t.rating != null && (
+                      <span
+                        class="sales-stars"
+                        aria-label={`${t.rating} out of 5 stars`}
+                      >
+                        {"★".repeat(Number(t.rating))}
+                        {"☆".repeat(5 - Number(t.rating))}
+                      </span>
+                    )}
+                  </footer>
+                </blockquote>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      <!-- Reviews -->
+      {
+        reviews.length > 0 && (
+          <section class="sales-reviews">
+            <h2 class="sales-section-heading">
+              Reviews
+              {avgRating != null && (
+                <span class="sales-avg-rating">
+                  {avgRating} / 5
+                  <span
+                    class="sales-stars"
+                    aria-label={`${avgRating} out of 5 stars`}
+                  >
+                    {"★".repeat(Math.round(avgRating))}
+                    {"☆".repeat(5 - Math.round(avgRating))}
+                  </span>
+                </span>
+              )}
+            </h2>
+            <div class="sales-reviews__list">
+              {reviews.map((r) => (
+                <div class="sales-review">
+                  <div class="sales-review__header">
+                    <strong>{r.reviewer_name}</strong>
+                    {r.is_verified === 1 && (
+                      <span class="sales-review__verified">
+                        ✓ Verified Buyer
+                      </span>
+                    )}
+                    {r.rating != null && (
+                      <span class="sales-stars">
+                        {"★".repeat(Number(r.rating))}
+                        {"☆".repeat(5 - Number(r.rating))}
+                      </span>
+                    )}
+                    {r.review_date && (
+                      <span class="sales-review__date">{r.review_date}</span>
+                    )}
+                  </div>
+                  <p class="sales-review__text">{r.review_text}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      <!-- Linked article -->
+      {
+        posting.linked_article_slug && (
+          <div class="sales-linked-article">
+            <a
+              href={`/articles/${posting.linked_article_slug}`}
+              class="sales-linked-article__link"
+            >
+              📖 Read the full article about this item →
+            </a>
+          </div>
+        )
+      }
+    </div>
+  </article>
+</BlogLayout>
+
+<style>
+  .sales-detail {
+    padding-bottom: 4rem;
+  }
+  .sales-hero {
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .sales-hero__img {
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+    display: block;
+  }
+  .sales-header {
+    margin: 1.5rem 0;
+  }
+  .sales-title {
+    font-size: 2rem;
+    margin: 0 0 1rem;
+  }
+  .sales-price-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.1rem;
+  }
+  .sales-promo-badge {
+    background: var(--color-accent, #e04030);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2em 0.6em;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .sales-sale-price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-accent, #e04030);
+  }
+  .sales-original-price {
+    text-decoration: line-through;
+    color: var(--color-muted, #999);
+  }
+  .sales-promo-end {
+    font-size: 0.85rem;
+    color: var(--color-muted, #888);
+  }
+  .sales-price-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  .sales-price-disclaimer {
+    font-size: 0.82rem;
+    color: var(--color-muted, #888);
+    margin: 0.5rem 0 0;
+    border-left: 3px solid var(--color-rule, #e0d8cc);
+    padding-left: 0.75rem;
+  }
+  .sales-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.75rem;
+  }
+  .sales-tag {
+    font-size: 0.75rem;
+    background: var(--color-surface-alt, #f5f0e8);
+    padding: 0.15em 0.6em;
+    border-radius: 3px;
+  }
+  .sales-body {
+    margin: 2rem 0;
+  }
+  .sales-gallery {
+    margin: 2rem 0;
+  }
+  .sales-gallery__heading,
+  .sales-section-heading {
+    font-size: 1.3rem;
+    margin: 0 0 1rem;
+  }
+  .sales-gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .sales-gallery__item {
+    margin: 0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .sales-gallery__item img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+  }
+  .sales-purchase-panel {
+    background: var(--color-surface-alt, #f5f0e8);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+  }
+  .sales-purchase-panel__heading {
+    margin: 0 0 1rem;
+    font-size: 1.2rem;
+  }
+  .btn--etsy {
+    display: inline-block;
+    background: #f1641e;
+    color: #fff;
+    padding: 0.7em 1.4em;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .btn--etsy:hover {
+    background: #d4571a;
+  }
+  .sales-paypal-wrap {
+    margin-top: 1rem;
+  }
+  .sales-paypal-label {
+    font-size: 0.9rem;
+    margin: 0 0 0.5rem;
+  }
+  .sales-testimonials,
+  .sales-reviews {
+    margin: 2rem 0;
+  }
+  .sales-section-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .sales-avg-rating {
+    font-size: 0.9rem;
+    font-weight: normal;
+    color: var(--color-muted, #888);
+  }
+  .sales-stars {
+    color: #f2c85a;
+    letter-spacing: 0.05em;
+  }
+  .sales-testimonials__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .sales-testimonial {
+    margin: 0;
+    padding: 1rem 1.2rem;
+    border-left: 3px solid var(--color-rule, #e0d8cc);
+    background: var(--color-surface-alt, #f5f0e8);
+    border-radius: 0 6px 6px 0;
+  }
+  .sales-testimonial__quote {
+    margin: 0 0 0.5rem;
+    font-style: italic;
+  }
+  .sales-testimonial__footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+  .sales-reviews__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .sales-review {
+    padding: 1rem;
+    border: 1px solid var(--color-rule, #e0d8cc);
+    border-radius: 6px;
+  }
+  .sales-review__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+  }
+  .sales-review__verified {
+    color: #34c070;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .sales-review__date {
+    color: var(--color-muted, #999);
+    font-size: 0.8rem;
+  }
+  .sales-review__text {
+    margin: 0;
+  }
+  .sales-linked-article {
+    margin: 2rem 0;
+    padding: 1rem;
+    background: var(--color-surface-alt, #f5f0e8);
+    border-radius: 6px;
+  }
+  .sales-linked-article__link {
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .sales-linked-article__link:hover {
+    text-decoration: underline;
+  }
+</style>

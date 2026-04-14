@@ -7,7 +7,8 @@ const SESSION_KEY = "scriptorium_splash_seen";
 
 export default function SplashScreen({
   panelImageUrl,
-}: { panelImageUrl?: string } = {}) {
+  panelImageAlt,
+}: { panelImageUrl?: string; panelImageAlt?: string } = {}) {
   const [phase, setPhase] = useState<Phase>("hidden");
 
   const dismiss = useCallback(() => {
@@ -52,8 +53,7 @@ export default function SplashScreen({
             <img
               className="splash-panel__img"
               src={panelImageUrl}
-              alt=""
-              aria-hidden="true"
+              alt={panelImageAlt ?? "Splash panel artwork"}
             />
           )}
           <span className="kirby-badge">New Issue!</span>

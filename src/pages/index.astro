@@ -2,6 +2,10 @@
 import SplashScreen from "../components/SplashScreen";
 import BlogLayout from "../layouts/BlogLayout.astro";
 import { ensureCategorySchema } from "../lib/categories";
+import {
+  buildCloudinaryImageSrcset,
+  buildCloudinaryImageUrl,
+} from "../lib/cloudinary";
 import { db } from "../lib/db";
 import { getPanelImageMap } from "../lib/panels";
 
@@ -13,6 +17,55 @@ const PRIMARY_CATEGORY_SLUGS = [
 
 await ensureCategorySchema();
 const panelImages = await getPanelImageMap();
+
+const CLOUD = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+
+function panelSrc(
+  slot: "panel-01" | "panel-02" | "panel-03" | "panel-04",
+): string | null {
+  const entry = panelImages[slot];
+  if (!entry.publicId || !CLOUD) return entry.url;
+  try {
+    return buildCloudinaryImageUrl({
+      cloudName: CLOUD,
+      publicId: entry.publicId,
+      preset: "panel",
+    });
+  } catch {
+    return entry.url;
+  }
+}
+
+function panelSrcset(
+  slot: "panel-01" | "panel-02" | "panel-03" | "panel-04",
+): string | undefined {
+  const entry = panelImages[slot];
+  if (!entry.publicId || !CLOUD) return undefined;
+  try {
+    return buildCloudinaryImageSrcset({
+      cloudName: CLOUD,
+      publicId: entry.publicId,
+      preset: "panel",
+      widths: [320, 480, 640],
+    });
+  } catch {
+    return undefined;
+  }
+}
+
+function panelAlt(
+  slot: "panel-01" | "panel-02" | "panel-03" | "panel-04",
+): string {
+  const fallbackBySlot: Record<typeof slot, string> = {
+    "panel-01": "Featured panel artwork 1",
+    "panel-02": "Featured panel artwork 2",
+    "panel-03": "Featured panel artwork 3",
+    "panel-04": "Splash panel artwork",
+  };
+
+  const candidate = panelImages[slot].altText?.trim();
+  return candidate && candidate.length > 0 ? candidate : fallbackBySlot[slot];
+}
 
 const categoryCountResult = await db.execute(
   `SELECT c.slug, COUNT(a.id) AS article_count
@@ -46,7 +99,8 @@ function formatArticleCount(count: number): string {
   <!-- Splash screen — client-only React island -->
   <SplashScreen
     client:only="react"
-    panelImageUrl={panelImages["panel-04"] ?? undefined}
+    panelImageUrl={panelSrc("panel-04") ?? undefined}
+    panelImageAlt={panelAlt("panel-04")}
   />
 
   <!-- ─── Hero diptych ─── -->
@@ -64,17 +118,18 @@ function formatArticleCount(count: number): string {
       <a href="/blog" class="hero__cta">Read the Archive →</a>
     </div>
 
-    <div class="hero__right" aria-hidden="true">
+    <div class="hero__right">
       <div class="panel-deco">
         {/* Panel 01 — top-left */}
         {
-          panelImages["panel-01"] ? (
+          panelImages["panel-01"].url ? (
             <div class="panel-deco__frame panel-deco__frame--has-image">
               <img
                 class="panel-deco__img"
-                src={panelImages["panel-01"]!}
-                alt=""
-                aria-hidden="true"
+                src={panelSrc("panel-01")!}
+                srcset={panelSrcset("panel-01")}
+                sizes="(max-width: 768px) 50vw, 320px"
+                alt={panelAlt("panel-01")}
                 loading="eager"
               />
               <div
@@ -97,13 +152,14 @@ function formatArticleCount(count: number): string {
 
         {/* Panel 02 — top-right (kirby blue + dots when no image) */}
         {
-          panelImages["panel-02"] ? (
+          panelImages["panel-02"].url ? (
             <div class="panel-deco__frame panel-deco__frame--has-image">
               <img
                 class="panel-deco__img"
-                src={panelImages["panel-02"]!}
-                alt=""
-                aria-hidden="true"
+                src={panelSrc("panel-02")!}
+                srcset={panelSrcset("panel-02")}
+                sizes="(max-width: 768px) 50vw, 320px"
+                alt={panelAlt("panel-02")}
                 loading="eager"
               />
               <div
@@ -126,13 +182,14 @@ function formatArticleCount(count: number): string {
           /* Panel 03 — bottom wide (spans 2 cols; --c preserved for grid-column) */
         }
         {
-          panelImages["panel-03"] ? (
+          panelImages["panel-03"].url ? (
             <div class="panel-deco__frame panel-deco__frame--c panel-deco__frame--has-image">
               <img
                 class="panel-deco__img"
-                src={panelImages["panel-03"]!}
-                alt=""
-                aria-hidden="true"
+                src={panelSrc("panel-03")!}
+                srcset={panelSrcset("panel-03")}
+                sizes="(max-width: 768px) 100vw, 640px"
+                alt={panelAlt("panel-03")}
                 loading="eager"
               />
               <div

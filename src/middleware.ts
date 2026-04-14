@@ -91,9 +91,16 @@ function addSecurityHeaders(response: Response, pathname: string): Response {
   const isAdmin = pathname.startsWith("/admin");
   // sha256 hash of the anti-FOUC is:inline script in BlogLayout.astro
   const fouc = "'sha256-HPPfxiskdCPpqDyDMT/Cc9sakRhGIC0x+o5OZyk+BdM='";
+  // Shop pages (/shop/*) render Etsy product images and PayPal checkout forms.
+  const isShop = pathname.startsWith("/shop");
+  const imgSrc = `img-src 'self' data: blob: https://res.cloudinary.com https://*.etsystatic.com https://www.paypalobjects.com;`;
+  const formAction =
+    isAdmin || isShop
+      ? `form-action 'self' https://www.paypal.com;`
+      : `form-action 'self';`;
   const csp = isAdmin
-    ? `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https://res.cloudinary.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';`
-    : `default-src 'self'; script-src 'self' ${fouc}; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: blob: https://res.cloudinary.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self';`;
+    ? `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; ${imgSrc} font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; ${formAction}`
+    : `default-src 'self'; script-src 'self' ${fouc}; style-src 'self' https://fonts.googleapis.com; ${imgSrc} font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; ${formAction}`;
   response.headers.set("Content-Security-Policy-Report-Only", csp);
 
   return response;

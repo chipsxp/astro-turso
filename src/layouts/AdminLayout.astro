@@ -89,6 +89,25 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
             </svg>
             New Article
           </a>
+          <a href="/admin/sales" class="nav-item" id="nav-sales">
+            <svg class="nav-item__icon" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M2 4.5A1.5 1.5 0 0 1 3.5 3h9A1.5 1.5 0 0 1 14 4.5v7a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 11.5v-7zm2 .75h8v1.5H4v-1.5zm0 3h5v1.5H4v-1.5z"
+              ></path>
+            </svg>
+            Sales Listings
+          </a>
+          <a href="/admin/sales/new" class="nav-item" id="nav-sales-new">
+            <svg class="nav-item__icon" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M8 2v12M2 8h12"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                fill="none"></path>
+            </svg>
+            New Listing
+          </a>
           <a href="/admin/events" class="nav-item" id="nav-events">
             <svg class="nav-item__icon" viewBox="0 0 16 16" fill="currentColor">
               <path
@@ -202,6 +221,8 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
         var map = {
           "/admin/dashboard": "nav-dashboard",
           "/admin/articles/new": "nav-new",
+          "/admin/sales": "nav-sales",
+          "/admin/sales/new": "nav-sales-new",
           "/admin/events": "nav-events",
           "/admin/events/new": "nav-events-new",
         };
@@ -210,6 +231,9 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
           path !== "/admin/articles/new"
         ) {
           path = "/admin/dashboard";
+        }
+        if (path.startsWith("/admin/sales/") && path !== "/admin/sales/new") {
+          path = "/admin/sales";
         }
         if (path.startsWith("/admin/events/") && path !== "/admin/events/new") {
           path = "/admin/events";

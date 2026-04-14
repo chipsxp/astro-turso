@@ -1,11 +1,10 @@
-import {
-  AdvancedImage,
-  AdvancedVideo,
-  lazyload,
-  responsive,
-} from "@cloudinary/react";
+import { AdvancedImage, lazyload, responsive } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { useEffect, useState } from "react";
+import {
+  buildCloudinaryImageUrl,
+  buildCloudinaryVideoUrl,
+} from "../../lib/cloudinary";
 
 type MediaResourceType = "image" | "video";
 
@@ -223,13 +222,19 @@ export default function AdminMediaGallery({
                   />
                 </button>
               )
-            ) : item.public_id ? (
-              <AdvancedVideo
-                cldVid={cloudinary.video(item.public_id)}
-                controls
-              />
             ) : (
-              <video controls preload="metadata" src={item.url} />
+              <video
+                controls
+                preload="metadata"
+                src={
+                  item.public_id && cloudName
+                    ? buildCloudinaryVideoUrl({
+                        cloudName,
+                        publicId: item.public_id,
+                      })
+                    : item.url
+                }
+              />
             )}
           </div>
           <div className="admin-media-gallery__meta">
@@ -295,7 +300,18 @@ export default function AdminMediaGallery({
             >
               ×
             </button>
-            <img src={activeImage.url} alt={activeImage.alt_text} />
+            <img
+              src={
+                activeImage.public_id && cloudName
+                  ? buildCloudinaryImageUrl({
+                      cloudName,
+                      publicId: activeImage.public_id,
+                      preset: "hero",
+                    })
+                  : activeImage.url
+              }
+              alt={activeImage.alt_text}
+            />
           </div>
         </div>
       )}

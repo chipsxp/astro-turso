@@ -1,10 +1,16 @@
 ---
 import BlogLayout from "../layouts/BlogLayout.astro";
-import { buildCloudinaryImageUrl } from "../lib/cloudinary";
+import {
+  buildCloudinaryImageSrcset,
+  buildCloudinaryImageUrl,
+} from "../lib/cloudinary";
 import { db } from "../lib/db";
 import {
   EVENT_SELECT_FIELDS,
   ensureEventsSchema,
+  getEventLifecycleLabel,
+  isEventArchivable,
+  isEventUpcoming,
   mapEventRow,
 } from "../lib/events";
 
@@ -20,15 +26,20 @@ const result = await db.execute(
    LEFT JOIN users u ON u.id = e.owner_id
    LEFT JOIN media m ON m.id = e.featured_media_id
    WHERE e.status = 'published'
-     AND date(COALESCE(NULLIF(e.end_date, ''), e.start_date)) >= date('now')
    ORDER BY date(e.start_date) ASC,
             COALESCE(time(e.start_time), '23:59') ASC,
             e.created_at DESC`,
 );
 
-const events = result.rows.map((row: Record<string, unknown>) =>
+const allEvents = result.rows.map((row: Record<string, unknown>) =>
   mapEventRow(row),
 );
+
+// Separate upcoming and archive events
+// The "Recently Ended" section shows events from the last 14 days on this page with transition badges.
+// Events older than 14 days move to the dedicated /events/archive page with celebratory badges.
+const upcomingEvents = allEvents.filter(isEventUpcoming);
+const archiveEvents = allEvents.filter(isEventArchivable);
 
 function formatDate(date: string): string {
   const parsed = new Date(`${date}T00:00:00`);
@@ -64,8 +75,8 @@ function getEventImageUrl(
   }
 }
 
-const featuredEvent = events[0] ?? null;
-const remainingEvents = events.slice(1);
+const featuredEvent = upcomingEvents[0] ?? null;
+const remainingUpcoming = upcomingEvents.slice(1);
 ---
 
 <BlogLayout
@@ -134,6 +145,16 @@ const remainingEvents = events.slice(1);
                     "hero",
                   ) ?? featuredEvent.featured_media_url!
                 }
+                srcset={
+                  featuredEvent.featured_media_public_id && cloudName
+                    ? buildCloudinaryImageSrcset({
+                        cloudName,
+                        publicId: featuredEvent.featured_media_public_id,
+                        preset: "hero",
+                      })
+                    : undefined
+                }
+                sizes="(max-width: 768px) 100vw, 1280px"
                 alt={
                   featuredEvent.featured_media_alt_text ?? featuredEvent.title
                 }
@@ -148,15 +169,17 @@ const remainingEvents = events.slice(1);
     <section class="events-list page-wrap" aria-label="All upcoming events">
       <h2 class="events-section-title">On The Calendar</h2>
       {
-        remainingEvents.length === 0 && !featuredEvent && (
-          <p class="events-empty">
-            New events are being scheduled. Check back soon for upcoming gallery
-            and artist-community gatherings.
-          </p>
-        )
+        remainingUpcoming.length === 0 &&
+          !featuredEvent &&
+          archiveEvents.length === 0 && (
+            <p class="events-empty">
+              New events are being scheduled. Check back soon for upcoming
+              gallery and artist-community gatherings.
+            </p>
+          )
       }
       {
-        remainingEvents.map((event: (typeof remainingEvents)[0]) => (
+        remainingUpcoming.map((event: (typeof remainingUpcoming)[0]) => (
           <article class="event-card">
             <p class="event-card__date">
               {formatDate(event.start_date)}
@@ -188,6 +211,51 @@ const remainingEvents = events.slice(1);
         ))
       }
     </section>
+
+    {
+      archiveEvents.length > 0 && (
+        <section
+          class="events-archive page-wrap"
+          aria-label="Recently ended events"
+        >
+          <div class="archive-header">
+            <h2 class="events-section-title">Recently Ended</h2>
+            <p class="archive-intro">
+              Events that have recently concluded, saved here for 14 days.
+            </p>
+            <a href="/events/archive" class="archive-link">
+              View Full Archive →
+            </a>
+          </div>
+          {archiveEvents.map((event: (typeof archiveEvents)[0]) => {
+            const lifecycleLabel = getEventLifecycleLabel(event);
+            const badgeClass =
+              lifecycleLabel === "ended" ? "badge--ended" : "badge--archived";
+            const badgeText = lifecycleLabel === "ended" ? "Ended" : "Archived";
+            return (
+              <article class="event-card event-card--archived">
+                <div class="event-card__badge-wrap">
+                  <span class={`badge ${badgeClass}`}>{badgeText}</span>
+                </div>
+                <p class="event-card__date">
+                  {formatDate(event.start_date)}
+                  {event.end_date && ` to ${formatDate(event.end_date)}`}
+                </p>
+                <h3 class="event-card__title">
+                  <a href={`/events/${event.slug}`}>{event.title}</a>
+                </h3>
+                {event.description && (
+                  <p class="event-card__description">{event.description}</p>
+                )}
+                <a href={`/events/${event.slug}`} class="event-card__cta">
+                  View Event
+                </a>
+              </article>
+            );
+          })}
+        </section>
+      )
+    }
   </main>
 </BlogLayout>
 

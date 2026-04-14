@@ -1,0 +1,207 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+
+const user = Astro.locals.user!;
+
+let postings: any[] = [];
+let fetchError = false;
+try {
+  const origin = Astro.url.origin;
+  const res = await fetch(`${origin}/api/admin/sales`, {
+    headers: { Cookie: Astro.request.headers.get("Cookie") ?? "" },
+  });
+  if (res.ok) {
+    const data = await res.json();
+    postings = data.postings ?? [];
+  } else {
+    fetchError = true;
+  }
+} catch {
+  fetchError = true;
+}
+---
+
+<AdminLayout title="Sales Postings">
+  <div class="page-header">
+    <div>
+      <p class="page-header__eyebrow">Shop</p>
+      <h1 class="page-header__title">Sales <em>Postings</em></h1>
+    </div>
+    <div class="flex" style="gap: 8px; align-items: center;">
+      <a href="/admin/sales/new" class="btn btn-primary">+ New Posting</a>
+      <a href="/admin/dashboard" class="btn btn-ghost">← Back</a>
+    </div>
+  </div>
+
+  {
+    fetchError && (
+      <div class="alert alert--error">
+        Could not load sales postings. Please refresh.
+      </div>
+    )
+  }
+
+  {
+    !fetchError && postings.length === 0 && (
+      <div class="card" style="padding: 2rem; text-align: center;">
+        <p style="color: var(--color-muted);">No sales postings yet.</p>
+        <a
+          href="/admin/sales/new"
+          class="btn btn-primary"
+          style="margin-top: 1rem;"
+        >
+          Create Your First Posting
+        </a>
+      </div>
+    )
+  }
+
+  {
+    !fetchError && postings.length > 0 && (
+      <div class="card">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Price</th>
+              <th>Author</th>
+              <th>Updated</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {postings.map((p) => {
+              const price =
+                p.etsy_price_amount != null
+                  ? `${(p.etsy_price_amount / (p.etsy_price_divisor ?? 100)).toFixed(2)} ${p.etsy_price_currency ?? "USD"}`
+                  : "—";
+              const updated = new Date(p.updated_at).toLocaleDateString(
+                "en-US",
+                { month: "short", day: "numeric", year: "numeric" },
+              );
+              return (
+                <tr>
+                  <td>
+                    <a href={`/admin/sales/${p.slug}`} class="table-link">
+                      {p.title}
+                    </a>
+                    <span class="table-meta">/shop/{p.slug}</span>
+                  </td>
+                  <td>
+                    <span class={`status-badge status-badge--${p.status}`}>
+                      {p.status}
+                    </span>
+                  </td>
+                  <td>{price}</td>
+                  <td>{p.author_email ?? "—"}</td>
+                  <td>{updated}</td>
+                  <td>
+                    <div class="flex" style="gap: 6px;">
+                      <a
+                        href={`/admin/sales/${p.slug}`}
+                        class="btn btn-ghost btn--sm"
+                      >
+                        Edit
+                      </a>
+                      <a
+                        href={`/shop/${p.slug}`}
+                        class="btn btn-ghost btn--sm"
+                        target="_blank"
+                      >
+                        View ↗
+                      </a>
+                      <button
+                        class="btn btn-danger btn--sm js-delete-posting"
+                        data-slug={p.slug}
+                        data-title={p.title}
+                        type="button"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+</AdminLayout>
+
+<script>
+  document
+    .querySelectorAll<HTMLButtonElement>(".js-delete-posting")
+    .forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const slug = btn.dataset.slug!;
+        const title = btn.dataset.title!;
+        if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
+        btn.disabled = true;
+        try {
+          const res = await fetch(`/api/admin/sales/${slug}`, {
+            method: "DELETE",
+          });
+          if (res.ok) {
+            btn.closest("tr")?.remove();
+          } else {
+            const data = await res.json().catch(() => ({}));
+            alert(data.error ?? "Failed to delete posting.");
+            btn.disabled = false;
+          }
+        } catch {
+          alert("Network error. Please try again.");
+          btn.disabled = false;
+        }
+      });
+    });
+</script>
+
+<style>
+  .table-link {
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .table-link:hover {
+    text-decoration: underline;
+  }
+  .table-meta {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--color-muted);
+  }
+  .status-badge {
+    display: inline-block;
+    padding: 0.15em 0.55em;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .status-badge--published {
+    background: #d4f4e2;
+    color: #1a7a40;
+  }
+  .status-badge--draft {
+    background: var(--color-surface-alt);
+    color: var(--color-muted);
+  }
+  .btn--sm {
+    padding: 0.2em 0.6em;
+    font-size: 0.8rem;
+  }
+  .btn-danger {
+    background: transparent;
+    color: var(--color-accent, #e04030);
+    border: 1px solid var(--color-accent, #e04030);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn-danger:hover {
+    background: var(--color-accent, #e04030);
+    color: #fff;
+  }
+</style>

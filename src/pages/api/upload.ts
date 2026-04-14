@@ -175,7 +175,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
       return json({ error: "Database error" }, 500);
     }
   } else {
-    await ensureUploadSessionSchema();
+    try {
+      await ensureUploadSessionSchema();
+    } catch {
+      return json({ error: "Database error" }, 500);
+    }
 
     try {
       const session = await getActiveUploadSessionForUser(
@@ -192,7 +196,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   if (hasArticleId) {
-    await ensureMediaTable();
+    try {
+      await ensureMediaTable();
+    } catch {
+      return json({ error: "Database error" }, 500);
+    }
   }
 
   // --- Upload to Cloudinary via base64 data URI ---
@@ -210,6 +218,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const result = await cloudinary.uploader.upload(fileData, {
       folder,
       resource_type: resourceType,
+      allowed_formats:
+        resourceType === "video"
+          ? ["mp4", "webm", "ogv", "mov"]
+          : ["jpg", "png", "webp", "gif", "avif"],
     });
     uploadResult = {
       secure_url: result.secure_url,
@@ -334,7 +346,11 @@ export const DELETE: APIRoute = async ({ request, locals }) => {
     return json({ error: "media_id must be a positive integer" }, 400);
   }
 
-  await ensureMediaTable();
+  try {
+    await ensureMediaTable();
+  } catch {
+    return json({ error: "Database error" }, 500);
+  }
 
   let mediaRow: Record<string, unknown> | undefined;
   try {

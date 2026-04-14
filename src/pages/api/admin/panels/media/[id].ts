@@ -45,7 +45,10 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
 
     // Destroy from Cloudinary (non-fatal if it fails — still delete the DB row)
     try {
-      await cloudinary.uploader.destroy(publicId, { resource_type: "image" });
+      await cloudinary.uploader.destroy(publicId, {
+        resource_type: "image",
+        invalidate: true,
+      });
     } catch (cloudErr) {
       console.warn(
         "[panels/media/delete] Cloudinary destroy failed (continuing):",

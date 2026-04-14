@@ -1,0 +1,244 @@
+---
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import { calcSalePrice, formatEtsyPrice, parseTags } from "../../lib/sales";
+
+// Fetch published postings server-side
+let postings: any[] = [];
+let fetchError = false;
+try {
+  const origin = Astro.url.origin;
+  const res = await fetch(`${origin}/api/sales`);
+  if (res.ok) {
+    const data = await res.json();
+    postings = data.postings ?? [];
+  } else {
+    fetchError = true;
+  }
+} catch {
+  fetchError = true;
+}
+---
+
+<BlogLayout
+  title="Shop — The Scriptorium"
+  description="Browse handcrafted items available from The Scriptorium shop."
+>
+  <div class="page-wrap">
+    <div class="content-col">
+      <header class="shop-header">
+        <h1 class="shop-title">Shop</h1>
+        <p class="shop-subtitle">
+          Handcrafted items, curated and sold via Etsy.
+        </p>
+      </header>
+
+      {
+        fetchError && (
+          <p class="shop-error">
+            Could not load shop listings. Please try again later.
+          </p>
+        )
+      }
+
+      {
+        !fetchError && postings.length === 0 && (
+          <p class="shop-empty">
+            No items are currently listed. Check back soon!
+          </p>
+        )
+      }
+
+      {
+        !fetchError && postings.length > 0 && (
+          <div class="shop-grid">
+            {postings.map((posting) => {
+              const salePrice = calcSalePrice(posting);
+              const displayPrice =
+                posting.etsy_price_amount != null
+                  ? formatEtsyPrice(
+                      posting.etsy_price_amount,
+                      posting.etsy_price_divisor,
+                      posting.etsy_price_currency,
+                    )
+                  : null;
+              const salePriceStr =
+                salePrice != null
+                  ? formatEtsyPrice(
+                      Math.round(salePrice * posting.etsy_price_divisor),
+                      posting.etsy_price_divisor,
+                      posting.etsy_price_currency,
+                    )
+                  : null;
+              const tags = parseTags(posting.tags ?? "[]");
+
+              return (
+                <a class="sales-card" href={`/shop/${posting.slug}`}>
+                  {posting.cover_image ? (
+                    <div class="sales-card__image-wrap">
+                      <img
+                        src={posting.cover_image.url}
+                        alt={posting.cover_image.alt_text || posting.title}
+                        loading="lazy"
+                        class="sales-card__image"
+                      />
+                    </div>
+                  ) : (
+                    <div class="sales-card__image-wrap sales-card__image-wrap--empty">
+                      <span class="sales-card__no-image">No image</span>
+                    </div>
+                  )}
+
+                  <div class="sales-card__body">
+                    <h2 class="sales-card__title">{posting.title}</h2>
+
+                    <div class="sales-card__price">
+                      {salePrice != null && (
+                        <span class="sales-card__promo-badge">
+                          {posting.promo_label ?? "Sale"}
+                        </span>
+                      )}
+                      {salePrice != null && salePriceStr && (
+                        <>
+                          <span class="sales-card__sale-price">
+                            {salePriceStr}
+                          </span>
+                          {displayPrice && (
+                            <span class="sales-card__original-price">
+                              {displayPrice}
+                            </span>
+                          )}
+                        </>
+                      )}
+                      {salePrice == null && displayPrice && (
+                        <span class="sales-card__price-value">
+                          {displayPrice}
+                        </span>
+                      )}
+                    </div>
+
+                    {tags.length > 0 && (
+                      <div class="sales-card__tags">
+                        {tags.slice(0, 3).map((tag) => (
+                          <span class="sales-card__tag">{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</BlogLayout>
+
+<style>
+  .shop-header {
+    padding: 2rem 0 1.5rem;
+    border-bottom: 1px solid var(--color-rule, #e0d8cc);
+    margin-bottom: 2rem;
+  }
+  .shop-title {
+    font-size: 2.2rem;
+    margin: 0 0 0.25rem;
+  }
+  .shop-subtitle {
+    color: var(--color-muted, #888);
+    margin: 0;
+  }
+  .shop-error,
+  .shop-empty {
+    color: var(--color-muted, #888);
+    padding: 2rem 0;
+  }
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    padding-bottom: 3rem;
+  }
+  .sales-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-rule, #e0d8cc);
+    border-radius: 6px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.15s;
+  }
+  .sales-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  .sales-card__image-wrap {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--color-surface-alt, #f5f0e8);
+  }
+  .sales-card__image-wrap--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sales-card__no-image {
+    color: var(--color-muted, #aaa);
+    font-size: 0.85rem;
+  }
+  .sales-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sales-card__body {
+    padding: 1rem;
+  }
+  .sales-card__title {
+    font-size: 1rem;
+    margin: 0 0 0.5rem;
+    line-height: 1.3;
+  }
+  .sales-card__price {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    font-size: 0.95rem;
+  }
+  .sales-card__promo-badge {
+    background: var(--color-accent, #e04030);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15em 0.5em;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .sales-card__sale-price {
+    font-weight: 700;
+    color: var(--color-accent, #e04030);
+  }
+  .sales-card__original-price {
+    text-decoration: line-through;
+    color: var(--color-muted, #999);
+    font-size: 0.85em;
+  }
+  .sales-card__price-value {
+    font-weight: 600;
+  }
+  .sales-card__tags {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+  .sales-card__tag {
+    font-size: 0.72rem;
+    color: var(--color-muted, #888);
+    background: var(--color-surface-alt, #f5f0e8);
+    padding: 0.1em 0.5em;
+    border-radius: 3px;
+  }
+</style>

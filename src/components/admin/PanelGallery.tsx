@@ -26,6 +26,7 @@ interface PanelAssignment {
   slot: PanelSlot;
   label: string;
   media_id: number | null;
+  media_public_id: string | null;
   url: string | null;
   alt_text: string | null;
   updated_at: string;
@@ -186,6 +187,13 @@ export default function PanelGallery({ cloudName }: Props) {
     if (!file) return;
     e.target.value = "";
 
+    const altInput = window.prompt(
+      "Alt text for this panel image (recommended):",
+      "",
+    );
+    if (altInput == null) return;
+    const altText = altInput.trim().slice(0, 160);
+
     setUploading(true);
     try {
       const dataUri = await new Promise<string>((resolve, reject) => {
@@ -201,6 +209,7 @@ export default function PanelGallery({ cloudName }: Props) {
           file_data: dataUri,
           mime_type: file.type,
           file_size: file.size,
+          alt_text: altText,
         }),
       });
       if (res.status === 401) {
@@ -409,7 +418,15 @@ export default function PanelGallery({ cloudName }: Props) {
                 {a.url && !brokenAssignmentThumbs.has(a.slot) ? (
                   <div className="panel-slot-card__thumb">
                     <img
-                      src={a.url}
+                      src={
+                        a.media_public_id && cloudName
+                          ? buildCloudinaryImageUrl({
+                              cloudName,
+                              publicId: a.media_public_id,
+                              preset: "thumb",
+                            })
+                          : (a.url ?? "")
+                      }
                       alt={a.alt_text ?? ""}
                       onError={() =>
                         setBrokenAssignmentThumbs((prev) => {

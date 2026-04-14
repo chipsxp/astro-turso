@@ -3,6 +3,8 @@ import { db } from "../../../lib/db";
 import {
   EVENT_SELECT_FIELDS,
   ensureEventsSchema,
+  getEventLifecycleLabel,
+  isEventPubliclyVisible,
   isValidIsoDate,
   isValidTime24,
   mapEventRow,
@@ -86,16 +88,23 @@ export const GET: APIRoute = async ({ request }) => {
        LEFT JOIN users u ON u.id = e.owner_id
        LEFT JOIN media m ON m.id = e.featured_media_id
        WHERE e.status = 'published'
-         AND date(COALESCE(NULLIF(e.end_date, ''), e.start_date)) >= date('now')
-       ORDER BY date(e.start_date) ASC,
-                COALESCE(time(e.start_time), '23:59') ASC,
-                e.created_at DESC`,
+       ORDER BY date(e.start_date) DESC, COALESCE(time(e.start_time), '23:59') DESC`,
     );
 
-    const events = result.rows.map((row: Record<string, unknown>) =>
-      toPublicEvent(mapEventRow(row)),
+    const allEvents = result.rows.map((row: Record<string, unknown>) =>
+      mapEventRow(row),
     );
-    return json({ events }, 200);
+
+    // Filter to only publicly visible events (upcoming + within 14-day archive window)
+    // and add lifecycle metadata
+    const visibleEvents = allEvents
+      .filter(isEventPubliclyVisible)
+      .map((event) => ({
+        ...toPublicEvent(event),
+        lifecycle: getEventLifecycleLabel(event),
+      }));
+
+    return json({ events: visibleEvents }, 200);
   } catch {
     return json({ error: "Database error" }, 500);
   }

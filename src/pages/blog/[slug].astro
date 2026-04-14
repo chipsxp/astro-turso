@@ -3,7 +3,11 @@ import BlogLayout from "../../layouts/BlogLayout.astro";
 import SocialShare from "../../components/SocialShare.astro";
 import { db } from "../../lib/db";
 import { getMediaByArticle } from "../../lib/media";
-import { buildCloudinaryImageUrl } from "../../lib/cloudinary";
+import {
+  buildCloudinaryImageUrl,
+  buildCloudinaryVideoUrl,
+  buildCloudinaryVideoPosterUrl,
+} from "../../lib/cloudinary";
 import { sanitizeArticleBodyServer } from "../../lib/sanitize-server";
 
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
@@ -276,7 +280,26 @@ const fbAppId = import.meta.env.PUBLIC_FB_APP_ID || undefined;
                   decoding="async"
                 />
               ) : (
-                <video controls preload="metadata" src={heroMedia.url} />
+                <video
+                  controls
+                  preload="metadata"
+                  src={
+                    heroMedia.public_id && cloudName
+                      ? buildCloudinaryVideoUrl({
+                          cloudName,
+                          publicId: heroMedia.public_id,
+                        })
+                      : heroMedia.url
+                  }
+                  poster={
+                    heroMedia.public_id && cloudName
+                      ? buildCloudinaryVideoPosterUrl({
+                          cloudName,
+                          publicId: heroMedia.public_id,
+                        })
+                      : undefined
+                  }
+                />
               )}
               <figcaption class="hero-image__caption">
                 {heroMedia.alt_text}
@@ -324,7 +347,26 @@ const fbAppId = import.meta.env.PUBLIC_FB_APP_ID || undefined;
                       class="js-lightbox-inline-image"
                     />
                   ) : (
-                    <video controls preload="metadata" src={item.url} />
+                    <video
+                      controls
+                      preload="metadata"
+                      src={
+                        item.public_id && cloudName
+                          ? buildCloudinaryVideoUrl({
+                              cloudName,
+                              publicId: item.public_id,
+                            })
+                          : item.url
+                      }
+                      poster={
+                        item.public_id && cloudName
+                          ? buildCloudinaryVideoPosterUrl({
+                              cloudName,
+                              publicId: item.public_id,
+                            })
+                          : undefined
+                      }
+                    />
                   )}
                   <figcaption>{item.alt_text}</figcaption>
                 </figure>

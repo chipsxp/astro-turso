@@ -7,6 +7,7 @@ interface ImportMetaEnv {
   readonly CLOUDINARY_CLOUD_NAME: string;
   readonly CLOUDINARY_API_KEY: string;
   readonly CLOUDINARY_API_SECRET: string;
+  readonly PUBLIC_CLOUDINARY_CLOUD_NAME: string;
   readonly RESEND_API_KEY: string;
   readonly CONTACT_TO_EMAIL: string;
   readonly CONTACT_FROM_EMAIL: string;

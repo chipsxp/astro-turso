@@ -8,11 +8,11 @@ This repository is meant to be practical for developers who want to learn from i
 
 ## Branches
 
-| Branch           | Version | Description                                   |
-| ---------------- | ------- | --------------------------------------------- |
-| `main`           | 1.0.0   | Base blog platform — no events module         |
-| `feature/events` | 1.1.0   | Adds the Upcoming Events module (this branch) |
-| `feature/etsy-sales` | 1.2.0 | Adds Etsy sales module and storefront integration, improves event flow, and raises Lighthouse score via WebP and alt-text delivery |
+| Branch               | Version | Description                                                                                                                        |
+| -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `main`               | 1.0.0   | Base blog platform — no events module                                                                                              |
+| `feature/events`     | 1.1.0   | Adds the Upcoming Events module (this branch)                                                                                      |
+| `feature/etsy-sales` | 1.2.0   | Adds Etsy sales module and storefront integration, improves event flow, and raises Lighthouse score via WebP and alt-text delivery |
 
 Clone the branch that matches what you need:
 
@@ -387,8 +387,8 @@ Then create your admin user and start the server as usual.
 
 ### Planned Releases
 
-| Version   | Feature               | Status   |
-| --------- | --------------------- | -------- |
-| **1.1.0** | Upcoming Events page  | Released |
+| Version   | Feature               | Status      |
+| --------- | --------------------- | ----------- |
+| **1.1.0** | Upcoming Events page  | Released    |
 | **1.2.0** | Art Sales / Shop page | In Progress |
-| **1.3.0** | _(to be determined)_  | Planned  |
+| **1.3.0** | _(to be determined)_  | Planned     |

@@ -102,6 +102,30 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
     });
   }
 
+  // Lifecycle helpers for admin visibility
+  function getTodayInNewYork(): string {
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "America/New_York",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+    const parts = formatter.formatToParts(new Date());
+    const year = parts.find((p) => p.type === "year")?.value;
+    const month = parts.find((p) => p.type === "month")?.value;
+    const day = parts.find((p) => p.type === "day")?.value;
+    return `${year}-${month}-${day}`;
+  }
+
+  function isEventEnded(event: EventItem): boolean {
+    const eventEndDate =
+      event.end_date && event.end_date.trim()
+        ? event.end_date
+        : event.start_date;
+    const todayNY = getTodayInNewYork();
+    return eventEndDate < todayNY;
+  }
+
   function renderRows(events: EventItem[]) {
     if (events.length === 0) {
       stateTable.style.display = "none";
@@ -137,6 +161,12 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
           .filter(Boolean)
           .join(" - ");
 
+        // Add lifecycle indicator for ended events
+        const ended = isEventEnded(event);
+        const lifecycleIndicator = ended
+          ? ' <span style="display: inline-block; margin-left: 6px; font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">(Ended)</span>'
+          : "";
+
         return `
           <tr>
             <td>
@@ -148,7 +178,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
             <td>
               <span class="badge badge--${event.status === "cancelled" ? "draft" : event.status}">${statusLabel}</span>
             </td>
-            <td class="dashboard-date-cell">${escapeHtml(dateLabel)}</td>
+            <td class="dashboard-date-cell">${escapeHtml(dateLabel)}${lifecycleIndicator}</td>
             <td>${escapeHtml(locationLabel || "-")}</td>
             <td class="dashboard-author-cell">${escapeHtml(event.owner_email || "-")}</td>
             <td class="table-actions-col">

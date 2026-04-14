@@ -19,6 +19,7 @@ export interface PanelAssignment {
   slot: PanelSlot;
   label: string;
   media_id: number | null;
+  media_public_id: string | null;
   url: string | null;
   alt_text: string | null;
   updated_at: string;
@@ -118,6 +119,8 @@ function mapAssignmentRow(row: Record<string, unknown>): PanelAssignment {
     slot: String(row.slot) as PanelSlot,
     label: String(row.label),
     media_id: row.media_id == null ? null : Number(row.media_id),
+    media_public_id:
+      row.media_public_id == null ? null : String(row.media_public_id),
     url: row.url == null ? null : String(row.url),
     alt_text: row.alt_text == null ? null : String(row.alt_text),
     updated_at: String(row.updated_at),
@@ -142,7 +145,7 @@ export async function getCurrentPanelAssignments(): Promise<PanelAssignment[]> {
   await ensurePanelSchema();
 
   const result = await db.execute(`
-    SELECT pa.slot, pa.label, pa.media_id, pm.url, pm.alt_text, pa.updated_at
+    SELECT pa.slot, pa.label, pa.media_id, pm.public_id AS media_public_id, pm.url, pm.alt_text, pa.updated_at
     FROM panel_assignments pa
     LEFT JOIN panel_media pm ON pm.id = pa.media_id
     ORDER BY pa.slot ASC
@@ -153,18 +156,26 @@ export async function getCurrentPanelAssignments(): Promise<PanelAssignment[]> {
   );
 }
 
+export type PanelImageEntry = {
+  url: string | null;
+  publicId: string | null;
+  altText: string | null;
+};
+
 /**
- * Convenience helper for Astro frontmatter — returns a slot → URL map.
- * Value is null when no image is assigned to that slot.
+ * Convenience helper for Astro frontmatter — returns a slot → { url, publicId } map.
+ * Both values are null when no image is assigned to that slot.
  */
 export async function getPanelImageMap(): Promise<
-  Record<PanelSlot, string | null>
+  Record<PanelSlot, PanelImageEntry>
 > {
   const rows = await getCurrentPanelAssignments();
-  return Object.fromEntries(rows.map((r) => [r.slot, r.url])) as Record<
-    PanelSlot,
-    string | null
-  >;
+  return Object.fromEntries(
+    rows.map((r) => [
+      r.slot,
+      { url: r.url, publicId: r.media_public_id, altText: r.alt_text },
+    ]),
+  ) as Record<PanelSlot, PanelImageEntry>;
 }
 
 /**

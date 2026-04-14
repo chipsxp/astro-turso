@@ -94,6 +94,15 @@ export async function ensureEventsSchema(): Promise<void> {
     await db.execute(indexSql);
   }
 
+  // Idempotent migration: add archive_date column if not present
+  // This column tracks when an event became archivable (after its end date passed).
+  // Used to enforce 14-day retention window for displaying ended events on public listings.
+  try {
+    await db.execute("ALTER TABLE events ADD COLUMN archive_date TEXT");
+  } catch {
+    // Column already exists; safe to continue.
+  }
+
   eventsSchemaReady = true;
 }
 
@@ -190,3 +199,159 @@ export const EVENT_SELECT_FIELDS = `
   m.public_id AS featured_media_public_id,
   m.alt_text AS featured_media_alt_text
 `;
+
+/**
+ * Get the effective end date for an event (falls back to start_date if no end_date).
+ * Returns ISO date string (YYYY-MM-DD).
+ */
+export function getEventEffectiveEndDate(event: EventRecord): string {
+  return event.end_date && event.end_date.trim()
+    ? event.end_date
+    : event.start_date;
+}
+
+/**
+ * Convert a date to America/New_York local date string.
+ * Uses UTC midnight as the baseline and adjusts by -5/-4 hours depending on EST/EDT.
+ * Returns ISO date string (YYYY-MM-DD) in New York local time.
+ */
+export function toNewYorkDate(date: Date): string {
+  // Create a formatter for America/New_York
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const parts = formatter.formatToParts(date);
+  const year = parts.find((p) => p.type === "year")?.value;
+  const month = parts.find((p) => p.type === "month")?.value;
+  const day = parts.find((p) => p.type === "day")?.value;
+  return `${year}-${month}-${day}`;
+}
+
+/**
+ * Get today's date in America/New_York timezone.
+ */
+export function getTodayInNewYork(): string {
+  return toNewYorkDate(new Date());
+}
+
+/**
+ * Get a date N days in the past (in New York timezone).
+ * For example, getDaysAgoInNewYork(14) returns the date 14 days ago.
+ */
+export function getDaysAgoInNewYork(days: number): string {
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  return toNewYorkDate(date);
+}
+
+/**
+ * Check if an event has ended (effective end date is before today in New York timezone).
+ */
+export function isEventEnded(event: EventRecord): boolean {
+  const eventEndDate = getEventEffectiveEndDate(event);
+  const todayNY = getTodayInNewYork();
+  return eventEndDate < todayNY;
+}
+
+/**
+ * Check if an event is within the 14-day archive window.
+ * Returns true if the event has ended but is still within 14 days of its end date.
+ */
+export function isEventInArchiveWindow(event: EventRecord): boolean {
+  const eventEndDate = getEventEffectiveEndDate(event);
+  const todayNY = getTodayInNewYork();
+  const fourteenDaysAgoNY = getDaysAgoInNewYork(14);
+
+  // Event must have ended and be within the last 14 days
+  return eventEndDate < todayNY && eventEndDate >= fourteenDaysAgoNY;
+}
+
+/**
+ * Get the lifecycle state of an event for UI display.
+ * Returns one of: "upcoming", "ended", "archived".
+ * "ended" = 0-3 days past end date, "archived" = 4-14 days past.
+ */
+export function getEventLifecycleLabel(
+  event: EventRecord,
+): "upcoming" | "ended" | "archived" {
+  if (!isEventEnded(event)) return "upcoming";
+
+  const eventEndDate = getEventEffectiveEndDate(event);
+  const todayNY = getTodayInNewYork();
+  const threeDaysAgoNY = getDaysAgoInNewYork(3);
+
+  // Ended within last 3 days = "ended", otherwise "archived"
+  return eventEndDate >= threeDaysAgoNY ? "ended" : "archived";
+}
+
+/**
+ * Check if an event should be visible on public listings (upcoming or archive pages).
+ * Returns true if event is published AND (upcoming OR within 14-day archive window).
+ */
+export function isEventPubliclyVisible(event: EventRecord): boolean {
+  if (event.status !== "published") return false;
+  if (!isEventEnded(event)) return true; // Upcoming events are always visible
+  return isEventInArchiveWindow(event); // Ended events only visible if within 14-day window
+}
+
+/**
+ * Check if an event should be shown on the Upcoming Events page.
+ * Returns true if event is published and not yet ended.
+ */
+export function isEventUpcoming(event: EventRecord): boolean {
+  if (event.status !== "published") return false;
+  return !isEventEnded(event);
+}
+
+/**
+ * Check if an event should be shown on the Archive Events page.
+ * Returns true if event is published and within 14-day archive window.
+ */
+export function isEventArchivable(event: EventRecord): boolean {
+  if (event.status !== "published") return false;
+  return isEventInArchiveWindow(event);
+}
+
+/**
+ * Check if an event should be shown on the Archive page (permanent archive).
+ * Returns true if event is published and has ended (no time limit).
+ * Archive is permanent; manual deletion via admin dashboard.
+ */
+export function isEventArchivedPermanently(event: EventRecord): boolean {
+  if (event.status !== "published") return false;
+  return isEventEnded(event); // All ended events, no 14-day cutoff
+}
+
+/**
+ * Get a human-readable "concluded X time ago" label for archive page display.
+ * Examples: "concluded yesterday", "concluded 2 weeks ago", "concluded 3 months ago"
+ */
+export function getArchiveBadgeLabel(event: EventRecord): string {
+  const eventEndDate = getEventEffectiveEndDate(event);
+  const todayNY = getTodayInNewYork();
+
+  // Parse dates and calculate days difference
+  const eventDate = new Date(`${eventEndDate}T00:00:00`);
+  const today = new Date(`${todayNY}T00:00:00`);
+  const daysAgo = Math.floor(
+    (today.getTime() - eventDate.getTime()) / (1000 * 60 * 60 * 24),
+  );
+
+  if (daysAgo === 0) return "concluded today";
+  if (daysAgo === 1) return "concluded yesterday";
+  if (daysAgo < 7) return `concluded ${daysAgo} days ago`;
+
+  const weeksAgo = Math.floor(daysAgo / 7);
+  if (daysAgo < 30)
+    return `concluded ${weeksAgo} week${weeksAgo > 1 ? "s" : ""} ago`;
+
+  const monthsAgo = Math.floor(daysAgo / 30);
+  if (daysAgo < 365)
+    return `concluded ${monthsAgo} month${monthsAgo > 1 ? "s" : ""} ago`;
+
+  const yearsAgo = Math.floor(daysAgo / 365);
+  return `concluded ${yearsAgo} year${yearsAgo > 1 ? "s" : ""} ago`;
+}

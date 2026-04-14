@@ -1,0 +1,1050 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="New Sales Posting">
+  <div class="page-header">
+    <div>
+      <p class="page-header__eyebrow">Shop</p>
+      <h1 class="page-header__title">New <em>Sales Posting</em></h1>
+    </div>
+    <a href="/admin/sales" class="btn btn-ghost">← Back to Postings</a>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <!-- ── Section 1: Etsy Product Browser ──────────────────────────────── -->
+  <div class="card card--accent-top" style="margin-bottom: 1.5rem;">
+    <div
+      style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;"
+    >
+      <p class="panel-heading" style="margin: 0;">Import from Etsy</p>
+      <button type="button" id="etsy-browse-toggle" class="btn btn-primary">
+        Browse Etsy Store ▾
+      </button>
+    </div>
+    <p
+      id="etsy-import-status"
+      class="form-hint"
+      style="min-height: 1.2em; margin-top: 0.5rem;"
+    >
+    </p>
+
+    <!-- Browser panel (hidden by default) -->
+    <div id="etsy-browser" class="etsy-browser" hidden>
+      <!-- Section filter tabs -->
+      <div id="etsy-section-tabs" class="etsy-section-tabs">
+        <button
+          type="button"
+          class="etsy-tab etsy-tab--active"
+          data-section="all">All</button
+        >
+      </div>
+      <!-- Product grid -->
+      <div id="etsy-grid" class="etsy-grid">
+        <p class="etsy-loading">Loading…</p>
+      </div>
+      <!-- Load more -->
+      <div
+        id="etsy-load-more-row"
+        style="text-align: center; padding: 0.75rem 0; display: none;"
+      >
+        <button type="button" id="etsy-load-more" class="btn btn-ghost"
+          >Load more</button
+        >
+      </div>
+    </div>
+  </div>
+
+  <form id="sales-form" novalidate>
+    <div class="editor-grid">
+      <!-- ── Left column ─────────────────────────────────────────────── -->
+      <div>
+        <!-- Section 2: Core Content -->
+        <div class="card card--accent-top" style="margin-bottom: 1.5rem;">
+          <p class="panel-heading">Content</p>
+
+          <div class="form-group">
+            <label class="form-label" for="title">Title *Required</label>
+            <input
+              class="form-input"
+              id="title"
+              name="title"
+              type="text"
+              placeholder="Posting title"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="slug">Slug</label>
+            <input
+              class="form-input"
+              id="slug"
+              name="slug"
+              type="text"
+              placeholder="auto-generated-from-title"
+            />
+            <span class="form-hint"
+              >Leave blank to auto-generate from title</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="status">Status</label>
+            <select class="form-input" id="status" name="status">
+              <option value="draft" selected>Draft</option>
+              <option value="published">Published</option>
+            </select>
+          </div>
+
+          <div class="form-group form-group--compact">
+            <label class="form-label" id="body-label">Body</label>
+            <div
+              id="body-editor"
+              class="form-textarea form-textarea--body quill-editor"
+              aria-labelledby="body-label"
+              style="min-height: 260px;"
+            >
+            </div>
+            <input type="hidden" id="body-input" name="body" />
+          </div>
+        </div>
+
+        <!-- Section 3: Price & Promotion -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <p class="panel-heading">Price &amp; Promotion</p>
+
+          <div class="form-group">
+            <label class="form-label">Etsy Price (imported, read-only)</label>
+            <input
+              class="form-input"
+              id="etsy-price-display"
+              type="text"
+              readonly
+              placeholder="Imported from Etsy"
+            />
+            <input
+              type="hidden"
+              id="etsy-price-amount"
+              name="etsy_price_amount"
+            />
+            <input
+              type="hidden"
+              id="etsy-price-divisor"
+              name="etsy_price_divisor"
+              value="100"
+            />
+            <input
+              type="hidden"
+              id="etsy-price-currency"
+              name="etsy_price_currency"
+              value="USD"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="etsy-listing-url"
+              >Etsy Listing URL</label
+            >
+            <input
+              class="form-input"
+              id="etsy-listing-url"
+              name="etsy_listing_url"
+              type="url"
+              placeholder="https://www.etsy.com/listing/..."
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="promo-label">Promo Label</label>
+            <input
+              class="form-input"
+              id="promo-label"
+              name="promo_label"
+              type="text"
+              placeholder="e.g. Spring Sale"
+            />
+          </div>
+
+          <div
+            class="form-group"
+            style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;"
+          >
+            <div>
+              <label class="form-label" for="promo-discount">Discount %</label>
+              <input
+                class="form-input"
+                id="promo-discount"
+                name="promo_discount_pct"
+                type="number"
+                min="0"
+                max="100"
+                step="0.5"
+                placeholder="0"
+              />
+            </div>
+            <div>
+              <label class="form-label">Sale Price Preview</label>
+              <input
+                class="form-input"
+                id="sale-price-preview"
+                type="text"
+                readonly
+                placeholder="Enter discount %"
+              />
+            </div>
+          </div>
+
+          <div
+            class="form-group"
+            style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;"
+          >
+            <div>
+              <label class="form-label" for="promo-start">Promo Start</label>
+              <input
+                class="form-input"
+                id="promo-start"
+                name="promo_start"
+                type="datetime-local"
+              />
+            </div>
+            <div>
+              <label class="form-label" for="promo-end">Promo End</label>
+              <input
+                class="form-input"
+                id="promo-end"
+                name="promo_end"
+                type="datetime-local"
+              />
+            </div>
+          </div>
+
+          <p class="form-hint">
+            ⚠️ Promo pricing is display-only. Buyer pays Etsy's price at
+            checkout.
+          </p>
+        </div>
+
+        <!-- Section 5: PayPal Button -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <p class="panel-heading">PayPal Buy Button (Optional)</p>
+          <div class="form-group">
+            <label class="form-label" for="paypal-html"
+              >Paste PayPal Legacy Button HTML</label
+            >
+            <textarea
+              class="form-input"
+              id="paypal-html"
+              name="paypal_button_html"
+              rows="6"
+              placeholder='<form action="https://www.paypal.com/..." ...>'
+            ></textarea>
+            <span class="form-hint"
+              >Paste the form code from your PayPal console. Only legacy
+              form-based buttons are supported.</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Right column ────────────────────────────────────────────── -->
+      <div>
+        <!-- Section 4: Images -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <p class="panel-heading">Images</p>
+          <div id="images-list" class="sales-images-grid"></div>
+          <p class="form-hint" id="images-hint">
+            Images imported from Etsy will appear here.
+          </p>
+          <input type="hidden" id="images-json" name="images_json" value="[]" />
+        </div>
+
+        <!-- Section 6: Testimonials -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <p class="panel-heading">Testimonials</p>
+          <div id="testimonials-list"></div>
+          <button
+            type="button"
+            id="add-testimonial-btn"
+            class="btn btn-ghost"
+            style="margin-top: 0.5rem;">+ Add Testimonial</button
+          >
+          <input
+            type="hidden"
+            id="testimonials-json"
+            name="testimonials_json"
+            value="[]"
+          />
+        </div>
+
+        <!-- Section 7: Reviews -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <p class="panel-heading">Reviews</p>
+          <div id="reviews-list"></div>
+          <button
+            type="button"
+            id="add-review-btn"
+            class="btn btn-ghost"
+            style="margin-top: 0.5rem;">+ Add Review</button
+          >
+          <input
+            type="hidden"
+            id="reviews-json"
+            name="reviews_json"
+            value="[]"
+          />
+        </div>
+
+        <!-- Section 8: Linked Article -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <p class="panel-heading">Linked Article (Optional)</p>
+          <div class="form-group">
+            <label class="form-label" for="linked-article">Article Slug</label>
+            <input
+              class="form-input"
+              id="linked-article"
+              name="linked_article_slug"
+              type="text"
+              placeholder="e.g. my-article-slug"
+            />
+            <span class="form-hint"
+              >Links to /articles/[slug] — shown as "Read more →" on the detail
+              page</span
+            >
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          id="submit-btn"
+          class="btn btn-primary"
+          style="width: 100%;">Create Posting</button
+        >
+      </div>
+    </div>
+  </form>
+</AdminLayout>
+
+<script>
+  import {
+    createToastManager,
+    initializeEditor,
+  } from "../../../lib/editor-utils";
+
+  const toast = createToastManager();
+
+  // ── Hidden state ──────────────────────────────────────────────────────────
+  let etsyListingId: string | null = null;
+  let importedImages: Array<{
+    url: string;
+    alt_text: string;
+    source: string;
+    sort_order: number;
+  }> = [];
+  let testimonials: Array<{
+    author_name: string;
+    quote: string;
+    rating: number | null;
+  }> = [];
+  let reviews: Array<{
+    reviewer_name: string;
+    review_text: string;
+    rating: number | null;
+    is_verified: boolean;
+    review_date: string;
+  }> = [];
+
+  // ── Quill editor ──────────────────────────────────────────────────────────
+  const editor = initializeEditor({
+    containerId: "body-editor",
+    placeholder: "Describe this item…",
+    onContentChange: (html) => {
+      (document.getElementById("body-input") as HTMLInputElement).value = html;
+    },
+  });
+
+  // ── Slug auto-generation ──────────────────────────────────────────────────
+  const titleInput = document.getElementById("title") as HTMLInputElement;
+  const slugInput = document.getElementById("slug") as HTMLInputElement;
+  let slugEdited = false;
+  slugInput.addEventListener("input", () => {
+    slugEdited = true;
+  });
+  titleInput.addEventListener("input", () => {
+    if (!slugEdited) {
+      slugInput.value = titleInput.value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+    }
+  });
+
+  // ── Sale price preview ────────────────────────────────────────────────────
+  const discountInput = document.getElementById(
+    "promo-discount",
+  ) as HTMLInputElement;
+  const salePricePreview = document.getElementById(
+    "sale-price-preview",
+  ) as HTMLInputElement;
+  const etsyPriceAmountInput = document.getElementById(
+    "etsy-price-amount",
+  ) as HTMLInputElement;
+  const etsyPriceDivisorInput = document.getElementById(
+    "etsy-price-divisor",
+  ) as HTMLInputElement;
+  const etsyPriceCurrencyInput = document.getElementById(
+    "etsy-price-currency",
+  ) as HTMLInputElement;
+
+  function updateSalePricePreview() {
+    const amount = parseFloat(etsyPriceAmountInput.value);
+    const divisor = parseFloat(etsyPriceDivisorInput.value) || 100;
+    const currency = etsyPriceCurrencyInput.value || "USD";
+    const pct = parseFloat(discountInput.value);
+    if (isNaN(amount) || isNaN(pct) || pct <= 0) {
+      salePricePreview.value = "";
+      return;
+    }
+    const saleVal = (amount / divisor) * (1 - pct / 100);
+    try {
+      salePricePreview.value = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency,
+      }).format(saleVal);
+    } catch {
+      salePricePreview.value = `${currency} ${saleVal.toFixed(2)}`;
+    }
+  }
+  discountInput.addEventListener("input", updateSalePricePreview);
+
+  // ── Etsy Product Browser ──────────────────────────────────────────────────
+  let browserOffset = 0;
+  let browserSectionId = "all";
+  let browserPanelOpen = false;
+  let selectedListingId: string | null = null;
+
+  const browseToggleBtn = document.getElementById("etsy-browse-toggle")!;
+  const browserPanel = document.getElementById("etsy-browser") as HTMLElement;
+  const sectionTabsEl = document.getElementById("etsy-section-tabs")!;
+  const gridEl = document.getElementById("etsy-grid")!;
+  const loadMoreRow = document.getElementById(
+    "etsy-load-more-row",
+  ) as HTMLElement;
+  const loadMoreBtn = document.getElementById("etsy-load-more")!;
+  const importStatus = document.getElementById("etsy-import-status")!;
+
+  browseToggleBtn.addEventListener("click", async () => {
+    browserPanelOpen = !browserPanelOpen;
+    browserPanel.hidden = !browserPanelOpen;
+    browseToggleBtn.textContent = browserPanelOpen
+      ? "Browse Etsy Store ▴"
+      : "Browse Etsy Store ▾";
+    if (browserPanelOpen && gridEl.querySelector(".etsy-loading")) {
+      await loadBrowser(true);
+    }
+  });
+
+  async function loadBrowser(reset: boolean) {
+    if (reset) {
+      browserOffset = 0;
+      gridEl.innerHTML = `<p class="etsy-loading">Loading…</p>`;
+      loadMoreRow.style.display = "none";
+    }
+    importStatus.textContent = "";
+
+    let url = `/api/admin/sales/etsy-browse?section_id=${browserSectionId}&offset=${browserOffset}&limit=24`;
+    let data: any;
+    try {
+      const res = await fetch(url);
+      data = await res.json();
+      if (!res.ok) {
+        gridEl.innerHTML = `<p class="etsy-error">⚠️ ${data.error ?? "Failed to load listings."}</p>`;
+        loadMoreRow.style.display = "none";
+        return;
+      }
+    } catch {
+      gridEl.innerHTML = `<p class="etsy-error">⚠️ Network error — could not reach the server.</p>`;
+      loadMoreRow.style.display = "none";
+      return;
+    }
+
+    // Render section tabs (first load only)
+    if (
+      reset &&
+      browserOffset === 0 &&
+      Array.isArray(data.sections) &&
+      data.sections.length > 0
+    ) {
+      renderSectionTabs(data.sections);
+    }
+
+    // Render product cards
+    const cards = renderCards(data.listings ?? []);
+    if (reset) {
+      gridEl.innerHTML = "";
+    } else {
+      // Remove "no results" message if appending
+    }
+    if (cards.length === 0 && browserOffset === 0) {
+      gridEl.innerHTML = `<p class="etsy-empty">No active listings found.</p>`;
+    } else {
+      cards.forEach((card) => gridEl.appendChild(card));
+    }
+
+    // Update load-more button
+    browserOffset += (data.listings ?? []).length;
+    loadMoreRow.style.display = data.has_more ? "block" : "none";
+  }
+
+  function renderSectionTabs(sections: Array<{ id: number; title: string }>) {
+    sectionTabsEl.innerHTML = `<button type="button" class="etsy-tab etsy-tab--active" data-section="all">All</button>`;
+    sections.forEach((sec) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "etsy-tab";
+      btn.dataset.section = String(sec.id);
+      btn.textContent = sec.title;
+      sectionTabsEl.appendChild(btn);
+    });
+    sectionTabsEl
+      .querySelectorAll<HTMLButtonElement>(".etsy-tab")
+      .forEach((tab) => {
+        tab.addEventListener("click", async () => {
+          sectionTabsEl
+            .querySelectorAll(".etsy-tab")
+            .forEach((t) => t.classList.remove("etsy-tab--active"));
+          tab.classList.add("etsy-tab--active");
+          browserSectionId = tab.dataset.section ?? "all";
+          await loadBrowser(true);
+        });
+      });
+  }
+
+  function renderCards(
+    listings: Array<{
+      listing_id: string;
+      title: string;
+      price_display: string;
+      thumbnail_url: string;
+      quantity: number | null;
+    }>,
+  ): HTMLElement[] {
+    return listings.map((item) => {
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "etsy-card";
+      if (item.listing_id === selectedListingId)
+        card.classList.add("etsy-card--selected");
+      card.dataset.listingId = item.listing_id;
+      card.innerHTML = `
+        ${item.thumbnail_url ? `<img src="${escAttr(item.thumbnail_url)}" alt="${escAttr(item.title)}" class="etsy-card__img" loading="lazy" />` : `<div class="etsy-card__no-img">No image</div>`}
+        <span class="etsy-card__title">${escHtml(item.title)}</span>
+        <span class="etsy-card__price">${escHtml(item.price_display)}</span>
+        ${item.quantity != null && item.quantity <= 3 ? `<span class="etsy-card__qty">Only ${item.quantity} left</span>` : ""}
+      `;
+      card.addEventListener("click", () => importCard(item.listing_id, card));
+      return card;
+    });
+  }
+
+  async function importCard(listingId: string, cardEl: HTMLElement) {
+    importStatus.textContent = "Importing…";
+    // Highlight selected card
+    gridEl
+      .querySelectorAll(".etsy-card--selected")
+      .forEach((c) => c.classList.remove("etsy-card--selected"));
+    cardEl.classList.add("etsy-card--selected");
+    selectedListingId = listingId;
+
+    try {
+      const res = await fetch("/api/admin/sales/etsy-import", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ listing_id: listingId }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        importStatus.textContent = `Error: ${data.error}`;
+        cardEl.classList.remove("etsy-card--selected");
+        selectedListingId = null;
+        return;
+      }
+      applyImport(data);
+      importStatus.textContent = `✓ Imported "${data.title}" with ${(data.images ?? []).length} image(s).`;
+    } catch {
+      importStatus.textContent = "Network error. Could not reach the server.";
+      cardEl.classList.remove("etsy-card--selected");
+      selectedListingId = null;
+    }
+  }
+
+  function applyImport(data: any) {
+    etsyListingId = data.listing_id;
+    titleInput.value = data.title;
+    titleInput.dispatchEvent(new Event("input")); // trigger slug generation
+    editor.root.innerHTML = data.body_html;
+    (document.getElementById("body-input") as HTMLInputElement).value =
+      data.body_html;
+    (document.getElementById("etsy-listing-url") as HTMLInputElement).value =
+      data.listing_url;
+
+    if (data.price_amount != null) {
+      etsyPriceAmountInput.value = String(data.price_amount);
+      etsyPriceDivisorInput.value = String(data.price_divisor);
+      etsyPriceCurrencyInput.value = data.price_currency;
+      const displayPrice = (data.price_amount / data.price_divisor).toFixed(2);
+      (
+        document.getElementById("etsy-price-display") as HTMLInputElement
+      ).value = `${data.price_currency} ${displayPrice}`;
+      updateSalePricePreview();
+    }
+
+    // Tags
+    if (Array.isArray(data.tags) && data.tags.length > 0) {
+      const tagsInput = document.getElementById(
+        "tags",
+      ) as HTMLInputElement | null;
+      if (tagsInput) tagsInput.value = data.tags.join(", ");
+    }
+
+    importedImages = data.images ?? [];
+    renderImages();
+  }
+
+  loadMoreBtn.addEventListener("click", async () => {
+    await loadBrowser(false);
+  });
+
+  // ── Images rendering ──────────────────────────────────────────────────────
+  function renderImages() {
+    const list = document.getElementById("images-list")!;
+    const hint = document.getElementById("images-hint")!;
+    list.innerHTML = importedImages
+      .map(
+        (img, i) => `
+      <div class="sales-image-item" data-index="${i}">
+        <img src="${img.url}" alt="${img.alt_text || ""}" />
+        <button type="button" class="sales-image-remove" data-index="${i}">✕</button>
+      </div>
+    `,
+      )
+      .join("");
+    hint.style.display = importedImages.length ? "none" : "";
+    (document.getElementById("images-json") as HTMLInputElement).value =
+      JSON.stringify(importedImages);
+
+    list
+      .querySelectorAll<HTMLButtonElement>(".sales-image-remove")
+      .forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.dataset.index);
+          importedImages.splice(idx, 1);
+          importedImages.forEach((img, i) => {
+            img.sort_order = i;
+          });
+          renderImages();
+        });
+      });
+  }
+
+  // ── Testimonials ──────────────────────────────────────────────────────────
+  function renderTestimonials() {
+    const list = document.getElementById("testimonials-list")!;
+    list.innerHTML = testimonials
+      .map(
+        (t, i) => `
+      <div class="sub-item" data-index="${i}">
+        <input class="form-input" placeholder="Name" value="${escAttr(t.author_name)}" data-field="author_name" data-idx="${i}" />
+        <textarea class="form-input" placeholder="Quote" rows="2" data-field="quote" data-idx="${i}">${escHtml(t.quote)}</textarea>
+        <input class="form-input" type="number" min="1" max="5" placeholder="Rating (1-5)" value="${t.rating ?? ""}" data-field="rating" data-idx="${i}" />
+        <button type="button" class="btn btn-ghost btn--sm js-remove-testimonial" data-idx="${i}">Remove</button>
+      </div>
+    `,
+      )
+      .join("");
+    (document.getElementById("testimonials-json") as HTMLInputElement).value =
+      JSON.stringify(testimonials);
+
+    list
+      .querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[data-field]")
+      .forEach((el) => {
+        el.addEventListener("input", () => {
+          const idx = Number(el.dataset.idx);
+          const field = el.dataset.field as keyof (typeof testimonials)[0];
+          const val = el.value;
+          if (field === "rating")
+            (testimonials[idx] as any)[field] = val ? Number(val) : null;
+          else (testimonials[idx] as any)[field] = val;
+          (
+            document.getElementById("testimonials-json") as HTMLInputElement
+          ).value = JSON.stringify(testimonials);
+        });
+      });
+    list
+      .querySelectorAll<HTMLButtonElement>(".js-remove-testimonial")
+      .forEach((btn) => {
+        btn.addEventListener("click", () => {
+          testimonials.splice(Number(btn.dataset.idx), 1);
+          renderTestimonials();
+        });
+      });
+  }
+  document
+    .getElementById("add-testimonial-btn")!
+    .addEventListener("click", () => {
+      testimonials.push({ author_name: "", quote: "", rating: null });
+      renderTestimonials();
+    });
+
+  // ── Reviews ───────────────────────────────────────────────────────────────
+  function renderReviews() {
+    const list = document.getElementById("reviews-list")!;
+    list.innerHTML = reviews
+      .map(
+        (r, i) => `
+      <div class="sub-item" data-index="${i}">
+        <input class="form-input" placeholder="Reviewer Name" value="${escAttr(r.reviewer_name)}" data-field="reviewer_name" data-idx="${i}" />
+        <textarea class="form-input" placeholder="Review text" rows="2" data-field="review_text" data-idx="${i}">${escHtml(r.review_text)}</textarea>
+        <input class="form-input" type="number" min="1" max="5" placeholder="Rating (1-5)" value="${r.rating ?? ""}" data-field="rating" data-idx="${i}" />
+        <label><input type="checkbox" data-field="is_verified" data-idx="${i}" ${r.is_verified ? "checked" : ""} /> Verified Buyer</label>
+        <input class="form-input" type="date" placeholder="Review date" value="${r.review_date ?? ""}" data-field="review_date" data-idx="${i}" />
+        <button type="button" class="btn btn-ghost btn--sm js-remove-review" data-idx="${i}">Remove</button>
+      </div>
+    `,
+      )
+      .join("");
+    (document.getElementById("reviews-json") as HTMLInputElement).value =
+      JSON.stringify(reviews);
+
+    list
+      .querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[data-field]")
+      .forEach((el) => {
+        const evtType = el.type === "checkbox" ? "change" : "input";
+        el.addEventListener(evtType, () => {
+          const idx = Number(el.dataset.idx);
+          const field = el.dataset.field as string;
+          if (field === "rating")
+            (reviews[idx] as any)[field] = (el as HTMLInputElement).value
+              ? Number((el as HTMLInputElement).value)
+              : null;
+          else if (field === "is_verified")
+            (reviews[idx] as any)[field] = (el as HTMLInputElement).checked;
+          else (reviews[idx] as any)[field] = (el as HTMLInputElement).value;
+          (document.getElementById("reviews-json") as HTMLInputElement).value =
+            JSON.stringify(reviews);
+        });
+      });
+    list
+      .querySelectorAll<HTMLButtonElement>(".js-remove-review")
+      .forEach((btn) => {
+        btn.addEventListener("click", () => {
+          reviews.splice(Number(btn.dataset.idx), 1);
+          renderReviews();
+        });
+      });
+  }
+  document.getElementById("add-review-btn")!.addEventListener("click", () => {
+    reviews.push({
+      reviewer_name: "",
+      review_text: "",
+      rating: null,
+      is_verified: false,
+      review_date: "",
+    });
+    renderReviews();
+  });
+
+  // ── Form submission ───────────────────────────────────────────────────────
+  document
+    .getElementById("sales-form")!
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = titleInput.value.trim();
+      if (!title) {
+        toast.show("Title is required.", "error");
+        return;
+      }
+
+      const body: Record<string, unknown> = {
+        title,
+        slug: slugInput.value.trim() || undefined,
+        status: (document.getElementById("status") as HTMLSelectElement).value,
+        body: (document.getElementById("body-input") as HTMLInputElement).value,
+        etsy_listing_id: etsyListingId,
+        etsy_listing_url:
+          (document.getElementById("etsy-listing-url") as HTMLInputElement)
+            .value || null,
+        etsy_price_amount: etsyPriceAmountInput.value
+          ? Number(etsyPriceAmountInput.value)
+          : null,
+        etsy_price_divisor: Number(etsyPriceDivisorInput.value) || 100,
+        etsy_price_currency: etsyPriceCurrencyInput.value || "USD",
+        promo_label:
+          (document.getElementById("promo-label") as HTMLInputElement).value ||
+          null,
+        promo_discount_pct: discountInput.value
+          ? Number(discountInput.value)
+          : null,
+        promo_start:
+          (document.getElementById("promo-start") as HTMLInputElement).value ||
+          null,
+        promo_end:
+          (document.getElementById("promo-end") as HTMLInputElement).value ||
+          null,
+        paypal_button_html:
+          (document.getElementById("paypal-html") as HTMLTextAreaElement)
+            .value || null,
+        linked_article_slug:
+          (document.getElementById("linked-article") as HTMLInputElement)
+            .value || null,
+        images: importedImages,
+      };
+
+      const submitBtn = document.getElementById(
+        "submit-btn",
+      ) as HTMLButtonElement;
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Saving…";
+
+      try {
+        const res = await fetch("/api/admin/sales", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          toast.show(data.error ?? "Failed to create posting.", "error");
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Create Posting";
+          return;
+        }
+
+        // Save testimonials and reviews if any
+        const slug = data.slug;
+        for (const t of testimonials) {
+          if (!t.author_name || !t.quote) continue;
+          await fetch(`/api/admin/sales/${slug}/testimonials`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(t),
+          });
+        }
+        for (const r of reviews) {
+          if (!r.reviewer_name || !r.review_text) continue;
+          await fetch(`/api/admin/sales/${slug}/reviews`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(r),
+          });
+        }
+
+        window.location.href = `/admin/sales/${slug}`;
+      } catch {
+        toast.show("Network error. Please try again.", "error");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Create Posting";
+      }
+    });
+
+  function escAttr(s: string): string {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/</g, "&lt;");
+  }
+  function escHtml(s: string): string {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+</script>
+
+<style>
+  .editor-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .editor-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .sales-images-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .sales-image-item {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .sales-image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .sales-image-remove {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .sub-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0.75rem;
+    background: var(--color-surface-alt);
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+  }
+  .btn--sm {
+    align-self: flex-start;
+  }
+
+  /* ── Etsy Product Browser ───────────────────────────────────────────────── */
+  .etsy-browser {
+    margin-top: 0.75rem;
+    border: 1px solid var(--color-border, #e2e8f0);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .etsy-section-tabs {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 0.6rem 0.75rem;
+    background: var(--color-surface-alt, #f8f9fa);
+    border-bottom: 1px solid var(--color-border, #e2e8f0);
+    scrollbar-width: thin;
+  }
+  .etsy-tab {
+    flex-shrink: 0;
+    padding: 0.25rem 0.75rem;
+    border: 1px solid var(--color-border, #e2e8f0);
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    color: var(--color-text, inherit);
+    transition:
+      background 0.15s,
+      color 0.15s;
+  }
+  .etsy-tab:hover {
+    background: var(--color-primary, #4f46e5);
+    color: #fff;
+    border-color: var(--color-primary, #4f46e5);
+  }
+  .etsy-tab--active {
+    background: var(--color-primary, #4f46e5);
+    color: #fff;
+    border-color: var(--color-primary, #4f46e5);
+  }
+  .etsy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 0.75rem;
+    padding: 0.75rem;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  .etsy-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    background: var(--color-surface-alt, #f8f9fa);
+    cursor: pointer;
+    overflow: hidden;
+    text-align: left;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
+    padding: 0;
+  }
+  .etsy-card:hover,
+  .etsy-card:focus-visible {
+    border-color: var(--color-primary, #4f46e5);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    outline: none;
+  }
+  .etsy-card--selected {
+    border-color: var(--color-primary, #4f46e5);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25);
+  }
+  .etsy-card__img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+  }
+  .etsy-card__no-img {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: var(--color-text-muted, #888);
+    background: var(--color-border, #e2e8f0);
+  }
+  .etsy-card__title {
+    font-size: 0.72rem;
+    line-height: 1.3;
+    padding: 0.35rem 0.4rem 0.15rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: var(--color-text, inherit);
+  }
+  .etsy-card__price {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0 0.4rem 0.2rem;
+    color: var(--color-primary, #4f46e5);
+  }
+  .etsy-card__qty {
+    font-size: 0.65rem;
+    padding: 0 0.4rem 0.35rem;
+    color: var(--color-warning, #d97706);
+  }
+  .etsy-loading,
+  .etsy-empty,
+  .etsy-error {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--color-text-muted, #888);
+    font-size: 0.875rem;
+  }
+  .etsy-error {
+    color: var(--color-danger, #dc2626);
+  }
+</style>

@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { db } from "../../../../lib/db";
 import { cloudinary } from "../../../../lib/cloudinary-server";
+import { db } from "../../../../lib/db";
 import { IMAGE_MIME_TYPES, MAX_IMAGE_BYTES } from "../../../../lib/media";
 import { ensurePanelSchema } from "../../../../lib/panels";
 
@@ -34,8 +34,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const fileData = body.file_data as string | null;
   const mimeType = String(body.mime_type ?? "").trim();
   const fileSize = Number(body.file_size ?? 0);
+  const altText = String(body.alt_text ?? "")
+    .trim()
+    .slice(0, 160);
 
-  if (!fileData || !fileData.startsWith("data:") || !fileData.includes(";base64,")) {
+  if (
+    !fileData ||
+    !fileData.startsWith("data:") ||
+    !fileData.includes(";base64,")
+  ) {
     return json({ error: "file_data must be a valid base64 data URI" }, 400);
   }
 
@@ -70,6 +77,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     uploadResult = await cloudinary.uploader.upload(fileData, {
       folder: "scriptorium/panels",
       resource_type: "image",
+      allowed_formats: ["jpg", "png", "webp", "gif", "avif"],
     });
   } catch (err) {
     console.error("[panels/upload] Cloudinary error:", err);
@@ -79,11 +87,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
   try {
     const inserted = await db.execute(
       `INSERT INTO panel_media (public_id, url, alt_text, width, height, format)
-       VALUES (?, ?, '', ?, ?, ?)
+       VALUES (?, ?, ?, ?, ?, ?)
        RETURNING id, public_id, url, alt_text, width, height, format, created_at`,
       [
         uploadResult.public_id,
         uploadResult.secure_url,
+        altText,
         uploadResult.width ?? null,
         uploadResult.height ?? null,
         uploadResult.format ?? null,
@@ -112,6 +121,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
     );
   } catch (err) {
     console.error("[panels/upload] DB error:", err);
+    try {
+      await cloudinary.uploader.destroy(uploadResult.public_id, {
+        resource_type: "image",
+      });
+    } catch (destroyErr) {
+      console.error("[panels/upload] Cloudinary rollback failed:", destroyErr);
+    }
     return json({ error: "Database error" }, 500);
   }
 };
