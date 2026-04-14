@@ -99,8 +99,8 @@ function addSecurityHeaders(response: Response, pathname: string): Response {
       ? `form-action 'self' https://www.paypal.com;`
       : `form-action 'self';`;
   const csp = isAdmin
-    ? `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; ${imgSrc} font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; ${formAction}`
-    : `default-src 'self'; script-src 'self' ${fouc}; style-src 'self' https://fonts.googleapis.com; ${imgSrc} font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; ${formAction}`;
+    ? `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; ${imgSrc} font-src 'self'; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; ${formAction}`
+    : `default-src 'self'; script-src 'self' ${fouc}; style-src 'self'; ${imgSrc} font-src 'self'; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; ${formAction}`;
   response.headers.set("Content-Security-Policy-Report-Only", csp);
 
   return response;

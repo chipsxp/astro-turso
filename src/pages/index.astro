@@ -18,7 +18,9 @@ const PRIMARY_CATEGORY_SLUGS = [
 await ensureCategorySchema();
 const panelImages = await getPanelImageMap();
 
-const CLOUD = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+const CLOUD =
+  process.env.CLOUDINARY_CLOUD_NAME ??
+  import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
 
 function panelSrc(
   slot: "panel-01" | "panel-02" | "panel-03" | "panel-04",

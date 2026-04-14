@@ -54,7 +54,8 @@ import PanelGallery from "../../components/admin/PanelGallery";
   </div>
   <PanelGallery
     client:load
-    cloudName={import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME}
+    cloudName={process.env.CLOUDINARY_CLOUD_NAME ??
+      import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME}
   />
 
   <!-- Article table panel -->
