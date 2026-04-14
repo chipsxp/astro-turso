@@ -1,6 +1,6 @@
 # The Happy Feeling Scriptorium
 
-![Version](https://img.shields.io/badge/version-1.1.0-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
+![Version](https://img.shields.io/badge/version-1.2.0-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
 
 Astro SSR blog and admin panel for publishing articles, managing events, managing media, and running a small author workflow on top of Turso and Cloudinary.
 
@@ -12,6 +12,7 @@ This repository is meant to be practical for developers who want to learn from i
 | ---------------- | ------- | --------------------------------------------- |
 | `main`           | 1.0.0   | Base blog platform — no events module         |
 | `feature/events` | 1.1.0   | Adds the Upcoming Events module (this branch) |
+| `feature/etsy-sales` | 1.2.0 | Adds Etsy sales module and storefront integration, improves event flow, and raises Lighthouse score via WebP and alt-text delivery |
 
 Clone the branch that matches what you need:
 
@@ -288,6 +289,12 @@ If you are new to Astro or full-stack content apps, start in this order:
 
 ## Changelog
 
+### [1.2.0] — 2026-04-13 — Etsy Sales + Storefront Integration (`feature/etsy-sales` branch)
+
+_Details to be filled in when the feature is complete._
+
+---
+
 ### [1.0.0] — 2026-04-06 — Base Platform Release
 
 First stable release. Core blogging platform, admin workflow, and security baseline are complete.
@@ -383,5 +390,5 @@ Then create your admin user and start the server as usual.
 | Version   | Feature               | Status   |
 | --------- | --------------------- | -------- |
 | **1.1.0** | Upcoming Events page  | Released |
-| **1.2.0** | Art Sales / Shop page | Planned  |
+| **1.2.0** | Art Sales / Shop page | In Progress |
 | **1.3.0** | _(to be determined)_  | Planned  |
