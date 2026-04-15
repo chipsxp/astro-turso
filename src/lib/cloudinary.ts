@@ -1,4 +1,10 @@
-type CloudinaryImagePreset = "hero" | "inline" | "thumb" | "panel";
+type CloudinaryImagePreset =
+  | "hero"
+  | "inline"
+  | "thumb"
+  | "panel"
+  | "panel-tall"
+  | "panel-wide";
 
 type BuildCloudinaryImageUrlInput = {
   cloudName: string;
@@ -17,6 +23,8 @@ const PRESET_DIMENSIONS: Record<CloudinaryImagePreset, PresetDimensions> = {
   inline: { width: 960 },
   thumb: { width: 320, height: 240 },
   panel: { width: 640, height: 480 },
+  "panel-tall": { width: 400, height: 720 }, // 5:9 portrait — panel-01, panel-02, panel-04
+  "panel-wide": { width: 800, height: 450 }, // 16:9 landscape — panel-03
 };
 
 function encodePublicId(publicId: string): string {
@@ -53,9 +61,16 @@ export function buildCloudinaryImageUrl({
   const presetDimensions = PRESET_DIMENSIONS[preset];
   const targetWidth = clampWidth(width ?? presetDimensions.width);
 
+  const scaledHeight =
+    presetDimensions.height !== undefined
+      ? Math.round(
+          (targetWidth / presetDimensions.width) * presetDimensions.height,
+        )
+      : undefined;
+
   const resizeComponent =
-    preset === "thumb"
-      ? `c_fill,g_auto,h_${presetDimensions.height ?? 240},w_${targetWidth}`
+    preset === "thumb" || preset === "panel-tall" || preset === "panel-wide"
+      ? `c_fill,g_auto,h_${scaledHeight ?? 240},w_${targetWidth}`
       : `c_limit,w_${targetWidth}`;
 
   const transformations = [resizeComponent, "f_auto", "q_auto"].join("/");

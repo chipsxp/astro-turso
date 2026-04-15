@@ -22,42 +22,51 @@ const CLOUD =
   process.env.CLOUDINARY_CLOUD_NAME ??
   import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
 
-function panelSrc(
-  slot: "panel-01" | "panel-02" | "panel-03" | "panel-04",
-): string | null {
+type PanelSlotKey = "panel-01" | "panel-02" | "panel-03" | "panel-04";
+
+const SLOT_PRESET: Record<PanelSlotKey, "panel-tall" | "panel-wide"> = {
+  "panel-01": "panel-tall",
+  "panel-02": "panel-tall",
+  "panel-03": "panel-wide",
+  "panel-04": "panel-tall",
+};
+
+const SLOT_WIDTHS: Record<"panel-tall" | "panel-wide", number[]> = {
+  "panel-tall": [200, 320, 400],
+  "panel-wide": [400, 640, 800],
+};
+
+function panelSrc(slot: PanelSlotKey): string | null {
   const entry = panelImages[slot];
   if (!entry.publicId || !CLOUD) return entry.url;
   try {
     return buildCloudinaryImageUrl({
       cloudName: CLOUD,
       publicId: entry.publicId,
-      preset: "panel",
+      preset: SLOT_PRESET[slot],
     });
   } catch {
     return entry.url;
   }
 }
 
-function panelSrcset(
-  slot: "panel-01" | "panel-02" | "panel-03" | "panel-04",
-): string | undefined {
+function panelSrcset(slot: PanelSlotKey): string | undefined {
   const entry = panelImages[slot];
   if (!entry.publicId || !CLOUD) return undefined;
+  const preset = SLOT_PRESET[slot];
   try {
     return buildCloudinaryImageSrcset({
       cloudName: CLOUD,
       publicId: entry.publicId,
-      preset: "panel",
-      widths: [320, 480, 640],
+      preset,
+      widths: SLOT_WIDTHS[preset],
     });
   } catch {
     return undefined;
   }
 }
 
-function panelAlt(
-  slot: "panel-01" | "panel-02" | "panel-03" | "panel-04",
-): string {
+function panelAlt(slot: PanelSlotKey): string {
   const fallbackBySlot: Record<typeof slot, string> = {
     "panel-01": "Featured panel artwork 1",
     "panel-02": "Featured panel artwork 2",
@@ -168,12 +177,14 @@ function formatArticleCount(count: number): string {
                 class="panel-deco__inner panel-deco__inner--b"
                 style="position:relative;z-index:1"
               >
+                <span class="panel-deco__bop">BOP!</span>
                 <span class="panel-deco__label">Panel&nbsp;02</span>
               </div>
             </div>
           ) : (
             <div class="panel-deco__frame panel-deco__frame--b">
               <div class="panel-deco__inner panel-deco__inner--b">
+                <span class="panel-deco__bop">BOP!</span>
                 <span class="panel-deco__label">Panel&nbsp;02</span>
               </div>
             </div>
@@ -275,6 +286,24 @@ function formatArticleCount(count: number): string {
       </article>
     </div>
   </section>
+
+  <!-- ─── Contributor join strip ─── -->
+  {!Astro.locals.user && (
+    <section class="join-strip">
+      <div class="join-strip__inner">
+        <div class="join-strip__copy">
+          <span class="join-strip__label">Become a Contributor</span>
+          <p class="join-strip__text">
+            Artists, illustrators, and comic creators — share your work, process, and stories with the community.
+          </p>
+        </div>
+        <div class="join-strip__actions">
+          <a href="/register" class="join-strip__btn join-strip__btn--primary">Create Account →</a>
+          <a href="/admin" class="join-strip__btn join-strip__btn--secondary">Sign In →</a>
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- ─── Manifesto strip ─── -->
   <section class="manifesto">

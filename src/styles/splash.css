@@ -90,7 +90,6 @@
   box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.6);
   width: 100%;
   max-width: 820px;
-  max-height: 520px;
   position: relative;
 }
 
@@ -122,7 +121,7 @@
     radial-gradient(circle 5px at 15% 88%, #0a0a0a 100%, transparent 0),
     radial-gradient(circle 10px at 50% 12%, #0a0a0a 100%, transparent 0),
     radial-gradient(circle 4px at 82% 10%, #0a0a0a 100%, transparent 0);
-  min-height: 320px;
+  aspect-ratio: 5 / 9;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -181,7 +180,7 @@
 .splash-panel--title {
   animation-delay: 0.3s;
   background: var(--surface, #141418);
-  min-height: 320px;
+  aspect-ratio: 5 / 9;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -318,10 +317,12 @@
   }
 
   .splash-panel--kirby {
-    min-height: 160px;
+    aspect-ratio: auto;
+    min-height: 220px;
   }
 
   .splash-panel--title {
+    aspect-ratio: auto;
     padding: 24px 20px;
     min-height: auto;
   }

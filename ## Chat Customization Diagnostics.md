@@ -3,11 +3,12 @@
 _WARNING: This file may contain sensitive information._
 
 **Custom Agents**<br>
-_5 files loaded_
+_6 files loaded_
 
 .github/agents<br>
 ├─ [`api-conventions-auditor.agent.md`](.github/agents/api-conventions-auditor.agent.md)<br>
-└─ [`cloudinary-transformation-validator.agent.md`](.github/agents/cloudinary-transformation-validator.agent.md)<br>
+├─ [`cloudinary-transformation-validator.agent.md`](.github/agents/cloudinary-transformation-validator.agent.md)<br>
+└─ [`new-feature.agent.md`](.github/agents/new-feature.agent.md)<br>
 .claude/agents<br>
 User Data<br>
 Extension: ms-windows-ai-studio.windows-ai-studio<br>
@@ -28,15 +29,16 @@ AGENTS.md<br>
 └─ [`AGENTS.md`](AGENTS.md)<br>
 
 **Prompt Files**<br>
-_4 files loaded_
+_5 files loaded_
 
 .github/prompts<br>
-└─ [`api-route-review.prompt.md`](.github/prompts/api-route-review.prompt.md)<br>
+├─ [`api-route-review.prompt.md`](.github/prompts/api-route-review.prompt.md)<br>
+└─ [`etsy-open-api-research.prompt.md`](.github/prompts/etsy-open-api-research.prompt.md)<br>
 User Data<br>
 Extension: GitHub.copilot-chat<br>
-├─ [`savePrompt.prompt.md`](../../.vscode/extensions/github.copilot-chat-0.42.3/assets/prompts/savePrompt.prompt.md)<br>
-├─ [`plan.prompt.md`](../../.vscode/extensions/github.copilot-chat-0.42.3/assets/prompts/plan.prompt.md)<br>
-└─ [`init.prompt.md`](../../.vscode/extensions/github.copilot-chat-0.42.3/assets/prompts/init.prompt.md)<br>
+├─ [`savePrompt.prompt.md`](../../.vscode/extensions/github.copilot-chat-0.43.0/assets/prompts/savePrompt.prompt.md)<br>
+├─ [`plan.prompt.md`](../../.vscode/extensions/github.copilot-chat-0.43.0/assets/prompts/plan.prompt.md)<br>
+└─ [`init.prompt.md`](../../.vscode/extensions/github.copilot-chat-0.43.0/assets/prompts/init.prompt.md)<br>
 
 **Skills**<br>
 _4 skills loaded_
