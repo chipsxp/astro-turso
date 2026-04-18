@@ -183,6 +183,14 @@ img {
   text-transform: uppercase;
 }
 
+.article-body .prose p {
+  margin-bottom: 1.4em;
+}
+
+.article-body .prose p:last-child {
+  margin-bottom: 0;
+}
+
 /* Restore visible blockquote border for rendered article prose (preflight resets borders). */
 .article-body .prose blockquote {
   margin: 0 0 1.4em;
@@ -606,4 +614,84 @@ img {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-status);
+}
+
+/* ─── Sales body (public shop page) ─── */
+/* Rules must live here (global.css, unlayered) not in scoped <style> blocks.
+   set:html children don't receive Astro's data-cid attribute, so scoped CSS never matches them.
+   Unlayered rules also win over Tailwind preflight (@layer base) resets on headings and lists. */
+.sales-body h1,
+.sales-body h2,
+.sales-body h3,
+.sales-body h4,
+.sales-body h5,
+.sales-body h6 {
+  font-family: var(--font-display);
+  color: var(--text);
+  line-height: 1.2;
+  font-weight: 500;
+  margin: 1.2em 0 0.5em;
+}
+
+.sales-body h1:first-child,
+.sales-body h2:first-child,
+.sales-body h3:first-child {
+  margin-top: 0;
+}
+
+.sales-body h2 {
+  font-size: clamp(1.6rem, 3vw, 2.05rem);
+}
+
+.sales-body h3 {
+  font-size: clamp(1.35rem, 2.3vw, 1.7rem);
+}
+
+.sales-body h4 {
+  font-size: 1.3rem;
+}
+
+/* Quill 2 stores both bullet and ordered lists as <ol> with data-list attribute.
+   No Quill CSS runs on public pages, so use native list-style-type for markers.
+   Hide .ql-ui marker spans (editor-only, no role on public pages). */
+.sales-body ol,
+.sales-body ul {
+  margin: 0 0 1.4em;
+  padding-left: 1.5em;
+}
+
+.sales-body li {
+  display: list-item;
+  list-style-position: outside;
+  margin-bottom: 0.45em;
+}
+
+.sales-body ol li[data-list="bullet"] {
+  list-style-type: disc;
+}
+
+.sales-body ol li[data-list="ordered"] {
+  list-style-type: decimal;
+}
+
+.sales-body .ql-ui {
+  display: none;
+}
+
+.sales-body blockquote {
+  margin: 0 0 1.4em;
+  padding: 0.15em 0 0.15em 1em;
+  border-left: 3px solid var(--border);
+}
+
+.sales-body p {
+  margin-bottom: 1em;
+}
+
+.sales-body strong {
+  font-weight: 700;
+}
+
+.sales-body em {
+  font-style: italic;
 }

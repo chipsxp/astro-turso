@@ -1,0 +1,77 @@
+/* Sales Dashboard — Responsive table styling */
+
+.dashboard-price-cell {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.dashboard-author-cell {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  max-width: 110px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.25;
+}
+
+.dashboard-date-cell {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.dashboard-article-link {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.dashboard-article-link:hover {
+  text-decoration: underline;
+}
+
+.dashboard-article-slug {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-status);
+  margin-top: 3px;
+  letter-spacing: 0.06em;
+}
+
+.dashboard-actions-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.dashboard-action-btn {
+  font-size: 0.54rem;
+  padding: 3px 7px;
+}
+
+/* Hide Price and Author columns on small screens (640px and below) */
+@media (max-width: 640px) {
+
+  #state-table th:nth-child(3),
+  #state-table td:nth-child(3),
+  #state-table th:nth-child(4),
+  #state-table td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Hide Updated column on very small screens (440px and below) */
+@media (max-width: 440px) {
+
+  #state-table th:nth-child(5),
+  #state-table td:nth-child(5) {
+    display: none;
+  }
+}

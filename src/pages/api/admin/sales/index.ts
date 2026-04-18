@@ -16,22 +16,27 @@ export const GET: APIRoute = async ({ locals }) => {
   const isAdmin = user.role === "admin";
 
   try {
-    const result = await db.execute(
-      isAdmin
-        ? `SELECT sp.*, u.email AS author_email
+    const result = isAdmin
+      ? await db.execute(
+          `SELECT sp.*, u.email AS author_email
            FROM sales_postings sp
            LEFT JOIN users u ON u.id = sp.author_id
-           ORDER BY sp.created_at DESC`
-        : `SELECT sp.*, u.email AS author_email
+           ORDER BY sp.created_at DESC`,
+          [],
+        )
+      : await db.execute(
+          `SELECT sp.*, u.email AS author_email
            FROM sales_postings sp
            LEFT JOIN users u ON u.id = sp.author_id
            WHERE sp.author_id = ?
            ORDER BY sp.created_at DESC`,
-      isAdmin ? [] : [Number(user.id)],
-    );
+          [Number(user.id)],
+        );
     return json({ postings: result.rows }, 200);
-  } catch {
-    return json({ error: "Database error" }, 500);
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[GET /api/admin/sales] Database error:", msg);
+    return json({ error: "Database error", detail: msg }, 500);
   }
 };
 
@@ -158,10 +163,12 @@ export const POST: APIRoute = async ({ locals, request }) => {
     }
 
     return json({ slug, id: newId }, 201);
-  } catch (err: any) {
-    if (String(err?.message).includes("UNIQUE constraint")) {
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[POST /api/admin/sales] Database error:", msg);
+    if (msg.includes("UNIQUE constraint")) {
       return json({ error: "Slug already exists." }, 409);
     }
-    return json({ error: "Database error" }, 500);
+    return json({ error: "Database error", detail: msg }, 500);
   }
 };

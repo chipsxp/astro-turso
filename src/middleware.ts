@@ -13,6 +13,25 @@ const WRITE_METHODS = new Set(["POST", "PUT", "DELETE", "PATCH"]);
 // Module-level secret key — TextEncoder is only called once at startup
 const JWT_SECRET_KEY = new TextEncoder().encode(import.meta.env.JWT_SECRET);
 
+// ── CSP builder ───────────────────────────────────────────────────────────────
+// Directives shared across every CSP tier (admin / shop / public)
+const BASE_CSP: Record<string, string> = {
+  "default-src":     "'self'",
+  "img-src":         "'self' data: blob: https://res.cloudinary.com https://*.etsystatic.com https://www.paypalobjects.com",
+  "font-src":        "'self'",
+  "connect-src":     "'self'",
+  "frame-src":       "'none'",
+  "frame-ancestors": "'none'",
+  "object-src":      "'none'",
+  "base-uri":        "'self'",
+};
+
+function buildCsp(overrides: Record<string, string>): string {
+  return Object.entries({ ...BASE_CSP, ...overrides })
+    .map(([k, v]) => `${k} ${v}`)
+    .join("; ");
+}
+
 export const onRequest = defineMiddleware(async (context, next) => {
   const { pathname } = new URL(context.request.url);
   const method = context.request.method;
@@ -88,19 +107,29 @@ function addSecurityHeaders(response: Response, pathname: string): Response {
   // Phase 2: compute sha256 hash of the anti-FOUC inline script in BlogLayout.astro
   // and switch to enforced Content-Security-Policy with per-pathname split.
   // Admin pages will keep 'unsafe-inline' due to define:vars in [slug].astro.
-  const isAdmin = pathname.startsWith("/admin");
+  // Anchored regex avoids false matches: /admin-panel → not admin, /shopify → not shop
+  const isAdmin = /^\/admin(?:\/|$)/.test(pathname);
+  const isShop  = /^\/shop(?:\/|$)/.test(pathname);
   // sha256 hash of the anti-FOUC is:inline script in BlogLayout.astro
   const fouc = "'sha256-HPPfxiskdCPpqDyDMT/Cc9sakRhGIC0x+o5OZyk+BdM='";
-  // Shop pages (/shop/*) render Etsy product images and PayPal checkout forms.
-  const isShop = pathname.startsWith("/shop");
-  const imgSrc = `img-src 'self' data: blob: https://res.cloudinary.com https://*.etsystatic.com https://www.paypalobjects.com;`;
-  const formAction =
-    isAdmin || isShop
-      ? `form-action 'self' https://www.paypal.com;`
-      : `form-action 'self';`;
   const csp = isAdmin
-    ? `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; ${imgSrc} font-src 'self'; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; ${formAction}`
-    : `default-src 'self'; script-src 'self' ${fouc}; style-src 'self'; ${imgSrc} font-src 'self'; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; ${formAction}`;
+    ? buildCsp({
+        "script-src":  "'self' 'unsafe-inline'",
+        "style-src":   "'self' 'unsafe-inline'",
+        "form-action": "'self' https://www.paypal.com",
+      })
+    : isShop
+      ? buildCsp({
+          "script-src":  `'self' ${fouc} https://www.paypal.com`,
+          "style-src":   "'self' 'unsafe-inline'",
+          "connect-src": "'self' https://www.paypal.com https://api.paypal.com https://api-m.paypal.com",
+          "form-action": "'self' https://www.paypal.com",
+        })
+      : buildCsp({
+          "script-src": `'self' ${fouc}`,
+          "style-src":  "'self'",
+          "form-action":"'self'",
+        });
   response.headers.set("Content-Security-Policy-Report-Only", csp);
 
   return response;

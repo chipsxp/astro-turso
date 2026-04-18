@@ -5,6 +5,15 @@ import {
   getDaysAgoInNewYork,
 } from "../../../../lib/events";
 
+type EventCandidate = {
+  id: number;
+  slug: string;
+  title: string;
+  status: string;
+  end_date: string | null;
+  start_date: string;
+};
+
 function json(data: unknown, status: number): Response {
   return new Response(JSON.stringify(data), {
     status,
@@ -46,20 +55,22 @@ export const POST: APIRoute = async ({ locals }) => {
        ORDER BY date(COALESCE(NULLIF(end_date, ''), start_date)) ASC`,
     );
 
-    const expiredEvents = expiredResult.rows
-      .map((row: Record<string, unknown>) => ({
+    const candidateEvents: EventCandidate[] = expiredResult.rows.map(
+      (row: Record<string, unknown>) => ({
         id: Number(row.id),
         slug: String(row.slug),
         title: String(row.title),
         status: String(row.status),
         end_date: row.end_date ? String(row.end_date) : null,
         start_date: String(row.start_date),
-      }))
-      .filter((event) => {
-        const effectiveEnd = event.end_date || event.start_date;
-        // Event is expired if its end date is more than 14 days in the past
-        return effectiveEnd < fourteenDaysAgoNY;
-      });
+      }),
+    );
+
+    const expiredEvents = candidateEvents.filter((event) => {
+      const effectiveEnd = event.end_date || event.start_date;
+      // Event is expired if its end date is more than 14 days in the past
+      return effectiveEnd < fourteenDaysAgoNY;
+    });
 
     // Log the result for operational awareness
     // In a production system, you might:
@@ -80,7 +91,7 @@ export const POST: APIRoute = async ({ locals }) => {
       },
       200,
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Archive transition failed:", err);
     return json({ error: "Database error during archive transition" }, 500);
   }

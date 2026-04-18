@@ -1,7 +1,11 @@
 ---
 import BlogLayout from "../../layouts/BlogLayout.astro";
+import { db } from "../../lib/db";
 import { calcSalePrice, formatEtsyPrice, parseTags } from "../../lib/sales";
-import { sanitizePayPalButton } from "../../lib/sanitize-paypal";
+import {
+  sanitizePayPalButton,
+  extractPayPalSdkConfig,
+} from "../../lib/sanitize-paypal";
 import { sanitizeArticleBodyServer } from "../../lib/sanitize-server";
 
 const { slug } = Astro.params;
@@ -14,19 +18,44 @@ let avgRating: number | null = null;
 let notFound = false;
 
 try {
-  const origin = Astro.url.origin;
-  const res = await fetch(`${origin}/api/sales/${slug}`);
-  if (res.status === 404) {
+  const result = await db.execute(
+    `SELECT sp.* FROM sales_postings sp WHERE sp.slug = ? AND sp.status = 'published'`,
+    [slug],
+  );
+
+  if (!result.rows.length) {
     notFound = true;
-  } else if (res.ok) {
-    const data = await res.json();
-    posting = data.posting;
-    images = data.images ?? [];
-    testimonials = data.testimonials ?? [];
-    reviews = data.reviews ?? [];
-    avgRating = data.avg_rating ?? null;
+  } else {
+    posting = result.rows[0];
+
+    const [imagesRes, testimonialsRes, reviewsRes] = await Promise.all([
+      db.execute(
+        "SELECT * FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC",
+        [Number(posting.id)],
+      ),
+      db.execute(
+        "SELECT * FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC",
+        [Number(posting.id)],
+      ),
+      db.execute(
+        "SELECT * FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC",
+        [Number(posting.id)],
+      ),
+    ]);
+    images = imagesRes.rows;
+    testimonials = testimonialsRes.rows;
+    reviews = reviewsRes.rows as any[];
+
+    const rated = reviews.filter((r) => r.rating != null);
+    avgRating =
+      rated.length > 0
+        ? Math.round(
+            (rated.reduce((s, r) => s + Number(r.rating), 0) / rated.length) *
+              10,
+          ) / 10
+        : null;
   }
-} catch {
+} catch (err: unknown) {
   notFound = true;
 }
 
@@ -59,6 +88,10 @@ const safeBody = posting?.body ? sanitizeArticleBodyServer(posting.body) : "";
 const safePayPal = posting?.paypal_button_html
   ? sanitizePayPalButton(posting.paypal_button_html)
   : "";
+const paypalSdkConfig =
+  !safePayPal && posting?.paypal_button_html
+    ? extractPayPalSdkConfig(posting.paypal_button_html)
+    : null;
 
 const promoEndDate = posting?.promo_end
   ? new Date(posting.promo_end).toLocaleDateString("en-US", {
@@ -190,6 +223,19 @@ const promoEndDate = posting?.promo_end
             </div>
           )
         }
+
+        {
+          paypalSdkConfig && (
+            <div class="sales-paypal-wrap">
+              <p class="sales-paypal-label">Or pay via PayPal:</p>
+              <div
+                id={`paypal-container-${paypalSdkConfig.hostedButtonId}`}
+                data-paypal-id={paypalSdkConfig.hostedButtonId}
+                data-paypal-sdk={paypalSdkConfig.sdkSrc}
+              />
+            </div>
+          )
+        }
       </div>
 
       <!-- Testimonials -->
@@ -283,6 +329,30 @@ const promoEndDate = posting?.promo_end
     </div>
   </article>
 </BlogLayout>
+
+<script>
+  // Dynamically load PayPal SDK buttons (Types A & B).
+  // The container div carries data-paypal-id and data-paypal-sdk attributes
+  // so no inline script is needed (inline scripts from set:html don't execute).
+  (function () {
+    const container = document.querySelector<HTMLElement>("[data-paypal-id]");
+    if (!container) return;
+
+    const hostedButtonId = container.dataset.paypalId;
+    const sdkSrc = container.dataset.paypalSdk;
+    if (!hostedButtonId || !sdkSrc) return;
+
+    const script = document.createElement("script");
+    script.src = sdkSrc;
+    script.async = true;
+    script.onload = () => {
+      const w = window as any;
+      if (typeof w.paypal?.HostedButtons !== "function") return;
+      w.paypal.HostedButtons({ hostedButtonId }).render(`#${container.id}`);
+    };
+    document.head.appendChild(script);
+  })();
+</script>
 
 <style>
   .sales-detail {
@@ -386,14 +456,22 @@ const promoEndDate = posting?.promo_end
     display: block;
   }
   .sales-purchase-panel {
-    background: var(--color-surface-alt, #f5f0e8);
+    background: var(--surface-2);
     border-radius: 8px;
     padding: 1.5rem;
     margin: 2rem 0;
   }
   .sales-purchase-panel__heading {
     margin: 0 0 1rem;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+  }
+  [data-theme="light"] .sales-purchase-panel {
+    background: var(--surface);
+    color: var(--text);
+  }
+  [data-theme="light"] .sales-testimonial {
+    background: var(--surface);
+    border-left-color: var(--border);
   }
   .btn--etsy {
     display: inline-block;
@@ -411,9 +489,36 @@ const promoEndDate = posting?.promo_end
   .sales-paypal-wrap {
     margin-top: 1rem;
   }
+  .sales-paypal-wrap :global(img[alt="paypal"]) {
+    filter: brightness(0) invert(1);
+  }
+  [data-theme="light"] .sales-paypal-wrap :global(img[alt="paypal"]) {
+    filter: none;
+  }
+  .sales-paypal-wrap :global(.pp-Z3SFQBH96SFFN) {
+    display: inline-block;
+    border: 2px solid var(--accent);
+    border-radius: 999px;
+    padding: 0.7em 2em;
+    background: transparent;
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      color 0.2s,
+      box-shadow 0.2s;
+  }
+  .sales-paypal-wrap :global(.pp-Z3SFQBH96SFFN:hover) {
+    background: var(--accent);
+    color: var(--surface);
+    box-shadow: 0 4px 14px rgba(242, 200, 90, 0.3);
+  }
   .sales-paypal-label {
-    font-size: 0.9rem;
-    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    margin: 0 0 0.75rem;
+    font-weight: 600;
   }
   .sales-testimonials,
   .sales-reviews {
@@ -430,7 +535,7 @@ const promoEndDate = posting?.promo_end
     color: var(--color-muted, #888);
   }
   .sales-stars {
-    color: #f2c85a;
+    color: var(--color-stars, #f2c85a);
     letter-spacing: 0.05em;
   }
   .sales-testimonials__list {
@@ -441,8 +546,8 @@ const promoEndDate = posting?.promo_end
   .sales-testimonial {
     margin: 0;
     padding: 1rem 1.2rem;
-    border-left: 3px solid var(--color-rule, #e0d8cc);
-    background: var(--color-surface-alt, #f5f0e8);
+    border-left: 3px solid var(--border);
+    background: var(--surface-2);
     border-radius: 0 6px 6px 0;
   }
   .sales-testimonial__quote {
@@ -474,7 +579,7 @@ const promoEndDate = posting?.promo_end
     font-size: 0.9rem;
   }
   .sales-review__verified {
-    color: #34c070;
+    color: var(--color-success, #34c070);
     font-size: 0.8rem;
     font-weight: 600;
   }

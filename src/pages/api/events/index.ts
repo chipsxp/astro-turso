@@ -11,6 +11,7 @@ import {
   normalizeEventStatus,
   toEventSlug,
   toPublicEvent,
+  type EventRecord,
 } from "../../../lib/events";
 import { ensureMediaTable } from "../../../lib/media";
 
@@ -91,8 +92,8 @@ export const GET: APIRoute = async ({ request }) => {
        ORDER BY date(e.start_date) DESC, COALESCE(time(e.start_time), '23:59') DESC`,
     );
 
-    const allEvents = result.rows.map((row: Record<string, unknown>) =>
-      mapEventRow(row),
+    const allEvents: EventRecord[] = result.rows.map(
+      (row: Record<string, unknown>) => mapEventRow(row),
     );
 
     // Filter to only publicly visible events (upcoming + within 14-day archive window)
@@ -255,8 +256,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
       },
       201,
     );
-  } catch (err: any) {
-    if (err?.message?.includes("UNIQUE constraint failed")) {
+  } catch (err: unknown) {
+    if (
+      err instanceof Error &&
+      err.message.includes("UNIQUE constraint failed")
+    ) {
       return json({ error: "An event with that slug already exists" }, 409);
     }
 

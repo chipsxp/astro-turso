@@ -1,18 +1,46 @@
 ---
 import BlogLayout from "../../layouts/BlogLayout.astro";
+import { db } from "../../lib/db";
 import { calcSalePrice, formatEtsyPrice, parseTags } from "../../lib/sales";
 
-// Fetch published postings server-side
+// Query published postings directly — never loopback-fetch in SSR (fails on Railway/cPanel)
 let postings: any[] = [];
 let fetchError = false;
 try {
-  const origin = Astro.url.origin;
-  const res = await fetch(`${origin}/api/sales`);
-  if (res.ok) {
-    const data = await res.json();
-    postings = data.postings ?? [];
-  } else {
-    fetchError = true;
+  const result = await db.execute(
+    `SELECT id, slug, title, status, etsy_price_amount, etsy_price_divisor,
+            etsy_price_currency, promo_discount_pct, promo_start, promo_end,
+            promo_label, tags, created_at, updated_at
+     FROM sales_postings
+     WHERE status = 'published'
+     ORDER BY created_at DESC`,
+  );
+
+  if (result.rows.length > 0) {
+    const ids = result.rows.map((p: any) => Number(p.id));
+    const placeholders = ids.map(() => "?").join(", ");
+    const imagesRes = await db.execute(
+      `SELECT posting_id, url, alt_text
+       FROM sales_images
+       WHERE posting_id IN (${placeholders})
+       ORDER BY sort_order ASC`,
+      ids,
+    );
+
+    const coverMap: Record<number, { url: string; alt_text: string }> = {};
+    for (const img of imagesRes.rows as any[]) {
+      const pid = Number(img.posting_id);
+      if (!coverMap[pid])
+        coverMap[pid] = {
+          url: String(img.url),
+          alt_text: String(img.alt_text ?? ""),
+        };
+    }
+
+    postings = result.rows.map((p: any) => ({
+      ...p,
+      cover_image: coverMap[Number(p.id)] ?? null,
+    }));
   }
 } catch {
   fetchError = true;

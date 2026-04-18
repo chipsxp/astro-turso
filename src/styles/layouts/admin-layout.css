@@ -827,6 +827,29 @@ html[data-theme="light"] {
   fill: var(--quill-toolbar-icon-active) !important;
 }
 
+/* ─── Quill editor content — reset admin heading bleed + block format fixes ─── */
+/* Neutralise the global h2/h3/h4 color and font-family that bleeds from admin-layout
+   into .ql-editor. Quill Snow handles font-size at higher specificity (0,2,1 vs 0,0,1)
+   so only color/family/letter-spacing need to be reset here. */
+.ql-editor h1,
+.ql-editor h2,
+.ql-editor h3,
+.ql-editor h4,
+.ql-editor h5,
+.ql-editor h6 {
+  color: inherit;
+  font-family: inherit;
+  letter-spacing: normal;
+}
+
+/* Blockquote: Quill Snow's default border-left is #ccc — invisible on dark --bg.
+   Use the theme border token instead. */
+.ql-snow .ql-editor blockquote {
+  border-left-color: var(--border);
+  padding-left: 16px;
+  margin: 5px 0;
+}
+
 /* ─── Status badges — comic stamp style ─── */
 .badge {
   display: inline-block;

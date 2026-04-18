@@ -134,14 +134,6 @@
   font-weight: 300;
 }
 
-.prose p {
-  margin-bottom: 1.4em;
-}
-
-.prose p:last-child {
-  margin-bottom: 0;
-}
-
 /* ─── Inline image grid ─── */
 .article-images {
   padding-bottom: 40px;
@@ -295,6 +287,7 @@ body.lightbox-open {
 }
 
 @media (max-width: 760px) {
+
   .hero-image img,
   .hero-image video,
   .image-grid__item img,

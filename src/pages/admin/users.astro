@@ -52,9 +52,7 @@ const user = Astro.locals.user!;
   };
 
   let currentUserId: number | null = null;
-  let currentUserRole: string = "";
 
-  const stateTable = document.getElementById("state-table")!;
   const tbody = document.getElementById("users-tbody")!;
   const pendingCountEl = document.getElementById("pending-count")!;
   const toast = document.getElementById("user-toast")!;
@@ -65,7 +63,6 @@ const user = Astro.locals.user!;
   (function detectCurrentUser() {
     const el = document.getElementById("current-user");
     currentUserId = el ? Number(el.dataset.id) : null;
-    currentUserRole = String(el?.dataset.role ?? "");
   })();
 
   function showToast(msg: string, isError = false) {

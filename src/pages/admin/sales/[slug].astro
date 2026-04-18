@@ -1,7 +1,9 @@
 ---
 import AdminLayout from "../../../layouts/AdminLayout.astro";
+import { db } from "../../../lib/db";
 
 const { slug } = Astro.params;
+const user = Astro.locals.user!;
 
 let posting: any = null;
 let images: any[] = [];
@@ -10,20 +12,46 @@ let reviews: any[] = [];
 let notFound = false;
 
 try {
-  const origin = Astro.url.origin;
-  const res = await fetch(`${origin}/api/admin/sales/${slug}`, {
-    headers: { Cookie: Astro.request.headers.get("Cookie") ?? "" },
-  });
-  if (res.status === 404 || res.status === 403) {
+  const result = await db.execute(
+    `SELECT sp.*, u.email AS author_email
+     FROM sales_postings sp
+     LEFT JOIN users u ON u.id = sp.author_id
+     WHERE sp.slug = ?`,
+    [slug],
+  );
+
+  if (!result.rows.length) {
     notFound = true;
-  } else if (res.ok) {
-    const data = await res.json();
-    posting = data.posting;
-    images = data.images ?? [];
-    testimonials = data.testimonials ?? [];
-    reviews = data.reviews ?? [];
+  } else {
+    posting = result.rows[0];
+    if (
+      user.role !== "admin" &&
+      Number(posting.author_id) !== Number(user.id)
+    ) {
+      notFound = true;
+    }
   }
-} catch {
+
+  if (!notFound) {
+    const [imagesRes, testimonialsRes, reviewsRes] = await Promise.all([
+      db.execute(
+        "SELECT * FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC",
+        [Number(posting.id)],
+      ),
+      db.execute(
+        "SELECT * FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC",
+        [Number(posting.id)],
+      ),
+      db.execute(
+        "SELECT * FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC",
+        [Number(posting.id)],
+      ),
+    ]);
+    images = imagesRes.rows;
+    testimonials = testimonialsRes.rows;
+    reviews = reviewsRes.rows;
+  }
+} catch (err: unknown) {
   notFound = true;
 }
 
@@ -99,7 +127,7 @@ const displayPrice =
     </div>
   </div>
 
-  <form id="sales-form" novalidate>
+  <form id="sales-form" novalidate data-slug={posting.slug}>
     <div class="editor-grid">
       <!-- ── Left column ─────────────────────────────────────────────── -->
       <div>
@@ -150,7 +178,12 @@ const displayPrice =
               style="min-height: 260px;"
             >
             </div>
-            <input type="hidden" id="body-input" name="body" />
+            <input
+              type="hidden"
+              id="body-input"
+              name="body"
+              value={posting.body ?? ""}
+            />
           </div>
         </div>
 
@@ -368,47 +401,97 @@ const displayPrice =
   </form>
 </AdminLayout>
 
-<script
-  define:vars={{
-    initialBody: posting.body,
-    initialImages: images,
-    initialTestimonials: testimonials,
-    initialReviews: reviews,
-    currentSlug: posting.slug,
-  }}
->
+<script>
   import {
     createToastManager,
+    escapeAttr,
+    escapeHtml,
     initializeEditor,
   } from "../../../lib/editor-utils";
 
+  // ── Types ─────────────────────────────────────────────────────────────────
+  interface SalesImage {
+    url: string;
+    alt_text: string;
+    source?: string;
+    sort_order?: number;
+  }
+  interface SalesTestimonial {
+    id?: number;
+    author_name: string;
+    quote: string;
+    rating: number | null;
+  }
+  interface SalesReview {
+    id?: number;
+    reviewer_name: string;
+    review_text: string;
+    rating: number | null;
+    is_verified: boolean;
+    review_date: string;
+  }
+  interface EtsySection {
+    id: number;
+    title: string;
+  }
+  interface EtsyListing {
+    listing_id: number;
+    title: string;
+    thumbnail_url?: string;
+    price_display: string;
+    quantity?: number;
+  }
+  interface BrowseResponse {
+    sections?: EtsySection[];
+    listings?: EtsyListing[];
+    has_more: boolean;
+    error?: string;
+  }
+
+  // ── DOM helper ────────────────────────────────────────────────────────────
+  function getEl<T extends HTMLElement>(id: string): T {
+    const el = document.querySelector<T>(`#${id}`);
+    if (!el) throw new Error(`Element #${id} not found`);
+    return el;
+  }
+
   const toast = createToastManager();
 
-  let etsyListingId = null;
-  let currentImages = [...initialImages];
-  let currentTestimonials = [...initialTestimonials];
-  let currentReviews = [...initialReviews];
+  // Read server-rendered values from pre-populated DOM inputs
+  const initialBody = getEl<HTMLInputElement>("body-input").value;
+  const currentSlug = getEl<HTMLFormElement>("sales-form").dataset.slug ?? "";
+
+  let etsyListingId: string | null = null;
+  let currentImages: SalesImage[] = JSON.parse(
+    getEl<HTMLInputElement>("images-json").value || "[]",
+  );
+  let currentTestimonials: SalesTestimonial[] = JSON.parse(
+    getEl<HTMLInputElement>("testimonials-json").value || "[]",
+  );
+  let currentReviews: SalesReview[] = JSON.parse(
+    getEl<HTMLInputElement>("reviews-json").value || "[]",
+  );
 
   // ── Quill ─────────────────────────────────────────────────────────────────
   const editor = initializeEditor({
     containerId: "body-editor",
     placeholder: "Describe this item…",
-    onContentChange: (html) => {
-      document.getElementById("body-input").value = html;
+    onContentChange: (html: string) => {
+      getEl<HTMLInputElement>("body-input").value = html;
     },
   });
   // Pre-populate without triggering onContentChange (edit page pattern from CLAUDE.md)
   editor.root.innerHTML = initialBody ?? "";
-  document.getElementById("body-input").value = initialBody ?? "";
+  getEl<HTMLInputElement>("body-input").value = initialBody ?? "";
 
   // ── Sale price preview ────────────────────────────────────────────────────
-  const discountInput = document.getElementById("promo-discount");
-  const salePricePreview = document.getElementById("sale-price-preview");
-  const etsyPriceAmountInput = document.getElementById("etsy-price-amount");
-  const etsyPriceDivisorInput = document.getElementById("etsy-price-divisor");
-  const etsyPriceCurrencyInput = document.getElementById("etsy-price-currency");
+  const discountInput = getEl<HTMLInputElement>("promo-discount");
+  const salePricePreview = getEl<HTMLInputElement>("sale-price-preview");
+  const etsyPriceAmountInput = getEl<HTMLInputElement>("etsy-price-amount");
+  const etsyPriceDivisorInput = getEl<HTMLInputElement>("etsy-price-divisor");
+  const etsyPriceCurrencyInput = getEl<HTMLInputElement>("etsy-price-currency");
 
-  function updateSalePricePreview() {
+  function updateSalePricePreview(): void {
     const amount = parseFloat(etsyPriceAmountInput.value);
     const divisor = parseFloat(etsyPriceDivisorInput.value) || 100;
     const currency = etsyPriceCurrencyInput.value || "USD";
@@ -434,15 +517,15 @@ const displayPrice =
   let browserOffset = 0;
   let browserSectionId = "all";
   let browserPanelOpen = false;
-  let selectedListingId = null;
+  let selectedListingId: number | null = null;
 
-  const browseToggleBtn = document.getElementById("etsy-browse-toggle");
-  const browserPanel = document.getElementById("etsy-browser");
-  const sectionTabsEl = document.getElementById("etsy-section-tabs");
-  const gridEl = document.getElementById("etsy-grid");
-  const loadMoreRow = document.getElementById("etsy-load-more-row");
-  const loadMoreBtn = document.getElementById("etsy-load-more");
-  const importStatus = document.getElementById("etsy-import-status");
+  const browseToggleBtn = getEl<HTMLButtonElement>("etsy-browse-toggle");
+  const browserPanel = getEl<HTMLElement>("etsy-browser");
+  const sectionTabsEl = getEl<HTMLElement>("etsy-section-tabs");
+  const gridEl = getEl<HTMLElement>("etsy-grid");
+  const loadMoreRow = getEl<HTMLElement>("etsy-load-more-row");
+  const loadMoreBtn = getEl<HTMLButtonElement>("etsy-load-more");
+  const importStatus = getEl<HTMLElement>("etsy-import-status");
 
   browseToggleBtn.addEventListener("click", async () => {
     browserPanelOpen = !browserPanelOpen;
@@ -455,7 +538,7 @@ const displayPrice =
     }
   });
 
-  async function loadBrowser(reset) {
+  async function loadBrowser(reset: boolean): Promise<void> {
     if (reset) {
       browserOffset = 0;
       gridEl.innerHTML = `<p class="etsy-loading">Loading…</p>`;
@@ -464,7 +547,7 @@ const displayPrice =
     importStatus.textContent = "";
 
     const url = `/api/admin/sales/etsy-browse?section_id=${browserSectionId}&offset=${browserOffset}&limit=24`;
-    let data;
+    let data: BrowseResponse;
     try {
       const res = await fetch(url);
       data = await res.json();
@@ -500,7 +583,7 @@ const displayPrice =
     loadMoreRow.style.display = data.has_more ? "block" : "none";
   }
 
-  function renderSectionTabs(sections) {
+  function renderSectionTabs(sections: EtsySection[]): void {
     sectionTabsEl.innerHTML = `<button type="button" class="etsy-tab etsy-tab--active" data-section="all">All</button>`;
     sections.forEach((sec) => {
       const btn = document.createElement("button");
@@ -510,30 +593,32 @@ const displayPrice =
       btn.textContent = sec.title;
       sectionTabsEl.appendChild(btn);
     });
-    sectionTabsEl.querySelectorAll(".etsy-tab").forEach((tab) => {
-      tab.addEventListener("click", async () => {
-        sectionTabsEl
-          .querySelectorAll(".etsy-tab")
-          .forEach((t) => t.classList.remove("etsy-tab--active"));
-        tab.classList.add("etsy-tab--active");
-        browserSectionId = tab.dataset.section ?? "all";
-        await loadBrowser(true);
+    sectionTabsEl
+      .querySelectorAll<HTMLButtonElement>(".etsy-tab")
+      .forEach((tab) => {
+        tab.addEventListener("click", async () => {
+          sectionTabsEl
+            .querySelectorAll<HTMLButtonElement>(".etsy-tab")
+            .forEach((t) => t.classList.remove("etsy-tab--active"));
+          tab.classList.add("etsy-tab--active");
+          browserSectionId = tab.dataset.section ?? "all";
+          await loadBrowser(true);
+        });
       });
-    });
   }
 
-  function renderCards(listings) {
+  function renderCards(listings: EtsyListing[]): HTMLButtonElement[] {
     return listings.map((item) => {
       const card = document.createElement("button");
       card.type = "button";
       card.className = "etsy-card";
       if (item.listing_id === selectedListingId)
         card.classList.add("etsy-card--selected");
-      card.dataset.listingId = item.listing_id;
+      card.dataset.listingId = String(item.listing_id);
       card.innerHTML = `
-        ${item.thumbnail_url ? `<img src="${escAttr(item.thumbnail_url)}" alt="${escAttr(item.title)}" class="etsy-card__img" loading="lazy" />` : `<div class="etsy-card__no-img">No image</div>`}
-        <span class="etsy-card__title">${escHtml(item.title)}</span>
-        <span class="etsy-card__price">${escHtml(item.price_display)}</span>
+        ${item.thumbnail_url ? `<img src="${escapeAttr(item.thumbnail_url)}" alt="${escapeAttr(item.title)}" class="etsy-card__img" loading="lazy" />` : `<div class="etsy-card__no-img">No image</div>`}
+        <span class="etsy-card__title">${escapeHtml(item.title)}</span>
+        <span class="etsy-card__price">${escapeHtml(item.price_display)}</span>
         ${item.quantity != null && item.quantity <= 3 ? `<span class="etsy-card__qty">Only ${item.quantity} left</span>` : ""}
       `;
       card.addEventListener("click", () => importCard(item.listing_id, card));
@@ -541,7 +626,10 @@ const displayPrice =
     });
   }
 
-  async function importCard(listingId, cardEl) {
+  async function importCard(
+    listingId: number,
+    cardEl: HTMLButtonElement,
+  ): Promise<void> {
     const confirmed = window.confirm(
       "Re-importing will replace the current title, body, price, and images. Continue?",
     );
@@ -549,7 +637,7 @@ const displayPrice =
 
     importStatus.textContent = "Importing…";
     gridEl
-      .querySelectorAll(".etsy-card--selected")
+      .querySelectorAll<HTMLButtonElement>(".etsy-card--selected")
       .forEach((c) => c.classList.remove("etsy-card--selected"));
     cardEl.classList.add("etsy-card--selected");
     selectedListingId = listingId;
@@ -568,15 +656,15 @@ const displayPrice =
         return;
       }
       etsyListingId = data.listing_id;
-      document.getElementById("title").value = data.title;
+      getEl<HTMLInputElement>("title").value = data.title;
       editor.root.innerHTML = data.body_html;
-      document.getElementById("body-input").value = data.body_html;
-      document.getElementById("etsy-listing-url").value = data.listing_url;
+      getEl<HTMLInputElement>("body-input").value = data.body_html;
+      getEl<HTMLInputElement>("etsy-listing-url").value = data.listing_url;
       if (data.price_amount != null) {
         etsyPriceAmountInput.value = String(data.price_amount);
         etsyPriceDivisorInput.value = String(data.price_divisor);
         etsyPriceCurrencyInput.value = data.price_currency;
-        document.getElementById("etsy-price-display").value =
+        getEl<HTMLInputElement>("etsy-price-display").value =
           `${data.price_currency} ${(data.price_amount / data.price_divisor).toFixed(2)}`;
         updateSalePricePreview();
       }
@@ -595,80 +683,100 @@ const displayPrice =
   });
 
   // ── Images ────────────────────────────────────────────────────────────────
-  function renderImages() {
-    const list = document.getElementById("images-list");
-    const hint = document.getElementById("images-hint");
-    list.innerHTML = currentImages
+  const imagesListEl = getEl<HTMLElement>("images-list");
+  const imagesHintEl = getEl<HTMLElement>("images-hint");
+  const imagesJsonEl = getEl<HTMLInputElement>("images-json");
+
+  function renderImages(): void {
+    imagesListEl.innerHTML = currentImages
       .map(
-        (img, i) => `
+        (img: SalesImage, i: number) => `
       <div class="sales-image-item">
-        <img src="${escAttr(img.url)}" alt="${escAttr(img.alt_text || "")}" />
+        <img src="${escapeAttr(img.url)}" alt="${escapeAttr(img.alt_text || "")}" />
         <button type="button" class="sales-image-remove js-remove-image" data-idx="${i}">✕</button>
       </div>`,
       )
       .join("");
-    hint.style.display = currentImages.length ? "none" : "";
-    document.getElementById("images-json").value =
-      JSON.stringify(currentImages);
-    list.querySelectorAll(".js-remove-image").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        currentImages.splice(Number(btn.dataset.idx), 1);
-        renderImages();
-      });
-    });
+    imagesHintEl.style.display = currentImages.length ? "none" : "";
+    imagesJsonEl.value = JSON.stringify(currentImages);
   }
+
+  // Event delegation — one listener for the whole list, not one per item
+  imagesListEl.addEventListener("click", (e) => {
+    const btn = (e.target as Element).closest<HTMLButtonElement>(
+      ".js-remove-image",
+    );
+    if (!btn) return;
+    currentImages.splice(Number(btn.dataset.idx), 1);
+    renderImages();
+  });
+
   renderImages();
 
   // ── Testimonials ──────────────────────────────────────────────────────────
-  function renderTestimonials() {
-    const list = document.getElementById("testimonials-list");
-    list.innerHTML = currentTestimonials
+  const testimonialsListEl = getEl<HTMLElement>("testimonials-list");
+  const testimonialsJsonEl = getEl<HTMLInputElement>("testimonials-json");
+
+  function renderTestimonials(): void {
+    testimonialsListEl.innerHTML = currentTestimonials
       .map(
-        (t, i) => `
+        (t: SalesTestimonial, i: number) => `
       <div class="sub-item">
-        <input class="form-input" placeholder="Name" value="${escAttr(t.author_name || "")}" data-field="author_name" data-idx="${i}" />
-        <textarea class="form-input" placeholder="Quote" rows="2" data-field="quote" data-idx="${i}">${escHtml(t.quote || "")}</textarea>
+        <input class="form-input" placeholder="Name" value="${escapeAttr(t.author_name || "")}" data-field="author_name" data-idx="${i}" />
+        <textarea class="form-input" placeholder="Quote" rows="2" data-field="quote" data-idx="${i}">${escapeHtml(t.quote || "")}</textarea>
         <input class="form-input" type="number" min="1" max="5" placeholder="Rating" value="${t.rating ?? ""}" data-field="rating" data-idx="${i}" />
         <button type="button" class="btn btn-ghost btn--sm js-remove-testimonial" data-idx="${i}">Remove</button>
       </div>`,
       )
       .join("");
-    document.getElementById("testimonials-json").value =
-      JSON.stringify(currentTestimonials);
-    list.querySelectorAll("[data-field]").forEach((el) => {
-      el.addEventListener("input", () => {
-        const idx = Number(el.dataset.idx);
-        const field = el.dataset.field;
-        currentTestimonials[idx][field] =
-          field === "rating" ? (el.value ? Number(el.value) : null) : el.value;
-        document.getElementById("testimonials-json").value =
-          JSON.stringify(currentTestimonials);
-      });
-    });
-    list.querySelectorAll(".js-remove-testimonial").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        currentTestimonials.splice(Number(btn.dataset.idx), 1);
-        renderTestimonials();
-      });
-    });
+    testimonialsJsonEl.value = JSON.stringify(currentTestimonials);
   }
-  document
-    .getElementById("add-testimonial-btn")
-    .addEventListener("click", () => {
+
+  // Event delegation — one listener for input changes, one for remove clicks
+  testimonialsListEl.addEventListener("input", (e) => {
+    const el = e.target as HTMLInputElement | HTMLTextAreaElement;
+    const idx = Number(el.dataset.idx);
+    const field = el.dataset.field;
+    if (!field || isNaN(idx)) return;
+    const value = el.value;
+    if (field === "rating") {
+      currentTestimonials[idx].rating = value ? Number(value) : null;
+    } else if (field === "author_name") {
+      currentTestimonials[idx].author_name = value;
+    } else if (field === "quote") {
+      currentTestimonials[idx].quote = value;
+    }
+    testimonialsJsonEl.value = JSON.stringify(currentTestimonials);
+  });
+  testimonialsListEl.addEventListener("click", (e) => {
+    const btn = (e.target as Element).closest<HTMLButtonElement>(
+      ".js-remove-testimonial",
+    );
+    if (!btn) return;
+    currentTestimonials.splice(Number(btn.dataset.idx), 1);
+    renderTestimonials();
+  });
+
+  getEl<HTMLButtonElement>("add-testimonial-btn").addEventListener(
+    "click",
+    () => {
       currentTestimonials.push({ author_name: "", quote: "", rating: null });
       renderTestimonials();
-    });
+    },
+  );
   renderTestimonials();
 
   // ── Reviews ───────────────────────────────────────────────────────────────
-  function renderReviews() {
-    const list = document.getElementById("reviews-list");
-    list.innerHTML = currentReviews
+  const reviewsListEl = getEl<HTMLElement>("reviews-list");
+  const reviewsJsonEl = getEl<HTMLInputElement>("reviews-json");
+
+  function renderReviews(): void {
+    reviewsListEl.innerHTML = currentReviews
       .map(
-        (r, i) => `
+        (r: SalesReview, i: number) => `
       <div class="sub-item">
-        <input class="form-input" placeholder="Reviewer Name" value="${escAttr(r.reviewer_name || "")}" data-field="reviewer_name" data-idx="${i}" />
-        <textarea class="form-input" rows="2" placeholder="Review text" data-field="review_text" data-idx="${i}">${escHtml(r.review_text || "")}</textarea>
+        <input class="form-input" placeholder="Reviewer Name" value="${escapeAttr(r.reviewer_name || "")}" data-field="reviewer_name" data-idx="${i}" />
+        <textarea class="form-input" rows="2" placeholder="Review text" data-field="review_text" data-idx="${i}">${escapeHtml(r.review_text || "")}</textarea>
         <input class="form-input" type="number" min="1" max="5" placeholder="Rating" value="${r.rating ?? ""}" data-field="rating" data-idx="${i}" />
         <label><input type="checkbox" data-field="is_verified" data-idx="${i}" ${r.is_verified ? "checked" : ""} /> Verified Buyer</label>
         <input class="form-input" type="date" value="${r.review_date ?? ""}" data-field="review_date" data-idx="${i}" />
@@ -676,30 +784,46 @@ const displayPrice =
       </div>`,
       )
       .join("");
-    document.getElementById("reviews-json").value =
-      JSON.stringify(currentReviews);
-    list.querySelectorAll("[data-field]").forEach((el) => {
-      const evt = el.type === "checkbox" ? "change" : "input";
-      el.addEventListener(evt, () => {
-        const idx = Number(el.dataset.idx);
-        const field = el.dataset.field;
-        if (field === "rating")
-          currentReviews[idx][field] = el.value ? Number(el.value) : null;
-        else if (field === "is_verified")
-          currentReviews[idx][field] = el.checked;
-        else currentReviews[idx][field] = el.value;
-        document.getElementById("reviews-json").value =
-          JSON.stringify(currentReviews);
-      });
-    });
-    list.querySelectorAll(".js-remove-review").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        currentReviews.splice(Number(btn.dataset.idx), 1);
-        renderReviews();
-      });
-    });
+    reviewsJsonEl.value = JSON.stringify(currentReviews);
   }
-  document.getElementById("add-review-btn").addEventListener("click", () => {
+
+  // Event delegation — input/change events bubble up to the container
+  reviewsListEl.addEventListener("input", (e) => {
+    const el = e.target as HTMLInputElement | HTMLTextAreaElement;
+    const idx = Number(el.dataset.idx);
+    const field = el.dataset.field;
+    if (!field || isNaN(idx)) return;
+    const value = el.value;
+    if (field === "rating") {
+      currentReviews[idx].rating = value ? Number(value) : null;
+    } else if (field === "reviewer_name") {
+      currentReviews[idx].reviewer_name = value;
+    } else if (field === "review_text") {
+      currentReviews[idx].review_text = value;
+    } else if (field === "review_date") {
+      currentReviews[idx].review_date = value;
+    }
+    reviewsJsonEl.value = JSON.stringify(currentReviews);
+  });
+  reviewsListEl.addEventListener("change", (e) => {
+    const el = e.target as HTMLInputElement;
+    const idx = Number(el.dataset.idx);
+    const field = el.dataset.field;
+    if (field === "is_verified" && !isNaN(idx)) {
+      currentReviews[idx].is_verified = el.checked;
+      reviewsJsonEl.value = JSON.stringify(currentReviews);
+    }
+  });
+  reviewsListEl.addEventListener("click", (e) => {
+    const btn = (e.target as Element).closest<HTMLButtonElement>(
+      ".js-remove-review",
+    );
+    if (!btn) return;
+    currentReviews.splice(Number(btn.dataset.idx), 1);
+    renderReviews();
+  });
+
+  getEl<HTMLButtonElement>("add-review-btn").addEventListener("click", () => {
     currentReviews.push({
       reviewer_name: "",
       review_text: "",
@@ -712,110 +836,93 @@ const displayPrice =
   renderReviews();
 
   // ── Form submission ───────────────────────────────────────────────────────
-  document
-    .getElementById("sales-form")
-    .addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const title = document.getElementById("title").value.trim();
-      if (!title) {
-        toast.show("Title is required.", "error");
+  getEl<HTMLFormElement>("sales-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const title = getEl<HTMLInputElement>("title").value.trim();
+    if (!title) {
+      toast.show("Title is required.", "error");
+      return;
+    }
+
+    const body = {
+      title,
+      slug: getEl<HTMLInputElement>("slug").value.trim() || undefined,
+      status: getEl<HTMLSelectElement>("status").value,
+      body: getEl<HTMLInputElement>("body-input").value,
+      etsy_listing_id: etsyListingId ?? undefined,
+      etsy_listing_url:
+        getEl<HTMLInputElement>("etsy-listing-url").value || null,
+      etsy_price_amount: etsyPriceAmountInput.value
+        ? Number(etsyPriceAmountInput.value)
+        : undefined,
+      etsy_price_divisor: Number(etsyPriceDivisorInput.value) || 100,
+      etsy_price_currency: etsyPriceCurrencyInput.value || "USD",
+      promo_label: getEl<HTMLInputElement>("promo-label").value || null,
+      promo_discount_pct: discountInput.value
+        ? Number(discountInput.value)
+        : null,
+      promo_start: getEl<HTMLInputElement>("promo-start").value || null,
+      promo_end: getEl<HTMLInputElement>("promo-end").value || null,
+      paypal_button_html:
+        getEl<HTMLTextAreaElement>("paypal-html").value || null,
+      linked_article_slug:
+        getEl<HTMLInputElement>("linked-article").value || null,
+      images: currentImages,
+    };
+
+    const submitBtn = getEl<HTMLButtonElement>("submit-btn");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Saving…";
+
+    try {
+      const res = await fetch(`/api/admin/sales/${currentSlug}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.show(data.error ?? "Failed to save.", "error");
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Save Changes";
         return;
       }
 
-      const body = {
-        title,
-        slug: document.getElementById("slug").value.trim() || undefined,
-        status: document.getElementById("status").value,
-        body: document.getElementById("body-input").value,
-        etsy_listing_id: etsyListingId ?? undefined,
-        etsy_listing_url:
-          document.getElementById("etsy-listing-url").value || null,
-        etsy_price_amount: etsyPriceAmountInput.value
-          ? Number(etsyPriceAmountInput.value)
-          : undefined,
-        etsy_price_divisor: Number(etsyPriceDivisorInput.value) || 100,
-        etsy_price_currency: etsyPriceCurrencyInput.value || "USD",
-        promo_label: document.getElementById("promo-label").value || null,
-        promo_discount_pct: discountInput.value
-          ? Number(discountInput.value)
-          : null,
-        promo_start: document.getElementById("promo-start").value || null,
-        promo_end: document.getElementById("promo-end").value || null,
-        paypal_button_html:
-          document.getElementById("paypal-html").value || null,
-        linked_article_slug:
-          document.getElementById("linked-article").value || null,
-        images: currentImages,
-      };
-
-      const submitBtn = document.getElementById("submit-btn");
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Saving…";
-
-      try {
-        const res = await fetch(`/api/admin/sales/${currentSlug}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        });
-        const data = await res.json();
-        if (!res.ok) {
-          toast.show(data.error ?? "Failed to save.", "error");
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Save Changes";
-          return;
-        }
-
-        // Save testimonials and reviews (replace approach: delete all then re-add)
-        // Simplified: POST new ones, signal their IDs via JSON if they have id fields
-        for (const t of currentTestimonials) {
-          if (!t.author_name || !t.quote) continue;
-          if (!t.id) {
-            await fetch(`/api/admin/sales/${currentSlug}/testimonials`, {
+      // Create new testimonials and reviews concurrently
+      await Promise.all([
+        ...currentTestimonials
+          .filter((t) => !t.id && t.author_name && t.quote)
+          .map((t) =>
+            fetch(`/api/admin/sales/${currentSlug}/testimonials`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(t),
-            });
-          }
-        }
-        for (const r of currentReviews) {
-          if (!r.reviewer_name || !r.review_text) continue;
-          if (!r.id) {
-            await fetch(`/api/admin/sales/${currentSlug}/reviews`, {
+            }),
+          ),
+        ...currentReviews
+          .filter((r) => !r.id && r.reviewer_name && r.review_text)
+          .map((r) =>
+            fetch(`/api/admin/sales/${currentSlug}/reviews`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(r),
-            });
-          }
-        }
+            }),
+          ),
+      ]);
 
-        toast.show("Saved!", "success");
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Save Changes";
-        // Update slug in case it changed
-        const newSlug = body.slug ?? currentSlug;
-        if (newSlug !== currentSlug) {
-          window.location.href = `/admin/sales/${newSlug}`;
-        }
-      } catch {
-        toast.show("Network error.", "error");
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Save Changes";
+      toast.show("Saved!", "success");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Save Changes";
+      const newSlug = body.slug ?? currentSlug;
+      if (newSlug !== currentSlug) {
+        window.location.href = `/admin/sales/${newSlug}`;
       }
-    });
-
-  function escAttr(s) {
-    return String(s)
-      .replace(/&/g, "&amp;")
-      .replace(/"/g, "&quot;")
-      .replace(/</g, "&lt;");
-  }
-  function escHtml(s) {
-    return String(s)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
-  }
+    } catch {
+      toast.show("Network error.", "error");
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Save Changes";
+    }
+  });
 </script>
 
 <style>

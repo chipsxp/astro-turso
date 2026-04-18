@@ -81,14 +81,14 @@ const user = Astro.locals.user;
   <body>
     <header class="site-header">
       <div class="site-header__inner">
-        <a href="/blog" class="site-wordmark">The Happy Feeling Scriptorium</a>
+        <a href="/" class="site-wordmark">The Happy Feeling Scriptorium</a>
         <nav class="site-nav">
           <a href="/blog">Gallery Blog</a>
           <a href="/shop">Shop Listings</a>
           <a href="/upcoming-events">Upcoming Events</a>
           {
             user ? (
-              <a href="/admin/articles" class="site-nav__signin">
+              <a href="/admin/dashboard" class="site-nav__signin">
                 Dashboard
               </a>
             ) : (
