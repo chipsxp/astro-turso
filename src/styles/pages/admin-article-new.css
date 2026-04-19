@@ -352,3 +352,42 @@ body.preview-open {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+/* ─── Calendar Color Swatch Picker ─── */
+.color-swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.color-swatch {
+  position: relative;
+  cursor: pointer;
+}
+
+.color-swatch input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.color-swatch__dot {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--swatch);
+  border: 2px solid transparent;
+  transition: border-color 0.12s, transform 0.1s;
+}
+
+.color-swatch input[type="radio"]:checked + .color-swatch__dot {
+  border-color: var(--text);
+  transform: scale(1.18);
+}
+
+.color-swatch:hover .color-swatch__dot {
+  transform: scale(1.1);
+}

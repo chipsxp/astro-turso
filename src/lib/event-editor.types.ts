@@ -21,6 +21,7 @@ export interface EventData {
   region: string | null;
   postal_code: string | null;
   event_url: string | null;
+  color: string | null;
   featured_media_id: number | null;
   featured_media_url: string | null;
   featured_media_alt_text: string | null;
@@ -43,6 +44,7 @@ export interface EventPayload {
   region?: string;
   postal_code?: string;
   event_url?: string;
+  color?: string | null;
   featured_media_id?: number | "";
 }
 

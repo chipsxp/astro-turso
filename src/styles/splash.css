@@ -311,6 +311,13 @@
 
 /* ─── Mobile responsive ─── */
 @media (max-width: 600px) {
+  .splash-overlay {
+    overflow-y: auto;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 16px 16px 40px;
+  }
+
   .splash-diptych {
     grid-template-columns: 1fr;
     max-height: none;
@@ -319,6 +326,30 @@
   .splash-panel--kirby {
     aspect-ratio: auto;
     min-height: 220px;
+  }
+
+  /* When a real photo is assigned, let the image dictate panel height */
+  .splash-panel--kirby[data-has-image] {
+    min-height: 0;
+    height: auto;
+    overflow: visible;
+  }
+
+  .splash-panel--kirby[data-has-image] .splash-panel__img {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    object-fit: initial;
+    display: block;
+  }
+
+  /* Re-anchor badge so it overlays the bottom of the natural-height image */
+  .splash-panel--kirby[data-has-image] .kirby-badge {
+    position: absolute;
+    bottom: 16px;
+    left: 20px;
+    z-index: 2;
   }
 
   .splash-panel--title {
@@ -331,5 +362,9 @@
     font-size: 0.72rem;
     white-space: normal;
     max-width: 220px;
+  }
+
+  .splash-skip {
+    margin-top: 32px;
   }
 }

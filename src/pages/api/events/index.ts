@@ -147,6 +147,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const region = normalizeOptionalText(data.region);
   const postalCode = normalizeOptionalText(data.postal_code);
   const eventUrl = normalizeOptionalText(data.event_url);
+  const color = normalizeOptionalText(data.color);
 
   const featuredMediaId =
     data.featured_media_id == null || data.featured_media_id === ""
@@ -224,8 +225,8 @@ export const POST: APIRoute = async ({ request, locals }) => {
          owner_id, status,
          start_date, start_time, end_date, end_time, is_all_day,
          venue_name, venue_address, city, region, postal_code,
-         event_url, featured_media_id
-       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+         event_url, color, featured_media_id
+       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         title,
         slug,
@@ -244,6 +245,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         region,
         postalCode,
         eventUrl,
+        color,
         featuredMediaId,
       ],
     );

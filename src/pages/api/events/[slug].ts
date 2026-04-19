@@ -251,6 +251,11 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
       values.push(eventUrl);
     }
 
+    if (data.color !== undefined) {
+      fields.push("color = ?");
+      values.push(normalizeOptionalText(data.color));
+    }
+
     if (data.featured_media_id !== undefined) {
       const mediaId =
         data.featured_media_id == null || data.featured_media_id === ""

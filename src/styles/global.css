@@ -695,3 +695,338 @@ img {
 .sales-body em {
   font-style: italic;
 }
+
+/* ─── Event Calendar (global — React island bypasses Astro CSS scoping) ─── */
+
+.cal-wrap {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  margin-top: 1.25rem;
+}
+
+.cal-grid-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.cal-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.cal-nav__btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.28rem 0.65rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cal-nav__btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.cal-nav__btn:not(:disabled):hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.cal-nav__label {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--text);
+  flex: 1;
+  text-align: center;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+.cal-day-header {
+  padding: 0.38rem 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-align: center;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2, var(--surface));
+}
+
+.cal-cell {
+  min-height: 88px;
+  padding: 0.32rem 0.28rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.cal-cell--empty {
+  background: var(--surface);
+  opacity: 0.45;
+}
+
+.cal-cell__day {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.28rem;
+  line-height: 1.5rem;
+  width: 1.5rem;
+  text-align: center;
+}
+
+.cal-cell--today .cal-cell__day {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.cal-cell__pills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+}
+
+.cal-pill {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.14rem 0.28rem;
+  font-size: 0.6rem;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.35;
+  font-family: var(--font-body, sans-serif);
+  opacity: 0.88;
+  transition: opacity 0.12s;
+}
+
+.cal-pill--sale {
+  background: #c09838;
+}
+
+.cal-pill--active {
+  opacity: 1;
+  outline: 2px solid rgba(255, 255, 255, 0.55);
+  outline-offset: -1px;
+}
+
+.cal-pill:hover {
+  opacity: 1;
+}
+
+.cal-cell__overflow {
+  font-size: 0.58rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  padding-left: 0.2rem;
+}
+
+.cal-legend {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 0.7rem;
+  padding-top: 0.5rem;
+}
+
+.cal-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.cal-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.cal-panel {
+  width: 340px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 1rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.cal-panel__close {
+  display: block;
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.2rem 0.3rem;
+  line-height: 1;
+}
+
+.cal-panel__close:hover {
+  color: var(--text);
+}
+
+.cal-panel__type {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.cal-panel__type--sale {
+  color: #c09838;
+}
+
+.cal-panel__title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--text);
+  margin-bottom: 0.55rem;
+  line-height: 1.22;
+}
+
+.cal-panel__date,
+.cal-panel__time,
+.cal-panel__venue {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 0.32rem;
+}
+
+.cal-panel__promo-label {
+  font-size: 0.9rem;
+  color: var(--text);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.cal-panel__discount {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: #c09838;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.cal-panel__price {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-bottom: 0.55rem;
+}
+
+.cal-panel__desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin: 0.55rem 0;
+  line-height: 1.5;
+}
+
+.cal-panel__cta {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent-dim);
+  text-decoration: none;
+}
+
+.cal-panel__cta+.cal-panel__cta {
+  margin-left: 1rem;
+}
+
+.cal-panel__cta--secondary {
+  color: var(--text-muted);
+  border-bottom-color: var(--border);
+}
+
+.cal-panel__cta:hover {
+  border-bottom-color: var(--accent);
+  text-decoration: none;
+}
+
+.cal-backdrop {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .cal-wrap {
+    flex-direction: column;
+  }
+
+  .cal-grid-col {
+    width: 100%;
+  }
+
+  .cal-cell {
+    min-height: 62px;
+  }
+
+  .cal-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-top: 2px solid var(--accent);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.18);
+    max-height: 58vh;
+    overflow-y: auto;
+    z-index: 200;
+    animation: cal-slide-up 0.22s ease;
+  }
+
+  .cal-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.28);
+    z-index: 199;
+  }
+}
+
+@keyframes cal-slide-up {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}

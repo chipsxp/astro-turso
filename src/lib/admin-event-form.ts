@@ -269,6 +269,7 @@ export class EventFormManager {
       region: String(formData.get("region") ?? "").trim(),
       postal_code: String(formData.get("postal_code") ?? "").trim(),
       event_url: String(formData.get("event_url") ?? "").trim(),
+      color: String(formData.get("color") ?? "").trim() || null,
       status: String(formData.get("status") ?? "draft").trim() as EventStatus,
     };
 
@@ -316,6 +317,15 @@ export class EventFormManager {
     this.setValue("region", event.region);
     this.setValue("postal_code", event.postal_code);
     this.setValue("event_url", event.event_url);
+
+    // Pre-select the saved color swatch
+    if (event.color) {
+      const colorInput = document.querySelector<HTMLInputElement>(
+        `input[name="color"][value="${event.color}"]`,
+      );
+      if (colorInput) colorInput.checked = true;
+    }
+
     this.setValue(
       "featured_media_id",
       event.featured_media_id == null ? "" : String(event.featured_media_id),

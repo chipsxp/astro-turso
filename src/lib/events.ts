@@ -22,6 +22,7 @@ export interface EventRecord {
   region: string | null;
   postal_code: string | null;
   event_url: string | null;
+  color: string | null;
   featured_media_id: number | null;
   featured_media_public_id: string | null;
   featured_media_url: string | null;
@@ -103,6 +104,13 @@ export async function ensureEventsSchema(): Promise<void> {
     // Column already exists; safe to continue.
   }
 
+  // Idempotent migration: add color column for calendar pill display
+  try {
+    await db.execute("ALTER TABLE events ADD COLUMN color TEXT");
+  } catch {
+    // Column already exists; safe to continue.
+  }
+
   eventsSchemaReady = true;
 }
 
@@ -155,6 +163,7 @@ export function mapEventRow(row: Record<string, unknown>): EventRecord {
     region: row.region == null ? null : String(row.region),
     postal_code: row.postal_code == null ? null : String(row.postal_code),
     event_url: row.event_url == null ? null : String(row.event_url),
+    color: row.color == null ? null : String(row.color),
     featured_media_id:
       row.featured_media_id == null ? null : Number(row.featured_media_id),
     featured_media_public_id:
@@ -191,6 +200,7 @@ export const EVENT_SELECT_FIELDS = `
   e.region,
   e.postal_code,
   e.event_url,
+  e.color,
   e.featured_media_id,
   e.created_at,
   e.updated_at,

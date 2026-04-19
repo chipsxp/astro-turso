@@ -1,4 +1,6 @@
 ---
+import type { CalendarEvent, SaleItem } from "../components/EventCalendar";
+import EventCalendar from "../components/EventCalendar";
 import BlogLayout from "../layouts/BlogLayout.astro";
 import {
   buildCloudinaryImageSrcset,
@@ -7,6 +9,7 @@ import {
 import { db } from "../lib/db";
 import {
   EVENT_SELECT_FIELDS,
+  type EventRecord,
   ensureEventsSchema,
   getEventLifecycleLabel,
   isEventArchivable,
@@ -36,10 +39,62 @@ const allEvents = result.rows.map((row: Record<string, unknown>) =>
 );
 
 // Separate upcoming and archive events
-// The "Recently Ended" section shows events from the last 14 days on this page with transition badges.
-// Events older than 14 days move to the dedicated /events/archive page with celebratory badges.
 const upcomingEvents = allEvents.filter(isEventUpcoming);
 const archiveEvents = allEvents.filter(isEventArchivable);
+
+// Query active sales for the calendar (promo window overlaps next 90 days)
+let calendarSales: SaleItem[] = [];
+try {
+  const salesResult = await db.execute(
+    `SELECT id, slug, title, promo_label, promo_discount_pct,
+            promo_start, promo_end, etsy_listing_url,
+            etsy_price_amount, etsy_price_divisor, etsy_price_currency
+     FROM sales_postings
+     WHERE status = 'published'
+       AND promo_start IS NOT NULL
+       AND promo_end IS NOT NULL
+       AND promo_end >= date('now')
+       AND promo_start <= date('now', '+90 days')
+     ORDER BY promo_start ASC`,
+    [],
+  );
+  calendarSales = salesResult.rows.map((row: Record<string, unknown>) => ({
+    id: Number(row.id),
+    slug: String(row.slug ?? ""),
+    title: String(row.title ?? ""),
+    promo_label: row.promo_label == null ? null : String(row.promo_label),
+    promo_discount_pct:
+      row.promo_discount_pct == null ? null : Number(row.promo_discount_pct),
+    promo_start: String(row.promo_start ?? ""),
+    promo_end: String(row.promo_end ?? ""),
+    etsy_listing_url:
+      row.etsy_listing_url == null ? null : String(row.etsy_listing_url),
+    etsy_price_amount:
+      row.etsy_price_amount == null ? null : Number(row.etsy_price_amount),
+    etsy_price_divisor: Number(row.etsy_price_divisor ?? 100),
+    etsy_price_currency: String(row.etsy_price_currency ?? "USD"),
+  }));
+} catch {
+  // sales_postings table may not exist in some environments
+}
+
+// Map events to CalendarEvent shape for the React island
+const calendarEvents: CalendarEvent[] = allEvents
+  .filter(isEventUpcoming)
+  .map((e: EventRecord) => ({
+    id: e.id,
+    slug: e.slug,
+    title: e.title,
+    description: e.description,
+    start_date: e.start_date,
+    end_date: e.end_date,
+    start_time: e.start_time,
+    end_time: e.end_time,
+    is_all_day: e.is_all_day,
+    venue_name: e.venue_name,
+    city: e.city,
+    color: e.color,
+  }));
 
 function formatDate(date: string): string {
   const parsed = new Date(`${date}T00:00:00`);
@@ -76,7 +131,6 @@ function getEventImageUrl(
 }
 
 const featuredEvent = upcomingEvents[0] ?? null;
-const remainingUpcoming = upcomingEvents.slice(1);
 ---
 
 <BlogLayout
@@ -169,46 +223,22 @@ const remainingUpcoming = upcomingEvents.slice(1);
     <section class="events-list page-wrap" aria-label="All upcoming events">
       <h2 class="events-section-title">On The Calendar</h2>
       {
-        remainingUpcoming.length === 0 &&
-          !featuredEvent &&
-          archiveEvents.length === 0 && (
-            <p class="events-empty">
-              New events are being scheduled. Check back soon for upcoming
-              gallery and artist-community gatherings.
-            </p>
-          )
+        calendarEvents.length === 0 && calendarSales.length === 0 && (
+          <p class="events-empty">
+            New events are being scheduled. Check back soon for upcoming gallery
+            and artist-community gatherings.
+          </p>
+        )
       }
       {
-        remainingUpcoming.map((event: (typeof remainingUpcoming)[0]) => (
-          <article class="event-card">
-            <p class="event-card__date">
-              {formatDate(event.start_date)}
-              {event.end_date && ` to ${formatDate(event.end_date)}`}
-            </p>
-            <h3 class="event-card__title">
-              <a href={`/events/${event.slug}`}>{event.title}</a>
-            </h3>
-            <p class="event-card__meta">
-              {event.is_all_day
-                ? "All Day"
-                : event.start_time
-                  ? `${formatTime(event.start_time)}${event.end_time ? ` to ${formatTime(event.end_time)}` : ""}`
-                  : "Time announced soon"}
-            </p>
-            {event.venue_name && (
-              <p class="event-card__meta event-card__meta--location">
-                {event.venue_name}
-                {event.city && ` • ${event.city}`}
-              </p>
-            )}
-            {event.description && (
-              <p class="event-card__description">{event.description}</p>
-            )}
-            <a href={`/events/${event.slug}`} class="event-card__cta">
-              View Event
-            </a>
-          </article>
-        ))
+        (calendarEvents.length > 0 || calendarSales.length > 0) && (
+          <EventCalendar
+            client:only="react"
+            events={calendarEvents}
+            sales={calendarSales}
+            siteUrl={siteUrl}
+          />
+        )
       }
     </section>
 

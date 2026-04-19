@@ -141,6 +141,36 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
             />
           </div>
           <div class="form-group">
+            <label class="form-label">Calendar Color</label>
+            <div
+              class="color-swatch-row"
+              role="group"
+              aria-label="Calendar pill color"
+            >
+              {
+                [
+                  { hex: "#4a7fcb", label: "Blue" },
+                  { hex: "#3d9970", label: "Emerald" },
+                  { hex: "#9b59b6", label: "Purple" },
+                  { hex: "#e84393", label: "Pink" },
+                  { hex: "#e67e22", label: "Orange" },
+                  { hex: "#e74c3c", label: "Red" },
+                  { hex: "#1abc9c", label: "Teal" },
+                  { hex: "#2c3e50", label: "Navy" },
+                ].map(({ hex, label }) => (
+                  <label
+                    class="color-swatch"
+                    title={label}
+                    style={`--swatch: ${hex}`}
+                  >
+                    <input type="radio" name="color" value={hex} />
+                    <span class="color-swatch__dot" />
+                  </label>
+                ))
+              }
+            </div>
+          </div>
+          <div class="form-group">
             <label class="form-label">Featured Hero Media</label>
             <input
               type="hidden"
@@ -526,6 +556,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
       region: String(formData.get("region") ?? "").trim(),
       postal_code: String(formData.get("postal_code") ?? "").trim(),
       event_url: String(formData.get("event_url") ?? "").trim(),
+      color: String(formData.get("color") ?? "").trim() || null,
       status: String(formData.get("status") ?? "draft").trim() as EventStatus,
     };
 
