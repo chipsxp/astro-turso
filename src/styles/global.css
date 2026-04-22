@@ -771,6 +771,8 @@ img {
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   vertical-align: top;
+  overflow: hidden;
+  min-width: 0;
 }
 
 .cal-cell--empty {
@@ -803,7 +805,11 @@ img {
 }
 
 .cal-pill {
-  display: block;
+  /* line-clamp: still requires webkit prefix for cross-browser support in 2025 */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
   width: 100%;
   text-align: left;
   padding: 0.14rem 0.28rem;
@@ -812,13 +818,12 @@ img {
   border-radius: 3px;
   color: #fff;
   cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
   line-height: 1.35;
   font-family: var(--font-body, sans-serif);
   opacity: 0.88;
   transition: opacity 0.12s;
+  word-break: break-word;
 }
 
 .cal-pill--sale {

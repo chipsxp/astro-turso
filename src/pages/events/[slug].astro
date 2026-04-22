@@ -1,13 +1,16 @@
 ---
 import BlogLayout from "../../layouts/BlogLayout.astro";
-import { buildCloudinaryImageSrcset, buildCloudinaryImageUrl } from "../../lib/cloudinary";
+import {
+  buildCloudinaryImageSrcset,
+  buildCloudinaryImageUrl,
+} from "../../lib/cloudinary";
 import { db } from "../../lib/db";
 import {
-EVENT_SELECT_FIELDS,
-ensureEventsSchema,
-getEventLifecycleLabel,
-isEventEnded,
-mapEventRow,
+  EVENT_SELECT_FIELDS,
+  ensureEventsSchema,
+  getEventLifecycleLabel,
+  isEventEnded,
+  mapEventRow,
 } from "../../lib/events";
 import { sanitizeArticleBodyServer } from "../../lib/sanitize-server";
 
@@ -123,7 +126,9 @@ const description = event.description ?? `Event details for ${event.title}.`;
       {event.description && <p class="events-intro">{event.description}</p>}
       {
         eventEnded && (
-          <div class={`event-lifecycle-banner event-lifecycle-banner--${lifecycleLabel}`}>
+          <div
+            class={`event-lifecycle-banner event-lifecycle-banner--${lifecycleLabel}`}
+          >
             <span class={`badge badge--${lifecycleLabel}`}>
               {lifecycleLabel === "ended" ? "Event Has Ended" : "Archived"}
             </span>
@@ -183,7 +188,6 @@ const description = event.description ?? `Event details for ${event.title}.`;
       event.featured_media_url && (
         <figure class="event-hero-media page-wrap">
           <img
-          <img
             src={
               getEventImageUrl(
                 event.featured_media_public_id,
@@ -191,9 +195,15 @@ const description = event.description ?? `Event details for ${event.title}.`;
                 "hero",
               ) ?? event.featured_media_url!
             }
-            srcset={event.featured_media_public_id && cloudName
-              ? buildCloudinaryImageSrcset({ cloudName, publicId: event.featured_media_public_id, preset: "hero" })
-              : undefined}
+            srcset={
+              event.featured_media_public_id && cloudName
+                ? buildCloudinaryImageSrcset({
+                    cloudName,
+                    publicId: event.featured_media_public_id,
+                    preset: "hero",
+                  })
+                : undefined
+            }
             sizes="(max-width: 768px) 100vw, 1280px"
             alt={event.featured_media_alt_text ?? event.title}
             loading="eager"
