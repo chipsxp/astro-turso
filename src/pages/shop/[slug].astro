@@ -1,7 +1,10 @@
 ---
 import BlogLayout from "../../layouts/BlogLayout.astro";
+import SocialShare from "../../components/SocialShare.astro";
+import ShareScrollPill from "../../components/ShareScrollPill.astro";
+import SalesGallery from "../../components/SalesGallery";
 import { db } from "../../lib/db";
-import { calcSalePrice, formatEtsyPrice, parseTags } from "../../lib/sales";
+import { calcSalePrice, formatPrice, parseTags, type SalesPosting } from "../../lib/sales";
 import {
   sanitizePayPalButton,
   extractPayPalSdkConfig,
@@ -9,11 +12,16 @@ import {
 import { sanitizeArticleBodyServer } from "../../lib/sanitize-server";
 
 const { slug } = Astro.params;
+const siteUrl = process.env.SITE_URL || Astro.url.origin;
+const canonicalUrl = `${siteUrl}/shop/${slug}`;
+const cloudName =
+  process.env.CLOUDINARY_CLOUD_NAME ??
+  import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
 
-let posting: any = null;
-let images: any[] = [];
-let testimonials: any[] = [];
-let reviews: any[] = [];
+let posting: Record<string, unknown> | null = null;
+let images: Record<string, unknown>[] = [];
+let testimonials: Record<string, unknown>[] = [];
+let reviews: Record<string, unknown>[] = [];
 let avgRating: number | null = null;
 let notFound = false;
 
@@ -26,25 +34,27 @@ try {
   if (!result.rows.length) {
     notFound = true;
   } else {
-    posting = result.rows[0];
+    const row = result.rows[0];
+    posting = row;
+    const postingId = Number(row.id);
 
     const [imagesRes, testimonialsRes, reviewsRes] = await Promise.all([
       db.execute(
         "SELECT * FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC",
-        [Number(posting.id)],
+        [postingId],
       ),
       db.execute(
         "SELECT * FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC",
-        [Number(posting.id)],
+        [postingId],
       ),
       db.execute(
         "SELECT * FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC",
-        [Number(posting.id)],
+        [postingId],
       ),
     ]);
     images = imagesRes.rows;
     testimonials = testimonialsRes.rows;
-    reviews = reviewsRes.rows as any[];
+    reviews = reviewsRes.rows;
 
     const rated = reviews.filter((r) => r.rating != null);
     avgRating =
@@ -55,83 +65,85 @@ try {
           ) / 10
         : null;
   }
-} catch (err: unknown) {
+} catch {
   notFound = true;
 }
 
-if (notFound) {
+if (notFound || !posting) {
   return Astro.redirect("/shop", 302);
 }
 
-const salePrice = posting ? calcSalePrice(posting) : null;
-const displayPrice =
-  posting?.etsy_price_amount != null
-    ? formatEtsyPrice(
-        posting.etsy_price_amount,
-        posting.etsy_price_divisor,
-        posting.etsy_price_currency,
-      )
-    : null;
-const salePriceStr =
-  salePrice != null
-    ? formatEtsyPrice(
-        Math.round(salePrice * posting.etsy_price_divisor),
-        posting.etsy_price_divisor,
-        posting.etsy_price_currency,
-      )
-    : null;
+// posting is confirmed non-null from here down
+const salePrice = calcSalePrice(posting as unknown as SalesPosting);
+const price = posting.price != null ? Number(posting.price) : null;
+const displayPrice = formatPrice(price);
+const salePriceStr = salePrice != null ? formatPrice(salePrice) : null;
 
-const coverImage = images[0] ?? null;
-const galleryImages = images.slice(1);
-const tags = parseTags(posting?.tags ?? "[]");
-const safeBody = posting?.body ? sanitizeArticleBodyServer(posting.body) : "";
-const safePayPal = posting?.paypal_button_html
-  ? sanitizePayPalButton(posting.paypal_button_html)
+const tags = parseTags(String(posting.tags ?? "[]"));
+const safeBody = posting.body ? sanitizeArticleBodyServer(String(posting.body)) : "";
+const safePayPal = posting.paypal_button_html
+  ? sanitizePayPalButton(String(posting.paypal_button_html))
   : "";
 const paypalSdkConfig =
-  !safePayPal && posting?.paypal_button_html
-    ? extractPayPalSdkConfig(posting.paypal_button_html)
+  !safePayPal && posting.paypal_button_html
+    ? extractPayPalSdkConfig(String(posting.paypal_button_html))
     : null;
 
-const promoEndDate = posting?.promo_end
-  ? new Date(posting.promo_end).toLocaleDateString("en-US", {
+const promoEndDate = posting.promo_end
+  ? new Date(String(posting.promo_end)).toLocaleDateString("en-US", {
       month: "long",
       day: "numeric",
       year: "numeric",
     })
   : null;
+
+const coverImage = images[0] ?? null;
+
+const galleryImages = images.map((img) => ({
+  url: String(img.url ?? ""),
+  public_id: String(img.public_id ?? ""),
+  alt_text: String(img.alt_text ?? ""),
+  transforms: String(img.transforms ?? "{}"),
+}));
 ---
 
 <BlogLayout
-  title={posting?.title ?? "Shop Item"}
-  description={`Purchase ${posting?.title} from The Scriptorium shop.`}
-  ogImage={coverImage?.url}
-  ogImageAlt={coverImage?.alt_text || posting?.title}
+  title={String(posting.title ?? "Shop Item")}
+  description={`Purchase ${String(posting.title)} from The Scriptorium shop.`}
+  ogImage={coverImage ? String(coverImage.url) : undefined}
+  ogImageAlt={coverImage
+    ? String(coverImage.alt_text) || String(posting.title)
+    : undefined}
 >
   <article class="sales-detail page-wrap">
     <div class="content-col">
-      <!-- Hero Image -->
+      <!-- Gallery carousel -->
       {
-        coverImage && (
-          <div class="sales-hero">
-            <img
-              src={coverImage.url}
-              alt={coverImage.alt_text || posting.title}
-              class="sales-hero__img"
+        galleryImages.length > 0 && (
+          <div class="sales-gallery-wrap">
+            <SalesGallery
+              client:load
+              images={galleryImages}
+              cloudName={cloudName}
             />
           </div>
         )
       }
 
+      <!-- Share pill — scrolls to share panel at the bottom -->
+      <div class="share-pill-wrap">
+        <ShareScrollPill />
+      </div>
+
       <!-- Title + Price -->
       <header class="sales-header">
-        <h1 class="sales-title">{posting.title}</h1>
+        <h1 class="sales-title">{String(posting.title)}</h1>
 
         <div class="sales-price-panel">
           {
             salePrice != null && (
               <span class="sales-promo-badge">
-                {posting.promo_label ?? "Sale"}
+                {String(posting.promo_label ?? "Sale")}
               </span>
             )
           }
@@ -156,15 +168,6 @@ const promoEndDate = posting?.promo_end
         </div>
 
         {
-          (salePrice != null || displayPrice) && (
-            <p class="sales-price-disclaimer">
-              ⚠️ Promotional pricing shown here is indicative only. The final
-              price is set by the seller at Etsy checkout.
-            </p>
-          )
-        }
-
-        {
           tags.length > 0 && (
             <div class="sales-tags">
               {tags.map((tag) => (
@@ -178,47 +181,14 @@ const promoEndDate = posting?.promo_end
       <!-- Body content (Quill HTML) -->
       {safeBody && <div class="sales-body prose" set:html={safeBody} />}
 
-      <!-- Image gallery -->
-      {
-        galleryImages.length > 0 && (
-          <div class="sales-gallery">
-            <h2 class="sales-gallery__heading">More Photos</h2>
-            <div class="sales-gallery__grid">
-              {galleryImages.map((img) => (
-                <figure class="sales-gallery__item">
-                  <img
-                    src={img.url}
-                    alt={img.alt_text || posting.title}
-                    loading="lazy"
-                  />
-                </figure>
-              ))}
-            </div>
-          </div>
-        )
-      }
-
       <!-- Purchase panel -->
       <div class="sales-purchase-panel">
         <h2 class="sales-purchase-panel__heading">Purchase</h2>
 
         {
-          posting.etsy_listing_url && (
-            <a
-              href={posting.etsy_listing_url}
-              class="btn btn--etsy"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Buy on Etsy ↗
-            </a>
-          )
-        }
-
-        {
           safePayPal && (
             <div class="sales-paypal-wrap">
-              <p class="sales-paypal-label">Or pay via PayPal:</p>
+              <p class="sales-paypal-label">Pay via PayPal:</p>
               <div set:html={safePayPal} />
             </div>
           )
@@ -227,13 +197,21 @@ const promoEndDate = posting?.promo_end
         {
           paypalSdkConfig && (
             <div class="sales-paypal-wrap">
-              <p class="sales-paypal-label">Or pay via PayPal:</p>
+              <p class="sales-paypal-label">Pay via PayPal:</p>
               <div
                 id={`paypal-container-${paypalSdkConfig.hostedButtonId}`}
                 data-paypal-id={paypalSdkConfig.hostedButtonId}
                 data-paypal-sdk={paypalSdkConfig.sdkSrc}
               />
             </div>
+          )
+        }
+
+        {
+          !safePayPal && !paypalSdkConfig && (
+            <p class="sales-no-button">
+              Contact the artist directly to purchase this item.
+            </p>
           )
         }
       </div>
@@ -246,9 +224,9 @@ const promoEndDate = posting?.promo_end
             <div class="sales-testimonials__list">
               {testimonials.map((t) => (
                 <blockquote class="sales-testimonial">
-                  <p class="sales-testimonial__quote">"{t.quote}"</p>
+                  <p class="sales-testimonial__quote">"{String(t.quote)}"</p>
                   <footer class="sales-testimonial__footer">
-                    <strong>{t.author_name}</strong>
+                    <strong>{String(t.author_name)}</strong>
                     {t.rating != null && (
                       <span
                         class="sales-stars"
@@ -289,7 +267,7 @@ const promoEndDate = posting?.promo_end
               {reviews.map((r) => (
                 <div class="sales-review">
                   <div class="sales-review__header">
-                    <strong>{r.reviewer_name}</strong>
+                    <strong>{String(r.reviewer_name)}</strong>
                     {r.is_verified === 1 && (
                       <span class="sales-review__verified">
                         ✓ Verified Buyer
@@ -302,10 +280,12 @@ const promoEndDate = posting?.promo_end
                       </span>
                     )}
                     {r.review_date && (
-                      <span class="sales-review__date">{r.review_date}</span>
+                      <span class="sales-review__date">
+                        {String(r.review_date)}
+                      </span>
                     )}
                   </div>
-                  <p class="sales-review__text">{r.review_text}</p>
+                  <p class="sales-review__text">{String(r.review_text)}</p>
                 </div>
               ))}
             </div>
@@ -318,7 +298,7 @@ const promoEndDate = posting?.promo_end
         posting.linked_article_slug && (
           <div class="sales-linked-article">
             <a
-              href={`/articles/${posting.linked_article_slug}`}
+              href={`/articles/${String(posting.linked_article_slug)}`}
               class="sales-linked-article__link"
             >
               📖 Read the full article about this item →
@@ -326,22 +306,27 @@ const promoEndDate = posting?.promo_end
           </div>
         )
       }
+
+      <!-- Social share -->
+      <SocialShare
+        title={String(posting.title)}
+        url={canonicalUrl}
+        description={`${String(posting.title)} — available in The Scriptorium shop.`}
+        image={coverImage ? String(coverImage.url) : undefined}
+        tags={tags}
+      />
     </div>
   </article>
 </BlogLayout>
 
 <script>
   // Dynamically load PayPal SDK buttons (Types A & B).
-  // The container div carries data-paypal-id and data-paypal-sdk attributes
-  // so no inline script is needed (inline scripts from set:html don't execute).
   (function () {
     const container = document.querySelector<HTMLElement>("[data-paypal-id]");
     if (!container) return;
-
     const hostedButtonId = container.dataset.paypalId;
     const sdkSrc = container.dataset.paypalSdk;
     if (!hostedButtonId || !sdkSrc) return;
-
     const script = document.createElement("script");
     script.src = sdkSrc;
     script.async = true;
@@ -358,16 +343,8 @@ const promoEndDate = posting?.promo_end
   .sales-detail {
     padding-bottom: 4rem;
   }
-  .sales-hero {
+  .sales-gallery-wrap {
     margin: 1.5rem 0;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .sales-hero__img {
-    width: 100%;
-    max-height: 520px;
-    object-fit: cover;
-    display: block;
   }
   .sales-header {
     margin: 1.5rem 0;
@@ -409,13 +386,6 @@ const promoEndDate = posting?.promo_end
     font-size: 1.4rem;
     font-weight: 700;
   }
-  .sales-price-disclaimer {
-    font-size: 0.82rem;
-    color: var(--color-muted, #888);
-    margin: 0.5rem 0 0;
-    border-left: 3px solid var(--color-rule, #e0d8cc);
-    padding-left: 0.75rem;
-  }
   .sales-tags {
     display: flex;
     flex-wrap: wrap;
@@ -431,30 +401,6 @@ const promoEndDate = posting?.promo_end
   .sales-body {
     margin: 2rem 0;
   }
-  .sales-gallery {
-    margin: 2rem 0;
-  }
-  .sales-gallery__heading,
-  .sales-section-heading {
-    font-size: 1.3rem;
-    margin: 0 0 1rem;
-  }
-  .sales-gallery__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-  }
-  .sales-gallery__item {
-    margin: 0;
-    border-radius: 6px;
-    overflow: hidden;
-  }
-  .sales-gallery__item img {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    display: block;
-  }
   .sales-purchase-panel {
     background: var(--surface-2);
     border-radius: 8px;
@@ -465,6 +411,10 @@ const promoEndDate = posting?.promo_end
     margin: 0 0 1rem;
     font-size: 1.3rem;
   }
+  .sales-no-button {
+    color: var(--color-muted, #888);
+    font-size: 0.95rem;
+  }
   [data-theme="light"] .sales-purchase-panel {
     background: var(--surface);
     color: var(--text);
@@ -472,19 +422,6 @@ const promoEndDate = posting?.promo_end
   [data-theme="light"] .sales-testimonial {
     background: var(--surface);
     border-left-color: var(--border);
-  }
-  .btn--etsy {
-    display: inline-block;
-    background: #f1641e;
-    color: #fff;
-    padding: 0.7em 1.4em;
-    border-radius: 4px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 1rem;
-  }
-  .btn--etsy:hover {
-    background: #d4571a;
   }
   .sales-paypal-wrap {
     margin-top: 1rem;
@@ -525,6 +462,8 @@ const promoEndDate = posting?.promo_end
     margin: 2rem 0;
   }
   .sales-section-heading {
+    font-size: 1.3rem;
+    margin: 0 0 1rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;

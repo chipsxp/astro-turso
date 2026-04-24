@@ -1,0 +1,84 @@
+---
+interface Props {
+  label?: string;
+}
+const { label = "Let's Share!" } = Astro.props;
+---
+
+<a
+  href="#share-panel"
+  class="share-scroll-pill"
+  aria-label="Scroll to share options"
+>
+  <svg
+    viewBox="0 0 24 24"
+    width="16"
+    height="16"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path
+      d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"
+    ></path>
+  </svg>
+  <span>{label}</span>
+</a>
+
+<style>
+  .share-scroll-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    background: var(--accent, #f2c85a);
+    color: var(--surface, #1a1a1a);
+    padding: 0.45em 1.15em;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  .share-scroll-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.22);
+    text-decoration: none;
+  }
+
+  .share-scroll-pill:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .share-scroll-pill svg {
+    flex-shrink: 0;
+  }
+</style>
+
+<script>
+  (function () {
+    const pill =
+      document.querySelector<HTMLAnchorElement>(".share-scroll-pill");
+    if (!pill) return;
+
+    const panel = document.getElementById("share-panel");
+
+    // Hide the pill if no share panel exists for this visitor (e.g. non-author on article page)
+    if (!panel) {
+      pill.style.display = "none";
+      return;
+    }
+
+    pill.addEventListener("click", (e) => {
+      e.preventDefault();
+      panel.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Brief focus shift so keyboard users land on the panel
+      panel.setAttribute("tabindex", "-1");
+      panel.focus({ preventScroll: true });
+    });
+  })();
+</script>

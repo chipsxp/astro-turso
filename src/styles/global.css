@@ -1035,3 +1035,14 @@ img {
     transform: translateY(0);
   }
 }
+
+/* ── Share scroll pill wrapper — shared across blog, events, and shop pages ── */
+.share-pill-wrap {
+  padding: 0.75rem 0 1.5rem;
+}
+
+/* ── Share panel wrappers — events and shop ── */
+.event-share-wrap,
+.sales-share-wrap {
+  padding: 2rem 0 3rem;
+}

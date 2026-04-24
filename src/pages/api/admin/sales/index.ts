@@ -65,21 +65,7 @@ export const POST: APIRoute = async ({ locals, request }) => {
   if (!slug) slug = slugify(title);
 
   const status = body.status === "published" ? "published" : "draft";
-  const etsy_listing_id = body.etsy_listing_id
-    ? String(body.etsy_listing_id)
-    : null;
-  const etsy_listing_url = body.etsy_listing_url
-    ? String(body.etsy_listing_url)
-    : null;
-  const etsy_price_amount =
-    typeof body.etsy_price_amount === "number" ? body.etsy_price_amount : null;
-  const etsy_price_divisor =
-    typeof body.etsy_price_divisor === "number" ? body.etsy_price_divisor : 100;
-  const etsy_price_currency = body.etsy_price_currency
-    ? String(body.etsy_price_currency)
-    : "USD";
-  const etsy_quantity =
-    typeof body.etsy_quantity === "number" ? body.etsy_quantity : null;
+  const price = typeof body.price === "number" ? body.price : null;
   const tags = Array.isArray(body.tags) ? JSON.stringify(body.tags) : "[]";
   const promo_label = body.promo_label ? String(body.promo_label) : null;
   const promo_discount_pct =
@@ -111,23 +97,16 @@ export const POST: APIRoute = async ({ locals, request }) => {
     const result = await db.execute(
       `INSERT INTO sales_postings
         (slug, author_id, title, body, status,
-         etsy_listing_id, etsy_listing_url,
-         etsy_price_amount, etsy_price_divisor, etsy_price_currency, etsy_quantity,
-         tags, promo_label, promo_discount_pct, promo_start, promo_end,
+         price, tags, promo_label, promo_discount_pct, promo_start, promo_end,
          paypal_button_html, linked_article_slug)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         slug,
         Number(user.id),
         title,
         sanitizedBody,
         status,
-        etsy_listing_id,
-        etsy_listing_url,
-        etsy_price_amount,
-        etsy_price_divisor,
-        etsy_price_currency,
-        etsy_quantity,
+        price,
         tags,
         promo_label,
         promo_discount_pct,
@@ -143,20 +122,21 @@ export const POST: APIRoute = async ({ locals, request }) => {
     // Insert images if provided
     const images: Array<{
       url: string;
+      public_id?: string;
       alt_text?: string;
-      source?: string;
       sort_order?: number;
     }> = Array.isArray(body.images) ? body.images : [];
     for (const img of images) {
       if (!img.url) continue;
       await db.execute(
-        `INSERT INTO sales_images (posting_id, url, alt_text, source, sort_order)
-         VALUES (?, ?, ?, ?, ?)`,
+        `INSERT INTO sales_images (posting_id, url, public_id, alt_text, source, sort_order)
+         VALUES (?, ?, ?, ?, ?, ?)`,
         [
           newId,
           String(img.url),
+          String(img.public_id ?? ""),
           String(img.alt_text ?? ""),
-          String(img.source ?? "etsy"),
+          "cloudinary",
           Number(img.sort_order ?? 0),
         ],
       );

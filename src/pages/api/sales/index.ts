@@ -47,8 +47,8 @@ export const GET: APIRoute = async ({ request }) => {
 
   try {
     const result = await db.execute(
-      `SELECT id, slug, title, status, etsy_price_amount, etsy_price_divisor,
-              etsy_price_currency, promo_discount_pct, promo_start, promo_end,
+      `SELECT id, slug, title, status, price,
+              promo_discount_pct, promo_start, promo_end,
               promo_label, tags, created_at, updated_at
        FROM sales_postings
        WHERE status = 'published'
@@ -59,7 +59,7 @@ export const GET: APIRoute = async ({ request }) => {
     const postings = result.rows;
     if (postings.length === 0) return json({ postings: [] }, 200);
 
-    const ids = postings.map((p: any) => Number(p.id));
+    const ids = postings.map((p) => Number(p.id));
     const placeholders = ids.map(() => "?").join(", ");
     const imagesRes = await db.execute(
       `SELECT posting_id, url, alt_text
@@ -71,13 +71,16 @@ export const GET: APIRoute = async ({ request }) => {
 
     // Group cover images by posting_id (first image only)
     const coverMap: Record<number, { url: string; alt_text: string }> = {};
-    for (const img of imagesRes.rows as any[]) {
+    for (const img of imagesRes.rows) {
       const pid = Number(img.posting_id);
       if (!coverMap[pid])
-        coverMap[pid] = { url: img.url, alt_text: img.alt_text };
+        coverMap[pid] = {
+          url: String(img.url),
+          alt_text: String(img.alt_text ?? ""),
+        };
     }
 
-    const enriched = postings.map((p: any) => ({
+    const enriched = postings.map((p) => ({
       ...p,
       cover_image: coverMap[Number(p.id)] ?? null,
       sale_price: calcSalePrice(p as any),

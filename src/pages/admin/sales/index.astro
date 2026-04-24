@@ -90,9 +90,7 @@ try {
             <tbody>
               {postings.map((p) => {
                 const price =
-                  p.etsy_price_amount != null
-                    ? `${(p.etsy_price_amount / (p.etsy_price_divisor ?? 100)).toFixed(2)} ${p.etsy_price_currency ?? "USD"}`
-                    : "—";
+                  p.price != null ? `$${Number(p.price).toFixed(2)}` : "—";
                 const updated = new Date(p.updated_at).toLocaleDateString(
                   "en-US",
                   { month: "short", day: "numeric", year: "numeric" },

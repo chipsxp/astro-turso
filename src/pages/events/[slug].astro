@@ -1,4 +1,6 @@
 ---
+import ShareScrollPill from "../../components/ShareScrollPill.astro";
+import SocialShare from "../../components/SocialShare.astro";
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import {
   buildCloudinaryImageSrcset,
@@ -212,11 +214,30 @@ const description = event.description ?? `Event details for ${event.title}.`;
       )
     }
 
+    <!-- Share pill — scrolls to share panel at the bottom -->
+    <div class="share-pill-wrap page-wrap">
+      <ShareScrollPill />
+    </div>
+
     <section class="event-body-wrap page-wrap">
       <div class="article-body">
         <div class="prose" set:html={sanitizedBody} />
       </div>
     </section>
+
+    <!-- Social share — always visible (no auth gate for events) -->
+    <div class="event-share-wrap page-wrap">
+      <SocialShare
+        title={event.title}
+        url={canonicalUrl}
+        description={event.description ?? undefined}
+        image={getEventImageUrl(
+          event.featured_media_public_id,
+          event.featured_media_url,
+          "hero",
+        ) ?? undefined}
+      />
+    </div>
   </main>
 </BlogLayout>
 

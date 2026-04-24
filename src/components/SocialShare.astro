@@ -5,8 +5,8 @@ export interface Props {
   description?: string;
   image?: string; // cover image URL — used by Pinterest
   tags?: string[]; // article tags → hashtags for X
-  authorId: number; // panel is hidden until client confirms viewer is author/admin
-  articleId: number; // used to log share events to /api/share
+  authorId?: number; // if omitted with articleId, panel is always public
+  articleId?: number; // if omitted, share events are not logged
 }
 
 const {
@@ -19,11 +19,14 @@ const {
   articleId,
 } = Astro.props;
 
-// Server-side auth gate: only render the panel for the article's author or an admin
+// Public when no authorId and no articleId (events, shop). Auth-gated for articles.
+const isPublic = authorId == null && articleId == null;
 const user = Astro.locals.user;
 const isAuthorized =
-  user != null &&
-  (user.role === "admin" || String(user.id) === String(authorId));
+  isPublic ||
+  (user != null &&
+    (user.role === "admin" ||
+      (authorId != null && String(user.id) === String(authorId))));
 
 // ── Build encoded share parameters ──────────────────────────────────────────
 const enc = encodeURIComponent;
@@ -146,12 +149,12 @@ const platforms: Platform[] = [
     <div
       id="share-panel"
       class="share-panel share-panel--visible"
-      data-article-id={String(articleId)}
+      data-article-id={articleId != null ? String(articleId) : ""}
       aria-hidden="false"
-      aria-label="Share this article"
+      aria-label="Share this content"
     >
       <div class="share-panel__header">
-        <span class="share-panel__title">Share this article</span>
+        <span class="share-panel__title">Share</span>
         <span class="share-panel__hint">
           Click any platform to share immediately
         </span>
@@ -209,108 +212,111 @@ const platforms: Platform[] = [
 
 <script>
   (function () {
-  // ── Auth gate ──────────────────────────────────────────────────────────────
+    // ── Auth gate ──────────────────────────────────────────────────────────────
 
-  const panel = document.getElementById("share-panel") as HTMLDivElement | null;
-  if (!panel) return; // panel is intentionally absent for non-authorized visitors
+    const panel = document.getElementById(
+      "share-panel",
+    ) as HTMLDivElement | null;
+    if (!panel) return; // panel is intentionally absent for non-authorized visitors
 
-  const articleId = Number(panel.dataset.articleId ?? "0");
+    const articleId = Number(panel.dataset.articleId ?? "0");
 
-  // ── UI helpers ─────────────────────────────────────────────────────────────
+    // ── UI helpers ─────────────────────────────────────────────────────────────
 
-  const tipEl = document.getElementById(
-    "share-clipboard-tip",
-  ) as HTMLParagraphElement;
+    const tipEl = document.getElementById(
+      "share-clipboard-tip",
+    ) as HTMLParagraphElement;
 
-  function showTip(msg: string): void {
-    tipEl.textContent = msg;
-    tipEl.classList.add("share-clipboard-tip--visible");
-    setTimeout(() => {
-      tipEl.textContent = "";
-      tipEl.classList.remove("share-clipboard-tip--visible");
-    }, 4000);
-  }
-
-  function flashButton(btn: HTMLButtonElement, label: string): void {
-    const labelEl = btn.querySelector<HTMLSpanElement>(".share-btn__label");
-    if (!labelEl) return;
-    const original = labelEl.textContent ?? label;
-    btn.classList.add("share-btn--done");
-    labelEl.textContent = "Shared!";
-    setTimeout(() => {
-      btn.classList.remove("share-btn--done");
-      labelEl.textContent = original;
-    }, 2000);
-  }
-
-  // ── Share analytics logger ─────────────────────────────────────────────────
-
-  async function logShare(platform: string): Promise<void> {
-    try {
-      await fetch("/api/share", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ article_id: articleId, platform }),
-      });
-    } catch {
-      // Analytics failure must never block the share action
+    function showTip(msg: string): void {
+      tipEl.textContent = msg;
+      tipEl.classList.add("share-clipboard-tip--visible");
+      setTimeout(() => {
+        tipEl.textContent = "";
+        tipEl.classList.remove("share-clipboard-tip--visible");
+      }, 4000);
     }
-  }
 
-  // ── Apply brand colors from data-color attribute ───────────────────────────
+    function flashButton(btn: HTMLButtonElement, label: string): void {
+      const labelEl = btn.querySelector<HTMLSpanElement>(".share-btn__label");
+      if (!labelEl) return;
+      const original = labelEl.textContent ?? label;
+      btn.classList.add("share-btn--done");
+      labelEl.textContent = "Shared!";
+      setTimeout(() => {
+        btn.classList.remove("share-btn--done");
+        labelEl.textContent = original;
+      }, 2000);
+    }
 
-  const shareBtns = panel.querySelectorAll<HTMLButtonElement>(".share-btn");
+    // ── Share analytics logger ─────────────────────────────────────────────────
 
-  shareBtns.forEach((btn) => {
-    const color = btn.dataset.color;
-    if (color) btn.style.setProperty("--btn-brand-color", color);
-  });
+    async function logShare(platform: string): Promise<void> {
+      if (!articleId) return; // no logging for events/shop (no articleId)
+      try {
+        await fetch("/api/share", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ article_id: articleId, platform }),
+        });
+      } catch {
+        // Analytics failure must never block the share action
+      }
+    }
 
-  const controller = new AbortController();
+    // ── Apply brand colors from data-color attribute ───────────────────────────
 
-  shareBtns.forEach((btn) => {
-    btn.addEventListener(
-      "click",
-      async () => {
-        const method = btn.dataset.method;
-        const platform = btn.dataset.platform ?? "";
-        const label = btn.dataset.label ?? platform;
+    const shareBtns = panel.querySelectorAll<HTMLButtonElement>(".share-btn");
 
-        if (method === "intent") {
-          const shareUrl = btn.dataset.shareUrl;
-          if (!shareUrl) return;
-          void logShare(platform);
-          window.open(
-            shareUrl,
-            "_blank",
-            "width=600,height=500,noopener,noreferrer",
-          );
-          flashButton(btn, label);
-        } else if (method === "clipboard") {
-          const text = btn.dataset.clipboardText ?? "";
-          const openUrl = btn.dataset.openUrl ?? "";
-          void logShare(platform);
+    shareBtns.forEach((btn) => {
+      const color = btn.dataset.color;
+      if (color) btn.style.setProperty("--btn-brand-color", color);
+    });
 
-          try {
-            await navigator.clipboard.writeText(text);
-            showTip(`Link copied for ${label} — paste it in your new post.`);
-          } catch {
-            showTip(
-              `Could not auto-copy for ${label} — copy the URL manually.`,
+    const controller = new AbortController();
+
+    shareBtns.forEach((btn) => {
+      btn.addEventListener(
+        "click",
+        async () => {
+          const method = btn.dataset.method;
+          const platform = btn.dataset.platform ?? "";
+          const label = btn.dataset.label ?? platform;
+
+          if (method === "intent") {
+            const shareUrl = btn.dataset.shareUrl;
+            if (!shareUrl) return;
+            void logShare(platform);
+            window.open(
+              shareUrl,
+              "_blank",
+              "width=600,height=500,noopener,noreferrer",
             );
-          }
+            flashButton(btn, label);
+          } else if (method === "clipboard") {
+            const text = btn.dataset.clipboardText ?? "";
+            const openUrl = btn.dataset.openUrl ?? "";
+            void logShare(platform);
 
-          if (openUrl) {
-            window.open(openUrl, "_blank", "noopener,noreferrer");
-          }
+            try {
+              await navigator.clipboard.writeText(text);
+              showTip(`Link copied for ${label} — paste it in your new post.`);
+            } catch {
+              showTip(
+                `Could not auto-copy for ${label} — copy the URL manually.`,
+              );
+            }
 
-          flashButton(btn, label);
-        }
-      },
-      { signal: controller.signal },
-    );
-  });
+            if (openUrl) {
+              window.open(openUrl, "_blank", "noopener,noreferrer");
+            }
+
+            flashButton(btn, label);
+          }
+        },
+        { signal: controller.signal },
+      );
+    });
   })();
 </script>

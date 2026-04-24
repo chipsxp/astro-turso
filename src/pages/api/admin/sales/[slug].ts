@@ -70,7 +70,7 @@ export const PUT: APIRoute = async ({ params, locals, request }) => {
   const { slug } = params;
 
   // Verify posting exists and enforce ownership
-  let existing: any;
+  let existing: { rows: Record<string, unknown>[] };
   try {
     existing = await db.execute(
       "SELECT id, author_id FROM sales_postings WHERE slug = ?",
@@ -118,18 +118,8 @@ export const PUT: APIRoute = async ({ params, locals, request }) => {
     }
     setField("body", sanitizeArticleBodyServer(rawBody));
   }
-  if (body.etsy_listing_id !== undefined)
-    setField("etsy_listing_id", body.etsy_listing_id || null);
-  if (body.etsy_listing_url !== undefined)
-    setField("etsy_listing_url", body.etsy_listing_url || null);
-  if (body.etsy_price_amount !== undefined)
-    setField("etsy_price_amount", body.etsy_price_amount ?? null);
-  if (body.etsy_price_divisor !== undefined)
-    setField("etsy_price_divisor", body.etsy_price_divisor ?? 100);
-  if (body.etsy_price_currency !== undefined)
-    setField("etsy_price_currency", String(body.etsy_price_currency || "USD"));
-  if (body.etsy_quantity !== undefined)
-    setField("etsy_quantity", body.etsy_quantity ?? null);
+  if (body.price !== undefined)
+    setField("price", body.price != null ? Number(body.price) : null);
   if (body.tags !== undefined)
     setField(
       "tags",
@@ -159,8 +149,8 @@ export const PUT: APIRoute = async ({ params, locals, request }) => {
       values,
     );
     return json({ updated: true }, 200);
-  } catch (err: any) {
-    if (String(err?.message).includes("UNIQUE constraint")) {
+  } catch (err: unknown) {
+    if (String((err as Error)?.message).includes("UNIQUE constraint")) {
       return json({ error: "Slug already in use." }, 409);
     }
     return json({ error: "Database error" }, 500);

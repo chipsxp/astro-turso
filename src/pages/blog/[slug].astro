@@ -1,6 +1,7 @@
 ---
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import SocialShare from "../../components/SocialShare.astro";
+import ShareScrollPill from "../../components/ShareScrollPill.astro";
 import { db } from "../../lib/db";
 import { getMediaByArticle } from "../../lib/media";
 import {
@@ -318,6 +319,13 @@ const fbAppId = import.meta.env.PUBLIC_FB_APP_ID || undefined;
           <span class="rule-glyph">✦</span>
           <span class="rule-line"></span>
         </div>
+      </div>
+    </div>
+
+    <!-- Share pill — scrolls to share panel at the bottom -->
+    <div class="share-pill-wrap page-wrap">
+      <div class="content-col">
+        <ShareScrollPill />
       </div>
     </div>
 

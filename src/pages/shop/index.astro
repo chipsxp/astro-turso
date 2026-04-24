@@ -1,15 +1,15 @@
 ---
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import { db } from "../../lib/db";
-import { calcSalePrice, formatEtsyPrice, parseTags } from "../../lib/sales";
+import { calcSalePrice, formatPrice, parseTags } from "../../lib/sales";
 
 // Query published postings directly — never loopback-fetch in SSR (fails on Railway/cPanel)
 let postings: any[] = [];
 let fetchError = false;
 try {
   const result = await db.execute(
-    `SELECT id, slug, title, status, etsy_price_amount, etsy_price_divisor,
-            etsy_price_currency, promo_discount_pct, promo_start, promo_end,
+    `SELECT id, slug, title, status, price,
+            promo_discount_pct, promo_start, promo_end,
             promo_label, tags, created_at, updated_at
      FROM sales_postings
      WHERE status = 'published'
@@ -56,7 +56,7 @@ try {
       <header class="shop-header">
         <h1 class="shop-title">Shop</h1>
         <p class="shop-subtitle">
-          Handcrafted items, curated and sold via Etsy.
+          Handcrafted items by our artists — pay securely via PayPal.
         </p>
       </header>
 
@@ -81,22 +81,11 @@ try {
           <div class="shop-grid">
             {postings.map((posting) => {
               const salePrice = calcSalePrice(posting);
-              const displayPrice =
-                posting.etsy_price_amount != null
-                  ? formatEtsyPrice(
-                      posting.etsy_price_amount,
-                      posting.etsy_price_divisor,
-                      posting.etsy_price_currency,
-                    )
-                  : null;
+              const price =
+                posting.price != null ? Number(posting.price) : null;
+              const displayPrice = formatPrice(price);
               const salePriceStr =
-                salePrice != null
-                  ? formatEtsyPrice(
-                      Math.round(salePrice * posting.etsy_price_divisor),
-                      posting.etsy_price_divisor,
-                      posting.etsy_price_currency,
-                    )
-                  : null;
+                salePrice != null ? formatPrice(salePrice) : null;
               const tags = parseTags(posting.tags ?? "[]");
 
               return (
