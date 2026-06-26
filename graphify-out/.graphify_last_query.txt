@@ -1,0 +1,773 @@
+Traversal: BFS | Start: ['Parse the batched JSON analysis data into the result object.', 'Build a single SQL query that returns all analysis data as JSON.', 'json()'] | 278 nodes
+NODE|.payloadFromForm()|src\lib\admin-event-form.ts|L250
+NODE|analyze_mongo()|devtools\skills\use-railway\scripts\analyze-mongo.py|L471
+NODE|_fmt_bytes()|devtools\skills\use-railway\scripts\analyze-mongo.py|L425
+NODE|_fmt_count()|devtools\skills\use-railway\scripts\analyze-mongo.py|L436
+NODE|_fmt_uptime()|devtools\skills\use-railway\scripts\analyze-mongo.py|L447
+NODE|_fmt_us()|devtools\skills\use-railway\scripts\analyze-mongo.py|L458
+NODE|format_report()|devtools\skills\use-railway\scripts\analyze-mongo.py|L929
+NODE|generate_recommendations()|devtools\skills\use-railway\scripts\analyze-mongo.py|L730
+NODE|main()|devtools\skills\use-railway\scripts\analyze-mongo.py|L1500
+NODE|MongoAnalysisResult|devtools\skills\use-railway\scripts\analyze-mongo.py|L48
+NODE|_parse_collection_stats()|devtools\skills\use-railway\scripts\analyze-mongo.py|L389
+NODE|_parse_current_op()|devtools\skills\use-railway\scripts\analyze-mongo.py|L372
+NODE|_parse_db_stats()|devtools\skills\use-railway\scripts\analyze-mongo.py|L361
+NODE|_parse_repl_info()|devtools\skills\use-railway\scripts\analyze-mongo.py|L403
+NODE|_parse_server_status()|devtools\skills\use-railway\scripts\analyze-mongo.py|L199
+NODE|_parse_slow_queries()|devtools\skills\use-railway\scripts\analyze-mongo.py|L396
+NODE|_parse_top()|devtools\skills\use-railway\scripts\analyze-mongo.py|L414
+NODE|Run a single collection step for debugging.|devtools\skills\use-railway\scripts\analyze-mongo.py|L1426
+NODE|Run a mongosh query via SSH and return (returncode, stdout, stderr).      The|devtools\skills\use-railway\scripts\analyze-mongo.py|L145
+NODE|Parse JSON from mongosh EJSON output, returning None on failure.|devtools\skills\use-railway\scripts\analyze-mongo.py|L184
+NODE|Extract metrics from serverStatus into result.|devtools\skills\use-railway\scripts\analyze-mongo.py|L200
+NODE|Extract metrics from db.stats().|devtools\skills\use-railway\scripts\analyze-mongo.py|L362
+NODE|Extract active operations from currentOp.|devtools\skills\use-railway\scripts\analyze-mongo.py|L373
+NODE|Parse per-collection stats.|devtools\skills\use-railway\scripts\analyze-mongo.py|L390
+NODE|Parse slow queries from profiler.|devtools\skills\use-railway\scripts\analyze-mongo.py|L397
+NODE|Parse oplog replication info.|devtools\skills\use-railway\scripts\analyze-mongo.py|L404
+NODE|Parse top collection activity.|devtools\skills\use-railway\scripts\analyze-mongo.py|L415
+NODE|Format bytes as human-readable.|devtools\skills\use-railway\scripts\analyze-mongo.py|L426
+NODE|Format large numbers with K/M suffix.|devtools\skills\use-railway\scripts\analyze-mongo.py|L437
+NODE|Format seconds as Xd Yh.|devtools\skills\use-railway\scripts\analyze-mongo.py|L448
+NODE|Format microseconds as human-readable latency.|devtools\skills\use-railway\scripts\analyze-mongo.py|L459
+NODE|Run complete MongoDB analysis.|devtools\skills\use-railway\scripts\analyze-mongo.py|L476
+NODE|Container for MongoDB analysis results.|devtools\skills\use-railway\scripts\analyze-mongo.py|L49
+NODE|Generate recommendations based on analysis results.|devtools\skills\use-railway\scripts\analyze-mongo.py|L731
+NODE|Format analysis result as human-readable markdown report.|devtools\skills\use-railway\scripts\analyze-mongo.py|L930
+NODE|run_mongosh_query()|devtools\skills\use-railway\scripts\analyze-mongo.py|L144
+NODE|run_single_step()|devtools\skills\use-railway\scripts\analyze-mongo.py|L1425
+NODE|_safe_json()|devtools\skills\use-railway\scripts\analyze-mongo.py|L183
+NODE|analyze_mysql()|devtools\skills\use-railway\scripts\analyze-mysql.py|L935
+NODE|collect_mysql_data()|devtools\skills\use-railway\scripts\analyze-mysql.py|L176
+NODE|_format_bytes()|devtools\skills\use-railway\scripts\analyze-mysql.py|L516
+NODE|_format_count()|devtools\skills\use-railway\scripts\analyze-mysql.py|L505
+NODE|format_report()|devtools\skills\use-railway\scripts\analyze-mysql.py|L673
+NODE|generate_recommendations()|devtools\skills\use-railway\scripts\analyze-mysql.py|L539
+NODE|main()|devtools\skills\use-railway\scripts\analyze-mysql.py|L1144
+NODE|MySQLAnalysisResult|devtools\skills\use-railway\scripts\analyze-mysql.py|L49
+NODE|parse_mysql_batch()|devtools\skills\use-railway\scripts\analyze-mysql.py|L124
+NODE|parse_mysql_data()|devtools\skills\use-railway\scripts\analyze-mysql.py|L303
+NODE|parse_mysql_kv()|devtools\skills\use-railway\scripts\analyze-mysql.py|L141
+NODE|Run a single collection step for debugging.|devtools\skills\use-railway\scripts\analyze-mysql.py|L1092
+NODE|Parse MySQL -B (batch/tab-separated) output into list of dicts.      First lin|devtools\skills\use-railway\scripts\analyze-mysql.py|L125
+NODE|Parse MySQL SHOW output (Variable_name / Value pairs) into a dict.|devtools\skills\use-railway\scripts\analyze-mysql.py|L142
+NODE|Collect all MySQL metrics via SSH.      Batches queries into two SSH calls for|devtools\skills\use-railway\scripts\analyze-mysql.py|L177
+NODE|Split concatenated MySQL batch output into sections by header line.|devtools\skills\use-railway\scripts\analyze-mysql.py|L243
+NODE|Split concatenated MySQL batch output into sections by multiple different header|devtools\skills\use-railway\scripts\analyze-mysql.py|L262
+NODE|Transform raw MySQL data into structured result sections.|devtools\skills\use-railway\scripts\analyze-mysql.py|L304
+NODE|Container for MySQL analysis results.|devtools\skills\use-railway\scripts\analyze-mysql.py|L50
+NODE|Format large numbers with K/M/G suffix.|devtools\skills\use-railway\scripts\analyze-mysql.py|L506
+NODE|Format bytes to human-readable.|devtools\skills\use-railway\scripts\analyze-mysql.py|L517
+NODE|Run a MySQL query via SSH and return (returncode, output).      Uses -B (batch|devtools\skills\use-railway\scripts\analyze-mysql.py|L91
+NODE|Run complete MySQL analysis.|devtools\skills\use-railway\scripts\analyze-mysql.py|L940
+NODE|run_mysql_query()|devtools\skills\use-railway\scripts\analyze-mysql.py|L90
+NODE|run_single_step()|devtools\skills\use-railway\scripts\analyze-mysql.py|L1091
+NODE|_split_mysql_resultsets()|devtools\skills\use-railway\scripts\analyze-mysql.py|L242
+NODE|_split_mysql_resultsets_multi()|devtools\skills\use-railway\scripts\analyze-mysql.py|L261
+NODE|AnalysisResult|devtools\skills\use-railway\scripts\analyze-postgres.py|L45
+NODE|analyze_postgres()|devtools\skills\use-railway\scripts\analyze-postgres.py|L1166
+NODE|build_analysis_query()|devtools\skills\use-railway\scripts\analyze-postgres.py|L100
+NODE|format_report()|devtools\skills\use-railway\scripts\analyze-postgres.py|L2298
+NODE|generate_recommendations()|devtools\skills\use-railway\scripts\analyze-postgres.py|L1412
+NODE|get_cluster_logs()|devtools\skills\use-railway\scripts\analyze-postgres.py|L1027
+NODE|get_cpu_memory_from_api()|devtools\skills\use-railway\scripts\analyze-postgres.py|L1000
+NODE|get_disk_usage()|devtools\skills\use-railway\scripts\analyze-postgres.py|L971
+NODE|get_disk_usage_from_api()|devtools\skills\use-railway\scripts\analyze-postgres.py|L914
+NODE|get_recent_errors()|devtools\skills\use-railway\scripts\analyze-postgres.py|L1011
+NODE|is_postgres_ha_service()|devtools\skills\use-railway\scripts\analyze-postgres.py|L1128
+NODE|main()|devtools\skills\use-railway\scripts\analyze-postgres.py|L2953
+NODE|parse_batched_analysis()|devtools\skills\use-railway\scripts\analyze-postgres.py|L517
+NODE|parse_psql_output()|devtools\skills\use-railway\scripts\analyze-postgres.py|L902
+NODE|Get CPU and memory usage from Railway metrics API.      DEPRECATED: Use get_al|devtools\skills\use-railway\scripts\analyze-postgres.py|L1001
+NODE|Build a single SQL query that returns all analysis data as JSON.|devtools\skills\use-railway\scripts\analyze-postgres.py|L101
+NODE|Get recent error logs (legacy - kept for backwards compat).|devtools\skills\use-railway\scripts\analyze-postgres.py|L1012
+NODE|Get logs from all HA cluster members via Railway API.      For HA clusters, ea|devtools\skills\use-railway\scripts\analyze-postgres.py|L1032
+NODE|Check if service is from postgres-ha template.      Returns True if the servic|devtools\skills\use-railway\scripts\analyze-postgres.py|L1129
+NODE|Run complete Postgres analysis with maximum data collection.      Uses a singl|devtools\skills\use-railway\scripts\analyze-postgres.py|L1172
+NODE|Generate recommendations based on analysis results.|devtools\skills\use-railway\scripts\analyze-postgres.py|L1413
+NODE|Sum up index sizes and return human-readable string.|devtools\skills\use-railway\scripts\analyze-postgres.py|L2271
+NODE|Format analysis result as human-readable report.|devtools\skills\use-railway\scripts\analyze-postgres.py|L2299
+NODE|Run a single collection step for debugging.|devtools\skills\use-railway\scripts\analyze-postgres.py|L3000
+NODE|Container for analysis results.|devtools\skills\use-railway\scripts\analyze-postgres.py|L46
+NODE|Parse the batched JSON analysis data into the result object.|devtools\skills\use-railway\scripts\analyze-postgres.py|L518
+NODE|Parse psql -t -A output (pipe-separated) into list of dicts.|devtools\skills\use-railway\scripts\analyze-postgres.py|L903
+NODE|Get disk usage from Railway metrics API.|devtools\skills\use-railway\scripts\analyze-postgres.py|L915
+NODE|Run a psql query using base64 encoding to avoid shell quoting issues.|devtools\skills\use-railway\scripts\analyze-postgres.py|L93
+NODE|Get disk usage - try API first, fall back to SSH.|devtools\skills\use-railway\scripts\analyze-postgres.py|L972
+NODE|run_psql_query_safe()|devtools\skills\use-railway\scripts\analyze-postgres.py|L92
+NODE|run_single_step()|devtools\skills\use-railway\scripts\analyze-postgres.py|L2999
+NODE|sum_index_sizes()|devtools\skills\use-railway\scripts\analyze-postgres.py|L2270
+NODE|analyze_redis()|devtools\skills\use-railway\scripts\analyze-redis.py|L761
+NODE|extract_cache()|devtools\skills\use-railway\scripts\analyze-redis.py|L132
+NODE|extract_command_stats()|devtools\skills\use-railway\scripts\analyze-redis.py|L185
+NODE|extract_keyspace()|devtools\skills\use-railway\scripts\analyze-redis.py|L158
+NODE|extract_memory()|devtools\skills\use-railway\scripts\analyze-redis.py|L110
+NODE|extract_overview()|devtools\skills\use-railway\scripts\analyze-redis.py|L99
+NODE|extract_persistence()|devtools\skills\use-railway\scripts\analyze-redis.py|L147
+NODE|extract_throughput()|devtools\skills\use-railway\scripts\analyze-redis.py|L123
+NODE|_format_bytes_human()|devtools\skills\use-railway\scripts\analyze-redis.py|L396
+NODE|_format_duration()|devtools\skills\use-railway\scripts\analyze-redis.py|L348
+NODE|_format_number()|devtools\skills\use-railway\scripts\analyze-redis.py|L337
+NODE|format_report()|devtools\skills\use-railway\scripts\analyze-redis.py|L545
+NODE|_format_total_time()|devtools\skills\use-railway\scripts\analyze-redis.py|L384
+NODE|_format_ttl()|devtools\skills\use-railway\scripts\analyze-redis.py|L361
+NODE|_format_usec()|devtools\skills\use-railway\scripts\analyze-redis.py|L375
+NODE|generate_recommendations()|devtools\skills\use-railway\scripts\analyze-redis.py|L411
+NODE|main()|devtools\skills\use-railway\scripts\analyze-redis.py|L1043
+NODE|parse_bigkeys()|devtools\skills\use-railway\scripts\analyze-redis.py|L291
+NODE|parse_redis_info()|devtools\skills\use-railway\scripts\analyze-redis.py|L83
+NODE|parse_slowlog_get()|devtools\skills\use-railway\scripts\analyze-redis.py|L213
+NODE|Extract overview metrics from INFO dict.|devtools\skills\use-railway\scripts\analyze-redis.py|L100
+NODE|Extract memory metrics from INFO dict.|devtools\skills\use-railway\scripts\analyze-redis.py|L111
+NODE|Extract throughput metrics from INFO dict.|devtools\skills\use-railway\scripts\analyze-redis.py|L124
+NODE|Extract cache performance metrics from INFO dict.|devtools\skills\use-railway\scripts\analyze-redis.py|L133
+NODE|Extract persistence metrics from INFO dict.|devtools\skills\use-railway\scripts\analyze-redis.py|L148
+NODE|Extract keyspace metrics from INFO dict.      Keyspace entries look like: db0:|devtools\skills\use-railway\scripts\analyze-redis.py|L159
+NODE|Extract command statistics from INFO dict.      Command stat entries look like|devtools\skills\use-railway\scripts\analyze-redis.py|L186
+NODE|Parse SLOWLOG GET output into structured entries.      redis-cli --raw SLOWLOG|devtools\skills\use-railway\scripts\analyze-redis.py|L214
+NODE|Parse redis-cli --bigkeys output into structured entries.      Looks for lines|devtools\skills\use-railway\scripts\analyze-redis.py|L292
+NODE|Format a large number with K/M/B suffixes.|devtools\skills\use-railway\scripts\analyze-redis.py|L338
+NODE|Format a duration in seconds to a human-readable relative string.|devtools\skills\use-railway\scripts\analyze-redis.py|L349
+NODE|Format average TTL in milliseconds to a human-readable string.|devtools\skills\use-railway\scripts\analyze-redis.py|L362
+NODE|Format microseconds to a human-readable string.|devtools\skills\use-railway\scripts\analyze-redis.py|L376
+NODE|Format total microseconds to a readable time string.|devtools\skills\use-railway\scripts\analyze-redis.py|L385
+NODE|Format bytes into human-readable string.|devtools\skills\use-railway\scripts\analyze-redis.py|L397
+NODE|Generate recommendations based on collected metrics.|devtools\skills\use-railway\scripts\analyze-redis.py|L412
+NODE|Container for Redis analysis results.|devtools\skills\use-railway\scripts\analyze-redis.py|L50
+NODE|Format the analysis result as a markdown report.|devtools\skills\use-railway\scripts\analyze-redis.py|L546
+NODE|Run complete Redis analysis with maximum data collection.      Collects Redis|devtools\skills\use-railway\scripts\analyze-redis.py|L767
+NODE|Parse Redis INFO output into a flat key:value dict.      Lines starting with #|devtools\skills\use-railway\scripts\analyze-redis.py|L84
+NODE|Run a single collection step for debugging.|devtools\skills\use-railway\scripts\analyze-redis.py|L983
+NODE|RedisAnalysisResult|devtools\skills\use-railway\scripts\analyze-redis.py|L49
+NODE|run_single_step()|devtools\skills\use-railway\scripts\analyze-redis.py|L982
+NODE|POST()|src\pages\api\admin\events\archive-expired.ts|L34
+NODE|POST()|src\pages\api\admin\panels\assign.ts|L24
+NODE|convertArticleInlineImages()|scripts\backfill-inline-images.mjs|L127
+NODE|ensureInlineSchema()|scripts\backfill-inline-images.mjs|L30
+NODE|execute()|scripts\backfill-inline-images.mjs|L24
+NODE|getDb()|scripts\backfill-inline-images.mjs|L17
+NODE|main()|scripts\backfill-inline-images.mjs|L173
+NODE|createCategory()|src\lib\categories.ts|L126
+NODE|ensureCategorySchema()|src\lib\categories.ts|L42
+NODE|findCategoryById()|src\lib\categories.ts|L93
+NODE|findCategoryByNameOrSlug()|src\lib\categories.ts|L107
+NODE|listCategories()|src\lib\categories.ts|L83
+NODE|POST()|src\pages\api\admin\uploads\cleanup.ts|L18
+NODE|getClientIp()|src\pages\api\contact.ts|L8
+NODE|isRateLimited()|src\pages\api\contact.ts|L16
+NODE|recordAttempt()|src\pages\api\contact.ts|L23
+NODE|_analyze_window()|devtools\skills\use-railway\scripts\dal.py|L368
+NODE|_build_metrics_history()|devtools\skills\use-railway\scripts\dal.py|L458
+NODE|_cli_fatal_error()|devtools\skills\use-railway\scripts\dal.py|L124
+NODE|confirm_with_user()|devtools\skills\use-railway\scripts\dal.py|L544
+NODE|error()|devtools\skills\use-railway\scripts\dal.py|L538
+NODE|_format_uptime()|devtools\skills\use-railway\scripts\dal.py|L578
+NODE|get_all_metrics_from_api()|devtools\skills\use-railway\scripts\dal.py|L281
+NODE|get_deployment_status()|devtools\skills\use-railway\scripts\dal.py|L232
+NODE|get_railway_status()|devtools\skills\use-railway\scripts\dal.py|L193
+NODE|get_recent_logs()|devtools\skills\use-railway\scripts\dal.py|L616
+NODE|info()|devtools\skills\use-railway\scripts\dal.py|L533
+NODE|_init_context()|devtools\skills\use-railway\scripts\dal.py|L79
+NODE|progress()|devtools\skills\use-railway\scripts\dal.py|L98
+NODE|ProgressTimer|devtools\skills\use-railway\scripts\dal.py|L15
+NODE|.__init__()|devtools\skills\use-railway\scripts\dal.py|L17
+NODE|.start()|devtools\skills\use-railway\scripts\dal.py|L21
+NODE|.step_elapsed()|devtools\skills\use-railway\scripts\dal.py|L26
+NODE|.total_elapsed()|devtools\skills\use-railway\scripts\dal.py|L37
+NODE|RailwayContext|devtools\skills\use-railway\scripts\dal.py|L50
+NODE|.logs_flags()|devtools\skills\use-railway\scripts\dal.py|L67
+NODE|.ssh_flags()|devtools\skills\use-railway\scripts\dal.py|L56
+NODE|Track elapsed time for progress messages.|devtools\skills\use-railway\scripts\dal.py|L16
+NODE|Start the overall timer.|devtools\skills\use-railway\scripts\dal.py|L22
+NODE|Get elapsed time since last step, then reset step timer.|devtools\skills\use-railway\scripts\dal.py|L27
+NODE|Get total elapsed time.|devtools\skills\use-railway\scripts\dal.py|L38
+NODE|Explicit Railway IDs that bypass railway link.|devtools\skills\use-railway\scripts\dal.py|L51
+NODE|Print an [ERROR] message to stderr and exit.|devtools\skills\use-railway\scripts\dal.py|L539
+NODE|Return CLI flags for railway ssh.|devtools\skills\use-railway\scripts\dal.py|L57
+NODE|Return CLI flags for railway logs.|devtools\skills\use-railway\scripts\dal.py|L68
+NODE|Initialize global context from CLI args or railway config.|devtools\skills\use-railway\scripts\dal.py|L80
+NODE|run_psql_query()|devtools\skills\use-railway\scripts\dal.py|L179
+NODE|run_railway_command()|devtools\skills\use-railway\scripts\dal.py|L108
+NODE|run_ssh_query()|devtools\skills\use-railway\scripts\dal.py|L145
+NODE|_safe_float()|devtools\skills\use-railway\scripts\dal.py|L570
+NODE|_safe_int()|devtools\skills\use-railway\scripts\dal.py|L562
+NODE|_trend_indicator()|devtools\skills\use-railway\scripts\dal.py|L595
+NODE|analyze-mongo.py|devtools\skills\use-railway\scripts\analyze-mongo.py|L1
+NODE|analyze-mysql.py|devtools\skills\use-railway\scripts\analyze-mysql.py|L1
+NODE|analyze-postgres.py|devtools\skills\use-railway\scripts\analyze-postgres.py|L1
+NODE|analyze-redis.py|devtools\skills\use-railway\scripts\analyze-redis.py|L1
+NODE|dal.py|devtools\skills\use-railway\scripts\dal.py|L1
+NODE|main()|devtools\skills\use-railway\scripts\enable-pg-stats.py|L42
+NODE|ensureEventsSchema()|src\lib\events.ts|L90
+NODE|mapEventRow()|src\lib\events.ts|L139
+NODE|toPublicEvent()|src\lib\events.ts|L43
+NODE|DELETE()|src\pages\api\admin\panels\media\[id].ts|L22
+NODE|PATCH()|src\pages\api\admin\users\[id].ts|L27
+NODE|DELETE()|src\pages\api\admin\sales\[slug]\images.ts|L163
+NODE|PATCH()|src\pages\api\admin\sales\[slug]\images.ts|L226
+NODE|POST()|src\pages\api\admin\sales\[slug]\images.ts|L28
+NODE|GET()|src\pages\api\sales\index.ts|L43
+NODE|POST()|src\pages\api\events\index.ts|L114
+NODE|cleanupUnusedInlineImages()|src\lib\inline-images.ts|L196
+NODE|deleteInlineImagesByIds()|src\lib\inline-images.ts|L222
+NODE|ensureColumn()|src\lib\inline-images.ts|L44
+NODE|ensureInlineImagesSchema()|src\lib\inline-images.ts|L54
+NODE|getInlineImageById()|src\lib\inline-images.ts|L239
+NODE|persistInlineImagesInBody()|src\lib\inline-images.ts|L141
+NODE|POST()|src\pages\api\auth\login.ts|L41
+NODE|addUploadSessionMedia()|src\lib\media.ts|L288
+NODE|attachUploadSessionMediaToArticle()|src\lib\media.ts|L356
+NODE|createUploadSession()|src\lib\media.ts|L229
+NODE|deleteMediaByArticle()|src\lib\media.ts|L224
+NODE|deleteUploadSession()|src\lib\media.ts|L441
+NODE|ensureMediaTable()|src\lib\media.ts|L175
+NODE|ensureUploadSessionSchema()|src\lib\media.ts|L196
+NODE|GET()|src\pages\api\admin\events\media.ts|L12
+NODE|getActiveUploadSessionForUser()|src\lib\media.ts|L267
+NODE|getMediaByArticle()|src\lib\media.ts|L207
+NODE|getResourceTypeFromMimeType()|src\lib\media.ts|L123
+NODE|getUploadSessionForUser()|src\lib\media.ts|L249
+NODE|listExpiredUnconsumedUploadSessions()|src\lib\media.ts|L406
+NODE|listUnconsumedUploadSessions()|src\lib\media.ts|L424
+NODE|listUploadSessionMedia()|src\lib\media.ts|L337
+NODE|mapSessionMediaRow()|src\lib\media.ts|L159
+NODE|mapUploadSessionRow()|src\lib\media.ts|L147
+NODE|markUploadSessionConsumed()|src\lib\media.ts|L394
+NODE|ensurePanelSchema()|src\lib\panels.ts|L104
+NODE|getCurrentPanelAssignments()|src\lib\panels.ts|L144
+NODE|getRecentPanelMedia()|src\lib\panels.ts|L185
+NODE|extension_info()|devtools\skills\use-railway\scripts\pg-extensions.py|L259
+NODE|install_extension()|devtools\skills\use-railway\scripts\pg-extensions.py|L177
+NODE|list_extensions()|devtools\skills\use-railway\scripts\pg-extensions.py|L40
+NODE|uninstall_extension()|devtools\skills\use-railway\scripts\pg-extensions.py|L223
+NODE|POST()|src\pages\api\auth\register.ts|L53
+NODE|GET()|src\pages\api\admin\sales\[slug]\reviews.ts|L33
+NODE|getPostingId()|src\pages\api\admin\sales\[slug]\reviews.ts|L11
+NODE|POST()|src\pages\api\admin\sales\[slug]\reviews.ts|L52
+NODE|calcSalePrice()|src\lib\sales.ts|L103
+NODE|backfill-inline-images.mjs|scripts\backfill-inline-images.mjs|L1
+NODE|POST()|src\pages\api\admin\uploads\sessions.ts|L15
+NODE|POST()|src\pages\api\share.ts|L28
+NODE|GET()|src\pages\sitemap.xml.ts|L17
+NODE|DELETE()|src\pages\api\events\[slug].ts|L316
+NODE|GET()|src\pages\api\sales\[slug].ts|L43
+NODE|getClientIp()|src\pages\api\sales\[slug].ts|L17
+NODE|isReadRateLimited()|src\pages\api\sales\[slug].ts|L25
+NODE|json()|src\pages\api\sales\[slug].ts|L5
+NODE|PUT()|src\pages\api\events\[slug].ts|L104
+NODE|recordReadAttempt()|src\pages\api\sales\[slug].ts|L32
+NODE|media.ts|src\lib\media.ts|L1
+NODE|panels.ts|src\lib\panels.ts|L1
+NODE|[slug].ts|src\pages\api\admin\articles\[slug].ts|L1
+NODE|[slug].ts|src\pages\api\admin\events\[slug].ts|L1
+NODE|upload.ts|src\pages\api\admin\panels\upload.ts|L1
+NODE|[slug].ts|src\pages\api\admin\sales\[slug].ts|L1
+NODE|[slug].ts|src\pages\api\articles\[slug].ts|L1
+NODE|[slug].ts|src\pages\api\events\[slug].ts|L1
+NODE|[slug].ts|src\pages\api\sales\[slug].ts|L1
+NODE|upload.ts|src\pages\api\upload.ts|L1
+NODE|GET()|src\pages\api\admin\sales\[slug]\testimonials.ts|L33
+NODE|getPostingId()|src\pages\api\admin\sales\[slug]\testimonials.ts|L11
+NODE|POST()|src\pages\api\admin\sales\[slug]\testimonials.ts|L52
+NODE|DELETE()|src\pages\api\upload.ts|L334
+NODE|estimateBase64DecodedBytes()|src\pages\api\upload.ts|L49
+NODE|GET()|src\pages\api\admin\panels\upload.ts|L135
+NODE|getAllowedTypesMessage()|src\pages\api\upload.ts|L29
+NODE|getFileSizeLimit()|src\pages\api\upload.ts|L25
+NODE|json()|src\pages\api\admin\panels\upload.ts|L7
+NODE|parseDataUri()|src\pages\api\upload.ts|L36
+NODE|POST()|src\pages\api\admin\panels\upload.ts|L21
+EDGE|json()|contains|EXTRACTED|upload.ts
+EDGE|json()|calls|EXTRACTED|POST()
+EDGE|json()|calls|EXTRACTED|DELETE()
+EDGE|json()|contains|EXTRACTED|upload.ts
+EDGE|json()|calls|EXTRACTED|GET()
+EDGE|Parse the batched JSON analysis data into the result object.|rationale_for|EXTRACTED|parse_batched_analysis()
+EDGE|Parse the batched JSON analysis data into the result object.|uses|INFERRED|ProgressTimer
+EDGE|Parse the batched JSON analysis data into the result object.|uses|INFERRED|RailwayContext
+EDGE|Build a single SQL query that returns all analysis data as JSON.|rationale_for|EXTRACTED|build_analysis_query()
+EDGE|Build a single SQL query that returns all analysis data as JSON.|uses|INFERRED|ProgressTimer
+EDGE|Build a single SQL query that returns all analysis data as JSON.|uses|INFERRED|RailwayContext
+EDGE|upload.ts|contains|EXTRACTED|getFileSizeLimit()
+EDGE|upload.ts|contains|EXTRACTED|getAllowedTypesMessage()
+EDGE|upload.ts|contains|EXTRACTED|parseDataUri()
+EDGE|upload.ts|contains|EXTRACTED|estimateBase64DecodedBytes()
+EDGE|build_analysis_query()|contains|EXTRACTED|analyze-postgres.py
+EDGE|build_analysis_query()|calls|EXTRACTED|analyze_postgres()
+EDGE|build_analysis_query()|calls|EXTRACTED|run_single_step()
+EDGE|ProgressTimer|uses|INFERRED|MongoAnalysisResult
+EDGE|ProgressTimer|uses|INFERRED|Container for MongoDB analysis results.
+EDGE|ProgressTimer|uses|INFERRED|Run a mongosh query via SSH and return (returncode, stdout, stderr).      The
+EDGE|ProgressTimer|uses|INFERRED|Parse JSON from mongosh EJSON output, returning None on failure.
+EDGE|ProgressTimer|uses|INFERRED|Extract metrics from serverStatus into result.
+EDGE|ProgressTimer|uses|INFERRED|Extract metrics from db.stats().
+EDGE|ProgressTimer|uses|INFERRED|Extract active operations from currentOp.
+EDGE|ProgressTimer|uses|INFERRED|Parse per-collection stats.
+EDGE|ProgressTimer|uses|INFERRED|Parse slow queries from profiler.
+EDGE|ProgressTimer|uses|INFERRED|Parse oplog replication info.
+EDGE|ProgressTimer|uses|INFERRED|Parse top collection activity.
+EDGE|ProgressTimer|uses|INFERRED|Format bytes as human-readable.
+EDGE|ProgressTimer|uses|INFERRED|Format large numbers with K/M suffix.
+EDGE|ProgressTimer|uses|INFERRED|Format seconds as Xd Yh.
+EDGE|ProgressTimer|uses|INFERRED|Format microseconds as human-readable latency.
+EDGE|ProgressTimer|uses|INFERRED|Run complete MongoDB analysis.
+EDGE|ProgressTimer|uses|INFERRED|Generate recommendations based on analysis results.
+EDGE|ProgressTimer|uses|INFERRED|Format analysis result as human-readable markdown report.
+EDGE|ProgressTimer|uses|INFERRED|Run a single collection step for debugging.
+EDGE|ProgressTimer|uses|INFERRED|MySQLAnalysisResult
+EDGE|ProgressTimer|uses|INFERRED|Container for MySQL analysis results.
+EDGE|ProgressTimer|uses|INFERRED|Run a MySQL query via SSH and return (returncode, output).      Uses -B (batch
+EDGE|ProgressTimer|uses|INFERRED|Parse MySQL -B (batch/tab-separated) output into list of dicts.      First lin
+EDGE|ProgressTimer|uses|INFERRED|Parse MySQL SHOW output (Variable_name / Value pairs) into a dict.
+EDGE|ProgressTimer|uses|INFERRED|Collect all MySQL metrics via SSH.      Batches queries into two SSH calls for
+EDGE|ProgressTimer|uses|INFERRED|Split concatenated MySQL batch output into sections by header line.
+EDGE|ProgressTimer|uses|INFERRED|Split concatenated MySQL batch output into sections by multiple different header
+EDGE|ProgressTimer|uses|INFERRED|Transform raw MySQL data into structured result sections.
+EDGE|ProgressTimer|uses|INFERRED|Format large numbers with K/M/G suffix.
+EDGE|ProgressTimer|uses|INFERRED|Format bytes to human-readable.
+EDGE|ProgressTimer|uses|INFERRED|Run complete MySQL analysis.
+EDGE|ProgressTimer|uses|INFERRED|Run a single collection step for debugging.
+EDGE|ProgressTimer|uses|INFERRED|AnalysisResult
+EDGE|ProgressTimer|uses|INFERRED|Container for analysis results.
+EDGE|ProgressTimer|uses|INFERRED|Run a psql query using base64 encoding to avoid shell quoting issues.
+EDGE|ProgressTimer|uses|INFERRED|Parse psql -t -A output (pipe-separated) into list of dicts.
+EDGE|ProgressTimer|uses|INFERRED|Get disk usage from Railway metrics API.
+EDGE|ProgressTimer|uses|INFERRED|Get disk usage - try API first, fall back to SSH.
+EDGE|ProgressTimer|uses|INFERRED|Get CPU and memory usage from Railway metrics API.      DEPRECATED: Use get_al
+EDGE|ProgressTimer|uses|INFERRED|Get recent error logs (legacy - kept for backwards compat).
+EDGE|ProgressTimer|uses|INFERRED|Get logs from all HA cluster members via Railway API.      For HA clusters, ea
+EDGE|ProgressTimer|uses|INFERRED|Check if service is from postgres-ha template.      Returns True if the servic
+EDGE|ProgressTimer|uses|INFERRED|Run complete Postgres analysis with maximum data collection.      Uses a singl
+EDGE|ProgressTimer|uses|INFERRED|Generate recommendations based on analysis results.
+EDGE|ProgressTimer|uses|INFERRED|Sum up index sizes and return human-readable string.
+EDGE|ProgressTimer|uses|INFERRED|Format analysis result as human-readable report.
+EDGE|ProgressTimer|uses|INFERRED|Run a single collection step for debugging.
+EDGE|ProgressTimer|uses|INFERRED|RedisAnalysisResult
+EDGE|ProgressTimer|uses|INFERRED|Container for Redis analysis results.
+EDGE|ProgressTimer|uses|INFERRED|Parse Redis INFO output into a flat key:value dict.      Lines starting with #
+EDGE|ProgressTimer|uses|INFERRED|Extract overview metrics from INFO dict.
+EDGE|ProgressTimer|uses|INFERRED|Extract memory metrics from INFO dict.
+EDGE|ProgressTimer|uses|INFERRED|Extract throughput metrics from INFO dict.
+EDGE|ProgressTimer|uses|INFERRED|Extract cache performance metrics from INFO dict.
+EDGE|ProgressTimer|uses|INFERRED|Extract persistence metrics from INFO dict.
+EDGE|ProgressTimer|uses|INFERRED|Extract keyspace metrics from INFO dict.      Keyspace entries look like: db0:
+EDGE|ProgressTimer|uses|INFERRED|Extract command statistics from INFO dict.      Command stat entries look like
+EDGE|ProgressTimer|uses|INFERRED|Parse SLOWLOG GET output into structured entries.      redis-cli --raw SLOWLOG
+EDGE|ProgressTimer|uses|INFERRED|Parse redis-cli --bigkeys output into structured entries.      Looks for lines
+EDGE|ProgressTimer|uses|INFERRED|Format a large number with K/M/B suffixes.
+EDGE|ProgressTimer|uses|INFERRED|Format a duration in seconds to a human-readable relative string.
+EDGE|ProgressTimer|uses|INFERRED|Format average TTL in milliseconds to a human-readable string.
+EDGE|ProgressTimer|uses|INFERRED|Format microseconds to a human-readable string.
+EDGE|ProgressTimer|uses|INFERRED|Format total microseconds to a readable time string.
+EDGE|ProgressTimer|uses|INFERRED|Format bytes into human-readable string.
+EDGE|ProgressTimer|uses|INFERRED|Generate recommendations based on collected metrics.
+EDGE|ProgressTimer|uses|INFERRED|Format the analysis result as a markdown report.
+EDGE|ProgressTimer|uses|INFERRED|Run complete Redis analysis with maximum data collection.      Collects Redis
+EDGE|ProgressTimer|uses|INFERRED|Run a single collection step for debugging.
+EDGE|ProgressTimer|contains|EXTRACTED|dal.py
+EDGE|ProgressTimer|method|EXTRACTED|.__init__()
+EDGE|ProgressTimer|method|EXTRACTED|.start()
+EDGE|ProgressTimer|method|EXTRACTED|.step_elapsed()
+EDGE|ProgressTimer|method|EXTRACTED|.total_elapsed()
+EDGE|ProgressTimer|rationale_for|EXTRACTED|Track elapsed time for progress messages.
+EDGE|DELETE()|calls|INFERRED|execute()
+EDGE|DELETE()|calls|INFERRED|ensureMediaTable()
+EDGE|RailwayContext|uses|INFERRED|MongoAnalysisResult
+EDGE|RailwayContext|calls|INFERRED|analyze_mongo()
+EDGE|RailwayContext|uses|INFERRED|Container for MongoDB analysis results.
+EDGE|RailwayContext|uses|INFERRED|Run a mongosh query via SSH and return (returncode, stdout, stderr).      The
+EDGE|RailwayContext|uses|INFERRED|Parse JSON from mongosh EJSON output, returning None on failure.
+EDGE|RailwayContext|uses|INFERRED|Extract metrics from serverStatus into result.
+EDGE|RailwayContext|uses|INFERRED|Extract metrics from db.stats().
+EDGE|RailwayContext|uses|INFERRED|Extract active operations from currentOp.
+EDGE|RailwayContext|uses|INFERRED|Parse per-collection stats.
+EDGE|RailwayContext|uses|INFERRED|Parse slow queries from profiler.
+EDGE|RailwayContext|uses|INFERRED|Parse oplog replication info.
+EDGE|RailwayContext|uses|INFERRED|Parse top collection activity.
+EDGE|RailwayContext|uses|INFERRED|Format bytes as human-readable.
+EDGE|RailwayContext|uses|INFERRED|Format large numbers with K/M suffix.
+EDGE|RailwayContext|uses|INFERRED|Format seconds as Xd Yh.
+EDGE|RailwayContext|uses|INFERRED|Format microseconds as human-readable latency.
+EDGE|RailwayContext|uses|INFERRED|Run complete MongoDB analysis.
+EDGE|RailwayContext|uses|INFERRED|Generate recommendations based on analysis results.
+EDGE|RailwayContext|uses|INFERRED|Format analysis result as human-readable markdown report.
+EDGE|RailwayContext|uses|INFERRED|Run a single collection step for debugging.
+EDGE|RailwayContext|uses|INFERRED|MySQLAnalysisResult
+EDGE|RailwayContext|calls|INFERRED|analyze_mysql()
+EDGE|RailwayContext|uses|INFERRED|Container for MySQL analysis results.
+EDGE|RailwayContext|uses|INFERRED|Run a MySQL query via SSH and return (returncode, output).      Uses -B (batch
+EDGE|RailwayContext|uses|INFERRED|Parse MySQL -B (batch/tab-separated) output into list of dicts.      First lin
+EDGE|RailwayContext|uses|INFERRED|Parse MySQL SHOW output (Variable_name / Value pairs) into a dict.
+EDGE|RailwayContext|uses|INFERRED|Collect all MySQL metrics via SSH.      Batches queries into two SSH calls for
+EDGE|RailwayContext|uses|INFERRED|Split concatenated MySQL batch output into sections by header line.
+EDGE|RailwayContext|uses|INFERRED|Split concatenated MySQL batch output into sections by multiple different header
+EDGE|RailwayContext|uses|INFERRED|Transform raw MySQL data into structured result sections.
+EDGE|RailwayContext|uses|INFERRED|Format large numbers with K/M/G suffix.
+EDGE|RailwayContext|uses|INFERRED|Format bytes to human-readable.
+EDGE|RailwayContext|uses|INFERRED|Run complete MySQL analysis.
+EDGE|RailwayContext|uses|INFERRED|Run a single collection step for debugging.
+EDGE|RailwayContext|uses|INFERRED|AnalysisResult
+EDGE|RailwayContext|calls|INFERRED|analyze_postgres()
+EDGE|RailwayContext|uses|INFERRED|Container for analysis results.
+EDGE|RailwayContext|uses|INFERRED|Run a psql query using base64 encoding to avoid shell quoting issues.
+EDGE|RailwayContext|uses|INFERRED|Parse psql -t -A output (pipe-separated) into list of dicts.
+EDGE|RailwayContext|uses|INFERRED|Get disk usage from Railway metrics API.
+EDGE|RailwayContext|uses|INFERRED|Get disk usage - try API first, fall back to SSH.
+EDGE|RailwayContext|uses|INFERRED|Get CPU and memory usage from Railway metrics API.      DEPRECATED: Use get_al
+EDGE|RailwayContext|uses|INFERRED|Get recent error logs (legacy - kept for backwards compat).
+EDGE|RailwayContext|uses|INFERRED|Get logs from all HA cluster members via Railway API.      For HA clusters, ea
+EDGE|RailwayContext|uses|INFERRED|Check if service is from postgres-ha template.      Returns True if the servic
+EDGE|RailwayContext|uses|INFERRED|Run complete Postgres analysis with maximum data collection.      Uses a singl
+EDGE|RailwayContext|uses|INFERRED|Generate recommendations based on analysis results.
+EDGE|RailwayContext|uses|INFERRED|Sum up index sizes and return human-readable string.
+EDGE|RailwayContext|uses|INFERRED|Format analysis result as human-readable report.
+EDGE|RailwayContext|uses|INFERRED|Run a single collection step for debugging.
+EDGE|RailwayContext|uses|INFERRED|RedisAnalysisResult
+EDGE|RailwayContext|calls|INFERRED|analyze_redis()
+EDGE|RailwayContext|uses|INFERRED|Container for Redis analysis results.
+EDGE|RailwayContext|uses|INFERRED|Parse Redis INFO output into a flat key:value dict.      Lines starting with #
+EDGE|RailwayContext|uses|INFERRED|Extract overview metrics from INFO dict.
+EDGE|RailwayContext|uses|INFERRED|Extract memory metrics from INFO dict.
+EDGE|RailwayContext|uses|INFERRED|Extract throughput metrics from INFO dict.
+EDGE|RailwayContext|uses|INFERRED|Extract cache performance metrics from INFO dict.
+EDGE|RailwayContext|uses|INFERRED|Extract persistence metrics from INFO dict.
+EDGE|RailwayContext|uses|INFERRED|Extract keyspace metrics from INFO dict.      Keyspace entries look like: db0:
+EDGE|RailwayContext|uses|INFERRED|Extract command statistics from INFO dict.      Command stat entries look like
+EDGE|RailwayContext|uses|INFERRED|Parse SLOWLOG GET output into structured entries.      redis-cli --raw SLOWLOG
+EDGE|RailwayContext|uses|INFERRED|Parse redis-cli --bigkeys output into structured entries.      Looks for lines
+EDGE|RailwayContext|uses|INFERRED|Format a large number with K/M/B suffixes.
+EDGE|RailwayContext|uses|INFERRED|Format a duration in seconds to a human-readable relative string.
+EDGE|RailwayContext|uses|INFERRED|Format average TTL in milliseconds to a human-readable string.
+EDGE|RailwayContext|uses|INFERRED|Format microseconds to a human-readable string.
+EDGE|RailwayContext|uses|INFERRED|Format total microseconds to a readable time string.
+EDGE|RailwayContext|uses|INFERRED|Format bytes into human-readable string.
+EDGE|RailwayContext|uses|INFERRED|Generate recommendations based on collected metrics.
+EDGE|RailwayContext|uses|INFERRED|Format the analysis result as a markdown report.
+EDGE|RailwayContext|uses|INFERRED|Run complete Redis analysis with maximum data collection.      Collects Redis
+EDGE|RailwayContext|uses|INFERRED|Run a single collection step for debugging.
+EDGE|RailwayContext|contains|EXTRACTED|dal.py
+EDGE|RailwayContext|method|EXTRACTED|.ssh_flags()
+EDGE|RailwayContext|method|EXTRACTED|.logs_flags()
+EDGE|RailwayContext|calls|EXTRACTED|_init_context()
+EDGE|RailwayContext|rationale_for|EXTRACTED|Explicit Railway IDs that bypass railway link.
+EDGE|POST()|calls|INFERRED|error()
+EDGE|POST()|calls|INFERRED|execute()
+EDGE|POST()|calls|INFERRED|getResourceTypeFromMimeType()
+EDGE|POST()|calls|INFERRED|ensureMediaTable()
+EDGE|POST()|calls|INFERRED|ensureUploadSessionSchema()
+EDGE|POST()|calls|INFERRED|getActiveUploadSessionForUser()
+EDGE|POST()|calls|INFERRED|addUploadSessionMedia()
+EDGE|POST()|calls|INFERRED|ensurePanelSchema()
+EDGE|POST()|calls|EXTRACTED|getFileSizeLimit()
+EDGE|POST()|calls|EXTRACTED|getAllowedTypesMessage()
+EDGE|POST()|calls|EXTRACTED|parseDataUri()
+EDGE|POST()|calls|EXTRACTED|estimateBase64DecodedBytes()
+EDGE|parse_batched_analysis()|contains|EXTRACTED|analyze-postgres.py
+EDGE|parse_batched_analysis()|calls|EXTRACTED|analyze_postgres()
+EDGE|parse_batched_analysis()|calls|INFERRED|GET()
+EDGE|.logs_flags()|calls|EXTRACTED|get_recent_logs()
+EDGE|.logs_flags()|rationale_for|EXTRACTED|Return CLI flags for railway logs.
+EDGE|analyze_redis()|contains|EXTRACTED|analyze-redis.py
+EDGE|analyze_redis()|calls|EXTRACTED|parse_redis_info()
+EDGE|analyze_redis()|calls|EXTRACTED|extract_overview()
+EDGE|analyze_redis()|calls|EXTRACTED|extract_memory()
+EDGE|analyze_redis()|calls|EXTRACTED|extract_throughput()
+EDGE|analyze_redis()|calls|EXTRACTED|extract_cache()
+EDGE|analyze_redis()|calls|EXTRACTED|extract_persistence()
+EDGE|analyze_redis()|calls|EXTRACTED|extract_keyspace()
+EDGE|analyze_redis()|calls|EXTRACTED|extract_command_stats()
+EDGE|analyze_redis()|calls|EXTRACTED|parse_slowlog_get()
+EDGE|analyze_redis()|calls|EXTRACTED|parse_bigkeys()
+EDGE|analyze_redis()|calls|EXTRACTED|generate_recommendations()
+EDGE|analyze_redis()|calls|EXTRACTED|main()
+EDGE|analyze_redis()|calls|INFERRED|get_railway_status()
+EDGE|analyze_redis()|calls|INFERRED|progress()
+EDGE|analyze_redis()|calls|INFERRED|get_deployment_status()
+EDGE|analyze_redis()|calls|INFERRED|run_ssh_query()
+EDGE|analyze_redis()|calls|INFERRED|_safe_int()
+EDGE|.ssh_flags()|calls|EXTRACTED|run_ssh_query()
+EDGE|.ssh_flags()|rationale_for|EXTRACTED|Return CLI flags for railway ssh.
+EDGE|Parse slow queries from profiler.|rationale_for|EXTRACTED|_parse_slow_queries()
+EDGE|.total_elapsed()|rationale_for|EXTRACTED|Get total elapsed time.
+EDGE|Parse oplog replication info.|rationale_for|EXTRACTED|_parse_repl_info()
+EDGE|Parse psql -t -A output (pipe-separated) into list of dicts.|rationale_for|EXTRACTED|parse_psql_output()
+EDGE|Extract overview metrics from INFO dict.|rationale_for|EXTRACTED|extract_overview()
+EDGE|Format microseconds to a human-readable string.|rationale_for|EXTRACTED|_format_usec()
+EDGE|Extract throughput metrics from INFO dict.|rationale_for|EXTRACTED|extract_throughput()
+EDGE|Extract keyspace metrics from INFO dict.      Keyspace entries look like: db0:|rationale_for|EXTRACTED|extract_keyspace()
+EDGE|Format analysis result as human-readable markdown report.|rationale_for|EXTRACTED|format_report()
+EDGE|Check if service is from postgres-ha template.      Returns True if the servic|rationale_for|EXTRACTED|is_postgres_ha_service()
+EDGE|Transform raw MySQL data into structured result sections.|rationale_for|EXTRACTED|parse_mysql_data()
+EDGE|Extract command statistics from INFO dict.      Command stat entries look like|rationale_for|EXTRACTED|extract_command_stats()
+EDGE|Run a single collection step for debugging.|rationale_for|EXTRACTED|run_single_step()
+EDGE|Format a large number with K/M/B suffixes.|rationale_for|EXTRACTED|_format_number()
+EDGE|execute()|contains|EXTRACTED|backfill-inline-images.mjs
+EDGE|execute()|calls|EXTRACTED|getDb()
+EDGE|execute()|calls|EXTRACTED|ensureInlineSchema()
+EDGE|execute()|calls|EXTRACTED|convertArticleInlineImages()
+EDGE|execute()|calls|EXTRACTED|main()
+EDGE|execute()|calls|INFERRED|ensureCategorySchema()
+EDGE|execute()|calls|INFERRED|listCategories()
+EDGE|execute()|calls|INFERRED|findCategoryById()
+EDGE|execute()|calls|INFERRED|findCategoryByNameOrSlug()
+EDGE|execute()|calls|INFERRED|createCategory()
+EDGE|execute()|calls|INFERRED|ensureEventsSchema()
+EDGE|execute()|calls|INFERRED|ensureColumn()
+EDGE|execute()|calls|INFERRED|ensureInlineImagesSchema()
+EDGE|execute()|calls|INFERRED|persistInlineImagesInBody()
+EDGE|execute()|calls|INFERRED|cleanupUnusedInlineImages()
+EDGE|execute()|calls|INFERRED|deleteInlineImagesByIds()
+EDGE|execute()|calls|INFERRED|getInlineImageById()
+EDGE|execute()|calls|INFERRED|getMediaByArticle()
+EDGE|execute()|calls|INFERRED|deleteMediaByArticle()
+EDGE|execute()|calls|INFERRED|createUploadSession()
+EDGE|execute()|calls|INFERRED|getUploadSessionForUser()
+EDGE|execute()|calls|INFERRED|listUploadSessionMedia()
+EDGE|execute()|calls|INFERRED|attachUploadSessionMediaToArticle()
+EDGE|execute()|calls|INFERRED|markUploadSessionConsumed()
+EDGE|execute()|calls|INFERRED|listExpiredUnconsumedUploadSessions()
+EDGE|execute()|calls|INFERRED|listUnconsumedUploadSessions()
+EDGE|execute()|calls|INFERRED|deleteUploadSession()
+EDGE|execute()|calls|INFERRED|getCurrentPanelAssignments()
+EDGE|execute()|calls|INFERRED|getRecentPanelMedia()
+EDGE|execute()|calls|INFERRED|GET()
+EDGE|execute()|calls|INFERRED|POST()
+EDGE|execute()|calls|INFERRED|GET()
+EDGE|execute()|calls|INFERRED|POST()
+EDGE|execute()|calls|INFERRED|GET()
+EDGE|execute()|calls|INFERRED|POST()
+EDGE|execute()|calls|INFERRED|DELETE()
+EDGE|execute()|calls|INFERRED|POST()
+EDGE|execute()|calls|INFERRED|PUT()
+EDGE|execute()|calls|INFERRED|DELETE()
+EDGE|execute()|calls|INFERRED|POST()
+EDGE|execute()|calls|INFERRED|DELETE()
+EDGE|execute()|calls|INFERRED|PATCH()
+EDGE|execute()|calls|INFERRED|getPostingId()
+EDGE|execute()|calls|INFERRED|GET()
+EDGE|execute()|calls|INFERRED|POST()
+EDGE|execute()|calls|INFERRED|getPostingId()
+EDGE|execute()|calls|INFERRED|GET()
+EDGE|execute()|calls|INFERRED|POST()
+EDGE|execute()|calls|INFERRED|PATCH()
+EDGE|execute()|calls|INFERRED|POST()
+EDGE|execute()|calls|INFERRED|POST()
+EDGE|run_single_step()|calls|EXTRACTED|run_psql_query_safe()
+EDGE|run_single_step()|calls|EXTRACTED|main()
+EDGE|run_single_step()|calls|INFERRED|run_ssh_query()
+EDGE|run_single_step()|calls|INFERRED|get_recent_logs()
+EDGE|run_single_step()|calls|INFERRED|get_all_metrics_from_api()
+EDGE|Extract memory metrics from INFO dict.|rationale_for|EXTRACTED|extract_memory()
+EDGE|Get disk usage from Railway metrics API.|rationale_for|EXTRACTED|get_disk_usage_from_api()
+EDGE|Sum up index sizes and return human-readable string.|rationale_for|EXTRACTED|sum_index_sizes()
+EDGE|Parse MySQL -B (batch/tab-separated) output into list of dicts.      First lin|rationale_for|EXTRACTED|parse_mysql_batch()
+EDGE|Format average TTL in milliseconds to a human-readable string.|rationale_for|EXTRACTED|_format_ttl()
+EDGE|ensureMediaTable()|contains|EXTRACTED|media.ts
+EDGE|ensureMediaTable()|calls|EXTRACTED|getMediaByArticle()
+EDGE|ensureMediaTable()|calls|EXTRACTED|deleteMediaByArticle()
+EDGE|ensureMediaTable()|calls|EXTRACTED|attachUploadSessionMediaToArticle()
+EDGE|ensureMediaTable()|calls|INFERRED|GET()
+EDGE|ensureMediaTable()|calls|INFERRED|POST()
+EDGE|ensureMediaTable()|calls|INFERRED|PUT()
+EDGE|Parse per-collection stats.|rationale_for|EXTRACTED|_parse_collection_stats()
+EDGE|Get recent error logs (legacy - kept for backwards compat).|rationale_for|EXTRACTED|get_recent_errors()
+EDGE|Get logs from all HA cluster members via Railway API.      For HA clusters, ea|rationale_for|EXTRACTED|get_cluster_logs()
+EDGE|GET()|calls|INFERRED|_parse_server_status()
+EDGE|GET()|calls|INFERRED|_parse_db_stats()
+EDGE|GET()|calls|INFERRED|_parse_current_op()
+EDGE|GET()|calls|INFERRED|_parse_repl_info()
+EDGE|GET()|calls|INFERRED|generate_recommendations()
+EDGE|GET()|calls|INFERRED|format_report()
+EDGE|GET()|calls|INFERRED|parse_mysql_kv()
+EDGE|GET()|calls|INFERRED|parse_mysql_data()
+EDGE|GET()|calls|INFERRED|generate_recommendations()
+EDGE|GET()|calls|INFERRED|format_report()
+EDGE|GET()|calls|INFERRED|run_single_step()
+EDGE|GET()|calls|INFERRED|get_disk_usage_from_api()
+EDGE|GET()|calls|INFERRED|get_cpu_memory_from_api()
+EDGE|GET()|calls|INFERRED|get_cluster_logs()
+EDGE|GET()|calls|INFERRED|is_postgres_ha_service()
+EDGE|GET()|calls|INFERRED|generate_recommendations()
+EDGE|GET()|calls|INFERRED|sum_index_sizes()
+EDGE|GET()|calls|INFERRED|format_report()
+EDGE|GET()|calls|INFERRED|extract_overview()
+EDGE|GET()|calls|INFERRED|extract_memory()
+EDGE|GET()|calls|INFERRED|extract_throughput()
+EDGE|GET()|calls|INFERRED|extract_cache()
+EDGE|GET()|calls|INFERRED|extract_persistence()
+EDGE|GET()|calls|INFERRED|extract_keyspace()
+EDGE|GET()|calls|INFERRED|extract_command_stats()
+EDGE|GET()|calls|INFERRED|generate_recommendations()
+EDGE|GET()|calls|INFERRED|format_report()
+EDGE|GET()|calls|INFERRED|get_railway_status()
+EDGE|GET()|calls|INFERRED|get_deployment_status()
+EDGE|GET()|calls|INFERRED|get_all_metrics_from_api()
+EDGE|GET()|calls|INFERRED|_analyze_window()
+EDGE|GET()|calls|INFERRED|_build_metrics_history()
+EDGE|GET()|calls|INFERRED|_trend_indicator()
+EDGE|GET()|calls|INFERRED|get_recent_logs()
+EDGE|GET()|calls|INFERRED|list_extensions()
+EDGE|GET()|calls|INFERRED|.payloadFromForm()
+EDGE|GET()|calls|INFERRED|ensureCategorySchema()
+EDGE|GET()|calls|INFERRED|toPublicEvent()
+EDGE|GET()|calls|INFERRED|ensureEventsSchema()
+EDGE|GET()|calls|INFERRED|mapEventRow()
+EDGE|GET()|calls|INFERRED|getMediaByArticle()
+EDGE|GET()|calls|INFERRED|calcSalePrice()
+EDGE|GET()|calls|INFERRED|getClientIp()
+EDGE|GET()|calls|INFERRED|isRateLimited()
+EDGE|GET()|calls|INFERRED|recordAttempt()
+EDGE|GET()|contains|EXTRACTED|[slug].ts
+EDGE|GET()|calls|EXTRACTED|json()
+EDGE|GET()|contains|EXTRACTED|[slug].ts
+EDGE|GET()|contains|EXTRACTED|[slug].ts
+EDGE|GET()|contains|EXTRACTED|[slug].ts
+EDGE|GET()|calls|EXTRACTED|getClientIp()
+EDGE|GET()|calls|EXTRACTED|isReadRateLimited()
+EDGE|GET()|calls|EXTRACTED|recordReadAttempt()
+EDGE|GET()|contains|EXTRACTED|[slug].ts
+EDGE|GET()|contains|EXTRACTED|[slug].ts
+EDGE|MongoAnalysisResult|contains|EXTRACTED|analyze-mongo.py
+EDGE|Format total microseconds to a readable time string.|rationale_for|EXTRACTED|_format_total_time()
+EDGE|Parse SLOWLOG GET output into structured entries.      redis-cli --raw SLOWLOG|rationale_for|EXTRACTED|parse_slowlog_get()
+EDGE|Get disk usage - try API first, fall back to SSH.|rationale_for|EXTRACTED|get_disk_usage()
+EDGE|Collect all MySQL metrics via SSH.      Batches queries into two SSH calls for|rationale_for|EXTRACTED|collect_mysql_data()
+EDGE|analyze-postgres.py|contains|EXTRACTED|run_psql_query_safe()
+EDGE|analyze-postgres.py|contains|EXTRACTED|parse_psql_output()
+EDGE|analyze-postgres.py|contains|EXTRACTED|get_disk_usage_from_api()
+EDGE|analyze-postgres.py|contains|EXTRACTED|get_disk_usage()
+EDGE|analyze-postgres.py|contains|EXTRACTED|get_cpu_memory_from_api()
+EDGE|analyze-postgres.py|contains|EXTRACTED|get_recent_errors()
+EDGE|analyze-postgres.py|contains|EXTRACTED|get_cluster_logs()
+EDGE|analyze-postgres.py|contains|EXTRACTED|is_postgres_ha_service()
+EDGE|analyze-postgres.py|contains|EXTRACTED|generate_recommendations()
+EDGE|analyze-postgres.py|contains|EXTRACTED|sum_index_sizes()
+EDGE|analyze-postgres.py|contains|EXTRACTED|format_report()
+EDGE|analyze-postgres.py|contains|EXTRACTED|main()
+EDGE|getActiveUploadSessionForUser()|contains|EXTRACTED|media.ts
+EDGE|getActiveUploadSessionForUser()|calls|EXTRACTED|mapUploadSessionRow()
+EDGE|getActiveUploadSessionForUser()|calls|INFERRED|POST()
+EDGE|Parse redis-cli --bigkeys output into structured entries.      Looks for lines|rationale_for|EXTRACTED|parse_bigkeys()
+EDGE|.start()|rationale_for|EXTRACTED|Start the overall timer.
+EDGE|Format bytes to human-readable.|rationale_for|EXTRACTED|_format_bytes()
+EDGE|Format microseconds as human-readable latency.|rationale_for|EXTRACTED|_fmt_us()
+EDGE|Split concatenated MySQL batch output into sections by header line.|rationale_for|EXTRACTED|_split_mysql_resultsets()
+EDGE|_init_context()|calls|INFERRED|run_single_step()
+EDGE|_init_context()|calls|INFERRED|run_single_step()
+EDGE|_init_context()|calls|INFERRED|run_single_step()
+EDGE|_init_context()|calls|EXTRACTED|get_railway_status()
+EDGE|_init_context()|rationale_for|EXTRACTED|Initialize global context from CLI args or railway config.
+EDGE|Extract persistence metrics from INFO dict.|rationale_for|EXTRACTED|extract_persistence()
+EDGE|Run a mongosh query via SSH and return (returncode, stdout, stderr).      The|rationale_for|EXTRACTED|run_mongosh_query()
+EDGE|MySQLAnalysisResult|contains|EXTRACTED|analyze-mysql.py
+EDGE|Run a psql query using base64 encoding to avoid shell quoting issues.|rationale_for|EXTRACTED|run_psql_query_safe()
+EDGE|Parse JSON from mongosh EJSON output, returning None on failure.|rationale_for|EXTRACTED|_safe_json()
+EDGE|addUploadSessionMedia()|contains|EXTRACTED|media.ts
+EDGE|addUploadSessionMedia()|calls|EXTRACTED|mapSessionMediaRow()
+EDGE|Parse Redis INFO output into a flat key:value dict.      Lines starting with #|rationale_for|EXTRACTED|parse_redis_info()
+EDGE|Get CPU and memory usage from Railway metrics API.      DEPRECATED: Use get_al|rationale_for|EXTRACTED|get_cpu_memory_from_api()
+EDGE|error()|rationale_for|EXTRACTED|Print an [ERROR] message to stderr and exit.
+EDGE|error()|calls|INFERRED|main()
+EDGE|error()|calls|INFERRED|list_extensions()
+EDGE|error()|calls|INFERRED|install_extension()
+EDGE|error()|calls|INFERRED|uninstall_extension()
+EDGE|error()|calls|INFERRED|extension_info()
+EDGE|error()|calls|INFERRED|POST()
+EDGE|error()|calls|INFERRED|POST()
+EDGE|error()|calls|INFERRED|POST()
+EDGE|error()|calls|INFERRED|GET()
+EDGE|error()|calls|INFERRED|DELETE()
+EDGE|error()|calls|INFERRED|POST()
+EDGE|error()|calls|INFERRED|POST()
+EDGE|error()|calls|INFERRED|DELETE()
+EDGE|error()|calls|INFERRED|DELETE()
+EDGE|error()|calls|INFERRED|POST()
+EDGE|analyze_postgres()|calls|EXTRACTED|get_cluster_logs()
+EDGE|analyze_postgres()|calls|EXTRACTED|is_postgres_ha_service()
+EDGE|analyze_postgres()|calls|EXTRACTED|generate_recommendations()
+EDGE|analyze_postgres()|calls|EXTRACTED|main()
+EDGE|analyze_postgres()|calls|INFERRED|get_railway_status()
+EDGE|analyze_postgres()|calls|INFERRED|progress()
+EDGE|analyze_postgres()|calls|INFERRED|get_deployment_status()
+EDGE|analyze_postgres()|calls|INFERRED|run_ssh_query()
+EDGE|Format a duration in seconds to a human-readable relative string.|rationale_for|EXTRACTED|_format_duration()
+EDGE|RedisAnalysisResult|contains|EXTRACTED|analyze-redis.py
+EDGE|Run a MySQL query via SSH and return (returncode, output).      Uses -B (batch|rationale_for|EXTRACTED|run_mysql_query()
+EDGE|ensurePanelSchema()|contains|EXTRACTED|panels.ts
+EDGE|ensurePanelSchema()|calls|EXTRACTED|getCurrentPanelAssignments()
+EDGE|ensurePanelSchema()|calls|EXTRACTED|getRecentPanelMedia()
+EDGE|ensurePanelSchema()|calls|INFERRED|POST()
+EDGE|ensurePanelSchema()|calls|INFERRED|GET()
+EDGE|Extract cache performance metrics from INFO dict.|rationale_for|EXTRACTED|extract_cache()
+EDGE|Run a single collection step for debugging.|rationale_for|EXTRACTED|run_single_step()
+EDGE|Split concatenated MySQL batch output into sections by multiple different header|rationale_for|EXTRACTED|_split_mysql_resultsets_multi()
+EDGE|Parse top collection activity.|rationale_for|EXTRACTED|_parse_top()
+EDGE|Format bytes as human-readable.|rationale_for|EXTRACTED|_fmt_bytes()
+EDGE|Generate recommendations based on analysis results.|rationale_for|EXTRACTED|generate_recommendations()
+EDGE|Format the analysis result as a markdown report.|rationale_for|EXTRACTED|format_report()
+EDGE|Parse MySQL SHOW output (Variable_name / Value pairs) into a dict.|rationale_for|EXTRACTED|parse_mysql_kv()
+EDGE|Extract metrics from db.stats().|rationale_for|EXTRACTED|_parse_db_stats()
+EDGE|Format analysis result as human-readable report.|rationale_for|EXTRACTED|format_report()
+EDGE|Format bytes into human-readable string.|rationale_for|EXTRACTED|_format_bytes_human()
+EDGE|Extract active operations from currentOp.|rationale_for|EXTRACTED|_parse_current_op()
+EDGE|analyze_mysql()|contains|EXTRACTED|analyze-mysql.py
+EDGE|analyze_mysql()|calls|EXTRACTED|parse_mysql_data()
+EDGE|analyze_mysql()|calls|EXTRACTED|generate_recommendations()
+EDGE|analyze_mysql()|calls|EXTRACTED|main()
+EDGE|analyze_mysql()|calls|INFERRED|get_railway_status()
+EDGE|analyze_mysql()|calls|INFERRED|progress()
+EDGE|analyze_mysql()|calls|INFERRED|get_deployment_status()
+EDGE|analyze_mysql()|calls|INFERRED|run_ssh_query()
+EDGE|Format large numbers with K/M suffix.|rationale_for|EXTRACTED|_fmt_count()
+EDGE|Format large numbers with K/M/G suffix.|rationale_for|EXTRACTED|_format_count()
+EDGE|Generate recommendations based on analysis results.|rationale_for|EXTRACTED|generate_recommendations()
+EDGE|getResourceTypeFromMimeType()|contains|EXTRACTED|media.ts
+EDGE|dal.py|contains|EXTRACTED|progress()
+EDGE|dal.py|contains|EXTRACTED|run_railway_command()
+EDGE|dal.py|contains|EXTRACTED|_cli_fatal_error()
+EDGE|dal.py|contains|EXTRACTED|run_ssh_query()
+EDGE|dal.py|contains|EXTRACTED|run_psql_query()
+EDGE|dal.py|contains|EXTRACTED|get_railway_status()
+EDGE|dal.py|contains|EXTRACTED|get_deployment_status()
+EDGE|dal.py|contains|EXTRACTED|get_all_metrics_from_api()
+EDGE|dal.py|contains|EXTRACTED|_analyze_window()
+EDGE|dal.py|contains|EXTRACTED|_build_metrics_history()
+EDGE|dal.py|contains|EXTRACTED|info()
+EDGE|dal.py|contains|EXTRACTED|confirm_with_user()
+EDGE|dal.py|contains|EXTRACTED|_safe_int()
+EDGE|dal.py|contains|EXTRACTED|_safe_float()
+EDGE|dal.py|contains|EXTRACTED|_format_uptime()
+EDGE|dal.py|contains|EXTRACTED|_trend_indicator()
+EDGE|dal.py|contains|EXTRACTED|get_recent_logs()
+EDGE|Run a single collection step for debugging.|rationale_for|EXTRACTED|run_single_step()
+EDGE|Generate recommendations based on collected metrics.|rationale_for|EXTRACTED|generate_recommendations()
+EDGE|Extract metrics from serverStatus into result.|rationale_for|EXTRACTED|_parse_server_status()
+EDGE|ensureUploadSessionSchema()|contains|EXTRACTED|media.ts
+EDGE|ensureUploadSessionSchema()|calls|EXTRACTED|createUploadSession()
+EDGE|ensureUploadSessionSchema()|calls|EXTRACTED|getUploadSessionForUser()
+EDGE|ensureUploadSessionSchema()|calls|EXTRACTED|listUploadSessionMedia()
+EDGE|ensureUploadSessionSchema()|calls|EXTRACTED|attachUploadSessionMediaToArticle()
+EDGE|ensureUploadSessionSchema()|calls|EXTRACTED|markUploadSessionConsumed()
+EDGE|ensureUploadSessionSchema()|calls|EXTRACTED|listExpiredUnconsumedUploadSessions()
+EDGE|ensureUploadSessionSchema()|calls|EXTRACTED|listUnconsumedUploadSessions()
+EDGE|ensureUploadSessionSchema()|calls|EXTRACTED|deleteUploadSession()
+EDGE|ensureUploadSessionSchema()|calls|INFERRED|POST()
+EDGE|ensureUploadSessionSchema()|calls|INFERRED|POST()
+EDGE|ensureUploadSessionSchema()|calls|INFERRED|POST()
+EDGE|Format seconds as Xd Yh.|rationale_for|EXTRACTED|_fmt_uptime()
+EDGE|.step_elapsed()|calls|EXTRACTED|progress()
+EDGE|.step_elapsed()|rationale_for|EXTRACTED|Get elapsed time since last step, then reset step timer.
+EDGE|analyze_mongo()|contains|EXTRACTED|analyze-mongo.py
+EDGE|analyze_mongo()|calls|EXTRACTED|_parse_server_status()
+EDGE|analyze_mongo()|calls|EXTRACTED|_parse_db_stats()
+EDGE|analyze_mongo()|calls|EXTRACTED|_parse_current_op()
+EDGE|analyze_mongo()|calls|EXTRACTED|_parse_collection_stats()
+EDGE|analyze_mongo()|calls|EXTRACTED|_parse_slow_queries()
+EDGE|analyze_mongo()|calls|EXTRACTED|_parse_repl_info()
+EDGE|analyze_mongo()|calls|EXTRACTED|_parse_top()
+EDGE|analyze_mongo()|calls|EXTRACTED|generate_recommendations()
+EDGE|analyze_mongo()|calls|EXTRACTED|main()
+EDGE|analyze_mongo()|calls|INFERRED|get_railway_status()
+EDGE|analyze_mongo()|calls|INFERRED|progress()
+EDGE|analyze_mongo()|calls|INFERRED|get_deployment_status()
+EDGE|analyze_mongo()|calls|INFERRED|run_ssh_query()

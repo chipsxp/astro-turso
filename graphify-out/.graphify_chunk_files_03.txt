@@ -1,0 +1,8 @@
+docs\diagrams\architecture-eraser-diagram.png
+docs\diagrams\sequence-eraser-diagram.png
+devtools\agents\frontend-designer.md
+devtools\skills\code-development\skill.md
+devtools\skills\eraser-diagrams\SKILL.md
+devtools\skills\frontend-design\skill.md
+devtools\skills\use-railway\SKILL.md
+public\favicon.svg

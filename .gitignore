@@ -18,6 +18,7 @@ devtools/
 AGENTS.md
 CLAUDE.md
 dist.zip
+Chat_Custom*.md
 
 # Environment variables
 .env

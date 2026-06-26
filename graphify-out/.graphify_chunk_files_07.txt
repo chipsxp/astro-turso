@@ -1,0 +1,4 @@
+public\favicon.svg
+src\pages\api\admin\panels\media\[id].ts
+src\pages\api\categories\index.ts
+src\pages\api\inline-images\[id].ts

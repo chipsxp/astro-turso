@@ -1,0 +1,25 @@
+library\astro-framework.txt
+library\astro-security-config-reference.md
+library\cloudinary-llms.txt
+library\panel-gallery-plan.md
+library\social-share-plan.md
+library\paypal_buy_button_code.pdf
+devtools\skills\eraser-diagrams\references\architecture-syntax.md
+devtools\skills\eraser-diagrams\references\bpmn-syntax.md
+devtools\skills\eraser-diagrams\references\erd-syntax.md
+devtools\skills\eraser-diagrams\references\flowchart-syntax.md
+devtools\skills\eraser-diagrams\references\sequence-syntax.md
+devtools\skills\project-memory\references\bugs_template.md
+devtools\skills\project-memory\references\decisions_template.md
+devtools\skills\project-memory\references\issues_template.md
+devtools\skills\project-memory\references\key_facts_template.md
+library\turso-database\fts.md
+library\turso-database\javascript-api-reference.md
+library\turso-database\manual.md
+library\turso-database\testing.md
+## Chat Customization Diagnostics.md
+AGENTS.md
+CLAUDE.md
+README.md
+devtools\skills\project-memory\README.md
+devtools\skills\project-memory\SKILL.md

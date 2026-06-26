@@ -90,7 +90,7 @@ pre {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  height: 56px;
+  height: 68px;
   position: sticky;
   top: 0;
   z-index: 50;
@@ -165,8 +165,8 @@ pre {
   border-right: 3px solid var(--comic-black);
   padding: 24px 0;
   position: sticky;
-  top: 56px;
-  height: calc(100vh - 56px);
+  top: 68px;
+  height: calc(100vh - 68px);
   overflow-y: auto;
 }
 

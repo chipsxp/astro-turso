@@ -55,11 +55,26 @@ export const GET: APIRoute = async ({ request }) => {
        ORDER BY created_at DESC`,
     );
 
+    interface SalesPostingRow {
+      id: number | string;
+      slug: string;
+      title: string;
+      status: string;
+      price: number | null;
+      promo_discount_pct: number | null;
+      promo_start: string | null;
+      promo_end: string | null;
+      promo_label: string | null;
+      tags: string;
+      created_at: string;
+      updated_at: string;
+    }
+
     // Attach cover image (first image by sort_order) for each posting
-    const postings = result.rows;
+    const postings = result.rows as SalesPostingRow[];
     if (postings.length === 0) return json({ postings: [] }, 200);
 
-    const ids = postings.map((p) => Number(p.id));
+    const ids = postings.map((p: SalesPostingRow) => Number(p.id));
     const placeholders = ids.map(() => "?").join(", ");
     const imagesRes = await db.execute(
       `SELECT posting_id, url, alt_text
@@ -76,14 +91,14 @@ export const GET: APIRoute = async ({ request }) => {
       if (!coverMap[pid])
         coverMap[pid] = {
           url: String(img.url),
-          alt_text: String(img.alt_text ?? ""),
+          alt_text: String(img.alt_text || ""),
         };
     }
 
-    const enriched = postings.map((p) => ({
+    const enriched = postings.map((p: SalesPostingRow) => ({
       ...p,
-      cover_image: coverMap[Number(p.id)] ?? null,
-      sale_price: calcSalePrice(p as any),
+      cover_image: coverMap[Number(p.id)] || null,
+      sale_price: calcSalePrice(p as import("../../../lib/sales").SalesPosting),
     }));
 
     return json({ postings: enriched }, 200);
