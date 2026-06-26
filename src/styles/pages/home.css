@@ -100,7 +100,7 @@
   border: 3px solid var(--comic-black);
   box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
   width: 100%;
-  max-width: 420px;
+  max-width: 640px;
   aspect-ratio: 9 / 13;
 }
 

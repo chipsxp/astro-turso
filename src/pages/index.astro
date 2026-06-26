@@ -124,7 +124,7 @@ function formatArticleCount(count: number): string {
       </h2>
       <p class="hero__sub">
         A creative home for artists, illustrators,<br />
-        comic creators, and superhero portrait artists.
+        comic creators, and portrait painters.
       </p>
       <a href="/blog" class="hero__cta">Read the Archive →</a>
     </div>
@@ -148,14 +148,12 @@ function formatArticleCount(count: number): string {
                 style="position:relative;z-index:1"
               >
                 <span class="panel-deco__label">Panel&nbsp;01</span>
-                <span class="panel-deco__impact">POW!</span>
               </div>
             </div>
           ) : (
             <div class="panel-deco__frame">
               <div class="panel-deco__inner">
                 <span class="panel-deco__label">Panel&nbsp;01</span>
-                <span class="panel-deco__impact">POW!</span>
               </div>
             </div>
           )
@@ -177,14 +175,12 @@ function formatArticleCount(count: number): string {
                 class="panel-deco__inner panel-deco__inner--b"
                 style="position:relative;z-index:1"
               >
-                <span class="panel-deco__bop">BOP!</span>
                 <span class="panel-deco__label">Panel&nbsp;02</span>
               </div>
             </div>
           ) : (
             <div class="panel-deco__frame panel-deco__frame--b">
               <div class="panel-deco__inner panel-deco__inner--b">
-                <span class="panel-deco__bop">BOP!</span>
                 <span class="panel-deco__label">Panel&nbsp;02</span>
               </div>
             </div>
@@ -210,14 +206,12 @@ function formatArticleCount(count: number): string {
                 style="position:relative;z-index:1"
               >
                 <span class="panel-deco__label">Panel&nbsp;03</span>
-                <span class="panel-deco__zap">ZAP!</span>
               </div>
             </div>
           ) : (
             <div class="panel-deco__frame panel-deco__frame--c">
               <div class="panel-deco__inner panel-deco__inner--c">
                 <span class="panel-deco__label">Panel&nbsp;03</span>
-                <span class="panel-deco__zap">ZAP!</span>
               </div>
             </div>
           )
@@ -288,22 +282,32 @@ function formatArticleCount(count: number): string {
   </section>
 
   <!-- ─── Contributor join strip ─── -->
-  {!Astro.locals.user && (
-    <section class="join-strip">
-      <div class="join-strip__inner">
-        <div class="join-strip__copy">
-          <span class="join-strip__label">Become a Contributor</span>
-          <p class="join-strip__text">
-            Artists, illustrators, and comic creators — share your work, process, and stories with the community.
-          </p>
+  {
+    !Astro.locals.user && (
+      <section class="join-strip">
+        <div class="join-strip__inner">
+          <div class="join-strip__copy">
+            <span class="join-strip__label">Become a Contributor</span>
+            <p class="join-strip__text">
+              Artists, illustrators, and comic creators — share your work,
+              process, and stories with the community.
+            </p>
+          </div>
+          <div class="join-strip__actions">
+            <a
+              href="/register"
+              class="join-strip__btn join-strip__btn--primary"
+            >
+              Create Account →
+            </a>
+            <a href="/admin" class="join-strip__btn join-strip__btn--secondary">
+              Sign In →
+            </a>
+          </div>
         </div>
-        <div class="join-strip__actions">
-          <a href="/register" class="join-strip__btn join-strip__btn--primary">Create Account →</a>
-          <a href="/admin" class="join-strip__btn join-strip__btn--secondary">Sign In →</a>
-        </div>
-      </div>
-    </section>
-  )}
+      </section>
+    )
+  }
 
   <!-- ─── Manifesto strip ─── -->
   <section class="manifesto">

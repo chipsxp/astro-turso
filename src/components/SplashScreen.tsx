@@ -62,7 +62,7 @@ export default function SplashScreen({
         {/* Right panel — Title + CTA */}
         <div className="splash-panel splash-panel--title">
           <span className="splash-eyebrow">
-            The Happy Feeling Scriptorium Presents
+            The Happy Feeling Prints Scriptorium Presents
           </span>
 
           <h1 className="splash-title">
@@ -76,17 +76,17 @@ export default function SplashScreen({
           <p className="splash-tagline">
             Comics. Cartoons. Portraits.
             <br />
-            Superhero action &amp; beyond.
+            Illustrators &amp; beyond.
           </p>
 
           <button className="splash-cta" onClick={dismiss} type="button">
-            Enter The Happy Feeling Scriptorium →
+            Enter The Happy Feeling Prints Scriptorium →
           </button>
         </div>
 
         {/* Speech bubble — positioned absolute via CSS */}
         <div className="splash-bubble" aria-hidden="true">
-          Welcome, creator. Your story starts here.
+          Welcome, Artists! Your story starts here.
         </div>
       </div>
 
