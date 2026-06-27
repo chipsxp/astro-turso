@@ -417,7 +417,7 @@
 
 .join-strip__label {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 1.2rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent);
@@ -425,7 +425,7 @@
 
 .join-strip__text {
   font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   color: var(--text-muted);
   max-width: 520px;
   margin: 0;
@@ -441,7 +441,7 @@
 
 .join-strip__btn {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.95rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;

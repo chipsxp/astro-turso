@@ -495,7 +495,7 @@ img {
 
 .site-footer__member-heading {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent);
@@ -503,7 +503,7 @@ img {
 
 .site-footer__member-sub {
   font-family: var(--font-mono);
-  font-size: 0.66rem;
+  font-size: 0.95rem;
   letter-spacing: 0.06em;
   color: var(--text-muted);
 }
@@ -517,7 +517,7 @@ img {
 
 .site-footer__auth-btn {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.95rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
@@ -809,6 +809,7 @@ img {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   overflow: hidden;
   width: 100%;
   text-align: left;
