@@ -267,7 +267,7 @@
   font-size: 1.55rem;
   font-weight: 600;
   font-style: italic;
-  color: var(--text);
+  color: var(--impact-yellow);
   line-height: 1.15;
 }
 
@@ -293,16 +293,19 @@
   font-size: 0.98rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--impact-yellow);
   align-self: flex-start;
-  padding-top: 4px;
+  padding: 8px 16px;
+  background-color: rgba(128, 128, 128, 0.2);
+  border-radius: 15px;
   border-bottom: 1px solid transparent;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, background-color 0.15s;
   text-decoration: none;
 }
 
 .pillar__link:hover {
   border-bottom-color: var(--accent-dim);
+  background-color: rgba(128, 128, 128, 0.3);
   text-decoration: none;
 }
 

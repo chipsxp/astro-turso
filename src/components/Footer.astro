@@ -1,0 +1,52 @@
+---
+const user = Astro.locals.user;
+---
+<footer class="site-footer">
+  {
+    !user && (
+      <div class="site-footer__member">
+        <div class="site-footer__member-inner">
+          <div class="site-footer__member-copy">
+            <span class="site-footer__member-heading">
+              Authors &amp; Contributors
+            </span>
+            <span class="site-footer__member-sub">
+              Join the creative community — share your art, process, and
+              stories.
+            </span>
+          </div>
+          <div class="site-footer__auth-btns">
+            <a
+              href="/admin"
+              class="site-footer__auth-btn site-footer__auth-btn--filled"
+            >
+              Sign In
+            </a>
+            <a
+              href="/register"
+              class="site-footer__auth-btn site-footer__auth-btn--outline"
+            >
+              Register
+            </a>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  <div class="site-footer__inner">
+    <span class="site-footer__copy">
+      The Happy Feeling Prints Scriptorium &mdash; &copy; {
+        new Date().getFullYear()
+      }
+    </span>
+    <nav class="site-footer__nav" aria-label="Footer links">
+      <a href="/about-us">About Us</a>
+      <a href="/contact-us">Contact Us</a>
+      <a href="/events/archive">Event Archive</a>
+      <a href="/privacy-policy">Privacy Policy</a>
+    </nav>
+    <span class="site-footer__copy"
+      >Crafted by Jimmy Burns, Coded with Astro &amp; Turso</span
+    >
+  </div>
+</footer>

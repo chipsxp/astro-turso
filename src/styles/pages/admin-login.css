@@ -21,6 +21,7 @@
           opacity: 0;
           transform: scale(0.97);
         }
+
         to {
           opacity: 1;
           transform: scale(1);
@@ -39,96 +40,60 @@
       .hero-panel {
         background-color: var(--kirby-blue);
         background-image:
-          radial-gradient(
-            circle 3px at 12% 18%,
+          radial-gradient(circle 3px at 12% 18%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 2px at 28% 8%,
+            transparent 0),
+          radial-gradient(circle 2px at 28% 8%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 4px at 45% 25%,
+            transparent 0),
+          radial-gradient(circle 4px at 45% 25%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 2px at 62% 12%,
+            transparent 0),
+          radial-gradient(circle 2px at 62% 12%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 3px at 78% 30%,
+            transparent 0),
+          radial-gradient(circle 3px at 78% 30%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 2px at 90% 8%,
+            transparent 0),
+          radial-gradient(circle 2px at 90% 8%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 3px at 8% 42%,
+            transparent 0),
+          radial-gradient(circle 3px at 8% 42%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 2px at 22% 55%,
+            transparent 0),
+          radial-gradient(circle 2px at 22% 55%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 4px at 38% 68%,
+            transparent 0),
+          radial-gradient(circle 4px at 38% 68%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 2px at 55% 50%,
+            transparent 0),
+          radial-gradient(circle 2px at 55% 50%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 3px at 70% 65%,
+            transparent 0),
+          radial-gradient(circle 3px at 70% 65%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 2px at 85% 48%,
+            transparent 0),
+          radial-gradient(circle 2px at 85% 48%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 4px at 15% 80%,
+            transparent 0),
+          radial-gradient(circle 4px at 15% 80%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 2px at 32% 88%,
+            transparent 0),
+          radial-gradient(circle 2px at 32% 88%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 3px at 50% 82%,
+            transparent 0),
+          radial-gradient(circle 3px at 50% 82%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 2px at 68% 90%,
+            transparent 0),
+          radial-gradient(circle 2px at 68% 90%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 3px at 82% 78%,
+            transparent 0),
+          radial-gradient(circle 3px at 82% 78%,
             var(--comic-black) 100%,
-            transparent 0
-          ),
-          radial-gradient(
-            circle 2px at 95% 92%,
+            transparent 0),
+          radial-gradient(circle 2px at 95% 92%,
             var(--comic-black) 100%,
-            transparent 0
-          );
+            transparent 0);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -140,10 +105,12 @@
       }
 
       @keyframes krackle-breathe {
+
         0%,
         100% {
           background-size: 100% 100%;
         }
+
         50% {
           background-size: 101.8% 101.8%;
         }
@@ -345,7 +312,7 @@
       /* Footer caption */
       .login-footer {
         margin-top: 20px;
-        font-size: 0.52rem;
+        font-size: 0.95rem;
         letter-spacing: 0.18em;
         color: var(--text-status);
         text-transform: uppercase;
@@ -359,20 +326,23 @@
         .login-panels {
           grid-template-columns: 1fr;
         }
+
         .hero-panel {
           min-height: 280px;
           border-right: none;
           border-bottom: var(--panel-gap) solid var(--comic-black);
           padding: 40px 32px;
         }
+
         .hero-panel::after {
           display: none;
         }
+
         .hero-title {
           font-size: 2.8rem;
         }
+
         .login-panel {
           padding: 40px 24px;
         }
       }
-    

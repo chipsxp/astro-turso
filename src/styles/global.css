@@ -44,6 +44,7 @@
   --speech-bg: #fffef0;
   --speech-text: #080808;
   --panel-gap: 3px;
+  --nav-hover-bg: rgba(255, 255, 255, 0.12);
 }
 
 /* ─── Light theme — Golden Age Comics ─── */
@@ -57,6 +58,7 @@
   --text-status: rgba(92, 64, 24, 0.6);
   --danger: #c43020;
   --success: #1e7a40;
+  --nav-hover-bg: #ffffff;
 }
 
 /* ─── Reset ─── */
@@ -259,11 +261,28 @@ img {
   justify-content: space-between;
 }
 
+.site-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.site-logo-link:hover {
+  text-decoration: none;
+}
+
+.site-logo-img {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
 .site-wordmark {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-style: italic;
-  color: var(--accent);
+  color: var(--accent-dim);
   letter-spacing: 0.02em;
   line-height: 1;
   text-decoration: none;
@@ -271,12 +290,13 @@ img {
 
 .site-wordmark:hover {
   text-decoration: none;
+  color: var(--accent);
 }
 
 .site-nav {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 8px;
 }
 
 .site-nav a {
@@ -285,11 +305,14 @@ img {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-muted);
-  transition: color 0.15s;
+  transition: color 0.15s, background-color 0.15s;
+  padding: 6px 6px;
+  border-radius: 15px;
 }
 
 .site-nav a:hover {
   color: var(--text);
+  background-color: var(--nav-hover-bg);
   text-decoration: none;
 }
 
@@ -300,7 +323,7 @@ img {
   text-transform: uppercase;
   color: var(--accent) !important;
   border: 1.5px solid var(--accent);
-  padding: 5px 14px;
+  padding: 6px 6px;
   transition: background 0.12s, color 0.12s;
 }
 
@@ -458,15 +481,19 @@ img {
 
 .site-footer__nav a {
   font-family: var(--font-mono);
-  font-size: 0.74rem;
-  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-muted);
+  transition: color 0.15s, background-color 0.15s;
+  padding: 6px 6px;
+  border-radius: 15px;
   text-decoration: none;
 }
 
 .site-footer__nav a:hover {
   color: var(--text);
+  background-color: var(--nav-hover-bg);
   text-decoration: none;
 }
 
