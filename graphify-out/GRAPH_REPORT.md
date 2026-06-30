@@ -1,7 +1,7 @@
 # Graph Report - C:\Users\manag\Github-repo\astro-turso  (2026-06-30)
 
 ## Corpus Check
-- 82 files · ~605,404 words
+- 82 files · ~606,144 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary

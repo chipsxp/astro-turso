@@ -16043,8 +16043,8 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\analytics\\track.ts",
       "source_location": "L40",
       "weight": 1.0,
-      "_src": "track_post",
-      "_tgt": "dal_error",
+      "_src": "dal_error",
+      "_tgt": "track_post",
       "source": "dal_error",
       "target": "track_post"
     },
@@ -17123,8 +17123,8 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
       "source_location": "L59",
       "weight": 1.0,
-      "_src": "monetization_loganalyticsevent",
-      "_tgt": "backfill_inline_images_execute",
+      "_src": "backfill_inline_images_execute",
+      "_tgt": "monetization_loganalyticsevent",
       "source": "backfill_inline_images_execute",
       "target": "monetization_loganalyticsevent"
     },
@@ -21059,8 +21059,8 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\analytics\\track.ts",
       "source_location": "L29",
       "weight": 1.0,
-      "_src": "track_post",
-      "_tgt": "monetization_loganalyticsevent",
+      "_src": "monetization_loganalyticsevent",
+      "_tgt": "track_post",
       "source": "monetization_loganalyticsevent",
       "target": "track_post"
     },
