@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import bcrypt from "bcryptjs";
 import { SignJWT } from "jose";
-import { setAuthCookie } from "../../../lib/auth";
+import { setAuthCookie, type UserRecord } from "../../../lib/auth";
 import { db } from "../../../lib/db";
 
 // --- In-memory rate limiter: 10 failed attempts per IP per 15 minutes ---
@@ -65,10 +65,10 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   // --- Look up user ---
-  let user: Record<string, any>;
+  let user: UserRecord | undefined;
 
   try {
-    const result = await db.execute(
+    const result = await db.execute<UserRecord>(
       "SELECT id, email, password_hash, role, status FROM users WHERE email = ?",
       [email],
     );

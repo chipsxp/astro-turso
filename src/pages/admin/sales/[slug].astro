@@ -2,6 +2,7 @@
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 import SalesImageManager from "../../../components/admin/SalesImageManager";
 import { db } from "../../../lib/db";
+import type { SalesPosting, SalesImage, SalesTestimonial, SalesReview } from "../../../lib/sales";
 
 const { slug } = Astro.params;
 const user = Astro.locals.user!;
@@ -11,14 +12,15 @@ const cloudName =
   import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME ??
   "";
 
-let posting: any = null;
-let images: any[] = [];
-let testimonials: any[] = [];
-let reviews: any[] = [];
+type PostingRow = SalesPosting & { author_email: string | null };
+let posting: PostingRow | null = null;
+let images: SalesImage[] = [];
+let testimonials: SalesTestimonial[] = [];
+let reviews: SalesReview[] = [];
 let notFound = false;
 
 try {
-  const result = await db.execute(
+  const result = await db.execute<PostingRow>(
     `SELECT sp.*, u.email AS author_email
      FROM sales_postings sp
      LEFT JOIN users u ON u.id = sp.author_id
@@ -40,17 +42,17 @@ try {
 
   if (!notFound) {
     const [imagesRes, testimonialsRes, reviewsRes] = await Promise.all([
-      db.execute(
+      db.execute<SalesImage>(
         "SELECT * FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC",
-        [Number(posting.id)],
+        [Number(posting!.id)],
       ),
-      db.execute(
+      db.execute<SalesTestimonial>(
         "SELECT * FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC",
-        [Number(posting.id)],
+        [Number(posting!.id)],
       ),
-      db.execute(
+      db.execute<SalesReview>(
         "SELECT * FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC",
-        [Number(posting.id)],
+        [Number(posting!.id)],
       ),
     ]);
     images = imagesRes.rows;
@@ -61,17 +63,11 @@ try {
   notFound = true;
 }
 
-if (notFound) {
+if (notFound || !posting) {
   return Astro.redirect("/admin/sales", 302);
 }
 
-const displayPrice =
-  posting.price != null
-    ? new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(Number(posting.price))
-    : "";
+
 ---
 
 <AdminLayout title={`Edit: ${posting.title}`}>
@@ -281,7 +277,7 @@ const displayPrice =
             client:load
             postingSlug={posting.slug}
             cloudName={cloudName}
-            initialImages={images.map((img: any) => ({
+            initialImages={images.map((img) => ({
               id: Number(img.id),
               url: String(img.url ?? ""),
               public_id: String(img.public_id ?? ""),

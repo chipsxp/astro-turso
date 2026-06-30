@@ -244,10 +244,10 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
       allEvents = data.events ?? [];
       stateLoading.style.display = "none";
       applyFilter();
-    } catch (error: any) {
+    } catch (error) {
       stateLoading.style.display = "none";
       stateError.style.display = "block";
-      stateError.textContent = error.message ?? "Failed to load events.";
+      stateError.textContent = error instanceof Error ? error.message : "Failed to load events.";
     }
   }
 

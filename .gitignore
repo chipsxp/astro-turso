@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+package-lock.json
 
 # Build output
 dist/
@@ -18,7 +19,6 @@ devtools/
 AGENTS.md
 CLAUDE.md
 dist.zip
-Chat_Custom*.md
 
 # Environment variables
 .env

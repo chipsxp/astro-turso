@@ -45,8 +45,23 @@ export const GET: APIRoute = async ({ request }) => {
   if (isReadRateLimited(ip)) return json({ error: "Too many requests" }, 429);
   recordReadAttempt(ip);
 
+  interface SalesPostingRow {
+    id: number | string;
+    slug: string;
+    title: string;
+    status: string;
+    price: number | null;
+    promo_discount_pct: number | null;
+    promo_start: string | null;
+    promo_end: string | null;
+    promo_label: string | null;
+    tags: string;
+    created_at: string;
+    updated_at: string;
+  }
+
   try {
-    const result = await db.execute(
+    const result = await db.execute<SalesPostingRow>(
       `SELECT id, slug, title, status, price,
               promo_discount_pct, promo_start, promo_end,
               promo_label, tags, created_at, updated_at
@@ -55,23 +70,10 @@ export const GET: APIRoute = async ({ request }) => {
        ORDER BY created_at DESC`,
     );
 
-    interface SalesPostingRow {
-      id: number | string;
-      slug: string;
-      title: string;
-      status: string;
-      price: number | null;
-      promo_discount_pct: number | null;
-      promo_start: string | null;
-      promo_end: string | null;
-      promo_label: string | null;
-      tags: string;
-      created_at: string;
-      updated_at: string;
-    }
+
 
     // Attach cover image (first image by sort_order) for each posting
-    const postings = result.rows as SalesPostingRow[];
+    const postings = result.rows;
     if (postings.length === 0) return json({ postings: [] }, 200);
 
     const ids = postings.map((p: SalesPostingRow) => Number(p.id));

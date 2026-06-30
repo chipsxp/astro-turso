@@ -254,10 +254,10 @@ import PanelGallery from "../../components/admin/PanelGallery";
       allArticles = data.articles ?? [];
       stateLoading.style.display = "none";
       applyFilter();
-    } catch (err: any) {
+    } catch (err) {
       stateLoading.style.display = "none";
       stateError.style.display = "block";
-      stateError.textContent = err.message ?? "Failed to load articles.";
+      stateError.textContent = err instanceof Error ? err.message : "Failed to load articles.";
     }
   }
 

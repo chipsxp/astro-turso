@@ -1,3 +1,11 @@
+export interface UserRecord {
+  id: number | string;
+  email: string;
+  password_hash: string;
+  role: "admin" | "author";
+  status: "active" | "pending" | "suspended";
+}
+
 // ── Shared auth cookie helpers ────────────────────────────────────────────────
 //
 // Both login.ts (Set-Cookie) and logout.ts (clear-Cookie) use the same cookie

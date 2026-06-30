@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../lib/db";
-import { calcSalePrice } from "../../../lib/sales";
+import { calcSalePrice, type SalesPosting, type SalesImage, type SalesTestimonial, type SalesReview } from "../../../lib/sales";
 
 function json(data: unknown, status: number): Response {
   return new Response(JSON.stringify(data), {
@@ -48,32 +48,32 @@ export const GET: APIRoute = async ({ params, request }) => {
   recordReadAttempt(ip);
 
   try {
-    const result = await db.execute(
+    const result = await db.execute<SalesPosting>(
       `SELECT sp.*
        FROM sales_postings sp
        WHERE sp.slug = ? AND sp.status = 'published'`,
       [slug],
     );
     if (!result.rows.length) return json({ error: "Not found" }, 404);
-    const posting = result.rows[0] as any;
+    const posting = result.rows[0];
 
     const [imagesRes, testimonialsRes, reviewsRes] = await Promise.all([
-      db.execute(
+      db.execute<SalesImage>(
         "SELECT * FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC",
         [Number(posting.id)],
       ),
-      db.execute(
+      db.execute<SalesTestimonial>(
         "SELECT * FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC",
         [Number(posting.id)],
       ),
-      db.execute(
+      db.execute<SalesReview>(
         "SELECT * FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC",
         [Number(posting.id)],
       ),
     ]);
 
     // Compute average rating
-    const reviews = reviewsRes.rows as any[];
+    const reviews = reviewsRes.rows;
     const ratingsWithValue = reviews.filter((r) => r.rating != null);
     const avg_rating =
       ratingsWithValue.length > 0

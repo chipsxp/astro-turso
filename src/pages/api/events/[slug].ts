@@ -304,8 +304,8 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
     );
 
     return json({ updated: true }, 200);
-  } catch (err: any) {
-    if (err?.message?.includes("UNIQUE constraint failed")) {
+  } catch (err) {
+    if (err instanceof Error && err.message.includes("UNIQUE constraint failed")) {
       return json({ error: "An event with that slug already exists" }, 409);
     }
 

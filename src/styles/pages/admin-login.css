@@ -159,7 +159,7 @@
         font-weight: 700;
         font-style: italic;
         color: var(--accent);
-        line-height: 0.9;
+        line-height: 1.2;
         text-shadow:
           3px 3px 0 var(--comic-black),
           5px 5px 0 rgba(0, 0, 0, 0.4);

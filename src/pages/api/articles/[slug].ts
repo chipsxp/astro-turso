@@ -11,6 +11,7 @@ import {
   persistInlineImagesInBody,
 } from "../../../lib/inline-images";
 import { deleteMediaByArticle, getMediaByArticle } from "../../../lib/media";
+import type { ArticleUpdatePayload } from "../../../lib/article-editor.types";
 
 // --- Helpers ---
 
@@ -184,7 +185,7 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
 
   let createdInlineImageIdsForRollback: number[] = [];
 
-  let data: Record<string, any>;
+  let data: Partial<ArticleUpdatePayload>;
   try {
     await ensureCategorySchema();
     data = await request.json();
@@ -209,7 +210,7 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
 
     // Build SET clause from only the fields that were provided
     const fields: string[] = [];
-    const values: any[] = [];
+    const values: unknown[] = [];
 
     if (data.title !== undefined) {
       fields.push("title = ?");
@@ -308,7 +309,7 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
     }
 
     return json({ updated: true }, 200);
-  } catch (err: any) {
+  } catch (err) {
     if (createdInlineImageIdsForRollback.length > 0) {
       try {
         await deleteInlineImagesByIds(createdInlineImageIdsForRollback);
@@ -317,7 +318,7 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
       }
     }
 
-    if (err?.message?.includes("UNIQUE constraint failed")) {
+    if (err instanceof Error && err.message.includes("UNIQUE constraint failed")) {
       return json({ error: "An article with that slug already exists" }, 409);
     }
     return json({ error: "Database error" }, 500);

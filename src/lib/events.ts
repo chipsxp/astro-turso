@@ -290,7 +290,6 @@ export function getEventLifecycleLabel(
   if (!isEventEnded(event)) return "upcoming";
 
   const eventEndDate = getEventEffectiveEndDate(event);
-  const todayNY = getTodayInNewYork();
   const threeDaysAgoNY = getDaysAgoInNewYork(3);
 
   // Ended within last 3 days = "ended", otherwise "archived"

@@ -78,7 +78,7 @@ function sanitizeInlineStyles(html: string): string {
   // Match style attributes
   return html.replace(
     /style\s*=\s*["']([^"']*)["']/gi,
-    (match, styleContent) => {
+    (_match, styleContent) => {
       // Blocked CSS that can execute code
       let clean = styleContent
         .replace(/binding\s*:[^;]*/gi, "") // VML binding

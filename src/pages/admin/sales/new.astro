@@ -282,7 +282,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
   }> = [];
 
   // ── Quill editor ──────────────────────────────────────────────────────────
-  const editor = initializeEditor({
+  initializeEditor({
     containerId: "body-editor",
     placeholder: "Describe this item…",
     onContentChange: (html) => {
@@ -370,10 +370,10 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
           const idx = Number(el.dataset.idx);
           const field = el.dataset.field as string;
           if (field === "rating")
-            (testimonials[idx] as any)[field] = el.value
+            (testimonials[idx] as Record<string, string | number | null>)[field] = el.value
               ? Number(el.value)
               : null;
-          else (testimonials[idx] as any)[field] = el.value;
+          else (testimonials[idx] as Record<string, string | number | null>)[field] = el.value;
           (
             document.getElementById("testimonials-json") as HTMLInputElement
           ).value = JSON.stringify(testimonials);
@@ -423,12 +423,12 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
           const idx = Number(el.dataset.idx);
           const field = el.dataset.field as string;
           if (field === "rating")
-            (reviews[idx] as any)[field] = (el as HTMLInputElement).value
+            (reviews[idx] as Record<string, string | number | boolean | null>)[field] = (el as HTMLInputElement).value
               ? Number((el as HTMLInputElement).value)
               : null;
           else if (field === "is_verified")
-            (reviews[idx] as any)[field] = (el as HTMLInputElement).checked;
-          else (reviews[idx] as any)[field] = (el as HTMLInputElement).value;
+            (reviews[idx] as Record<string, string | number | boolean | null>)[field] = (el as HTMLInputElement).checked;
+          else (reviews[idx] as Record<string, string | number | boolean | null>)[field] = (el as HTMLInputElement).value;
           (document.getElementById("reviews-json") as HTMLInputElement).value =
             JSON.stringify(reviews);
         });

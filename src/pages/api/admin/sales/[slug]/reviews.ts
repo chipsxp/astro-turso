@@ -13,9 +13,9 @@ async function getPostingId(
   userId: string,
   role: string,
 ): Promise<number | null | "forbidden" | "error"> {
-  let result: any;
+  let result: Awaited<ReturnType<typeof db.execute<{ id: number; author_id: number }>>>;
   try {
-    result = await db.execute(
+    result = await db.execute<{ id: number; author_id: number }>(
       "SELECT id, author_id FROM sales_postings WHERE slug = ?",
       [slug],
     );
@@ -23,7 +23,7 @@ async function getPostingId(
     return "error";
   }
   if (!result.rows.length) return null;
-  const row = result.rows[0] as any;
+  const row = result.rows[0];
   if (role !== "admin" && Number(row.author_id) !== Number(userId))
     return "forbidden";
   return Number(row.id);

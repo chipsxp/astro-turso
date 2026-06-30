@@ -1,13 +1,13 @@
 ---
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import { db } from "../../lib/db";
-import { calcSalePrice, formatPrice, parseTags } from "../../lib/sales";
+import { calcSalePrice, formatPrice, parseTags, type SalesPosting, type SalesImage } from "../../lib/sales";
 
 // Query published postings directly — never loopback-fetch in SSR (fails on Railway/cPanel)
-let postings: any[] = [];
+let postings: (SalesPosting & { cover_image: { url: string; alt_text: string } | null })[] = [];
 let fetchError = false;
 try {
-  const result = await db.execute(
+  const result = await db.execute<SalesPosting>(
     `SELECT id, slug, title, status, price,
             promo_discount_pct, promo_start, promo_end,
             promo_label, tags, created_at, updated_at
@@ -17,9 +17,9 @@ try {
   );
 
   if (result.rows.length > 0) {
-    const ids = result.rows.map((p: any) => Number(p.id));
+    const ids = result.rows.map((p) => Number(p.id));
     const placeholders = ids.map(() => "?").join(", ");
-    const imagesRes = await db.execute(
+    const imagesRes = await db.execute<SalesImage>(
       `SELECT posting_id, url, alt_text
        FROM sales_images
        WHERE posting_id IN (${placeholders})
@@ -28,7 +28,7 @@ try {
     );
 
     const coverMap: Record<number, { url: string; alt_text: string }> = {};
-    for (const img of imagesRes.rows as any[]) {
+    for (const img of imagesRes.rows) {
       const pid = Number(img.posting_id);
       if (!coverMap[pid])
         coverMap[pid] = {
@@ -37,7 +37,7 @@ try {
         };
     }
 
-    postings = result.rows.map((p: any) => ({
+    postings = result.rows.map((p) => ({
       ...p,
       cover_image: coverMap[Number(p.id)] ?? null,
     }));

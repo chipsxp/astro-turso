@@ -331,7 +331,12 @@ const galleryImages = images.map((img) => ({
     script.src = sdkSrc;
     script.async = true;
     script.onload = () => {
-      const w = window as any;
+      interface PayPalWindow extends Window {
+        paypal?: {
+          HostedButtons: (args: { hostedButtonId: string }) => { render: (s: string) => void };
+        };
+      }
+      const w = window as unknown as PayPalWindow;
       if (typeof w.paypal?.HostedButtons !== "function") return;
       w.paypal.HostedButtons({ hostedButtonId }).render(`#${container.id}`);
     };

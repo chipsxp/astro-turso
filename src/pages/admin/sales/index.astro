@@ -1,23 +1,25 @@
 ---
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 import { db } from "../../../lib/db";
+import type { SalesPosting } from "../../../lib/sales";
 
 const user = Astro.locals.user!;
 const isAdmin = user.role === "admin";
 
-let postings: any[] = [];
+type PostingRow = SalesPosting & { author_email: string | null };
+let postings: PostingRow[] = [];
 let fetchError = false;
 let fetchErrorDetail = "";
 try {
   const result = isAdmin
-    ? await db.execute(
+    ? await db.execute<PostingRow>(
         `SELECT sp.*, u.email AS author_email
          FROM sales_postings sp
          LEFT JOIN users u ON u.id = sp.author_id
          ORDER BY sp.created_at DESC`,
         [],
       )
-    : await db.execute(
+    : await db.execute<PostingRow>(
         `SELECT sp.*, u.email AS author_email
          FROM sales_postings sp
          LEFT JOIN users u ON u.id = sp.author_id

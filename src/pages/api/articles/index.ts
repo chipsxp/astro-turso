@@ -307,7 +307,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       { article_id: articleId, slug, preview_url: `/blog/${slug}` },
       201,
     );
-  } catch (err: any) {
+  } catch (err) {
     if (createdInlineImageIds.length > 0) {
       try {
         await deleteInlineImagesByIds(createdInlineImageIds);
@@ -316,7 +316,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       }
     }
 
-    if (err?.message?.includes("UNIQUE constraint failed")) {
+    if (err instanceof Error && err.message.includes("UNIQUE constraint failed")) {
       return json({ error: "An article with that slug already exists" }, 409);
     }
     return json({ error: "Database error" }, 500);

@@ -118,6 +118,31 @@ export const POST: APIRoute = async ({ request }) => {
     return json({ error: "Database error" }, 500);
   }
 
+  // --- Send admin notification email ---
+  const resendApiKey = import.meta.env.RESEND_API_KEY;
+  const toEmail = import.meta.env.CONTACT_TO_EMAIL ?? "support@happyfeelingprints.com";
+  const fromEmail = import.meta.env.CONTACT_FROM_EMAIL ?? "support@happyfeelingprints.com";
+
+  if (resendApiKey) {
+    try {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${resendApiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: fromEmail,
+          to: [toEmail],
+          subject: "New Author Registration Pending Approval",
+          text: `A new user has registered and is pending approval.\n\nEmail: ${email}\n\nPlease log in to the admin dashboard to approve or decline this account.`,
+        }),
+      });
+    } catch (err) {
+      console.error("[register] Failed to send admin notification email:", err);
+    }
+  }
+
   return json(
     {
       message:

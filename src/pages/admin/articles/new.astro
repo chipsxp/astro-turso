@@ -196,7 +196,6 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
 
   let createdArticleId: number | null = null;
   let uploadSessionId: string | null = null;
-  let quillEditor: any;
   const previewMediaItems: Array<{
     url: string;
     alt_text: string;
@@ -243,7 +242,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
     "Image is too large (max 10 MB). Please optimize it to 5–10 MB before uploading.";
 
   // Initialize editor
-  quillEditor = initializeEditor({
+  initializeEditor({
     containerId: "body-editor",
     onContentChange: (html) => {
       bodyInput.value = html;
