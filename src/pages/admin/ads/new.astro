@@ -1,0 +1,118 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="New Ad">
+  <div class="page-header">
+    <div>
+      <a href="/admin/ads" class="page-header__eyebrow" style="text-decoration: none;">&larr; Back to Ads</a>
+      <h1 class="page-header__title">Create <em>Advertisement</em></h1>
+    </div>
+  </div>
+
+  <form id="ad-form" class="card" style="max-width: 600px; padding: 2rem;">
+    <div class="form-group">
+      <label for="business_name">Business Name <span class="required">*</span></label>
+      <input type="text" id="business_name" name="business_name" required class="form-input" />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" class="form-input" rows="3"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="image_url">Image URL <span class="required">*</span></label>
+      <p class="form-help">Upload the image to Cloudinary first and paste the secure URL here.</p>
+      <input type="url" id="image_url" name="image_url" required class="form-input" />
+    </div>
+
+    <div class="form-group">
+      <label for="target_url">Target URL <span class="required">*</span></label>
+      <input type="url" id="target_url" name="target_url" required class="form-input" placeholder="https://" />
+    </div>
+
+    <div class="form-group">
+      <label for="coupon_code">Coupon Code</label>
+      <input type="text" id="coupon_code" name="coupon_code" class="form-input" placeholder="e.g. SAVE20" />
+    </div>
+
+    <div class="form-group">
+      <label for="slot_type">Slot Location <span class="required">*</span></label>
+      <select id="slot_type" name="slot_type" class="form-input" required>
+        <option value="sidebar">Sidebar</option>
+        <option value="article_bottom">Bottom of Article</option>
+        <option value="homepage">Homepage Grid</option>
+      </select>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <button type="submit" class="btn btn-primary" id="submit-btn" style="width: 100%;">Create Ad</button>
+    </div>
+    <div id="error-msg" style="color: red; margin-top: 1rem; display: none;"></div>
+  </form>
+</AdminLayout>
+
+<script>
+  const form = document.getElementById("ad-form") as HTMLFormElement;
+  const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+  const errorMsg = document.getElementById("error-msg") as HTMLDivElement;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Creating...";
+    errorMsg.style.display = "none";
+
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await fetch("/api/admin/ads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        const d = await res.json();
+        throw new Error(d.error || "Failed to create ad");
+      }
+
+      window.location.href = "/admin/ads";
+    } catch (err: unknown) {
+      errorMsg.textContent = err instanceof Error ? err.message : "An unknown error occurred.";
+      errorMsg.style.display = "block";
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Create Ad";
+    }
+  });
+</script>
+
+<style>
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .required {
+    color: var(--accent);
+  }
+  .form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    background: var(--surface-alt);
+    color: var(--text);
+    border-radius: 4px;
+    font-family: inherit;
+  }
+  .form-help {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: -0.25rem 0 0.5rem 0;
+  }
+</style>

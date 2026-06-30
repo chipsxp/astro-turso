@@ -1,6 +1,32 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import PanelGallery from "../../components/admin/PanelGallery";
+import { getUserGamificationStats } from "../../lib/monetization";
+
+const userId = Astro.locals.user ? Number(Astro.locals.user.id) : 0;
+const { totalShares } = await getUserGamificationStats(userId);
+
+let gamificationRank = "Novice";
+let badgeColor = "#777";
+let badgeIcon = "🌟";
+
+if (totalShares >= 101) { 
+  gamificationRank = "Platinum"; 
+  badgeColor = "#e5e4e2"; 
+  badgeIcon = "💎";
+} else if (totalShares >= 51) { 
+  gamificationRank = "Gold"; 
+  badgeColor = "#ffd700"; 
+  badgeIcon = "🥇";
+} else if (totalShares >= 11) { 
+  gamificationRank = "Silver"; 
+  badgeColor = "#c0c0c0"; 
+  badgeIcon = "🥈";
+} else if (totalShares >= 1) { 
+  gamificationRank = "Bronze"; 
+  badgeColor = "#cd7f32"; 
+  badgeIcon = "🥉";
+}
 ---
 
 <AdminLayout title="Dashboard">
@@ -10,6 +36,25 @@ import PanelGallery from "../../components/admin/PanelGallery";
       <h1 class="page-header__title">All <em>Articles</em></h1>
     </div>
     <a href="/admin/articles/new" class="btn btn-primary">+ New Article</a>
+  </div>
+
+  <!-- Gamification Score Keeper -->
+  <div class="card" style="margin-bottom: 2rem; border-color: var(--accent); position: relative; overflow: hidden;">
+    <div style="padding: 1.5rem; display: flex; align-items: center; gap: 2rem;">
+      <div style="font-size: 4rem; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));">{badgeIcon}</div>
+      <div>
+        <p class="page-header__eyebrow" style="color: {badgeColor};">Author Rank</p>
+        <h2 style="margin: 0 0 0.5rem 0; font-family: var(--font-display); color: {badgeColor}; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">{gamificationRank}</h2>
+        <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">
+          You have generated <strong>{totalShares}</strong> shares for your artwork blogs!
+        </p>
+        {gamificationRank === "Platinum" && (
+          <div style="margin-top: 0.5rem; display: inline-block; background: var(--accent-transparent); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">
+            👑 Top Artist — Most Social Shares!
+          </div>
+        )}
+      </div>
+    </div>
   </div>
 
   <!-- Filter bar -->

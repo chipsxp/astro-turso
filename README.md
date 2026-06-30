@@ -1,6 +1,6 @@
 # The Happy Feeling Scriptorium
 
-![Version](https://img.shields.io/badge/version-1.2.0-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
+![Version](https://img.shields.io/badge/version-1.3.0-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
 
 Astro SSR blog and admin panel for publishing articles, managing events, managing media, and running a small author workflow on top of Turso and Cloudinary.
 
@@ -13,6 +13,7 @@ This repository is meant to be practical for developers who want to learn from i
 | `main`               | 1.0.0   | Base blog platform — no events module                                                                                              |
 | `feature/events`     | 1.1.0   | Adds the Upcoming Events module (this branch)                                                                                      |
 | `feature/etsy-sales` | 1.2.0   | Adds Etsy sales module and storefront integration, improves event flow, and raises Lighthouse score via WebP and alt-text delivery |
+| `feature/monetization`| 1.3.0  | Adds gamification scoring for social shares and an advertisement placement module                                                  |
 
 Clone the branch that matches what you need:
 
@@ -289,6 +290,23 @@ If you are new to Astro or full-stack content apps, start in this order:
 
 ## Changelog
 
+### [1.3.0] — 2026-06-30 — Gamification & Monetization (`feature/monetization` branch)
+
+Adds an Author Score Keeper to gamify social shares and an Advertisement Management system for site monetization.
+
+**Gamification Score Keeper**
+- Automatically awards Authors ranks (Novice, Bronze, Silver, Gold, Platinum) based on how many times they share their articles.
+- Calculates and displays the rank securely on the Author Dashboard.
+- Issues a special "Top Artist" badge for Platinum ranks.
+
+**Monetization & Ads**
+- Introduced the `AdPlacement` component to easily drop sponsored ad spots anywhere in the platform.
+- Created an Ads Admin Dashboard to manage active and inactive advertisement campaigns with Cloudinary image upload integration.
+- Built a non-blocking `navigator.sendBeacon` telemetry tracker to transparently record ad clicks without impacting Lighthouse scores.
+- Ad tracking relies strictly on first-party IDs and routes directly to the `/api/analytics/track` endpoint, bypassing ad-blockers and privacy shields.
+
+---
+
 ### [1.2.0] — 2026-04-13 — Etsy Sales + Storefront Integration (`feature/etsy-sales` branch)
 
 _Details to be filled in when the feature is complete._
@@ -391,4 +409,4 @@ Then create your admin user and start the server as usual.
 | --------- | --------------------- | ----------- |
 | **1.1.0** | Upcoming Events page  | Released    |
 | **1.2.0** | Art Sales / Shop page | In Progress |
-| **1.3.0** | _(to be determined)_  | Planned     |
+| **1.3.0** | Gamification & Monetization module | Released    |

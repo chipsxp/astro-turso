@@ -1,0 +1,122 @@
+---
+import { getActiveAdsForSlot } from "../lib/monetization";
+
+export interface Props {
+  slotType: string;
+}
+
+const { slotType } = Astro.props;
+
+// In a highly trafficked app, we might want to cache this, but for now we fetch live:
+const ads = await getActiveAdsForSlot(slotType);
+
+// Randomly pick one ad to display if there are multiple
+const ad = ads.length > 0 ? ads[Math.floor(Math.random() * ads.length)] : null;
+
+// Track the impression via a script block or rely on click tracking
+// For now we rely on the click tracking via data attributes
+---
+
+{ad && (
+  <div class="ad-container">
+    <div class="ad-label">Sponsored</div>
+    <a
+      href={ad.target_url || "#"}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-track-type="ad"
+      data-track-id={ad.id}
+      class="ad-link"
+    >
+      {ad.image_url && (
+        <img
+          src={ad.image_url}
+          alt={`Ad by ${ad.business_name}`}
+          loading="lazy"
+          class="ad-image"
+        />
+      )}
+      <div class="ad-content">
+        <h4 class="ad-business">{ad.business_name}</h4>
+        {ad.description && <p class="ad-desc">{ad.description}</p>}
+        {ad.coupon_code && (
+          <div class="ad-coupon">
+            Use code: <strong>{ad.coupon_code}</strong>
+          </div>
+        )}
+      </div>
+    </a>
+  </div>
+)}
+
+<style>
+  .ad-container {
+    border: 1px solid var(--border, #333);
+    border-radius: 8px;
+    background: var(--surface, #1e1e1e);
+    overflow: hidden;
+    margin: 1.5rem 0;
+    position: relative;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .ad-container:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent, #a274ff);
+  }
+
+  .ad-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--surface-alt, #333);
+    color: var(--text-muted, #aaa);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-bottom-left-radius: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .ad-link {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ad-image {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border, #333);
+  }
+
+  .ad-content {
+    padding: 1rem;
+  }
+
+  .ad-business {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    color: var(--text, #fff);
+  }
+
+  .ad-desc {
+    margin: 0 0 0.75rem 0;
+    font-size: 0.9rem;
+    color: var(--text-muted, #ccc);
+    line-height: 1.4;
+  }
+
+  .ad-coupon {
+    display: inline-block;
+    background: var(--accent-transparent, rgba(162, 116, 255, 0.1));
+    color: var(--accent, #a274ff);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    border: 1px dashed var(--accent, #a274ff);
+  }
+</style>

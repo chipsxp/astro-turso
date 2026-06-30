@@ -1,0 +1,79 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+import { db } from "../../../lib/db";
+
+// SSR direct fetch for admin page
+const rs = await db.execute<{ id: number; business_name: string; slot_type: string; is_active: number; coupon_code: string | null; created_at: number }>("SELECT id, business_name, slot_type, is_active, coupon_code, created_at FROM advertisements ORDER BY created_at DESC");
+
+const ads = rs.rows.map(r => ({
+  id: Number(r.id),
+  business_name: String(r.business_name),
+  slot_type: String(r.slot_type),
+  is_active: Number(r.is_active),
+  coupon_code: r.coupon_code ? String(r.coupon_code) : "—",
+  created_at: Number(r.created_at)
+}));
+
+// Fetch click stats from analytics_events
+const statsRs = await db.execute<{ target_id: number; click_count: number }>("SELECT target_id, COUNT(*) as click_count FROM analytics_events WHERE event_type = 'click' AND target_type = 'ad' GROUP BY target_id");
+const clickStats = new Map<number, number>();
+for (const row of statsRs.rows) {
+  clickStats.set(Number(row.target_id), Number(row.click_count));
+}
+---
+
+<AdminLayout title="Manage Ads">
+  <div class="page-header">
+    <div>
+      <p class="page-header__eyebrow">Monetization</p>
+      <h1 class="page-header__title">Advertisements</h1>
+    </div>
+    <a href="/admin/ads/new" class="btn btn-primary">+ New Ad</a>
+  </div>
+
+  <div class="card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Business Name</th>
+            <th>Slot</th>
+            <th>Coupon</th>
+            <th>Status</th>
+            <th>Clicks</th>
+            <th class="table-actions-col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ads.length === 0 ? (
+            <tr>
+              <td colspan="6" style="text-align: center; padding: 2rem;">No advertisements created yet.</td>
+            </tr>
+          ) : (
+            ads.map(ad => (
+              <tr>
+                <td><strong>{ad.business_name}</strong></td>
+                <td><span class="badge badge--draft">{ad.slot_type}</span></td>
+                <td>{ad.coupon_code}</td>
+                <td>
+                  <span class={`badge badge--${ad.is_active ? 'published' : 'draft'}`}>
+                    {ad.is_active ? 'Active' : 'Inactive'}
+                  </span>
+                </td>
+                <td><strong>{clickStats.get(ad.id) || 0}</strong></td>
+                <td class="table-actions-col">
+                  <!-- Actions placeholder for future delete/toggle -->
+                  <button class="btn btn-ghost" disabled>Edit</button>
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</AdminLayout>
+
+<style is:global>
+  @import "../../../styles/pages/admin-dashboard.css";
+</style>

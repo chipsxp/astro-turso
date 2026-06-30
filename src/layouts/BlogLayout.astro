@@ -81,5 +81,26 @@ const {
     <Header />
     <slot />
     <Footer />
+    
+    <!-- Telemetry Tracker -->
+    <script is:inline>
+      document.addEventListener("click", function (e) {
+        const target = e.target.closest("[data-track-type]");
+        if (!target) return;
+
+        const eventType = target.getAttribute("data-track-event") || "click";
+        const targetType = target.getAttribute("data-track-type");
+        const targetId = target.getAttribute("data-track-id") || null;
+
+        const payload = JSON.stringify({
+          event_type: eventType,
+          target_type: targetType,
+          target_id: targetId,
+          page_path: window.location.pathname,
+        });
+
+        navigator.sendBeacon("/api/analytics/track", payload);
+      });
+    </script>
   </body>
 </html>
