@@ -62,8 +62,21 @@ for (const row of statsRs.rows) {
                 </td>
                 <td><strong>{clickStats.get(ad.id) || 0}</strong></td>
                 <td class="table-actions-col">
-                  <!-- Actions placeholder for future delete/toggle -->
-                  <button class="btn btn-ghost" disabled>Edit</button>
+                  <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                    <button 
+                      class="btn btn-ghost btn-sm toggle-btn" 
+                      data-id={ad.id} 
+                      data-active={ad.is_active}
+                    >
+                      {ad.is_active ? 'Disable' : 'Enable'}
+                    </button>
+                    <button 
+                      class="btn btn-danger btn-sm delete-btn" 
+                      data-id={ad.id}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))
@@ -77,3 +90,56 @@ for (const row of statsRs.rows) {
 <style is:global>
   @import "../../../styles/pages/admin-dashboard.css";
 </style>
+
+<script>
+  const toggleBtns = document.querySelectorAll('.toggle-btn');
+  const deleteBtns = document.querySelectorAll('.delete-btn');
+
+  toggleBtns.forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      const target = e.currentTarget as HTMLButtonElement;
+      const id = target.dataset.id;
+      if (!id) return;
+
+      target.disabled = true;
+      try {
+        const res = await fetch(`/api/admin/ads/${id}`, { method: 'PATCH' });
+        if (res.ok) {
+          window.location.reload();
+        } else {
+          alert('Failed to toggle ad status.');
+          target.disabled = false;
+        }
+      } catch (err) {
+        alert('An error occurred.');
+        target.disabled = false;
+      }
+    });
+  });
+
+  deleteBtns.forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      const target = e.currentTarget as HTMLButtonElement;
+      const id = target.dataset.id;
+      if (!id) return;
+
+      if (!confirm('Are you sure you want to completely delete this ad?')) {
+        return;
+      }
+
+      target.disabled = true;
+      try {
+        const res = await fetch(`/api/admin/ads/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          window.location.reload();
+        } else {
+          alert('Failed to delete ad.');
+          target.disabled = false;
+        }
+      } catch (err) {
+        alert('An error occurred.');
+        target.disabled = false;
+      }
+    });
+  });
+</script>
