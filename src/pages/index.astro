@@ -8,6 +8,11 @@ import {
 } from "../lib/cloudinary";
 import { db } from "../lib/db";
 import { getPanelImageMap } from "../lib/panels";
+import AdPlacement from "../components/AdPlacement.astro";
+import AdminDonationBlock from "../components/AdminDonationBlock.astro";
+import { getSetting } from "../lib/settings";
+
+const donationPlacement = await getSetting("donation_placement") || "footer";
 
 const PRIMARY_CATEGORY_SLUGS = [
   "for-artists",
@@ -219,6 +224,11 @@ function formatArticleCount(count: number): string {
       </div>
     </div>
   </section>
+
+  <div class="page-wrap" style="margin: 2rem auto; max-width: 1200px; padding: 0 1rem;">
+    <AdPlacement slotType="homepage_grid" />
+    {donationPlacement === "homepage_grid" && <AdminDonationBlock />}
+  </div>
 
   <!-- ─── Panel grid — three pillars ─── -->
   <section class="pillars">

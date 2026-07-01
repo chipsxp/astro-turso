@@ -16,10 +16,14 @@ import {
   isEventUpcoming,
   mapEventRow,
 } from "../lib/events";
+import AdPlacement from "../components/AdPlacement.astro";
+import AdminDonationBlock from "../components/AdminDonationBlock.astro";
+import { getSetting } from "../lib/settings";
 
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
 const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
 const canonicalUrl = `${siteUrl}/upcoming-events`;
+const donationPlacement = await getSetting("donation_placement") || "footer";
 
 await ensureEventsSchema();
 
@@ -147,6 +151,11 @@ const featuredEvent = upcomingEvents[0] ?? null;
         small-business collaborative exhibitions led by our artists.
       </p>
     </section>
+
+    <div class="page-wrap" style="margin: 2rem auto;">
+      <AdPlacement slotType="event_index_top" />
+      {donationPlacement === "event_index_top" && <AdminDonationBlock />}
+    </div>
 
     {
       featuredEvent && (

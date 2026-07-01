@@ -4,6 +4,7 @@ import { db } from "../../lib/db";
 import { calcSalePrice, formatPrice, parseTags, type SalesPosting, type SalesImage } from "../../lib/sales";
 import { getSetting } from "../../lib/settings";
 import AdminDonationBlock from "../../components/AdminDonationBlock.astro";
+import AdPlacement from "../../components/AdPlacement.astro";
 
 const donationPlacement = await getSetting("donation_placement") || "footer";
 
@@ -64,7 +65,8 @@ try {
         </p>
       </header>
 
-      {donationPlacement === "sales_shop" && <AdminDonationBlock />}
+      <AdPlacement slotType="shop_index_top" />
+      {donationPlacement === "shop_index_top" && <AdminDonationBlock />}
 
       {
         fetchError && (

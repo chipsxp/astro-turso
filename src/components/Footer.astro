@@ -1,6 +1,7 @@
 ---
 import { getSetting } from "../lib/settings";
 import AdminDonationBlock from "./AdminDonationBlock.astro";
+import AdPlacement from "./AdPlacement.astro";
 
 const user = Astro.locals.user;
 const donationPlacement = await getSetting("donation_placement") || "footer";
@@ -37,6 +38,7 @@ const donationPlacement = await getSetting("donation_placement") || "footer";
       </div>
     )
   }
+  <AdPlacement slotType="footer" />
   {donationPlacement === "footer" && <AdminDonationBlock />}
   <div class="site-footer__inner">
     <span class="site-footer__copy">

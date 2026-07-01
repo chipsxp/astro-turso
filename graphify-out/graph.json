@@ -173,7 +173,7 @@
       "source_file": "astro.config.mjs",
       "source_location": "L1",
       "id": "astro_config_mjs",
-      "community": 64,
+      "community": 66,
       "norm_label": "astro.config.mjs"
     },
     {
@@ -2270,7 +2270,7 @@
       "source_file": "scripts\\create-admin.mjs",
       "source_location": "L1",
       "id": "scripts_create_admin_mjs",
-      "community": 65,
+      "community": 67,
       "norm_label": "create-admin.mjs"
     },
     {
@@ -2364,6 +2364,24 @@
       "norm_label": "getdb()"
     },
     {
+      "label": "create-site-settings-table.mjs",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs",
+      "source_location": "L1",
+      "id": "c_users_manag_github_repo_astro_turso_scripts_create_site_settings_table_mjs",
+      "community": 47,
+      "norm_label": "create-site-settings-table.mjs"
+    },
+    {
+      "label": "getDb()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs",
+      "source_location": "L19",
+      "id": "create_site_settings_table_getdb",
+      "community": 47,
+      "norm_label": "getdb()"
+    },
+    {
       "label": "diagnose-sales.mjs",
       "file_type": "code",
       "source_file": "scripts\\diagnose-sales.mjs",
@@ -2391,12 +2409,30 @@
       "norm_label": "maprows()"
     },
     {
+      "label": "migrate-sales-qr.mjs",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\migrate-sales-qr.mjs",
+      "source_location": "L1",
+      "id": "c_users_manag_github_repo_astro_turso_scripts_migrate_sales_qr_mjs",
+      "community": 3,
+      "norm_label": "migrate-sales-qr.mjs"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\migrate-sales-qr.mjs",
+      "source_location": "L13",
+      "id": "migrate_sales_qr_main",
+      "community": 3,
+      "norm_label": "main()"
+    },
+    {
       "label": "migrate-sales-remove-etsy.mjs",
       "file_type": "code",
       "source_file": "scripts\\migrate-sales-remove-etsy.mjs",
       "source_location": "L1",
       "id": "scripts_migrate_sales_remove_etsy_mjs",
-      "community": 47,
+      "community": 48,
       "norm_label": "migrate-sales-remove-etsy.mjs"
     },
     {
@@ -2405,7 +2441,25 @@
       "source_file": "scripts\\migrate-sales-remove-etsy.mjs",
       "source_location": "L19",
       "id": "migrate_sales_remove_etsy_getdb",
-      "community": 47,
+      "community": 48,
+      "norm_label": "getdb()"
+    },
+    {
+      "label": "migrate-users-shop-qr.mjs",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\migrate-users-shop-qr.mjs",
+      "source_location": "L1",
+      "id": "c_users_manag_github_repo_astro_turso_scripts_migrate_users_shop_qr_mjs",
+      "community": 49,
+      "norm_label": "migrate-users-shop-qr.mjs"
+    },
+    {
+      "label": "getDb()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\migrate-users-shop-qr.mjs",
+      "source_location": "L15",
+      "id": "migrate_users_shop_qr_getdb",
+      "community": 49,
       "norm_label": "getdb()"
     },
     {
@@ -2414,7 +2468,7 @@
       "source_file": "scripts\\migrate-users-status.mjs",
       "source_location": "L1",
       "id": "scripts_migrate_users_status_mjs",
-      "community": 48,
+      "community": 50,
       "norm_label": "migrate-users-status.mjs"
     },
     {
@@ -2423,7 +2477,7 @@
       "source_file": "scripts\\migrate-users-status.mjs",
       "source_location": "L20",
       "id": "migrate_users_status_getdb",
-      "community": 48,
+      "community": 50,
       "norm_label": "getdb()"
     },
     {
@@ -2432,7 +2486,7 @@
       "source_file": "src\\env.d.ts",
       "source_location": "L1",
       "id": "src_env_d_ts",
-      "community": 66,
+      "community": 68,
       "norm_label": "env.d.ts"
     },
     {
@@ -2576,7 +2630,7 @@
       "source_file": "src\\components\\SalesGallery.tsx",
       "source_location": "L1",
       "id": "src_components_salesgallery_tsx",
-      "community": 19,
+      "community": 18,
       "norm_label": "salesgallery.tsx"
     },
     {
@@ -2585,7 +2639,7 @@
       "source_file": "src\\components\\SalesGallery.tsx",
       "source_location": "L16",
       "id": "salesgallery_salesgallery",
-      "community": 19,
+      "community": 18,
       "norm_label": "salesgallery()"
     },
     {
@@ -2594,7 +2648,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\components\\SplashScreen.tsx",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_components_splashscreen_tsx",
-      "community": 49,
+      "community": 51,
       "norm_label": "splashscreen.tsx"
     },
     {
@@ -2603,7 +2657,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\components\\SplashScreen.tsx",
       "source_location": "L8",
       "id": "splashscreen_splashscreen",
-      "community": 49,
+      "community": 51,
       "norm_label": "splashscreen()"
     },
     {
@@ -2738,7 +2792,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L1",
       "id": "src_components_admin_salesimagemanager_tsx",
-      "community": 18,
+      "community": 19,
       "norm_label": "salesimagemanager.tsx"
     },
     {
@@ -2747,7 +2801,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L37",
       "id": "salesimagemanager_defaulttransforms",
-      "community": 18,
+      "community": 19,
       "norm_label": "defaulttransforms()"
     },
     {
@@ -2756,7 +2810,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L47",
       "id": "salesimagemanager_parsetransforms",
-      "community": 18,
+      "community": 19,
       "norm_label": "parsetransforms()"
     },
     {
@@ -2765,7 +2819,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L76",
       "id": "salesimagemanager_toast",
-      "community": 18,
+      "community": 19,
       "norm_label": "toast()"
     },
     {
@@ -2774,7 +2828,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L139",
       "id": "salesimagemanager_handledelete",
-      "community": 18,
+      "community": 19,
       "norm_label": "handledelete()"
     },
     {
@@ -2783,7 +2837,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L162",
       "id": "salesimagemanager_updatetransform",
-      "community": 18,
+      "community": 19,
       "norm_label": "updatetransform()"
     },
     {
@@ -2792,7 +2846,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L173",
       "id": "salesimagemanager_applytransforms",
-      "community": 18,
+      "community": 19,
       "norm_label": "applytransforms()"
     },
     {
@@ -2801,7 +2855,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L194",
       "id": "salesimagemanager_handledragstart",
-      "community": 18,
+      "community": 19,
       "norm_label": "handledragstart()"
     },
     {
@@ -2810,7 +2864,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L195",
       "id": "salesimagemanager_handledragover",
-      "community": 18,
+      "community": 19,
       "norm_label": "handledragover()"
     },
     {
@@ -2819,7 +2873,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L208",
       "id": "salesimagemanager_handledragend",
-      "community": 18,
+      "community": 19,
       "norm_label": "handledragend()"
     },
     {
@@ -2990,7 +3044,7 @@
       "source_file": "src\\lib\\article-editor.types.ts",
       "source_location": "L1",
       "id": "src_lib_article_editor_types_ts",
-      "community": 67,
+      "community": 69,
       "norm_label": "article-editor.types.ts"
     },
     {
@@ -3125,7 +3179,7 @@
       "source_file": "src\\lib\\cloudinary-server.ts",
       "source_location": "L1",
       "id": "src_lib_cloudinary_server_ts",
-      "community": 68,
+      "community": 70,
       "norm_label": "cloudinary-server.ts"
     },
     {
@@ -3305,7 +3359,7 @@
       "source_file": "src\\lib\\event-editor.types.ts",
       "source_location": "L1",
       "id": "src_lib_event_editor_types_ts",
-      "community": 69,
+      "community": 71,
       "norm_label": "event-editor.types.ts"
     },
     {
@@ -3332,7 +3386,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L90",
       "id": "events_ensureeventsschema",
-      "community": 5,
+      "community": 2,
       "norm_label": "ensureeventsschema()"
     },
     {
@@ -3905,73 +3959,73 @@
     {
       "label": "sales.ts",
       "file_type": "code",
-      "source_file": "src\\lib\\sales.ts",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
       "source_location": "L1",
-      "id": "src_lib_sales_ts",
-      "community": 19,
+      "id": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
+      "community": 18,
       "norm_label": "sales.ts"
     },
     {
       "label": "slugify()",
       "file_type": "code",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L77",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L78",
       "id": "sales_slugify",
-      "community": 19,
+      "community": 18,
       "norm_label": "slugify()"
     },
     {
       "label": "formatPrice()",
       "file_type": "code",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L90",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L91",
       "id": "sales_formatprice",
-      "community": 19,
+      "community": 18,
       "norm_label": "formatprice()"
     },
     {
       "label": "calcSalePrice()",
       "file_type": "code",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L103",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L104",
       "id": "sales_calcsaleprice",
-      "community": 19,
+      "community": 18,
       "norm_label": "calcsaleprice()"
     },
     {
       "label": "isPromoActive()",
       "file_type": "code",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L123",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L124",
       "id": "sales_ispromoactive",
-      "community": 19,
+      "community": 18,
       "norm_label": "ispromoactive()"
     },
     {
       "label": "parseTransforms()",
       "file_type": "code",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L140",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L141",
       "id": "sales_parsetransforms",
-      "community": 19,
+      "community": 18,
       "norm_label": "parsetransforms()"
     },
     {
       "label": "buildSalesImageUrl()",
       "file_type": "code",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L157",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L158",
       "id": "sales_buildsalesimageurl",
-      "community": 19,
+      "community": 18,
       "norm_label": "buildsalesimageurl()"
     },
     {
       "label": "parseTags()",
       "file_type": "code",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L206",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L207",
       "id": "sales_parsetags",
-      "community": 19,
+      "community": 18,
       "norm_label": "parsetags()"
     },
     {
@@ -4209,12 +4263,39 @@
       "norm_label": "isvalidlinkurl()"
     },
     {
+      "label": "settings.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\settings.ts",
+      "source_location": "L1",
+      "id": "c_users_manag_github_repo_astro_turso_src_lib_settings_ts",
+      "community": 3,
+      "norm_label": "settings.ts"
+    },
+    {
+      "label": "getSetting()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\settings.ts",
+      "source_location": "L6",
+      "id": "settings_getsetting",
+      "community": 3,
+      "norm_label": "getsetting()"
+    },
+    {
+      "label": "setSetting()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\settings.ts",
+      "source_location": "L18",
+      "id": "settings_setsetting",
+      "community": 3,
+      "norm_label": "setsetting()"
+    },
+    {
       "label": "robots.txt.ts",
       "file_type": "code",
       "source_file": "src\\pages\\robots.txt.ts",
       "source_location": "L1",
       "id": "src_pages_robots_txt_ts",
-      "community": 50,
+      "community": 52,
       "norm_label": "robots.txt.ts"
     },
     {
@@ -4223,7 +4304,7 @@
       "source_file": "src\\pages\\robots.txt.ts",
       "source_location": "L3",
       "id": "robots_txt_get",
-      "community": 50,
+      "community": 52,
       "norm_label": "get()"
     },
     {
@@ -4416,6 +4497,42 @@
       "norm_label": "delete()"
     },
     {
+      "label": "settings.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L1",
+      "id": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_settings_ts",
+      "community": 3,
+      "norm_label": "settings.ts"
+    },
+    {
+      "label": "json()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L4",
+      "id": "settings_json",
+      "community": 3,
+      "norm_label": "json()"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L11",
+      "id": "settings_get",
+      "community": 3,
+      "norm_label": "get()"
+    },
+    {
+      "label": "PUT()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L26",
+      "id": "settings_put",
+      "community": 3,
+      "norm_label": "put()"
+    },
+    {
       "label": "index.ts",
       "file_type": "code",
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\ads\\index.ts",
@@ -4493,7 +4610,7 @@
       "source_file": "src\\pages\\api\\admin\\events\\archive-expired.ts",
       "source_location": "L1",
       "id": "src_pages_api_admin_events_archive_expired_ts",
-      "community": 3,
+      "community": 2,
       "norm_label": "archive-expired.ts"
     },
     {
@@ -4502,7 +4619,7 @@
       "source_file": "src\\pages\\api\\admin\\events\\archive-expired.ts",
       "source_location": "L17",
       "id": "archive_expired_json",
-      "community": 3,
+      "community": 2,
       "norm_label": "json()"
     },
     {
@@ -4511,7 +4628,7 @@
       "source_file": "src\\pages\\api\\admin\\events\\archive-expired.ts",
       "source_location": "L34",
       "id": "archive_expired_post",
-      "community": 3,
+      "community": 2,
       "norm_label": "post()"
     },
     {
@@ -4661,18 +4778,18 @@
     {
       "label": "index.ts",
       "file_type": "code",
-      "source_file": "src\\pages\\api\\admin\\sales\\index.ts",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\sales\\index.ts",
       "source_location": "L1",
-      "id": "src_pages_api_admin_sales_index_ts",
+      "id": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_index_ts",
       "community": 5,
       "norm_label": "index.ts"
     },
     {
       "label": "[slug].ts",
       "file_type": "code",
-      "source_file": "src\\pages\\api\\admin\\sales\\[slug].ts",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\sales\\[slug].ts",
       "source_location": "L1",
-      "id": "src_pages_api_admin_sales_slug_ts",
+      "id": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_slug_ts",
       "community": 2,
       "norm_label": "[slug].ts"
     },
@@ -5486,7 +5603,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 70,
+      "community": 72,
       "norm_label": "content security policy (addsecurityheaders in middleware)",
       "id": "csp_middleware"
     },
@@ -5499,7 +5616,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 71,
+      "community": 73,
       "norm_label": "in-memory rate limiting pattern (map-based)",
       "id": "rate_limiting_pattern"
     },
@@ -5551,7 +5668,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 51,
+      "community": 53,
       "norm_label": "two-phase middleware pattern (identification + enforcement)",
       "id": "two_phase_middleware_pattern"
     },
@@ -5564,7 +5681,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 72,
+      "community": 74,
       "norm_label": "article body guardrails (size + inline image limits)",
       "id": "article_body_guardrails"
     },
@@ -5577,7 +5694,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 73,
+      "community": 75,
       "norm_label": "event archive lifecycle (14-day window + permanent archive)",
       "id": "event_archive_lifecycle"
     },
@@ -5590,7 +5707,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 51,
+      "community": 53,
       "norm_label": "role-based access control (admin / author)",
       "id": "role_based_access"
     },
@@ -6513,7 +6630,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 74,
+      "community": 76,
       "norm_label": "railway railpack builder",
       "id": "deploy_railpack_builder"
     },
@@ -6526,7 +6643,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 52,
+      "community": 54,
       "norm_label": "railway monorepo deployment patterns",
       "id": "deploy_monorepo_patterns"
     },
@@ -6630,7 +6747,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 75,
+      "community": 77,
       "norm_label": "railway central station community",
       "id": "request_central_station"
     },
@@ -6695,7 +6812,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 52,
+      "community": 54,
       "norm_label": "railway monorepo detection patterns",
       "id": "setup_monorepo_detection"
     },
@@ -7059,7 +7176,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 76,
+      "community": 78,
       "norm_label": "bug: db datetime invalid date parsing",
       "id": "bugs_db_datetime_invalid"
     },
@@ -7072,7 +7189,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 77,
+      "community": 79,
       "norm_label": "bug: typescript implicit any after filter chain",
       "id": "bugs_typescript_implicit_any"
     },
@@ -7111,7 +7228,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 78,
+      "community": 80,
       "norm_label": "bug: sales listing silent catch{} error hiding",
       "id": "bugs_sales_silent_catch"
     },
@@ -7124,7 +7241,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 54,
+      "community": 57,
       "norm_label": "bug: cloudinary cloud name ssr env resolution",
       "id": "bugs_cloudinary_cloud_name_ssr"
     },
@@ -7137,7 +7254,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 79,
+      "community": 81,
       "norm_label": "bug: typescript narrowing drift across astro boundaries",
       "id": "bugs_type_narrowing_drift"
     },
@@ -7150,7 +7267,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 80,
+      "community": 82,
       "norm_label": "bug: admin event draft edit blank fields",
       "id": "bugs_admin_event_draft_edit"
     },
@@ -7163,7 +7280,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 81,
+      "community": 83,
       "norm_label": "bug: admin edit page 2+ min pending for draft slug",
       "id": "bugs_edit_page_pending"
     },
@@ -7176,7 +7293,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 82,
+      "community": 84,
       "norm_label": "bug: cloudinary upload guardrails + preview sanitization gaps",
       "id": "bugs_upload_guardrails"
     },
@@ -7215,7 +7332,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 83,
+      "community": 85,
       "norm_label": "bug: feature image upload fails typescript generic in is:inline",
       "id": "bugs_feature_image_upload"
     },
@@ -7228,7 +7345,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 84,
+      "community": 86,
       "norm_label": "bug: generated build artifacts contained inlined secrets",
       "id": "bugs_secrets_in_build_artifacts"
     },
@@ -7241,7 +7358,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 85,
+      "community": 87,
       "norm_label": "bug: article delete 500 fk constraint violation",
       "id": "bugs_article_delete_fk"
     },
@@ -7267,7 +7384,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 86,
+      "community": 88,
       "norm_label": "bug: railway cli service targeting mismatch",
       "id": "bugs_railway_cli_service_mismatch"
     },
@@ -7280,7 +7397,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 87,
+      "community": 89,
       "norm_label": "bug: panel gallery slot picker clipped by card overflow",
       "id": "bugs_panel_gallery_slot_clipped"
     },
@@ -7293,7 +7410,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 88,
+      "community": 90,
       "norm_label": "bug: db.execute() without [] args returns empty rows",
       "id": "bugs_db_execute_empty_args"
     },
@@ -7332,7 +7449,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 89,
+      "community": 91,
       "norm_label": "bug: new article form re-posted on update click",
       "id": "bugs_new_article_repost"
     },
@@ -7345,7 +7462,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 53,
+      "community": 56,
       "norm_label": "bug: multi-user privacy gap in admin routes",
       "id": "bugs_multi_user_privacy"
     },
@@ -7449,7 +7566,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 54,
+      "community": 57,
       "norm_label": "adr-019: self-hosted fonts + cloudinary name fallback",
       "id": "decisions_adr019_self_hosted_fonts"
     },
@@ -7462,7 +7579,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 90,
+      "community": 92,
       "norm_label": "adr-018: permanent event archive 14-day window",
       "id": "decisions_adr018_event_archive"
     },
@@ -7488,7 +7605,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 91,
+      "community": 93,
       "norm_label": "adr-016: inline editor images stored in images table",
       "id": "decisions_adr016_inline_images"
     },
@@ -7527,7 +7644,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 92,
+      "community": 94,
       "norm_label": "adr-009: dark/light theme system css custom property override",
       "id": "decisions_adr009_dark_light_theme"
     },
@@ -7540,7 +7657,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 93,
+      "community": 95,
       "norm_label": "adr-008: user registration & admin approval system",
       "id": "decisions_adr008_user_registration"
     },
@@ -7553,7 +7670,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 94,
+      "community": 96,
       "norm_label": "adr-007: tailwindcss v4 vite plugin approach",
       "id": "decisions_adr007_tailwind_v4"
     },
@@ -7566,7 +7683,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 53,
+      "community": 56,
       "norm_label": "adr-006: per-user article ownership enforcement",
       "id": "decisions_adr006_article_ownership"
     },
@@ -7605,7 +7722,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 95,
+      "community": 97,
       "norm_label": "adr-001: pinecone assistant for library rag",
       "id": "decisions_adr001_pinecone_rag"
     },
@@ -7653,7 +7770,7 @@
       "source_url": null,
       "captured_at": "2026-04-17",
       "author": "Jimmy Burns",
-      "community": 56,
+      "community": 58,
       "norm_label": "css dead code removal + admin-layout quill cleanup (2026-04-17)",
       "id": "issues_css_dead_code"
     },
@@ -7665,7 +7782,7 @@
       "source_url": null,
       "captured_at": "2026-04-17",
       "author": "Jimmy Burns",
-      "community": 96,
+      "community": 98,
       "norm_label": "fixed quill 2 block formatting in sales editor (2026-04-17)",
       "id": "issues_quill2_css_fix"
     },
@@ -7689,7 +7806,7 @@
       "source_url": null,
       "captured_at": "2026-04-13",
       "author": "Jimmy Burns",
-      "community": 97,
+      "community": 99,
       "norm_label": "event archive policy revision (2026-04-13)",
       "id": "issues_event_archive_policy"
     },
@@ -7701,7 +7818,7 @@
       "source_url": null,
       "captured_at": "2026-04-06",
       "author": "Jimmy Burns",
-      "community": 57,
+      "community": 59,
       "norm_label": "astro + typescript error resolution (2026-04-06)",
       "id": "issues_ts_error_resolution"
     },
@@ -7713,7 +7830,7 @@
       "source_url": null,
       "captured_at": "2026-04-06",
       "author": "Jimmy Burns",
-      "community": 98,
+      "community": 100,
       "norm_label": "events feature v1 implementation (2026-04-06)",
       "id": "issues_events_feature_v1"
     },
@@ -7737,7 +7854,7 @@
       "source_url": null,
       "captured_at": "2026-04-05",
       "author": "Jimmy Burns",
-      "community": 61,
+      "community": 60,
       "norm_label": "quill image resize restored (2026-04-05)",
       "id": "issues_quill_image_resize"
     },
@@ -7749,7 +7866,7 @@
       "source_url": null,
       "captured_at": "2026-04-05",
       "author": "Jimmy Burns",
-      "community": 58,
+      "community": 62,
       "norm_label": "article body guardrails relaxed after author feedback (2026-04-05)",
       "id": "issues_article_guardrails"
     },
@@ -7761,7 +7878,7 @@
       "source_url": null,
       "captured_at": "2026-04-03",
       "author": "Jimmy Burns",
-      "community": 99,
+      "community": 101,
       "norm_label": "api convention audit + one-slug pending diagnosis (2026-04-03)",
       "id": "issues_api_audit"
     },
@@ -7773,7 +7890,7 @@
       "source_url": null,
       "captured_at": "2026-04-03",
       "author": "Jimmy Burns",
-      "community": 62,
+      "community": 64,
       "norm_label": "cloudinary transformation + validation sweep (2026-04-03)",
       "id": "issues_cloudinary_sweep"
     },
@@ -7785,7 +7902,7 @@
       "source_url": null,
       "captured_at": "2026-04-02",
       "author": "Jimmy Burns",
-      "community": 100,
+      "community": 102,
       "norm_label": "railway dev validation deploy (2026-04-02)",
       "id": "issues_railway_deploy"
     },
@@ -7869,7 +7986,7 @@
       "source_url": null,
       "captured_at": "2026-03-15",
       "author": "Jimmy Burns",
-      "community": 40,
+      "community": 39,
       "norm_label": "user registration & admin approval system (2026-03-15)",
       "id": "issues_user_registration"
     },
@@ -7881,7 +7998,7 @@
       "source_url": null,
       "captured_at": "2026-03-19",
       "author": "Jimmy Burns",
-      "community": 59,
+      "community": 61,
       "norm_label": "cloudinary delivery optimization rollout (2026-03-19)",
       "id": "issues_cloudinary_delivery"
     },
@@ -7893,7 +8010,7 @@
       "source_url": null,
       "captured_at": "2026-03-19",
       "author": "Jimmy Burns",
-      "community": 39,
+      "community": 40,
       "norm_label": "dark / light theme system (2026-03-19)",
       "id": "issues_theme_system"
     },
@@ -7905,7 +8022,7 @@
       "source_url": null,
       "captured_at": "2026-02-28",
       "author": "Jimmy Burns",
-      "community": 101,
+      "community": 103,
       "norm_label": "phase 1: turso database schema (2026-02-28)",
       "id": "issues_turso_db_schema"
     },
@@ -7917,7 +8034,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 56,
+      "community": 58,
       "norm_label": "rationale: global css for set:html containers (astro scoped css never matches set:html children)",
       "id": "rationale_global_css_for_sethtml"
     },
@@ -7929,7 +8046,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 60,
+      "community": 63,
       "norm_label": "development journal",
       "id": "journal_dev_journal"
     },
@@ -7953,7 +8070,7 @@
       "source_url": null,
       "captured_at": "2026-04-06",
       "author": "Jimmy Burns",
-      "community": 57,
+      "community": 59,
       "norm_label": "astro + typescript framework boundaries (2026-04-06)",
       "id": "journal_astro_ts_boundaries"
     },
@@ -7977,7 +8094,7 @@
       "source_url": null,
       "captured_at": "2026-04-05",
       "author": "Jimmy Burns",
-      "community": 61,
+      "community": 60,
       "norm_label": "giving the editor real hands: in-editor image resize (2026-04-05)",
       "id": "journal_quill_resize_story"
     },
@@ -7989,7 +8106,7 @@
       "source_url": null,
       "captured_at": "2026-04-03",
       "author": "Jimmy Burns",
-      "community": 58,
+      "community": 62,
       "norm_label": "body guardrails: protecting the database (2026-04-03)",
       "id": "journal_body_guardrails_story"
     },
@@ -8013,7 +8130,7 @@
       "source_url": null,
       "captured_at": "2026-03-29",
       "author": "Jimmy Burns",
-      "community": 60,
+      "community": 63,
       "norm_label": "the bug that wasn't a network error (2026-03-29)",
       "id": "journal_promise_bug"
     },
@@ -8025,7 +8142,7 @@
       "source_url": null,
       "captured_at": "2026-04-03",
       "author": "Jimmy Burns",
-      "community": 62,
+      "community": 64,
       "norm_label": "cloudinary transformation validator sweep (2026-04-03)",
       "id": "journal_cloudinary_validator"
     },
@@ -8049,7 +8166,7 @@
       "source_url": null,
       "captured_at": "2026-03-19",
       "author": "Jimmy Burns",
-      "community": 39,
+      "community": 40,
       "norm_label": "dark / light theme system: noir edition + golden age comics (2026-03-19)",
       "id": "journal_theme_system_story"
     },
@@ -8061,7 +8178,7 @@
       "source_url": null,
       "captured_at": "2026-03-19",
       "author": "Jimmy Burns",
-      "community": 59,
+      "community": 61,
       "norm_label": "cloudinary image delivery optimization + upload guardrails (2026-03-19)",
       "id": "journal_cloudinary_delivery_story"
     },
@@ -8085,7 +8202,7 @@
       "source_url": null,
       "captured_at": "2026-03-15",
       "author": "Jimmy Burns",
-      "community": 40,
+      "community": 39,
       "norm_label": "user visibility incident + future interconnect design (2026-03-15)",
       "id": "journal_user_visibility"
     },
@@ -8133,7 +8250,7 @@
       "source_url": null,
       "captured_at": "2026-03-01",
       "author": "Jimmy Burns",
-      "community": 102,
+      "community": 104,
       "norm_label": "session 4: auth api route + jwt middleware (2026-03-01)",
       "id": "journal_session4"
     },
@@ -8169,7 +8286,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 40,
+      "community": 39,
       "norm_label": "rationale: client-side draft preview (zero round-trip, no preview token system needed)",
       "id": "rationale_client_side_preview"
     },
@@ -8253,7 +8370,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 39,
+      "community": 40,
       "norm_label": "theme system (dark/light data-theme attribute)",
       "id": "key_facts_theme_system"
     },
@@ -8277,7 +8394,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 103,
+      "community": 105,
       "norm_label": "eraser diagrams skill config",
       "id": "key_facts_eraser_skill"
     },
@@ -8913,7 +9030,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 104,
+      "community": 106,
       "norm_label": "favicon svg (yellow smiley face icon)",
       "id": "favicon_svg"
     },
@@ -8978,7 +9095,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 63,
+      "community": 65,
       "norm_label": "rationale: global css for set:html containers",
       "id": "graph_report_css_cleanup_rationale"
     },
@@ -8991,7 +9108,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 63,
+      "community": 65,
       "norm_label": "global css policy for set:html children",
       "id": "graph_report_set_html_css_policy"
     },
@@ -15920,6 +16037,18 @@
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\migrate-sales-qr.mjs",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_src": "migrate_sales_qr_main",
+      "_tgt": "dal_error",
+      "source": "dal_error",
+      "target": "migrate_sales_qr_main"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
       "source_file": "src\\pages\\api\\share.ts",
       "source_location": "L61",
       "weight": 1.0,
@@ -15939,6 +16068,30 @@
       "_tgt": "upload_post",
       "source": "dal_error",
       "target": "upload_post"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_src": "settings_get",
+      "_tgt": "dal_error",
+      "source": "dal_error",
+      "target": "settings_get"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_src": "settings_put",
+      "_tgt": "dal_error",
+      "source": "dal_error",
+      "target": "settings_put"
     },
     {
       "relation": "calls",
@@ -16808,6 +16961,18 @@
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\migrate-sales-qr.mjs",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_src": "migrate_sales_qr_main",
+      "_tgt": "backfill_inline_images_execute",
+      "source": "backfill_inline_images_execute",
+      "target": "migrate_sales_qr_main"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
       "source_file": "src\\lib\\categories.ts",
       "source_location": "L45",
       "weight": 1.0,
@@ -17163,6 +17328,18 @@
       "_tgt": "panels_getrecentpanelmedia",
       "source": "backfill_inline_images_execute",
       "target": "panels_getrecentpanelmedia"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\settings.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_src": "settings_setsetting",
+      "_tgt": "backfill_inline_images_execute",
+      "source": "backfill_inline_images_execute",
+      "target": "settings_setsetting"
     },
     {
       "relation": "calls",
@@ -17587,6 +17764,18 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs",
+      "source_location": "L19",
+      "weight": 1.0,
+      "_src": "c_users_manag_github_repo_astro_turso_scripts_create_site_settings_table_mjs",
+      "_tgt": "create_site_settings_table_getdb",
+      "source": "c_users_manag_github_repo_astro_turso_scripts_create_site_settings_table_mjs",
+      "target": "create_site_settings_table_getdb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts\\diagnose-sales.mjs",
       "source_location": "L16",
       "weight": 1.0,
@@ -17611,6 +17800,18 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\migrate-sales-qr.mjs",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_src": "c_users_manag_github_repo_astro_turso_scripts_migrate_sales_qr_mjs",
+      "_tgt": "migrate_sales_qr_main",
+      "source": "c_users_manag_github_repo_astro_turso_scripts_migrate_sales_qr_mjs",
+      "target": "migrate_sales_qr_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts\\migrate-sales-remove-etsy.mjs",
       "source_location": "L19",
       "weight": 1.0,
@@ -17618,6 +17819,18 @@
       "_tgt": "migrate_sales_remove_etsy_getdb",
       "source": "scripts_migrate_sales_remove_etsy_mjs",
       "target": "migrate_sales_remove_etsy_getdb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\migrate-users-shop-qr.mjs",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_src": "c_users_manag_github_repo_astro_turso_scripts_migrate_users_shop_qr_mjs",
+      "_tgt": "migrate_users_shop_qr_getdb",
+      "source": "c_users_manag_github_repo_astro_turso_scripts_migrate_users_shop_qr_mjs",
+      "target": "migrate_users_shop_qr_getdb",
       "confidence_score": 1.0
     },
     {
@@ -21283,84 +21496,84 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L77",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L78",
       "weight": 1.0,
-      "_src": "src_lib_sales_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "_tgt": "sales_slugify",
-      "source": "src_lib_sales_ts",
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "target": "sales_slugify",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L90",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L91",
       "weight": 1.0,
-      "_src": "src_lib_sales_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "_tgt": "sales_formatprice",
-      "source": "src_lib_sales_ts",
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "target": "sales_formatprice",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L103",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L104",
       "weight": 1.0,
-      "_src": "src_lib_sales_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "_tgt": "sales_calcsaleprice",
-      "source": "src_lib_sales_ts",
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "target": "sales_calcsaleprice",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L123",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L124",
       "weight": 1.0,
-      "_src": "src_lib_sales_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "_tgt": "sales_ispromoactive",
-      "source": "src_lib_sales_ts",
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "target": "sales_ispromoactive",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L140",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L141",
       "weight": 1.0,
-      "_src": "src_lib_sales_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "_tgt": "sales_parsetransforms",
-      "source": "src_lib_sales_ts",
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "target": "sales_parsetransforms",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L157",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L158",
       "weight": 1.0,
-      "_src": "src_lib_sales_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "_tgt": "sales_buildsalesimageurl",
-      "source": "src_lib_sales_ts",
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "target": "sales_buildsalesimageurl",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L206",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L207",
       "weight": 1.0,
-      "_src": "src_lib_sales_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "_tgt": "sales_parsetags",
-      "source": "src_lib_sales_ts",
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
       "target": "sales_parsetags",
       "confidence_score": 1.0
     },
@@ -21391,8 +21604,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L124",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L125",
       "weight": 1.0,
       "_src": "sales_ispromoactive",
       "_tgt": "sales_calcsaleprice",
@@ -21415,8 +21628,8 @@
     {
       "relation": "calls",
       "confidence": "EXTRACTED",
-      "source_file": "src\\lib\\sales.ts",
-      "source_location": "L163",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
+      "source_location": "L164",
       "weight": 1.0,
       "_src": "sales_buildsalesimageurl",
       "_tgt": "sales_parsetransforms",
@@ -21943,6 +22156,54 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\settings.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_src": "c_users_manag_github_repo_astro_turso_src_lib_settings_ts",
+      "_tgt": "settings_getsetting",
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_settings_ts",
+      "target": "settings_getsetting",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\settings.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_src": "c_users_manag_github_repo_astro_turso_src_lib_settings_ts",
+      "_tgt": "settings_setsetting",
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_settings_ts",
+      "target": "settings_setsetting",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_src": "settings_get",
+      "_tgt": "settings_getsetting",
+      "source": "settings_getsetting",
+      "target": "settings_get"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_src": "settings_put",
+      "_tgt": "settings_setsetting",
+      "source": "settings_setsetting",
+      "target": "settings_put"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src\\pages\\robots.txt.ts",
       "source_location": "L3",
       "weight": 1.0,
@@ -22387,6 +22648,66 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_settings_ts",
+      "_tgt": "settings_json",
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_settings_ts",
+      "target": "settings_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_settings_ts",
+      "_tgt": "settings_get",
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_settings_ts",
+      "target": "settings_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_settings_ts",
+      "_tgt": "settings_put",
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_settings_ts",
+      "target": "settings_put",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_src": "settings_get",
+      "_tgt": "settings_json",
+      "source": "settings_json",
+      "target": "settings_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_src": "settings_put",
+      "_tgt": "settings_json",
+      "source": "settings_json",
+      "target": "settings_put",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\ads\\index.ts",
       "source_location": "L4",
       "weight": 1.0,
@@ -22471,13 +22792,13 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\sales\\index.ts",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\sales\\index.ts",
       "source_location": "L6",
       "weight": 1.0,
-      "_src": "src_pages_api_admin_sales_index_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_index_ts",
       "_tgt": "index_json",
       "source": "index_json",
-      "target": "src_pages_api_admin_sales_index_ts",
+      "target": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_index_ts",
       "confidence_score": 1.0
     },
     {
@@ -22555,13 +22876,13 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\sales\\index.ts",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\sales\\index.ts",
       "source_location": "L44",
       "weight": 1.0,
-      "_src": "src_pages_api_admin_sales_index_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_index_ts",
       "_tgt": "index_post",
       "source": "index_post",
-      "target": "src_pages_api_admin_sales_index_ts",
+      "target": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_index_ts",
       "confidence_score": 1.0
     },
     {
@@ -22699,13 +23020,13 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\sales\\index.ts",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\sales\\index.ts",
       "source_location": "L14",
       "weight": 1.0,
-      "_src": "src_pages_api_admin_sales_index_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_index_ts",
       "_tgt": "index_get",
       "source": "index_get",
-      "target": "src_pages_api_admin_sales_index_ts",
+      "target": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_index_ts",
       "confidence_score": 1.0
     },
     {
@@ -22855,13 +23176,13 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\sales\\[slug].ts",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\sales\\[slug].ts",
       "source_location": "L6",
       "weight": 1.0,
-      "_src": "src_pages_api_admin_sales_slug_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_slug_ts",
       "_tgt": "slug_json",
       "source": "slug_json",
-      "target": "src_pages_api_admin_sales_slug_ts",
+      "target": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_slug_ts",
       "confidence_score": 1.0
     },
     {
@@ -22939,13 +23260,13 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\sales\\[slug].ts",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\sales\\[slug].ts",
       "source_location": "L14",
       "weight": 1.0,
-      "_src": "src_pages_api_admin_sales_slug_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_slug_ts",
       "_tgt": "slug_get",
       "source": "slug_get",
-      "target": "src_pages_api_admin_sales_slug_ts",
+      "target": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_slug_ts",
       "confidence_score": 1.0
     },
     {
@@ -23311,24 +23632,24 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\sales\\[slug].ts",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\sales\\[slug].ts",
       "source_location": "L68",
       "weight": 1.0,
-      "_src": "src_pages_api_admin_sales_slug_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_slug_ts",
       "_tgt": "slug_put",
-      "source": "src_pages_api_admin_sales_slug_ts",
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_slug_ts",
       "target": "slug_put",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\sales\\[slug].ts",
-      "source_location": "L161",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\sales\\[slug].ts",
+      "source_location": "L163",
       "weight": 1.0,
-      "_src": "src_pages_api_admin_sales_slug_ts",
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_slug_ts",
       "_tgt": "slug_delete",
-      "source": "src_pages_api_admin_sales_slug_ts",
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_slug_ts",
       "target": "slug_delete",
       "confidence_score": 1.0
     },
