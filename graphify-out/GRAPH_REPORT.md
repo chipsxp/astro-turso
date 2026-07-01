@@ -1,12 +1,12 @@
 # Graph Report - C:\Users\manag\Github-repo\astro-turso  (2026-06-30)
 
 ## Corpus Check
-- 87 files · ~607,645 words
+- 88 files · ~607,849 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 909 nodes · 1585 edges · 107 communities detected
-- Extraction: 70% EXTRACTED · 30% INFERRED · 0% AMBIGUOUS · INFERRED: 481 edges (avg confidence: 0.71)
+- 910 nodes · 1589 edges · 108 communities detected
+- Extraction: 70% EXTRACTED · 30% INFERRED · 0% AMBIGUOUS · INFERRED: 482 edges (avg confidence: 0.71)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
@@ -117,6 +117,7 @@
 - [[_COMMUNITY_Community 104|Community 104]]
 - [[_COMMUNITY_Community 105|Community 105]]
 - [[_COMMUNITY_Community 106|Community 106]]
+- [[_COMMUNITY_Community 107|Community 107]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `RailwayContext` - 80 edges
@@ -125,7 +126,7 @@
 4. `execute()` - 62 edges
 5. `POST()` - 30 edges
 6. `analyze_redis()` - 25 edges
-7. `error()` - 23 edges
+7. `error()` - 24 edges
 8. `PUT()` - 22 edges
 9. `GET()` - 21 edges
 10. `analyze_mongo()` - 20 edges
@@ -135,12 +136,12 @@
   library/social-share-plan.md → docs/diagrams/architecture-eraser-diagram.png
 - `PanelGallery React Island (admin dashboard)` --semantically_similar_to--> `Frontend Layer (Admin Dashboard, Article Editor, Blog Pages, SEO/OG, Social Share)`  [INFERRED] [semantically similar]
   library/panel-gallery-plan.md → docs/diagrams/architecture-eraser-diagram.png
-- `toPublicEvent()` --calls--> `GET()`  [INFERRED]
-  C:\Users\manag\Github-repo\astro-turso\src\lib\events.ts → C:\Users\manag\Github-repo\astro-turso\src\pages\api\sales\[slug].ts
 - `toEventSlug()` --calls--> `POST()`  [INFERRED]
   C:\Users\manag\Github-repo\astro-turso\src\lib\events.ts → src\pages\api\events\index.ts
-- `mapEventRow()` --calls--> `GET()`  [INFERRED]
-  C:\Users\manag\Github-repo\astro-turso\src\lib\events.ts → C:\Users\manag\Github-repo\astro-turso\src\pages\api\sales\[slug].ts
+- `Turso Fresh Connection Per Call Rule` --semantically_similar_to--> `Turso Query Conventions (parameterized, mapRows, batch)`  [INFERRED] [semantically similar]
+  CLAUDE.md → devtools/skills/code-development/skill.md
+- `Three-Agent Sync Contract (Claude + Copilot + Cursor must stay in sync)` --semantically_similar_to--> `Project Memory Skill (SKILL.md)`  [INFERRED] [semantically similar]
+  CLAUDE.md → devtools/skills/project-memory/SKILL.md
 
 ## Hyperedges (group relationships)
 - **Three-Agent Sync Contract (Claude + Copilot + Cursor/Windsurf)** — claude_md, agents_md, github_copilot_instructions [EXTRACTED 1.00]
@@ -159,48 +160,48 @@
 ## Communities
 
 ### Community 0 - "Community 0"
-Cohesion: 0.03
-Nodes (181): analyze_mongo(), _fmt_bytes(), _fmt_count(), _fmt_uptime(), _fmt_us(), format_report(), generate_recommendations(), main() (+173 more)
+Cohesion: 0.04
+Nodes (126): analyze_mongo(), _fmt_bytes(), _fmt_count(), _fmt_uptime(), _fmt_us(), format_report(), generate_recommendations(), main() (+118 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.06
-Nodes (56): GET(), json(), POST(), convertArticleInlineImages(), ensureInlineSchema(), estimateBase64DecodedBytes(), execute(), extractInlineMatches() (+48 more)
+Nodes (60): convertArticleInlineImages(), ensureInlineSchema(), estimateBase64DecodedBytes(), execute(), extractInlineMatches(), getDb(), main(), rewriteBodyWithUrls() (+52 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.06
-Nodes (40): handleDelete(), json(), POST(), ensureEventsSchema(), getArchiveBadgeLabel(), getDaysAgoInNewYork(), getEventEffectiveEndDate(), getEventLifecycleLabel() (+32 more)
+Nodes (55): collect_mysql_data(), _format_bytes(), _format_count(), format_report(), generate_recommendations(), main(), parse_mysql_batch(), parse_mysql_kv() (+47 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.06
-Nodes (46): confirm_with_user(), error(), info(), Run a psql query via railway ssh and return (returncode, output).      Normali, Print an [INFO] message to stdout., Print an [ERROR] message to stderr and exit., Get confirmation directly from the terminal.      Reads from /dev/tty to ensur, run_psql_query() (+38 more)
+Cohesion: 0.07
+Nodes (43): handleDelete(), json(), POST(), getClientIp(), isRateLimited(), isValidEmail(), json(), POST() (+35 more)
 
 ### Community 4 - "Community 4"
+Cohesion: 0.07
+Nodes (46): GET(), json(), POST(), confirm_with_user(), error(), info(), Run a psql query via railway ssh and return (returncode, output).      Normali, Print an [INFO] message to stdout. (+38 more)
+
+### Community 5 - "Community 5"
 Cohesion: 0.06
 Nodes (45): AGENTS.md — Cursor/Windsurf Agent Instructions, Astro SSR Framework (output: server), Base64 JSON Upload Pattern (WAF-safe alternative to multipart), Bug Log Template, Chat Customization Diagnostics, CLAUDE.md — Claude Code Project Instructions, Cloudinary Media Storage Integration, Code Development Skill (+37 more)
 
-### Community 5 - "Community 5"
-Cohesion: 0.15
-Nodes (21): CategoryInputError, createCategory(), ensureCategorySchema(), findCategoryById(), findCategoryByNameOrSlug(), listCategories(), mapCategoryRow(), resolveCategoryId() (+13 more)
-
 ### Community 6 - "Community 6"
-Cohesion: 0.1
-Nodes (9): EventFormManager, buildPreviewHtml(), ensureResizeModuleRegistered(), escapeAttr(), escapeHtml(), initializeEditor(), previewBodyToHtml(), attachPickerControl() (+1 more)
+Cohesion: 0.12
+Nodes (25): CategoryInputError, createCategory(), ensureCategorySchema(), findCategoryById(), findCategoryByNameOrSlug(), listCategories(), mapCategoryRow(), resolveCategoryId() (+17 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.1
-Nodes (29): API Layer (JWT Middleware, /api/auth/login, /api/articles, /api/upload), CDN / Image Storage (external), System Architecture Diagram (Cloud Architecture), Frontend Layer (Admin Dashboard, Article Editor, Blog Pages, SEO/OG, Social Share), Social Platforms (external share targets), Turso Layer (Turso Cloud, users/articles/images/tags tables), Panel Gallery Slot Picker Clipping Fix (2026-03-20), Session 1: Project Architecture Planning (2026-02-27) (+21 more)
+Nodes (9): EventFormManager, buildPreviewHtml(), ensureResizeModuleRegistered(), escapeAttr(), escapeHtml(), initializeEditor(), previewBodyToHtml(), attachPickerControl() (+1 more)
 
 ### Community 8 - "Community 8"
 Cohesion: 0.1
-Nodes (26): Railway DB Autoscale Rules, DB Analysis Collection Status Handling, Database Analysis Common Patterns, MongoDB Connection Saturation Pattern, MongoDB Analysis Reference, MongoDB Oplog Pressure Pattern, MongoDB Query Efficiency Pattern, WiredTiger Cache Performance Pattern (+18 more)
+Nodes (29): API Layer (JWT Middleware, /api/auth/login, /api/articles, /api/upload), CDN / Image Storage (external), System Architecture Diagram (Cloud Architecture), Frontend Layer (Admin Dashboard, Article Editor, Blog Pages, SEO/OG, Social Share), Social Platforms (external share targets), Turso Layer (Turso Cloud, users/articles/images/tags tables), Panel Gallery Slot Picker Clipping Fix (2026-03-20), Session 1: Project Architecture Planning (2026-02-27) (+21 more)
 
 ### Community 9 - "Community 9"
 Cohesion: 0.1
-Nodes (22): Session 2: WSL + Turso DB Setup (2026-02-28), Session 3: Astro Bootstrap + Turso DB Client (2026-03-01), Turso Driver: connect() Single-Use HTTP Session, FTS DDL: CREATE INDEX USING fts, Full-Text Search in tursodb (Tantivy-based), FTS Query Functions (fts_score, fts_match, fts_highlight), HybridBTreeDirectory (memory-bounded FTS storage), OPTIMIZE INDEX (FTS segment merging) (+14 more)
+Nodes (26): Railway DB Autoscale Rules, DB Analysis Collection Status Handling, Database Analysis Common Patterns, MongoDB Connection Saturation Pattern, MongoDB Analysis Reference, MongoDB Oplog Pressure Pattern, MongoDB Query Efficiency Pattern, WiredTiger Cache Performance Pattern (+18 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.18
-Nodes (17): DELETE(), GET(), getClientIp(), isRateLimited(), json(), PATCH(), cleanupUnusedInlineImages(), columnExistsError() (+9 more)
+Cohesion: 0.1
+Nodes (22): Session 2: WSL + Turso DB Setup (2026-02-28), Session 3: Astro Bootstrap + Turso DB Client (2026-03-01), Turso Driver: connect() Single-Use HTTP Session, FTS DDL: CREATE INDEX USING fts, Full-Text Search in tursodb (Tantivy-based), FTS Query Functions (fts_score, fts_match, fts_highlight), HybridBTreeDirectory (memory-bounded FTS storage), OPTIMIZE INDEX (FTS segment merging) (+14 more)
 
 ### Community 11 - "Community 11"
 Cohesion: 0.11
@@ -211,84 +212,84 @@ Cohesion: 0.12
 Nodes (19): Bug: 403 CSRF checkOrigin False Positive on Railway, Bug: Facebook OG Scraper Blocked by ModSecurity, ADR-004: Admin JWT HttpOnly Cookie Auth, ADR-012: In-Memory Rate Limiting on Public API Endpoints, ADR-013: HSTS + CSP Report-Only Headers, cPanel Deployment Guide, cPanel Environment Variable Configuration, cPanel SSL/HTTPS Requirements (+11 more)
 
 ### Community 13 - "Community 13"
+Cohesion: 0.18
+Nodes (9): buildCloudinaryImageUrl(), buildCloudinaryVideoPosterUrl(), buildCloudinaryVideoUrl(), clampWidth(), encodePublicId(), handleDelete(), handleFileChange(), showToast() (+1 more)
+
+### Community 14 - "Community 14"
 Cohesion: 0.26
 Nodes (14): buildSafeForm(), buildSafeInput(), buildSafePaypalImg(), escAttr(), extractAttr(), extractPayPalSdkConfig(), hasSdkScript(), parseAttrs() (+6 more)
 
-### Community 14 - "Community 14"
+### Community 15 - "Community 15"
 Cohesion: 0.14
 Nodes (15): Edge Confidence Labels (EXTRACTED/INFERRED), Interactive Graph Visualization Page, RAW_EDGES Dataset, RAW_NODES Dataset, Inline Image Pipeline Hyperedge, PayPal Sanitizer Concept, Rationale: Separate images (inline/base64) vs media (Cloudinary) tables, Rationale: Server-Side Inline Image Interception on Save (+7 more)
 
-### Community 15 - "Community 15"
+### Community 16 - "Community 16"
 Cohesion: 0.16
 Nodes (14): @astrojs/node Adapter Options (standalone/middleware mode), Railway + checkOrigin False Positive (TLS Termination), security.allowedDomains (X-Forwarded-Host Validation), security.checkOrigin (CSRF Origin Check), security.csp (Content Security Policy), Astro Security Configuration Reference, CSRF 403 Fixed + Railway Deploy (2026-03-28), Facebook OG Social Share Fixed on cPanel LAMP (2026-03-30) (+6 more)
 
-### Community 16 - "Community 16"
+### Community 17 - "Community 17"
 Cohesion: 0.27
 Nodes (10): clearAuthCookie(), setAuthCookie(), clearAttempts(), GET(), getClientIp(), isRateLimited(), json(), POST() (+2 more)
 
-### Community 17 - "Community 17"
+### Community 18 - "Community 18"
 Cohesion: 0.22
 Nodes (3): getItemsForDay(), getTodayStr(), toDateStr()
 
-### Community 18 - "Community 18"
+### Community 19 - "Community 19"
 Cohesion: 0.24
 Nodes (6): buildSalesImageUrl(), calcSalePrice(), isPromoActive(), parseTransforms(), slugify(), SalesGallery()
 
-### Community 19 - "Community 19"
+### Community 20 - "Community 20"
 Cohesion: 0.29
 Nodes (5): applyTransforms(), defaultTransforms(), handleDelete(), parseTransforms(), toast()
 
-### Community 20 - "Community 20"
+### Community 21 - "Community 21"
+Cohesion: 0.4
+Nodes (6): DELETE(), GET(), getClientIp(), isRateLimited(), json(), PATCH()
+
+### Community 22 - "Community 22"
 Cohesion: 0.22
 Nodes (10): Bug: Cloudinary Text Overlay Resize Order, ADR-021: Remove Etsy Integration Replace with Cloudinary+PayPal, Etsy Browse API Route Design, Etsy Section Cache Pattern, Etsy Product Browser Implementation Plan, Sales Postings Database Schema, Etsy Open API v3 Integration Research, Sales Page Feature Plan v2 (+2 more)
 
-### Community 21 - "Community 21"
-Cohesion: 0.39
-Nodes (6): buildCloudinaryImageUrl(), buildCloudinaryVideoPosterUrl(), buildCloudinaryVideoUrl(), clampWidth(), encodePublicId(), thumbUrl()
-
-### Community 22 - "Community 22"
+### Community 23 - "Community 23"
 Cohesion: 0.25
 Nodes (9): Bug: SocialShare Panel Hidden Due to Middleware Early Return, Bug: @tursodatabase/serverless Numeric-Indexed Rows, Bug: @tursodatabase/serverless Single-Use HTTP Session, Phase 2: Astro Project Bootstrap, Phase 4: Auth API Route, Phase 5: JWT Middleware, Build Plan Phase Tracker, Phase 1: Turso Database Schema (+1 more)
 
-### Community 23 - "Community 23"
+### Community 24 - "Community 24"
 Cohesion: 0.57
 Nodes (7): GET(), getClientIp(), isRateLimited(), isValidEmail(), json(), POST(), recordAttempt()
 
-### Community 24 - "Community 24"
-Cohesion: 0.52
-Nodes (6): getClientIp(), isRateLimited(), isValidEmail(), json(), POST(), recordAttempt()
-
 ### Community 25 - "Community 25"
+Cohesion: 0.33
+Nodes (3): logAnalyticsEvent(), json(), POST()
+
+### Community 26 - "Community 26"
 Cohesion: 0.29
 Nodes (7): Etsy Removal → Cloudinary Sales System (2026-04-23), Event Calendar React Island (2026-04-19), Inline Images Persisted to images Table (2026-04-05), Issues / Work Log, Database Should Know About Its Own Images (2026-04-05), Rationale: Separate images (inline/base64) vs media (Cloudinary) tables, Rationale: Server-Side Inline Image Interception on Save (transparent to author, clean DB storage)
 
-### Community 26 - "Community 26"
+### Community 27 - "Community 27"
 Cohesion: 0.4
 Nodes (2): sanitizeArticleBody(), sanitizeForPreview()
 
-### Community 27 - "Community 27"
+### Community 28 - "Community 28"
 Cohesion: 0.47
 Nodes (6): cPanel/LiteSpeed Production Deployment (happyfeelingprints.com), No Self-Fetch in Astro SSR Frontmatter Rule, Railway Deployment Target, Railway Resource Model (Workspace/Project/Environment/Service), Rationale: No Self-Fetch (Railway/LiteSpeed TLS termination breaks loopback), Use Railway Skill
 
-### Community 28 - "Community 28"
+### Community 29 - "Community 29"
 Cohesion: 0.83
 Nodes (3): addSecurityHeaders(), buildCsp(), unauthorized()
 
-### Community 29 - "Community 29"
+### Community 30 - "Community 30"
 Cohesion: 0.5
 Nodes (4): Admin Layout Heading Bleed Bug (h2-h4 into .ql-editor), CSS Scoping Trap: set:html and client:only Bypass Astro CID, Quill 2 Snow WYSIWYG Editor, Rationale: set:html styles in global.css (Astro cid attribute bypass)
 
-### Community 30 - "Community 30"
+### Community 31 - "Community 31"
 Cohesion: 0.5
 Nodes (4): Railway Template Search and Deploy, Railway S3 Bucket Management, Railway Project Setup, Railway Service Creation
 
-### Community 31 - "Community 31"
+### Community 32 - "Community 32"
 Cohesion: 0.5
 Nodes (4): Cloudinary Panel Fix + Self-Hosted Fonts Rollout (2026-04-14), Cloudinary Transform Debugging + Local Font Hosting (2026-04-14), Self-Hosted Fonts (Fraunces, DM Sans, Fira Code), Rationale: Self-Hosted Fonts (remove Google Fonts CDN dependency, tighten CSP)
-
-### Community 32 - "Community 32"
-Cohesion: 0.67
-Nodes (0): 
 
 ### Community 33 - "Community 33"
 Cohesion: 0.67
@@ -296,27 +297,27 @@ Nodes (0):
 
 ### Community 34 - "Community 34"
 Cohesion: 0.67
-Nodes (3): Railway Environment Management, Railway Private Networking Decision, Railway Variable Configuration
+Nodes (0): 
 
 ### Community 35 - "Community 35"
 Cohesion: 0.67
-Nodes (3): Railway Domain Configuration, Railway Service Config Schema, Railway Standard Deploy Command
+Nodes (3): Railway Environment Management, Railway Private Networking Decision, Railway Variable Configuration
 
 ### Community 36 - "Community 36"
 Cohesion: 0.67
-Nodes (3): Railway Metrics GraphQL Queries, Railway GraphQL API Helper, Railway Official Documentation Endpoints
+Nodes (3): Railway Domain Configuration, Railway Service Config Schema, Railway Standard Deploy Command
 
 ### Community 37 - "Community 37"
 Cohesion: 0.67
-Nodes (3): Quill Editor Verification Tests, Phase 6 Verification Checklist, XSS Sanitization Smoke Tests
+Nodes (3): Railway Metrics GraphQL Queries, Railway GraphQL API Helper, Railway Official Documentation Endpoints
 
 ### Community 38 - "Community 38"
 Cohesion: 0.67
-Nodes (3): Bug: Quill 2 Block Formats Public Page Rendering, Bug: React Island CSS Scoping Trap, ADR-020: global.css as Escape Hatch for React Island CSS
+Nodes (3): Quill Editor Verification Tests, Phase 6 Verification Checklist, XSS Sanitization Smoke Tests
 
 ### Community 39 - "Community 39"
 Cohesion: 0.67
-Nodes (3): User Registration & Admin Approval System (2026-03-15), User Visibility Incident + Future Interconnect Design (2026-03-15), Rationale: Client-Side Draft Preview (zero round-trip, no preview token system needed)
+Nodes (3): Bug: Quill 2 Block Formats Public Page Rendering, Bug: React Island CSS Scoping Trap, ADR-020: global.css as Escape Hatch for React Island CSS
 
 ### Community 40 - "Community 40"
 Cohesion: 0.67
@@ -324,11 +325,11 @@ Nodes (3): Dark / Light Theme System (2026-03-19), Dark / Light Theme System: No
 
 ### Community 41 - "Community 41"
 Cohesion: 0.67
-Nodes (3): Auth: JWT HttpOnly Cookie Pattern, Key Facts, Event Lifecycle Policy
+Nodes (3): User Registration & Admin Approval System (2026-03-15), User Visibility Incident + Future Interconnect Design (2026-03-15), Rationale: Client-Side Draft Preview (zero round-trip, no preview token system needed)
 
 ### Community 42 - "Community 42"
-Cohesion: 1.0
-Nodes (0): 
+Cohesion: 0.67
+Nodes (3): Auth: JWT HttpOnly Cookie Pattern, Key Facts, Event Lifecycle Policy
 
 ### Community 43 - "Community 43"
 Cohesion: 1.0
@@ -372,31 +373,31 @@ Nodes (0):
 
 ### Community 53 - "Community 53"
 Cohesion: 1.0
-Nodes (2): Role-Based Access Control (admin / author), Two-Phase Middleware Pattern (Identification + Enforcement)
+Nodes (0): 
 
 ### Community 54 - "Community 54"
 Cohesion: 1.0
-Nodes (2): Railway Monorepo Deployment Patterns, Railway Monorepo Detection Patterns
+Nodes (2): Role-Based Access Control (admin / author), Two-Phase Middleware Pattern (Identification + Enforcement)
 
 ### Community 55 - "Community 55"
 Cohesion: 1.0
-Nodes (2): Bug: Quill 2 Block Formats Admin CSS Bleed, ADR-017: Docs-First Workflow for Astro+TypeScript Errors
+Nodes (2): Railway Monorepo Deployment Patterns, Railway Monorepo Detection Patterns
 
 ### Community 56 - "Community 56"
 Cohesion: 1.0
-Nodes (2): Bug: Multi-User Privacy Gap in Admin Routes, ADR-006: Per-User Article Ownership Enforcement
+Nodes (2): Bug: Quill 2 Block Formats Admin CSS Bleed, ADR-017: Docs-First Workflow for Astro+TypeScript Errors
 
 ### Community 57 - "Community 57"
 Cohesion: 1.0
-Nodes (2): Bug: Cloudinary Cloud Name SSR ENV Resolution, ADR-019: Self-Hosted Fonts + Cloudinary Name Fallback
+Nodes (2): Bug: Multi-User Privacy Gap in Admin Routes, ADR-006: Per-User Article Ownership Enforcement
 
 ### Community 58 - "Community 58"
 Cohesion: 1.0
-Nodes (2): CSS Dead Code Removal + Admin-Layout Quill Cleanup (2026-04-17), Rationale: Global CSS for set:html containers (Astro scoped CSS never matches set:html children)
+Nodes (2): Bug: Cloudinary Cloud Name SSR ENV Resolution, ADR-019: Self-Hosted Fonts + Cloudinary Name Fallback
 
 ### Community 59 - "Community 59"
 Cohesion: 1.0
-Nodes (2): Astro + TypeScript Error Resolution (2026-04-06), Astro + TypeScript Framework Boundaries (2026-04-06)
+Nodes (2): CSS Dead Code Removal + Admin-Layout Quill Cleanup (2026-04-17), Rationale: Global CSS for set:html containers (Astro scoped CSS never matches set:html children)
 
 ### Community 60 - "Community 60"
 Cohesion: 1.0
@@ -408,23 +409,23 @@ Nodes (2): Cloudinary Delivery Optimization Rollout (2026-03-19), Cloudinary Ima
 
 ### Community 62 - "Community 62"
 Cohesion: 1.0
-Nodes (2): Article Body Guardrails Relaxed After Author Feedback (2026-04-05), Body Guardrails: Protecting the Database (2026-04-03)
+Nodes (2): Astro + TypeScript Error Resolution (2026-04-06), Astro + TypeScript Framework Boundaries (2026-04-06)
 
 ### Community 63 - "Community 63"
 Cohesion: 1.0
-Nodes (2): Development Journal, The Bug That Wasn't a Network Error (2026-03-29)
+Nodes (2): Article Body Guardrails Relaxed After Author Feedback (2026-04-05), Body Guardrails: Protecting the Database (2026-04-03)
 
 ### Community 64 - "Community 64"
 Cohesion: 1.0
-Nodes (2): Cloudinary Transformation + Validation Sweep (2026-04-03), Cloudinary Transformation Validator Sweep (2026-04-03)
+Nodes (2): Development Journal, The Bug That Wasn't a Network Error (2026-03-29)
 
 ### Community 65 - "Community 65"
 Cohesion: 1.0
-Nodes (2): Rationale: Global CSS for set:html containers, Global CSS Policy for set:html Children
+Nodes (2): Cloudinary Transformation + Validation Sweep (2026-04-03), Cloudinary Transformation Validator Sweep (2026-04-03)
 
 ### Community 66 - "Community 66"
 Cohesion: 1.0
-Nodes (0): 
+Nodes (2): Rationale: Global CSS for set:html containers, Global CSS Policy for set:html Children
 
 ### Community 67 - "Community 67"
 Cohesion: 1.0
@@ -448,141 +449,145 @@ Nodes (0):
 
 ### Community 72 - "Community 72"
 Cohesion: 1.0
-Nodes (1): Content Security Policy (addSecurityHeaders in middleware)
+Nodes (0): 
 
 ### Community 73 - "Community 73"
 Cohesion: 1.0
-Nodes (1): In-Memory Rate Limiting Pattern (Map-based)
+Nodes (1): Content Security Policy (addSecurityHeaders in middleware)
 
 ### Community 74 - "Community 74"
 Cohesion: 1.0
-Nodes (1): Article Body Guardrails (Size + Inline Image Limits)
+Nodes (1): In-Memory Rate Limiting Pattern (Map-based)
 
 ### Community 75 - "Community 75"
 Cohesion: 1.0
-Nodes (1): Event Archive Lifecycle (14-day window + permanent archive)
+Nodes (1): Article Body Guardrails (Size + Inline Image Limits)
 
 ### Community 76 - "Community 76"
 Cohesion: 1.0
-Nodes (1): Railway Railpack Builder
+Nodes (1): Event Archive Lifecycle (14-day window + permanent archive)
 
 ### Community 77 - "Community 77"
 Cohesion: 1.0
-Nodes (1): Railway Central Station Community
+Nodes (1): Railway Railpack Builder
 
 ### Community 78 - "Community 78"
 Cohesion: 1.0
-Nodes (1): Bug: DB Datetime Invalid Date Parsing
+Nodes (1): Railway Central Station Community
 
 ### Community 79 - "Community 79"
 Cohesion: 1.0
-Nodes (1): Bug: TypeScript Implicit Any After Filter Chain
+Nodes (1): Bug: DB Datetime Invalid Date Parsing
 
 ### Community 80 - "Community 80"
 Cohesion: 1.0
-Nodes (1): Bug: Sales Listing Silent catch{} Error Hiding
+Nodes (1): Bug: TypeScript Implicit Any After Filter Chain
 
 ### Community 81 - "Community 81"
 Cohesion: 1.0
-Nodes (1): Bug: TypeScript Narrowing Drift Across Astro Boundaries
+Nodes (1): Bug: Sales Listing Silent catch{} Error Hiding
 
 ### Community 82 - "Community 82"
 Cohesion: 1.0
-Nodes (1): Bug: Admin Event Draft Edit Blank Fields
+Nodes (1): Bug: TypeScript Narrowing Drift Across Astro Boundaries
 
 ### Community 83 - "Community 83"
 Cohesion: 1.0
-Nodes (1): Bug: Admin Edit Page 2+ Min Pending for Draft Slug
+Nodes (1): Bug: Admin Event Draft Edit Blank Fields
 
 ### Community 84 - "Community 84"
 Cohesion: 1.0
-Nodes (1): Bug: Cloudinary Upload Guardrails + Preview Sanitization Gaps
+Nodes (1): Bug: Admin Edit Page 2+ Min Pending for Draft Slug
 
 ### Community 85 - "Community 85"
 Cohesion: 1.0
-Nodes (1): Bug: Feature Image Upload Fails TypeScript Generic in is:inline
+Nodes (1): Bug: Cloudinary Upload Guardrails + Preview Sanitization Gaps
 
 ### Community 86 - "Community 86"
 Cohesion: 1.0
-Nodes (1): Bug: Generated Build Artifacts Contained Inlined Secrets
+Nodes (1): Bug: Feature Image Upload Fails TypeScript Generic in is:inline
 
 ### Community 87 - "Community 87"
 Cohesion: 1.0
-Nodes (1): Bug: Article DELETE 500 FK Constraint Violation
+Nodes (1): Bug: Generated Build Artifacts Contained Inlined Secrets
 
 ### Community 88 - "Community 88"
 Cohesion: 1.0
-Nodes (1): Bug: Railway CLI Service Targeting Mismatch
+Nodes (1): Bug: Article DELETE 500 FK Constraint Violation
 
 ### Community 89 - "Community 89"
 Cohesion: 1.0
-Nodes (1): Bug: Panel Gallery Slot Picker Clipped by Card Overflow
+Nodes (1): Bug: Railway CLI Service Targeting Mismatch
 
 ### Community 90 - "Community 90"
 Cohesion: 1.0
-Nodes (1): Bug: db.execute() Without [] Args Returns Empty Rows
+Nodes (1): Bug: Panel Gallery Slot Picker Clipped by Card Overflow
 
 ### Community 91 - "Community 91"
 Cohesion: 1.0
-Nodes (1): Bug: New Article Form Re-POSTed on Update Click
+Nodes (1): Bug: db.execute() Without [] Args Returns Empty Rows
 
 ### Community 92 - "Community 92"
 Cohesion: 1.0
-Nodes (1): ADR-018: Permanent Event Archive 14-Day Window
+Nodes (1): Bug: New Article Form Re-POSTed on Update Click
 
 ### Community 93 - "Community 93"
 Cohesion: 1.0
-Nodes (1): ADR-016: Inline Editor Images Stored in images Table
+Nodes (1): ADR-018: Permanent Event Archive 14-Day Window
 
 ### Community 94 - "Community 94"
 Cohesion: 1.0
-Nodes (1): ADR-009: Dark/Light Theme System CSS Custom Property Override
+Nodes (1): ADR-016: Inline Editor Images Stored in images Table
 
 ### Community 95 - "Community 95"
 Cohesion: 1.0
-Nodes (1): ADR-008: User Registration & Admin Approval System
+Nodes (1): ADR-009: Dark/Light Theme System CSS Custom Property Override
 
 ### Community 96 - "Community 96"
 Cohesion: 1.0
-Nodes (1): ADR-007: TailwindCSS v4 Vite Plugin Approach
+Nodes (1): ADR-008: User Registration & Admin Approval System
 
 ### Community 97 - "Community 97"
 Cohesion: 1.0
-Nodes (1): ADR-001: Pinecone Assistant for Library RAG
+Nodes (1): ADR-007: TailwindCSS v4 Vite Plugin Approach
 
 ### Community 98 - "Community 98"
 Cohesion: 1.0
-Nodes (1): Fixed Quill 2 Block Formatting in Sales Editor (2026-04-17)
+Nodes (1): ADR-001: Pinecone Assistant for Library RAG
 
 ### Community 99 - "Community 99"
 Cohesion: 1.0
-Nodes (1): Event Archive Policy Revision (2026-04-13)
+Nodes (1): Fixed Quill 2 Block Formatting in Sales Editor (2026-04-17)
 
 ### Community 100 - "Community 100"
 Cohesion: 1.0
-Nodes (1): Events Feature v1 Implementation (2026-04-06)
+Nodes (1): Event Archive Policy Revision (2026-04-13)
 
 ### Community 101 - "Community 101"
 Cohesion: 1.0
-Nodes (1): API Convention Audit + One-Slug Pending Diagnosis (2026-04-03)
+Nodes (1): Events Feature v1 Implementation (2026-04-06)
 
 ### Community 102 - "Community 102"
 Cohesion: 1.0
-Nodes (1): Railway Dev Validation Deploy (2026-04-02)
+Nodes (1): API Convention Audit + One-Slug Pending Diagnosis (2026-04-03)
 
 ### Community 103 - "Community 103"
 Cohesion: 1.0
-Nodes (1): Phase 1: Turso Database Schema (2026-02-28)
+Nodes (1): Railway Dev Validation Deploy (2026-04-02)
 
 ### Community 104 - "Community 104"
 Cohesion: 1.0
-Nodes (1): Session 4: Auth API Route + JWT Middleware (2026-03-01)
+Nodes (1): Phase 1: Turso Database Schema (2026-02-28)
 
 ### Community 105 - "Community 105"
 Cohesion: 1.0
-Nodes (1): Eraser Diagrams Skill Config
+Nodes (1): Session 4: Auth API Route + JWT Middleware (2026-03-01)
 
 ### Community 106 - "Community 106"
+Cohesion: 1.0
+Nodes (1): Eraser Diagrams Skill Config
+
+### Community 107 - "Community 107"
 Cohesion: 1.0
 Nodes (1): Favicon SVG (yellow smiley face icon)
 
@@ -593,135 +598,135 @@ Nodes (1): Favicon SVG (yellow smiley face icon)
 ## Knowledge Gaps
 - **212 isolated node(s):** `Track elapsed time for progress messages.`, `Start the overall timer.`, `Get elapsed time since last step, then reset step timer.`, `Get total elapsed time.`, `Explicit Railway IDs that bypass railway link.` (+207 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Community 42`** (2 nodes): `getDb()`, `create-events-table.mjs`
+- **Thin community `Community 43`** (2 nodes): `getDb()`, `create-events-table.mjs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 43`** (2 nodes): `create-monetization-tables.mjs`, `getDb()`
+- **Thin community `Community 44`** (2 nodes): `create-monetization-tables.mjs`, `getDb()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 44`** (2 nodes): `getDb()`, `create-panel-tables.mjs`
+- **Thin community `Community 45`** (2 nodes): `getDb()`, `create-panel-tables.mjs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 45`** (2 nodes): `getDb()`, `create-sales-table.mjs`
+- **Thin community `Community 46`** (2 nodes): `getDb()`, `create-sales-table.mjs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 46`** (2 nodes): `getDb()`, `create-shares-table.mjs`
+- **Thin community `Community 47`** (2 nodes): `getDb()`, `create-shares-table.mjs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 47`** (2 nodes): `create-site-settings-table.mjs`, `getDb()`
+- **Thin community `Community 48`** (2 nodes): `create-site-settings-table.mjs`, `getDb()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 48`** (2 nodes): `getDb()`, `migrate-sales-remove-etsy.mjs`
+- **Thin community `Community 49`** (2 nodes): `getDb()`, `migrate-sales-remove-etsy.mjs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 49`** (2 nodes): `migrate-users-shop-qr.mjs`, `getDb()`
+- **Thin community `Community 50`** (2 nodes): `migrate-users-shop-qr.mjs`, `getDb()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 50`** (2 nodes): `getDb()`, `migrate-users-status.mjs`
+- **Thin community `Community 51`** (2 nodes): `getDb()`, `migrate-users-status.mjs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 51`** (2 nodes): `SplashScreen.tsx`, `SplashScreen()`
+- **Thin community `Community 52`** (2 nodes): `SplashScreen.tsx`, `SplashScreen()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 52`** (2 nodes): `GET()`, `robots.txt.ts`
+- **Thin community `Community 53`** (2 nodes): `GET()`, `robots.txt.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 53`** (2 nodes): `Role-Based Access Control (admin / author)`, `Two-Phase Middleware Pattern (Identification + Enforcement)`
+- **Thin community `Community 54`** (2 nodes): `Role-Based Access Control (admin / author)`, `Two-Phase Middleware Pattern (Identification + Enforcement)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 54`** (2 nodes): `Railway Monorepo Deployment Patterns`, `Railway Monorepo Detection Patterns`
+- **Thin community `Community 55`** (2 nodes): `Railway Monorepo Deployment Patterns`, `Railway Monorepo Detection Patterns`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 55`** (2 nodes): `Bug: Quill 2 Block Formats Admin CSS Bleed`, `ADR-017: Docs-First Workflow for Astro+TypeScript Errors`
+- **Thin community `Community 56`** (2 nodes): `Bug: Quill 2 Block Formats Admin CSS Bleed`, `ADR-017: Docs-First Workflow for Astro+TypeScript Errors`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 56`** (2 nodes): `Bug: Multi-User Privacy Gap in Admin Routes`, `ADR-006: Per-User Article Ownership Enforcement`
+- **Thin community `Community 57`** (2 nodes): `Bug: Multi-User Privacy Gap in Admin Routes`, `ADR-006: Per-User Article Ownership Enforcement`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 57`** (2 nodes): `Bug: Cloudinary Cloud Name SSR ENV Resolution`, `ADR-019: Self-Hosted Fonts + Cloudinary Name Fallback`
+- **Thin community `Community 58`** (2 nodes): `Bug: Cloudinary Cloud Name SSR ENV Resolution`, `ADR-019: Self-Hosted Fonts + Cloudinary Name Fallback`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 58`** (2 nodes): `CSS Dead Code Removal + Admin-Layout Quill Cleanup (2026-04-17)`, `Rationale: Global CSS for set:html containers (Astro scoped CSS never matches set:html children)`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 59`** (2 nodes): `Astro + TypeScript Error Resolution (2026-04-06)`, `Astro + TypeScript Framework Boundaries (2026-04-06)`
+- **Thin community `Community 59`** (2 nodes): `CSS Dead Code Removal + Admin-Layout Quill Cleanup (2026-04-17)`, `Rationale: Global CSS for set:html containers (Astro scoped CSS never matches set:html children)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 60`** (2 nodes): `Quill Image Resize Restored (2026-04-05)`, `Giving the Editor Real Hands: In-Editor Image Resize (2026-04-05)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 61`** (2 nodes): `Cloudinary Delivery Optimization Rollout (2026-03-19)`, `Cloudinary Image Delivery Optimization + Upload Guardrails (2026-03-19)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 62`** (2 nodes): `Article Body Guardrails Relaxed After Author Feedback (2026-04-05)`, `Body Guardrails: Protecting the Database (2026-04-03)`
+- **Thin community `Community 62`** (2 nodes): `Astro + TypeScript Error Resolution (2026-04-06)`, `Astro + TypeScript Framework Boundaries (2026-04-06)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 63`** (2 nodes): `Development Journal`, `The Bug That Wasn't a Network Error (2026-03-29)`
+- **Thin community `Community 63`** (2 nodes): `Article Body Guardrails Relaxed After Author Feedback (2026-04-05)`, `Body Guardrails: Protecting the Database (2026-04-03)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 64`** (2 nodes): `Cloudinary Transformation + Validation Sweep (2026-04-03)`, `Cloudinary Transformation Validator Sweep (2026-04-03)`
+- **Thin community `Community 64`** (2 nodes): `Development Journal`, `The Bug That Wasn't a Network Error (2026-03-29)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 65`** (2 nodes): `Rationale: Global CSS for set:html containers`, `Global CSS Policy for set:html Children`
+- **Thin community `Community 65`** (2 nodes): `Cloudinary Transformation + Validation Sweep (2026-04-03)`, `Cloudinary Transformation Validator Sweep (2026-04-03)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 66`** (1 nodes): `astro.config.mjs`
+- **Thin community `Community 66`** (2 nodes): `Rationale: Global CSS for set:html containers`, `Global CSS Policy for set:html Children`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 67`** (1 nodes): `create-admin.mjs`
+- **Thin community `Community 67`** (1 nodes): `astro.config.mjs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 68`** (1 nodes): `env.d.ts`
+- **Thin community `Community 68`** (1 nodes): `create-admin.mjs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 69`** (1 nodes): `article-editor.types.ts`
+- **Thin community `Community 69`** (1 nodes): `env.d.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 70`** (1 nodes): `cloudinary-server.ts`
+- **Thin community `Community 70`** (1 nodes): `article-editor.types.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 71`** (1 nodes): `event-editor.types.ts`
+- **Thin community `Community 71`** (1 nodes): `cloudinary-server.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 72`** (1 nodes): `Content Security Policy (addSecurityHeaders in middleware)`
+- **Thin community `Community 72`** (1 nodes): `event-editor.types.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 73`** (1 nodes): `In-Memory Rate Limiting Pattern (Map-based)`
+- **Thin community `Community 73`** (1 nodes): `Content Security Policy (addSecurityHeaders in middleware)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 74`** (1 nodes): `Article Body Guardrails (Size + Inline Image Limits)`
+- **Thin community `Community 74`** (1 nodes): `In-Memory Rate Limiting Pattern (Map-based)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 75`** (1 nodes): `Event Archive Lifecycle (14-day window + permanent archive)`
+- **Thin community `Community 75`** (1 nodes): `Article Body Guardrails (Size + Inline Image Limits)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 76`** (1 nodes): `Railway Railpack Builder`
+- **Thin community `Community 76`** (1 nodes): `Event Archive Lifecycle (14-day window + permanent archive)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 77`** (1 nodes): `Railway Central Station Community`
+- **Thin community `Community 77`** (1 nodes): `Railway Railpack Builder`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 78`** (1 nodes): `Bug: DB Datetime Invalid Date Parsing`
+- **Thin community `Community 78`** (1 nodes): `Railway Central Station Community`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 79`** (1 nodes): `Bug: TypeScript Implicit Any After Filter Chain`
+- **Thin community `Community 79`** (1 nodes): `Bug: DB Datetime Invalid Date Parsing`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 80`** (1 nodes): `Bug: Sales Listing Silent catch{} Error Hiding`
+- **Thin community `Community 80`** (1 nodes): `Bug: TypeScript Implicit Any After Filter Chain`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 81`** (1 nodes): `Bug: TypeScript Narrowing Drift Across Astro Boundaries`
+- **Thin community `Community 81`** (1 nodes): `Bug: Sales Listing Silent catch{} Error Hiding`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 82`** (1 nodes): `Bug: Admin Event Draft Edit Blank Fields`
+- **Thin community `Community 82`** (1 nodes): `Bug: TypeScript Narrowing Drift Across Astro Boundaries`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 83`** (1 nodes): `Bug: Admin Edit Page 2+ Min Pending for Draft Slug`
+- **Thin community `Community 83`** (1 nodes): `Bug: Admin Event Draft Edit Blank Fields`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 84`** (1 nodes): `Bug: Cloudinary Upload Guardrails + Preview Sanitization Gaps`
+- **Thin community `Community 84`** (1 nodes): `Bug: Admin Edit Page 2+ Min Pending for Draft Slug`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 85`** (1 nodes): `Bug: Feature Image Upload Fails TypeScript Generic in is:inline`
+- **Thin community `Community 85`** (1 nodes): `Bug: Cloudinary Upload Guardrails + Preview Sanitization Gaps`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 86`** (1 nodes): `Bug: Generated Build Artifacts Contained Inlined Secrets`
+- **Thin community `Community 86`** (1 nodes): `Bug: Feature Image Upload Fails TypeScript Generic in is:inline`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 87`** (1 nodes): `Bug: Article DELETE 500 FK Constraint Violation`
+- **Thin community `Community 87`** (1 nodes): `Bug: Generated Build Artifacts Contained Inlined Secrets`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 88`** (1 nodes): `Bug: Railway CLI Service Targeting Mismatch`
+- **Thin community `Community 88`** (1 nodes): `Bug: Article DELETE 500 FK Constraint Violation`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 89`** (1 nodes): `Bug: Panel Gallery Slot Picker Clipped by Card Overflow`
+- **Thin community `Community 89`** (1 nodes): `Bug: Railway CLI Service Targeting Mismatch`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 90`** (1 nodes): `Bug: db.execute() Without [] Args Returns Empty Rows`
+- **Thin community `Community 90`** (1 nodes): `Bug: Panel Gallery Slot Picker Clipped by Card Overflow`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 91`** (1 nodes): `Bug: New Article Form Re-POSTed on Update Click`
+- **Thin community `Community 91`** (1 nodes): `Bug: db.execute() Without [] Args Returns Empty Rows`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 92`** (1 nodes): `ADR-018: Permanent Event Archive 14-Day Window`
+- **Thin community `Community 92`** (1 nodes): `Bug: New Article Form Re-POSTed on Update Click`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 93`** (1 nodes): `ADR-016: Inline Editor Images Stored in images Table`
+- **Thin community `Community 93`** (1 nodes): `ADR-018: Permanent Event Archive 14-Day Window`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 94`** (1 nodes): `ADR-009: Dark/Light Theme System CSS Custom Property Override`
+- **Thin community `Community 94`** (1 nodes): `ADR-016: Inline Editor Images Stored in images Table`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 95`** (1 nodes): `ADR-008: User Registration & Admin Approval System`
+- **Thin community `Community 95`** (1 nodes): `ADR-009: Dark/Light Theme System CSS Custom Property Override`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 96`** (1 nodes): `ADR-007: TailwindCSS v4 Vite Plugin Approach`
+- **Thin community `Community 96`** (1 nodes): `ADR-008: User Registration & Admin Approval System`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 97`** (1 nodes): `ADR-001: Pinecone Assistant for Library RAG`
+- **Thin community `Community 97`** (1 nodes): `ADR-007: TailwindCSS v4 Vite Plugin Approach`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 98`** (1 nodes): `Fixed Quill 2 Block Formatting in Sales Editor (2026-04-17)`
+- **Thin community `Community 98`** (1 nodes): `ADR-001: Pinecone Assistant for Library RAG`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 99`** (1 nodes): `Event Archive Policy Revision (2026-04-13)`
+- **Thin community `Community 99`** (1 nodes): `Fixed Quill 2 Block Formatting in Sales Editor (2026-04-17)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 100`** (1 nodes): `Events Feature v1 Implementation (2026-04-06)`
+- **Thin community `Community 100`** (1 nodes): `Event Archive Policy Revision (2026-04-13)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 101`** (1 nodes): `API Convention Audit + One-Slug Pending Diagnosis (2026-04-03)`
+- **Thin community `Community 101`** (1 nodes): `Events Feature v1 Implementation (2026-04-06)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 102`** (1 nodes): `Railway Dev Validation Deploy (2026-04-02)`
+- **Thin community `Community 102`** (1 nodes): `API Convention Audit + One-Slug Pending Diagnosis (2026-04-03)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 103`** (1 nodes): `Phase 1: Turso Database Schema (2026-02-28)`
+- **Thin community `Community 103`** (1 nodes): `Railway Dev Validation Deploy (2026-04-02)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 104`** (1 nodes): `Session 4: Auth API Route + JWT Middleware (2026-03-01)`
+- **Thin community `Community 104`** (1 nodes): `Phase 1: Turso Database Schema (2026-02-28)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 105`** (1 nodes): `Eraser Diagrams Skill Config`
+- **Thin community `Community 105`** (1 nodes): `Session 4: Auth API Route + JWT Middleware (2026-03-01)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 106`** (1 nodes): `Favicon SVG (yellow smiley face icon)`
+- **Thin community `Community 106`** (1 nodes): `Eraser Diagrams Skill Config`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 107`** (1 nodes): `Favicon SVG (yellow smiley face icon)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
@@ -729,12 +734,12 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **What is the exact relationship between `PayPal Buy Button Code PDF` and `PayPal Buy Button Snippet Content`?**
   _Edge tagged AMBIGUOUS (relation: references) - confidence is low._
-- **Why does `GET()` connect `Community 0` to `Community 1`, `Community 2`, `Community 3`, `Community 5`, `Community 6`, `Community 18`, `Community 24`?**
+- **Why does `GET()` connect `Community 3` to `Community 0`, `Community 1`, `Community 2`, `Community 4`, `Community 6`, `Community 7`, `Community 19`?**
   _High betweenness centrality (0.155) - this node is a cross-community bridge._
-- **Why does `execute()` connect `Community 1` to `Community 0`, `Community 2`, `Community 3`, `Community 5`, `Community 10`, `Community 16`, `Community 23`?**
-  _High betweenness centrality (0.107) - this node is a cross-community bridge._
-- **Why does `error()` connect `Community 3` to `Community 0`, `Community 1`, `Community 2`, `Community 5`, `Community 10`, `Community 23`?**
-  _High betweenness centrality (0.057) - this node is a cross-community bridge._
+- **Why does `execute()` connect `Community 1` to `Community 3`, `Community 4`, `Community 6`, `Community 17`, `Community 21`, `Community 24`, `Community 25`?**
+  _High betweenness centrality (0.106) - this node is a cross-community bridge._
+- **Why does `error()` connect `Community 4` to `Community 1`, `Community 2`, `Community 3`, `Community 6`, `Community 21`, `Community 24`, `Community 25`?**
+  _High betweenness centrality (0.059) - this node is a cross-community bridge._
 - **Are the 75 inferred relationships involving `RailwayContext` (e.g. with `analyze_mongo()` and `analyze_mysql()`) actually correct?**
   _`RailwayContext` has 75 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 71 inferred relationships involving `ProgressTimer` (e.g. with `MongoAnalysisResult` and `Container for MongoDB analysis results.`) actually correct?**

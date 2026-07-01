@@ -1,0 +1,180 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import { db } from "../../lib/db";
+
+// Global Platform Metrics
+const usersRs = await db.execute("SELECT COUNT(*) as count FROM users");
+const totalUsers = Number(usersRs.rows[0]?.count || 0);
+
+const articlesRs = await db.execute("SELECT COUNT(*) as count FROM articles");
+const totalArticles = Number(articlesRs.rows[0]?.count || 0);
+
+const eventsRs = await db.execute("SELECT COUNT(*) as count FROM events");
+const totalEvents = Number(eventsRs.rows[0]?.count || 0);
+
+const salesRs = await db.execute("SELECT COUNT(*) as count FROM sales_postings");
+const totalSales = Number(salesRs.rows[0]?.count || 0);
+
+// Social Engagement
+const sharesRs = await db.execute("SELECT COUNT(*) as count FROM shares");
+const totalShares = Number(sharesRs.rows[0]?.count || 0);
+
+const sharesByPlatformRs = await db.execute<{ platform: string; count: number }>(
+  "SELECT platform, COUNT(*) as count FROM shares GROUP BY platform ORDER BY count DESC"
+);
+const sharesByPlatform = sharesByPlatformRs.rows.map(r => ({
+  platform: String(r.platform),
+  count: Number(r.count)
+}));
+
+// Ad Performance
+const adsRs = await db.execute<{ id: number; business_name: string; slot_type: string; is_active: number }>(
+  "SELECT id, business_name, slot_type, is_active FROM advertisements"
+);
+const statsRs = await db.execute<{ target_id: number; click_count: number }>(
+  "SELECT target_id, COUNT(*) as click_count FROM analytics_events WHERE event_type = 'click' AND target_type = 'ad' GROUP BY target_id"
+);
+const clickStats = new Map<number, number>();
+for (const row of statsRs.rows) {
+  clickStats.set(Number(row.target_id), Number(row.click_count));
+}
+
+const adPerformance = adsRs.rows.map(ad => ({
+  id: Number(ad.id),
+  business_name: String(ad.business_name),
+  slot_type: String(ad.slot_type),
+  is_active: Number(ad.is_active),
+  clicks: clickStats.get(Number(ad.id)) || 0
+})).sort((a, b) => b.clicks - a.clicks);
+---
+
+<AdminLayout title="Analytics & Reports">
+  <div class="page-header">
+    <div>
+      <p class="page-header__eyebrow">Reports</p>
+      <h1 class="page-header__title">Analytics Dashboard</h1>
+    </div>
+  </div>
+
+  <div class="metrics-grid">
+    <div class="card metric-card">
+      <h3>Registered Users</h3>
+      <div class="metric-value">{totalUsers}</div>
+    </div>
+    <div class="card metric-card">
+      <h3>Published Articles</h3>
+      <div class="metric-value">{totalArticles}</div>
+    </div>
+    <div class="card metric-card">
+      <h3>Events Hosted</h3>
+      <div class="metric-value">{totalEvents}</div>
+    </div>
+    <div class="card metric-card">
+      <h3>Sales Items</h3>
+      <div class="metric-value">{totalSales}</div>
+    </div>
+  </div>
+
+  <div class="dashboard-sections">
+    <div class="card">
+      <h2 style="font-family: var(--font-display); color: var(--accent); margin-bottom: 1rem;">Social Shares</h2>
+      <div style="margin-bottom: 1.5rem;">
+        <span style="font-size: 2.5rem; font-weight: 700;">{totalShares}</span>
+        <span style="color: var(--text-muted); margin-left: 0.5rem;">Total Shares</span>
+      </div>
+      
+      {sharesByPlatform.length > 0 ? (
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem;">
+          {sharesByPlatform.map(share => (
+            <li style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--surface-alt); border-radius: 4px;">
+              <span style="text-transform: capitalize; font-weight: 600;">{share.platform}</span>
+              <span class="badge badge--published" style="font-size: 1rem;">{share.count}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p style="color: var(--text-muted);">No social shares recorded yet.</p>
+      )}
+    </div>
+
+    <div class="card">
+      <h2 style="font-family: var(--font-display); color: var(--accent); margin-bottom: 1rem;">Ad Performance</h2>
+      
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Business Name</th>
+              <th>Status</th>
+              <th>Slot</th>
+              <th>Total Clicks</th>
+            </tr>
+          </thead>
+          <tbody>
+            {adPerformance.length === 0 ? (
+              <tr>
+                <td colspan="4" style="text-align: center; padding: 1rem;">No ads created yet.</td>
+              </tr>
+            ) : (
+              adPerformance.map(ad => (
+                <tr>
+                  <td><strong>{ad.business_name}</strong></td>
+                  <td>
+                    <span class={`badge badge--${ad.is_active ? 'published' : 'draft'}`}>
+                      {ad.is_active ? 'Active' : 'Inactive'}
+                    </span>
+                  </td>
+                  <td><span class="badge badge--draft">{ad.slot_type}</span></td>
+                  <td><strong>{ad.clicks}</strong></td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</AdminLayout>
+
+<style is:global>
+  @import "../../styles/pages/admin-dashboard.css";
+  
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .metric-card {
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+  
+  .metric-card h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  
+  .metric-card .metric-value {
+    font-size: 3rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--accent);
+    margin-top: 0.5rem;
+  }
+  
+  .dashboard-sections {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  @media (min-width: 900px) {
+    .dashboard-sections {
+      grid-template-columns: 1fr 2fr;
+    }
+  }
+</style>

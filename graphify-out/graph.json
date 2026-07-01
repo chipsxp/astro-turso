@@ -173,7 +173,7 @@
       "source_file": "astro.config.mjs",
       "source_location": "L1",
       "id": "astro_config_mjs",
-      "community": 66,
+      "community": 67,
       "norm_label": "astro.config.mjs"
     },
     {
@@ -524,7 +524,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L1",
       "id": "devtools_skills_use_railway_scripts_analyze_mysql_py",
-      "community": 0,
+      "community": 2,
       "norm_label": "analyze-mysql.py"
     },
     {
@@ -542,7 +542,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L90",
       "id": "analyze_mysql_run_mysql_query",
-      "community": 0,
+      "community": 2,
       "norm_label": "run_mysql_query()"
     },
     {
@@ -551,7 +551,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L124",
       "id": "analyze_mysql_parse_mysql_batch",
-      "community": 0,
+      "community": 2,
       "norm_label": "parse_mysql_batch()"
     },
     {
@@ -560,7 +560,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L141",
       "id": "analyze_mysql_parse_mysql_kv",
-      "community": 0,
+      "community": 2,
       "norm_label": "parse_mysql_kv()"
     },
     {
@@ -569,7 +569,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L176",
       "id": "analyze_mysql_collect_mysql_data",
-      "community": 0,
+      "community": 2,
       "norm_label": "collect_mysql_data()"
     },
     {
@@ -578,7 +578,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L242",
       "id": "analyze_mysql_split_mysql_resultsets",
-      "community": 0,
+      "community": 2,
       "norm_label": "_split_mysql_resultsets()"
     },
     {
@@ -587,7 +587,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L261",
       "id": "analyze_mysql_split_mysql_resultsets_multi",
-      "community": 0,
+      "community": 2,
       "norm_label": "_split_mysql_resultsets_multi()"
     },
     {
@@ -605,7 +605,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L505",
       "id": "analyze_mysql_format_count",
-      "community": 0,
+      "community": 2,
       "norm_label": "_format_count()"
     },
     {
@@ -614,7 +614,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L516",
       "id": "analyze_mysql_format_bytes",
-      "community": 0,
+      "community": 2,
       "norm_label": "_format_bytes()"
     },
     {
@@ -623,7 +623,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L527",
       "id": "analyze_mysql_status_ok_warn_crit",
-      "community": 0,
+      "community": 2,
       "norm_label": "_status_ok_warn_crit()"
     },
     {
@@ -632,7 +632,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L539",
       "id": "analyze_mysql_generate_recommendations",
-      "community": 0,
+      "community": 2,
       "norm_label": "generate_recommendations()"
     },
     {
@@ -641,7 +641,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L673",
       "id": "analyze_mysql_format_report",
-      "community": 0,
+      "community": 2,
       "norm_label": "format_report()"
     },
     {
@@ -659,7 +659,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L1091",
       "id": "analyze_mysql_run_single_step",
-      "community": 0,
+      "community": 2,
       "norm_label": "run_single_step()"
     },
     {
@@ -668,7 +668,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-mysql.py",
       "source_location": "L1144",
       "id": "analyze_mysql_main",
-      "community": 0,
+      "community": 2,
       "norm_label": "main()"
     },
     {
@@ -785,7 +785,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L1",
       "id": "devtools_skills_use_railway_scripts_analyze_postgres_py",
-      "community": 0,
+      "community": 2,
       "norm_label": "analyze-postgres.py"
     },
     {
@@ -794,7 +794,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L45",
       "id": "analyze_postgres_analysisresult",
-      "community": 0,
+      "community": 2,
       "norm_label": "analysisresult"
     },
     {
@@ -803,7 +803,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L92",
       "id": "analyze_postgres_run_psql_query_safe",
-      "community": 0,
+      "community": 2,
       "norm_label": "run_psql_query_safe()"
     },
     {
@@ -812,7 +812,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L100",
       "id": "analyze_postgres_build_analysis_query",
-      "community": 0,
+      "community": 2,
       "norm_label": "build_analysis_query()"
     },
     {
@@ -821,7 +821,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L517",
       "id": "analyze_postgres_parse_batched_analysis",
-      "community": 0,
+      "community": 2,
       "norm_label": "parse_batched_analysis()"
     },
     {
@@ -830,7 +830,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L902",
       "id": "analyze_postgres_parse_psql_output",
-      "community": 0,
+      "community": 2,
       "norm_label": "parse_psql_output()"
     },
     {
@@ -839,7 +839,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L914",
       "id": "analyze_postgres_get_disk_usage_from_api",
-      "community": 0,
+      "community": 2,
       "norm_label": "get_disk_usage_from_api()"
     },
     {
@@ -848,7 +848,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L971",
       "id": "analyze_postgres_get_disk_usage",
-      "community": 0,
+      "community": 2,
       "norm_label": "get_disk_usage()"
     },
     {
@@ -857,7 +857,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L1000",
       "id": "analyze_postgres_get_cpu_memory_from_api",
-      "community": 0,
+      "community": 2,
       "norm_label": "get_cpu_memory_from_api()"
     },
     {
@@ -866,7 +866,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L1011",
       "id": "analyze_postgres_get_recent_errors",
-      "community": 0,
+      "community": 2,
       "norm_label": "get_recent_errors()"
     },
     {
@@ -875,7 +875,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L1027",
       "id": "analyze_postgres_get_cluster_logs",
-      "community": 0,
+      "community": 2,
       "norm_label": "get_cluster_logs()"
     },
     {
@@ -884,7 +884,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L1128",
       "id": "analyze_postgres_is_postgres_ha_service",
-      "community": 0,
+      "community": 2,
       "norm_label": "is_postgres_ha_service()"
     },
     {
@@ -893,7 +893,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L1166",
       "id": "analyze_postgres_analyze_postgres",
-      "community": 0,
+      "community": 2,
       "norm_label": "analyze_postgres()"
     },
     {
@@ -902,7 +902,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L1412",
       "id": "analyze_postgres_generate_recommendations",
-      "community": 0,
+      "community": 2,
       "norm_label": "generate_recommendations()"
     },
     {
@@ -911,7 +911,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L2270",
       "id": "analyze_postgres_sum_index_sizes",
-      "community": 0,
+      "community": 2,
       "norm_label": "sum_index_sizes()"
     },
     {
@@ -920,7 +920,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L2298",
       "id": "analyze_postgres_format_report",
-      "community": 0,
+      "community": 2,
       "norm_label": "format_report()"
     },
     {
@@ -929,7 +929,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L2953",
       "id": "analyze_postgres_main",
-      "community": 0,
+      "community": 2,
       "norm_label": "main()"
     },
     {
@@ -938,7 +938,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\analyze-postgres.py",
       "source_location": "L2999",
       "id": "analyze_postgres_run_single_step",
-      "community": 0,
+      "community": 2,
       "norm_label": "run_single_step()"
     },
     {
@@ -1487,7 +1487,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L1",
       "id": "devtools_skills_use_railway_scripts_dal_py",
-      "community": 0,
+      "community": 2,
       "norm_label": "dal.py"
     },
     {
@@ -1550,7 +1550,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L56",
       "id": "dal_railwaycontext_ssh_flags",
-      "community": 0,
+      "community": 2,
       "norm_label": ".ssh_flags()"
     },
     {
@@ -1559,7 +1559,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L67",
       "id": "dal_railwaycontext_logs_flags",
-      "community": 0,
+      "community": 2,
       "norm_label": ".logs_flags()"
     },
     {
@@ -1568,7 +1568,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L79",
       "id": "dal_init_context",
-      "community": 0,
+      "community": 2,
       "norm_label": "_init_context()"
     },
     {
@@ -1586,7 +1586,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L108",
       "id": "dal_run_railway_command",
-      "community": 0,
+      "community": 2,
       "norm_label": "run_railway_command()"
     },
     {
@@ -1595,7 +1595,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L124",
       "id": "dal_cli_fatal_error",
-      "community": 0,
+      "community": 2,
       "norm_label": "_cli_fatal_error()"
     },
     {
@@ -1604,7 +1604,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L145",
       "id": "dal_run_ssh_query",
-      "community": 0,
+      "community": 2,
       "norm_label": "run_ssh_query()"
     },
     {
@@ -1613,7 +1613,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L179",
       "id": "dal_run_psql_query",
-      "community": 3,
+      "community": 4,
       "norm_label": "run_psql_query()"
     },
     {
@@ -1622,7 +1622,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L193",
       "id": "dal_get_railway_status",
-      "community": 0,
+      "community": 2,
       "norm_label": "get_railway_status()"
     },
     {
@@ -1631,7 +1631,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L232",
       "id": "dal_get_deployment_status",
-      "community": 0,
+      "community": 2,
       "norm_label": "get_deployment_status()"
     },
     {
@@ -1640,7 +1640,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L281",
       "id": "dal_get_all_metrics_from_api",
-      "community": 0,
+      "community": 2,
       "norm_label": "get_all_metrics_from_api()"
     },
     {
@@ -1649,7 +1649,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L368",
       "id": "dal_analyze_window",
-      "community": 0,
+      "community": 2,
       "norm_label": "_analyze_window()"
     },
     {
@@ -1658,7 +1658,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L458",
       "id": "dal_build_metrics_history",
-      "community": 0,
+      "community": 2,
       "norm_label": "_build_metrics_history()"
     },
     {
@@ -1667,7 +1667,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L533",
       "id": "dal_info",
-      "community": 3,
+      "community": 4,
       "norm_label": "info()"
     },
     {
@@ -1676,7 +1676,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L538",
       "id": "dal_error",
-      "community": 3,
+      "community": 4,
       "norm_label": "error()"
     },
     {
@@ -1685,7 +1685,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L544",
       "id": "dal_confirm_with_user",
-      "community": 3,
+      "community": 4,
       "norm_label": "confirm_with_user()"
     },
     {
@@ -1721,7 +1721,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L595",
       "id": "dal_trend_indicator",
-      "community": 0,
+      "community": 2,
       "norm_label": "_trend_indicator()"
     },
     {
@@ -1730,7 +1730,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L616",
       "id": "dal_get_recent_logs",
-      "community": 0,
+      "community": 2,
       "norm_label": "get_recent_logs()"
     },
     {
@@ -1783,7 +1783,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L57",
-      "community": 0,
+      "community": 2,
       "norm_label": "return cli flags for railway ssh.",
       "id": "dal_rationale_57"
     },
@@ -1792,7 +1792,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L68",
-      "community": 0,
+      "community": 2,
       "norm_label": "return cli flags for railway logs.",
       "id": "dal_rationale_68"
     },
@@ -1801,7 +1801,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L80",
-      "community": 0,
+      "community": 2,
       "norm_label": "initialize global context from cli args or railway config.",
       "id": "dal_rationale_80"
     },
@@ -1819,7 +1819,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L109",
-      "community": 0,
+      "community": 2,
       "norm_label": "run a railway cli command and return (returncode, stdout, stderr).",
       "id": "dal_rationale_109"
     },
@@ -1828,7 +1828,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L125",
-      "community": 0,
+      "community": 2,
       "norm_label": "return a friendly error string if the cli itself is broken, else none.      th",
       "id": "dal_rationale_125"
     },
@@ -1837,7 +1837,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L147",
-      "community": 0,
+      "community": 2,
       "norm_label": "run a command via railway ssh, retrying up to max_attempts times.      passes",
       "id": "dal_rationale_147"
     },
@@ -1846,7 +1846,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L180",
-      "community": 3,
+      "community": 4,
       "norm_label": "run a psql query via railway ssh and return (returncode, output).      normali",
       "id": "dal_rationale_180"
     },
@@ -1855,7 +1855,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L194",
-      "community": 0,
+      "community": 2,
       "norm_label": "get environment and service ids from railway config file.      reads directly",
       "id": "dal_rationale_194"
     },
@@ -1864,7 +1864,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L233",
-      "community": 0,
+      "community": 2,
       "norm_label": "get deployment status for service.      uses direct api call if service_id pro",
       "id": "dal_rationale_233"
     },
@@ -1873,7 +1873,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L282",
-      "community": 0,
+      "community": 2,
       "norm_label": "get disk, cpu, memory, and network usage from railway metrics api.      fetche",
       "id": "dal_rationale_282"
     },
@@ -1882,7 +1882,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L370",
-      "community": 0,
+      "community": 2,
       "norm_label": "analyze a single time window of metric data.      returns summary stats, trend",
       "id": "dal_rationale_370"
     },
@@ -1891,7 +1891,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L459",
-      "community": 0,
+      "community": 2,
       "norm_label": "build multi-window time-series history with trend analysis.      always produc",
       "id": "dal_rationale_459"
     },
@@ -1900,7 +1900,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L534",
-      "community": 3,
+      "community": 4,
       "norm_label": "print an [info] message to stdout.",
       "id": "dal_rationale_534"
     },
@@ -1909,7 +1909,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L539",
-      "community": 3,
+      "community": 4,
       "norm_label": "print an [error] message to stderr and exit.",
       "id": "dal_rationale_539"
     },
@@ -1918,7 +1918,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L545",
-      "community": 3,
+      "community": 4,
       "norm_label": "get confirmation directly from the terminal.      reads from /dev/tty to ensur",
       "id": "dal_rationale_545"
     },
@@ -1954,7 +1954,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L596",
-      "community": 0,
+      "community": 2,
       "norm_label": "return a compact trend string like ' (^ +15.2% 24h)' for use in summary rows.",
       "id": "dal_rationale_596"
     },
@@ -1963,7 +1963,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\dal.py",
       "source_location": "L619",
-      "community": 0,
+      "community": 2,
       "norm_label": "get recent logs for llm analysis.      uses api if environment_id and service_",
       "id": "dal_rationale_619"
     },
@@ -1973,7 +1973,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\enable-pg-stats.py",
       "source_location": "L1",
       "id": "devtools_skills_use_railway_scripts_enable_pg_stats_py",
-      "community": 3,
+      "community": 4,
       "norm_label": "enable-pg-stats.py"
     },
     {
@@ -1982,7 +1982,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\enable-pg-stats.py",
       "source_location": "L27",
       "id": "enable_pg_stats_parse_preload_libraries",
-      "community": 3,
+      "community": 4,
       "norm_label": "parse_preload_libraries()"
     },
     {
@@ -1991,7 +1991,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\enable-pg-stats.py",
       "source_location": "L42",
       "id": "enable_pg_stats_main",
-      "community": 3,
+      "community": 4,
       "norm_label": "main()"
     },
     {
@@ -1999,7 +1999,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\enable-pg-stats.py",
       "source_location": "L28",
-      "community": 3,
+      "community": 4,
       "norm_label": "parse shared_preload_libraries value into clean library names.",
       "id": "enable_pg_stats_rationale_28"
     },
@@ -2009,7 +2009,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L1",
       "id": "devtools_skills_use_railway_scripts_pg_extensions_py",
-      "community": 3,
+      "community": 4,
       "norm_label": "pg-extensions.py"
     },
     {
@@ -2018,7 +2018,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L32",
       "id": "pg_extensions_extension",
-      "community": 3,
+      "community": 4,
       "norm_label": "extension"
     },
     {
@@ -2027,7 +2027,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L40",
       "id": "pg_extensions_list_extensions",
-      "community": 3,
+      "community": 4,
       "norm_label": "list_extensions()"
     },
     {
@@ -2036,7 +2036,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L119",
       "id": "pg_extensions_get_extension_dependencies",
-      "community": 3,
+      "community": 4,
       "norm_label": "get_extension_dependencies()"
     },
     {
@@ -2045,7 +2045,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L138",
       "id": "pg_extensions_get_extension_dependents",
-      "community": 3,
+      "community": 4,
       "norm_label": "get_extension_dependents()"
     },
     {
@@ -2054,7 +2054,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L161",
       "id": "pg_extensions_is_extension_installed",
-      "community": 3,
+      "community": 4,
       "norm_label": "is_extension_installed()"
     },
     {
@@ -2063,7 +2063,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L170",
       "id": "pg_extensions_is_extension_available",
-      "community": 3,
+      "community": 4,
       "norm_label": "is_extension_available()"
     },
     {
@@ -2072,7 +2072,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L177",
       "id": "pg_extensions_install_extension",
-      "community": 3,
+      "community": 4,
       "norm_label": "install_extension()"
     },
     {
@@ -2081,7 +2081,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L223",
       "id": "pg_extensions_uninstall_extension",
-      "community": 3,
+      "community": 4,
       "norm_label": "uninstall_extension()"
     },
     {
@@ -2090,7 +2090,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L259",
       "id": "pg_extensions_extension_info",
-      "community": 3,
+      "community": 4,
       "norm_label": "extension_info()"
     },
     {
@@ -2099,7 +2099,7 @@
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L304",
       "id": "pg_extensions_main",
-      "community": 3,
+      "community": 4,
       "norm_label": "main()"
     },
     {
@@ -2107,7 +2107,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L33",
-      "community": 3,
+      "community": 4,
       "norm_label": "postgresql extension info.",
       "id": "pg_extensions_rationale_33"
     },
@@ -2116,7 +2116,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L41",
-      "community": 3,
+      "community": 4,
       "norm_label": "list all available and installed extensions.",
       "id": "pg_extensions_rationale_41"
     },
@@ -2125,7 +2125,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L120",
-      "community": 3,
+      "community": 4,
       "norm_label": "get dependencies for an extension.",
       "id": "pg_extensions_rationale_120"
     },
@@ -2134,7 +2134,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L139",
-      "community": 3,
+      "community": 4,
       "norm_label": "get extensions that depend on this extension.",
       "id": "pg_extensions_rationale_139"
     },
@@ -2143,7 +2143,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L162",
-      "community": 3,
+      "community": 4,
       "norm_label": "check if extension is installed, return (installed, version).",
       "id": "pg_extensions_rationale_162"
     },
@@ -2152,7 +2152,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L171",
-      "community": 3,
+      "community": 4,
       "norm_label": "check if extension is available in the image.",
       "id": "pg_extensions_rationale_171"
     },
@@ -2161,7 +2161,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L178",
-      "community": 3,
+      "community": 4,
       "norm_label": "install an extension with cascade (auto-install dependencies).",
       "id": "pg_extensions_rationale_178"
     },
@@ -2170,7 +2170,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L224",
-      "community": 3,
+      "community": 4,
       "norm_label": "uninstall an extension.",
       "id": "pg_extensions_rationale_224"
     },
@@ -2179,7 +2179,7 @@
       "file_type": "rationale",
       "source_file": "devtools\\skills\\use-railway\\scripts\\pg-extensions.py",
       "source_location": "L260",
-      "community": 3,
+      "community": 4,
       "norm_label": "show detailed info about an extension.",
       "id": "pg_extensions_rationale_260"
     },
@@ -2270,7 +2270,7 @@
       "source_file": "scripts\\create-admin.mjs",
       "source_location": "L1",
       "id": "scripts_create_admin_mjs",
-      "community": 67,
+      "community": 68,
       "norm_label": "create-admin.mjs"
     },
     {
@@ -2279,7 +2279,7 @@
       "source_file": "scripts\\create-events-table.mjs",
       "source_location": "L1",
       "id": "scripts_create_events_table_mjs",
-      "community": 42,
+      "community": 43,
       "norm_label": "create-events-table.mjs"
     },
     {
@@ -2288,7 +2288,7 @@
       "source_file": "scripts\\create-events-table.mjs",
       "source_location": "L19",
       "id": "create_events_table_getdb",
-      "community": 42,
+      "community": 43,
       "norm_label": "getdb()"
     },
     {
@@ -2297,7 +2297,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-monetization-tables.mjs",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_scripts_create_monetization_tables_mjs",
-      "community": 43,
+      "community": 44,
       "norm_label": "create-monetization-tables.mjs"
     },
     {
@@ -2306,7 +2306,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-monetization-tables.mjs",
       "source_location": "L19",
       "id": "create_monetization_tables_getdb",
-      "community": 43,
+      "community": 44,
       "norm_label": "getdb()"
     },
     {
@@ -2315,7 +2315,7 @@
       "source_file": "scripts\\create-panel-tables.mjs",
       "source_location": "L1",
       "id": "scripts_create_panel_tables_mjs",
-      "community": 44,
+      "community": 45,
       "norm_label": "create-panel-tables.mjs"
     },
     {
@@ -2324,7 +2324,7 @@
       "source_file": "scripts\\create-panel-tables.mjs",
       "source_location": "L20",
       "id": "create_panel_tables_getdb",
-      "community": 44,
+      "community": 45,
       "norm_label": "getdb()"
     },
     {
@@ -2333,7 +2333,7 @@
       "source_file": "scripts\\create-sales-table.mjs",
       "source_location": "L1",
       "id": "scripts_create_sales_table_mjs",
-      "community": 45,
+      "community": 46,
       "norm_label": "create-sales-table.mjs"
     },
     {
@@ -2342,7 +2342,7 @@
       "source_file": "scripts\\create-sales-table.mjs",
       "source_location": "L19",
       "id": "create_sales_table_getdb",
-      "community": 45,
+      "community": 46,
       "norm_label": "getdb()"
     },
     {
@@ -2351,7 +2351,7 @@
       "source_file": "scripts\\create-shares-table.mjs",
       "source_location": "L1",
       "id": "scripts_create_shares_table_mjs",
-      "community": 46,
+      "community": 47,
       "norm_label": "create-shares-table.mjs"
     },
     {
@@ -2360,7 +2360,7 @@
       "source_file": "scripts\\create-shares-table.mjs",
       "source_location": "L19",
       "id": "create_shares_table_getdb",
-      "community": 46,
+      "community": 47,
       "norm_label": "getdb()"
     },
     {
@@ -2369,7 +2369,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_scripts_create_site_settings_table_mjs",
-      "community": 47,
+      "community": 48,
       "norm_label": "create-site-settings-table.mjs"
     },
     {
@@ -2378,7 +2378,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs",
       "source_location": "L19",
       "id": "create_site_settings_table_getdb",
-      "community": 47,
+      "community": 48,
       "norm_label": "getdb()"
     },
     {
@@ -2387,7 +2387,7 @@
       "source_file": "scripts\\diagnose-sales.mjs",
       "source_location": "L1",
       "id": "scripts_diagnose_sales_mjs",
-      "community": 32,
+      "community": 33,
       "norm_label": "diagnose-sales.mjs"
     },
     {
@@ -2396,7 +2396,7 @@
       "source_file": "scripts\\diagnose-sales.mjs",
       "source_location": "L16",
       "id": "diagnose_sales_getdb",
-      "community": 32,
+      "community": 33,
       "norm_label": "getdb()"
     },
     {
@@ -2405,7 +2405,7 @@
       "source_file": "scripts\\diagnose-sales.mjs",
       "source_location": "L23",
       "id": "diagnose_sales_maprows",
-      "community": 32,
+      "community": 33,
       "norm_label": "maprows()"
     },
     {
@@ -2414,7 +2414,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\migrate-sales-qr.mjs",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_scripts_migrate_sales_qr_mjs",
-      "community": 3,
+      "community": 4,
       "norm_label": "migrate-sales-qr.mjs"
     },
     {
@@ -2423,7 +2423,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\migrate-sales-qr.mjs",
       "source_location": "L13",
       "id": "migrate_sales_qr_main",
-      "community": 3,
+      "community": 4,
       "norm_label": "main()"
     },
     {
@@ -2432,7 +2432,7 @@
       "source_file": "scripts\\migrate-sales-remove-etsy.mjs",
       "source_location": "L1",
       "id": "scripts_migrate_sales_remove_etsy_mjs",
-      "community": 48,
+      "community": 49,
       "norm_label": "migrate-sales-remove-etsy.mjs"
     },
     {
@@ -2441,7 +2441,7 @@
       "source_file": "scripts\\migrate-sales-remove-etsy.mjs",
       "source_location": "L19",
       "id": "migrate_sales_remove_etsy_getdb",
-      "community": 48,
+      "community": 49,
       "norm_label": "getdb()"
     },
     {
@@ -2450,7 +2450,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\migrate-users-shop-qr.mjs",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_scripts_migrate_users_shop_qr_mjs",
-      "community": 49,
+      "community": 50,
       "norm_label": "migrate-users-shop-qr.mjs"
     },
     {
@@ -2459,7 +2459,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\migrate-users-shop-qr.mjs",
       "source_location": "L15",
       "id": "migrate_users_shop_qr_getdb",
-      "community": 49,
+      "community": 50,
       "norm_label": "getdb()"
     },
     {
@@ -2468,7 +2468,7 @@
       "source_file": "scripts\\migrate-users-status.mjs",
       "source_location": "L1",
       "id": "scripts_migrate_users_status_mjs",
-      "community": 50,
+      "community": 51,
       "norm_label": "migrate-users-status.mjs"
     },
     {
@@ -2477,7 +2477,7 @@
       "source_file": "scripts\\migrate-users-status.mjs",
       "source_location": "L20",
       "id": "migrate_users_status_getdb",
-      "community": 50,
+      "community": 51,
       "norm_label": "getdb()"
     },
     {
@@ -2486,7 +2486,7 @@
       "source_file": "src\\env.d.ts",
       "source_location": "L1",
       "id": "src_env_d_ts",
-      "community": 68,
+      "community": 69,
       "norm_label": "env.d.ts"
     },
     {
@@ -2495,7 +2495,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\middleware.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_middleware_ts",
-      "community": 28,
+      "community": 29,
       "norm_label": "middleware.ts"
     },
     {
@@ -2504,7 +2504,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\middleware.ts",
       "source_location": "L31",
       "id": "middleware_buildcsp",
-      "community": 28,
+      "community": 29,
       "norm_label": "buildcsp()"
     },
     {
@@ -2513,7 +2513,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\middleware.ts",
       "source_location": "L91",
       "id": "middleware_addsecurityheaders",
-      "community": 28,
+      "community": 29,
       "norm_label": "addsecurityheaders()"
     },
     {
@@ -2522,7 +2522,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\middleware.ts",
       "source_location": "L140",
       "id": "middleware_unauthorized",
-      "community": 28,
+      "community": 29,
       "norm_label": "unauthorized()"
     },
     {
@@ -2531,7 +2531,7 @@
       "source_file": "src\\components\\EventCalendar.tsx",
       "source_location": "L1",
       "id": "src_components_eventcalendar_tsx",
-      "community": 17,
+      "community": 18,
       "norm_label": "eventcalendar.tsx"
     },
     {
@@ -2540,7 +2540,7 @@
       "source_file": "src\\components\\EventCalendar.tsx",
       "source_location": "L54",
       "id": "eventcalendar_todatestr",
-      "community": 17,
+      "community": 18,
       "norm_label": "todatestr()"
     },
     {
@@ -2549,7 +2549,7 @@
       "source_file": "src\\components\\EventCalendar.tsx",
       "source_location": "L58",
       "id": "eventcalendar_gettodaystr",
-      "community": 17,
+      "community": 18,
       "norm_label": "gettodaystr()"
     },
     {
@@ -2558,7 +2558,7 @@
       "source_file": "src\\components\\EventCalendar.tsx",
       "source_location": "L63",
       "id": "eventcalendar_formatdisplaydate",
-      "community": 17,
+      "community": 18,
       "norm_label": "formatdisplaydate()"
     },
     {
@@ -2567,7 +2567,7 @@
       "source_file": "src\\components\\EventCalendar.tsx",
       "source_location": "L72",
       "id": "eventcalendar_formatdisplaytime",
-      "community": 17,
+      "community": 18,
       "norm_label": "formatdisplaytime()"
     },
     {
@@ -2576,7 +2576,7 @@
       "source_file": "src\\components\\EventCalendar.tsx",
       "source_location": "L79",
       "id": "eventcalendar_formatprice",
-      "community": 17,
+      "community": 18,
       "norm_label": "formatprice()"
     },
     {
@@ -2585,7 +2585,7 @@
       "source_file": "src\\components\\EventCalendar.tsx",
       "source_location": "L112",
       "id": "eventcalendar_prevmonth",
-      "community": 17,
+      "community": 18,
       "norm_label": "prevmonth()"
     },
     {
@@ -2594,7 +2594,7 @@
       "source_file": "src\\components\\EventCalendar.tsx",
       "source_location": "L123",
       "id": "eventcalendar_nextmonth",
-      "community": 17,
+      "community": 18,
       "norm_label": "nextmonth()"
     },
     {
@@ -2603,7 +2603,7 @@
       "source_file": "src\\components\\EventCalendar.tsx",
       "source_location": "L143",
       "id": "eventcalendar_getitemsforday",
-      "community": 17,
+      "community": 18,
       "norm_label": "getitemsforday()"
     },
     {
@@ -2612,7 +2612,7 @@
       "source_file": "src\\components\\EventCalendar.tsx",
       "source_location": "L155",
       "id": "eventcalendar_selectevent",
-      "community": 17,
+      "community": 18,
       "norm_label": "selectevent()"
     },
     {
@@ -2621,7 +2621,7 @@
       "source_file": "src\\components\\EventCalendar.tsx",
       "source_location": "L163",
       "id": "eventcalendar_selectsale",
-      "community": 17,
+      "community": 18,
       "norm_label": "selectsale()"
     },
     {
@@ -2630,7 +2630,7 @@
       "source_file": "src\\components\\SalesGallery.tsx",
       "source_location": "L1",
       "id": "src_components_salesgallery_tsx",
-      "community": 18,
+      "community": 19,
       "norm_label": "salesgallery.tsx"
     },
     {
@@ -2639,7 +2639,7 @@
       "source_file": "src\\components\\SalesGallery.tsx",
       "source_location": "L16",
       "id": "salesgallery_salesgallery",
-      "community": 18,
+      "community": 19,
       "norm_label": "salesgallery()"
     },
     {
@@ -2648,7 +2648,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\components\\SplashScreen.tsx",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_components_splashscreen_tsx",
-      "community": 51,
+      "community": 52,
       "norm_label": "splashscreen.tsx"
     },
     {
@@ -2657,7 +2657,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\components\\SplashScreen.tsx",
       "source_location": "L8",
       "id": "splashscreen_splashscreen",
-      "community": 51,
+      "community": 52,
       "norm_label": "splashscreen()"
     },
     {
@@ -2666,7 +2666,7 @@
       "source_file": "src\\components\\admin\\AdminMediaGallery.tsx",
       "source_location": "L1",
       "id": "src_components_admin_adminmediagallery_tsx",
-      "community": 2,
+      "community": 3,
       "norm_label": "adminmediagallery.tsx"
     },
     {
@@ -2675,7 +2675,7 @@
       "source_file": "src\\components\\admin\\AdminMediaGallery.tsx",
       "source_location": "L51",
       "id": "adminmediagallery_handlesync",
-      "community": 2,
+      "community": 3,
       "norm_label": "handlesync()"
     },
     {
@@ -2684,7 +2684,7 @@
       "source_file": "src\\components\\admin\\AdminMediaGallery.tsx",
       "source_location": "L66",
       "id": "adminmediagallery_handledelete",
-      "community": 2,
+      "community": 3,
       "norm_label": "handledelete()"
     },
     {
@@ -2693,7 +2693,7 @@
       "source_file": "src\\components\\admin\\AdminMediaGallery.tsx",
       "source_location": "L140",
       "id": "adminmediagallery_handleesc",
-      "community": 2,
+      "community": 3,
       "norm_label": "handleesc()"
     },
     {
@@ -2702,7 +2702,7 @@
       "source_file": "src\\components\\admin\\PanelGallery.tsx",
       "source_location": "L1",
       "id": "src_components_admin_panelgallery_tsx",
-      "community": 2,
+      "community": 13,
       "norm_label": "panelgallery.tsx"
     },
     {
@@ -2711,7 +2711,7 @@
       "source_file": "src\\components\\admin\\PanelGallery.tsx",
       "source_location": "L51",
       "id": "panelgallery_formatdate",
-      "community": 2,
+      "community": 13,
       "norm_label": "formatdate()"
     },
     {
@@ -2720,7 +2720,7 @@
       "source_file": "src\\components\\admin\\PanelGallery.tsx",
       "source_location": "L62",
       "id": "panelgallery_thumburl",
-      "community": 21,
+      "community": 13,
       "norm_label": "thumburl()"
     },
     {
@@ -2729,7 +2729,7 @@
       "source_file": "src\\components\\admin\\PanelGallery.tsx",
       "source_location": "L77",
       "id": "panelgallery_showtoast",
-      "community": 2,
+      "community": 13,
       "norm_label": "showtoast()"
     },
     {
@@ -2738,7 +2738,7 @@
       "source_file": "src\\components\\admin\\PanelGallery.tsx",
       "source_location": "L87",
       "id": "panelgallery_slotpicker",
-      "community": 2,
+      "community": 13,
       "norm_label": "slotpicker()"
     },
     {
@@ -2756,7 +2756,7 @@
       "source_file": "src\\components\\admin\\PanelGallery.tsx",
       "source_location": "L185",
       "id": "panelgallery_handlefilechange",
-      "community": 2,
+      "community": 13,
       "norm_label": "handlefilechange()"
     },
     {
@@ -2765,7 +2765,7 @@
       "source_file": "src\\components\\admin\\PanelGallery.tsx",
       "source_location": "L235",
       "id": "panelgallery_handleassign",
-      "community": 2,
+      "community": 13,
       "norm_label": "handleassign()"
     },
     {
@@ -2774,7 +2774,7 @@
       "source_file": "src\\components\\admin\\PanelGallery.tsx",
       "source_location": "L292",
       "id": "panelgallery_handleunassign",
-      "community": 2,
+      "community": 13,
       "norm_label": "handleunassign()"
     },
     {
@@ -2783,7 +2783,7 @@
       "source_file": "src\\components\\admin\\PanelGallery.tsx",
       "source_location": "L338",
       "id": "panelgallery_handledelete",
-      "community": 2,
+      "community": 13,
       "norm_label": "handledelete()"
     },
     {
@@ -2792,7 +2792,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L1",
       "id": "src_components_admin_salesimagemanager_tsx",
-      "community": 19,
+      "community": 20,
       "norm_label": "salesimagemanager.tsx"
     },
     {
@@ -2801,7 +2801,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L37",
       "id": "salesimagemanager_defaulttransforms",
-      "community": 19,
+      "community": 20,
       "norm_label": "defaulttransforms()"
     },
     {
@@ -2810,7 +2810,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L47",
       "id": "salesimagemanager_parsetransforms",
-      "community": 19,
+      "community": 20,
       "norm_label": "parsetransforms()"
     },
     {
@@ -2819,7 +2819,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L76",
       "id": "salesimagemanager_toast",
-      "community": 19,
+      "community": 20,
       "norm_label": "toast()"
     },
     {
@@ -2828,7 +2828,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L139",
       "id": "salesimagemanager_handledelete",
-      "community": 19,
+      "community": 20,
       "norm_label": "handledelete()"
     },
     {
@@ -2837,7 +2837,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L162",
       "id": "salesimagemanager_updatetransform",
-      "community": 19,
+      "community": 20,
       "norm_label": "updatetransform()"
     },
     {
@@ -2846,7 +2846,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L173",
       "id": "salesimagemanager_applytransforms",
-      "community": 19,
+      "community": 20,
       "norm_label": "applytransforms()"
     },
     {
@@ -2855,7 +2855,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L194",
       "id": "salesimagemanager_handledragstart",
-      "community": 19,
+      "community": 20,
       "norm_label": "handledragstart()"
     },
     {
@@ -2864,7 +2864,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L195",
       "id": "salesimagemanager_handledragover",
-      "community": 19,
+      "community": 20,
       "norm_label": "handledragover()"
     },
     {
@@ -2873,7 +2873,7 @@
       "source_file": "src\\components\\admin\\SalesImageManager.tsx",
       "source_location": "L208",
       "id": "salesimagemanager_handledragend",
-      "community": 19,
+      "community": 20,
       "norm_label": "handledragend()"
     },
     {
@@ -2882,7 +2882,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L1",
       "id": "src_lib_admin_event_form_ts",
-      "community": 6,
+      "community": 7,
       "norm_label": "admin-event-form.ts"
     },
     {
@@ -2891,7 +2891,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L40",
       "id": "admin_event_form_eventformmanager",
-      "community": 6,
+      "community": 7,
       "norm_label": "eventformmanager"
     },
     {
@@ -2900,7 +2900,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L50",
       "id": "admin_event_form_eventformmanager_constructor",
-      "community": 6,
+      "community": 7,
       "norm_label": ".constructor()"
     },
     {
@@ -2909,7 +2909,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L57",
       "id": "admin_event_form_eventformmanager_collectformelements",
-      "community": 6,
+      "community": 7,
       "norm_label": ".collectformelements()"
     },
     {
@@ -2918,7 +2918,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L91",
       "id": "admin_event_form_eventformmanager_setvalue",
-      "community": 6,
+      "community": 7,
       "norm_label": ".setvalue()"
     },
     {
@@ -2927,7 +2927,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L101",
       "id": "admin_event_form_eventformmanager_renderselectedmedia",
-      "community": 6,
+      "community": 7,
       "norm_label": ".renderselectedmedia()"
     },
     {
@@ -2936,7 +2936,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L138",
       "id": "admin_event_form_eventformmanager_rendermediapicker",
-      "community": 6,
+      "community": 7,
       "norm_label": ".rendermediapicker()"
     },
     {
@@ -2945,7 +2945,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L176",
       "id": "admin_event_form_eventformmanager_loadmedialibrary",
-      "community": 6,
+      "community": 7,
       "norm_label": ".loadmedialibrary()"
     },
     {
@@ -2954,7 +2954,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L212",
       "id": "admin_event_form_eventformmanager_openpreview",
-      "community": 6,
+      "community": 7,
       "norm_label": ".openpreview()"
     },
     {
@@ -2963,7 +2963,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L241",
       "id": "admin_event_form_eventformmanager_closepreview",
-      "community": 6,
+      "community": 7,
       "norm_label": ".closepreview()"
     },
     {
@@ -2972,7 +2972,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L250",
       "id": "admin_event_form_eventformmanager_payloadfromform",
-      "community": 6,
+      "community": 7,
       "norm_label": ".payloadfromform()"
     },
     {
@@ -2981,7 +2981,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L283",
       "id": "admin_event_form_eventformmanager_loadevent",
-      "community": 6,
+      "community": 7,
       "norm_label": ".loadevent()"
     },
     {
@@ -2990,7 +2990,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L354",
       "id": "admin_event_form_eventformmanager_setupautoslug",
-      "community": 6,
+      "community": 7,
       "norm_label": ".setupautoslug()"
     },
     {
@@ -2999,7 +2999,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L372",
       "id": "admin_event_form_eventformmanager_setupformsubmit",
-      "community": 6,
+      "community": 7,
       "norm_label": ".setupformsubmit()"
     },
     {
@@ -3008,7 +3008,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L433",
       "id": "admin_event_form_eventformmanager_setupdeletebutton",
-      "community": 6,
+      "community": 7,
       "norm_label": ".setupdeletebutton()"
     },
     {
@@ -3017,7 +3017,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L466",
       "id": "admin_event_form_eventformmanager_setuppreviewbuttons",
-      "community": 6,
+      "community": 7,
       "norm_label": ".setuppreviewbuttons()"
     },
     {
@@ -3026,7 +3026,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L481",
       "id": "admin_event_form_eventformmanager_setupmediabuttons",
-      "community": 6,
+      "community": 7,
       "norm_label": ".setupmediabuttons()"
     },
     {
@@ -3035,7 +3035,7 @@
       "source_file": "src\\lib\\admin-event-form.ts",
       "source_location": "L487",
       "id": "admin_event_form_eventformmanager_initialize",
-      "community": 6,
+      "community": 7,
       "norm_label": ".initialize()"
     },
     {
@@ -3044,7 +3044,7 @@
       "source_file": "src\\lib\\article-editor.types.ts",
       "source_location": "L1",
       "id": "src_lib_article_editor_types_ts",
-      "community": 69,
+      "community": 70,
       "norm_label": "article-editor.types.ts"
     },
     {
@@ -3053,7 +3053,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\auth.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_lib_auth_ts",
-      "community": 16,
+      "community": 17,
       "norm_label": "auth.ts"
     },
     {
@@ -3062,7 +3062,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\auth.ts",
       "source_location": "L17",
       "id": "auth_setauthcookie",
-      "community": 16,
+      "community": 17,
       "norm_label": "setauthcookie()"
     },
     {
@@ -3071,7 +3071,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\auth.ts",
       "source_location": "L21",
       "id": "auth_clearauthcookie",
-      "community": 16,
+      "community": 17,
       "norm_label": "clearauthcookie()"
     },
     {
@@ -3080,7 +3080,7 @@
       "source_file": "src\\lib\\categories.ts",
       "source_location": "L1",
       "id": "src_lib_categories_ts",
-      "community": 5,
+      "community": 6,
       "norm_label": "categories.ts"
     },
     {
@@ -3089,7 +3089,7 @@
       "source_file": "src\\lib\\categories.ts",
       "source_location": "L9",
       "id": "categories_categoryinputerror",
-      "community": 5,
+      "community": 6,
       "norm_label": "categoryinputerror"
     },
     {
@@ -3098,7 +3098,7 @@
       "source_file": "src\\lib\\categories.ts",
       "source_location": "L12",
       "id": "categories_categoryinputerror_constructor",
-      "community": 5,
+      "community": 6,
       "norm_label": ".constructor()"
     },
     {
@@ -3107,7 +3107,7 @@
       "source_file": "src\\lib\\categories.ts",
       "source_location": "L26",
       "id": "categories_toslug",
-      "community": 5,
+      "community": 6,
       "norm_label": "toslug()"
     },
     {
@@ -3116,7 +3116,7 @@
       "source_file": "src\\lib\\categories.ts",
       "source_location": "L34",
       "id": "categories_mapcategoryrow",
-      "community": 5,
+      "community": 6,
       "norm_label": "mapcategoryrow()"
     },
     {
@@ -3125,7 +3125,7 @@
       "source_file": "src\\lib\\categories.ts",
       "source_location": "L42",
       "id": "categories_ensurecategoryschema",
-      "community": 5,
+      "community": 6,
       "norm_label": "ensurecategoryschema()"
     },
     {
@@ -3134,7 +3134,7 @@
       "source_file": "src\\lib\\categories.ts",
       "source_location": "L83",
       "id": "categories_listcategories",
-      "community": 5,
+      "community": 6,
       "norm_label": "listcategories()"
     },
     {
@@ -3143,7 +3143,7 @@
       "source_file": "src\\lib\\categories.ts",
       "source_location": "L93",
       "id": "categories_findcategorybyid",
-      "community": 5,
+      "community": 6,
       "norm_label": "findcategorybyid()"
     },
     {
@@ -3152,7 +3152,7 @@
       "source_file": "src\\lib\\categories.ts",
       "source_location": "L107",
       "id": "categories_findcategorybynameorslug",
-      "community": 5,
+      "community": 6,
       "norm_label": "findcategorybynameorslug()"
     },
     {
@@ -3161,7 +3161,7 @@
       "source_file": "src\\lib\\categories.ts",
       "source_location": "L126",
       "id": "categories_createcategory",
-      "community": 5,
+      "community": 6,
       "norm_label": "createcategory()"
     },
     {
@@ -3170,7 +3170,7 @@
       "source_file": "src\\lib\\categories.ts",
       "source_location": "L152",
       "id": "categories_resolvecategoryid",
-      "community": 5,
+      "community": 6,
       "norm_label": "resolvecategoryid()"
     },
     {
@@ -3179,7 +3179,7 @@
       "source_file": "src\\lib\\cloudinary-server.ts",
       "source_location": "L1",
       "id": "src_lib_cloudinary_server_ts",
-      "community": 70,
+      "community": 71,
       "norm_label": "cloudinary-server.ts"
     },
     {
@@ -3188,7 +3188,7 @@
       "source_file": "src\\lib\\cloudinary.ts",
       "source_location": "L1",
       "id": "src_lib_cloudinary_ts",
-      "community": 21,
+      "community": 13,
       "norm_label": "cloudinary.ts"
     },
     {
@@ -3197,7 +3197,7 @@
       "source_file": "src\\lib\\cloudinary.ts",
       "source_location": "L30",
       "id": "cloudinary_encodepublicid",
-      "community": 21,
+      "community": 13,
       "norm_label": "encodepublicid()"
     },
     {
@@ -3206,7 +3206,7 @@
       "source_file": "src\\lib\\cloudinary.ts",
       "source_location": "L37",
       "id": "cloudinary_clampwidth",
-      "community": 21,
+      "community": 13,
       "norm_label": "clampwidth()"
     },
     {
@@ -3215,7 +3215,7 @@
       "source_file": "src\\lib\\cloudinary.ts",
       "source_location": "L44",
       "id": "cloudinary_buildcloudinaryimageurl",
-      "community": 21,
+      "community": 13,
       "norm_label": "buildcloudinaryimageurl()"
     },
     {
@@ -3224,7 +3224,7 @@
       "source_file": "src\\lib\\cloudinary.ts",
       "source_location": "L82",
       "id": "cloudinary_getcloudinarypresetwidth",
-      "community": 21,
+      "community": 13,
       "norm_label": "getcloudinarypresetwidth()"
     },
     {
@@ -3233,7 +3233,7 @@
       "source_file": "src\\lib\\cloudinary.ts",
       "source_location": "L88",
       "id": "cloudinary_buildcloudinaryimagesrcset",
-      "community": 21,
+      "community": 13,
       "norm_label": "buildcloudinaryimagesrcset()"
     },
     {
@@ -3242,7 +3242,7 @@
       "source_file": "src\\lib\\cloudinary.ts",
       "source_location": "L102",
       "id": "cloudinary_buildcloudinaryvideourl",
-      "community": 21,
+      "community": 13,
       "norm_label": "buildcloudinaryvideourl()"
     },
     {
@@ -3251,7 +3251,7 @@
       "source_file": "src\\lib\\cloudinary.ts",
       "source_location": "L127",
       "id": "cloudinary_buildcloudinaryvideoposterurl",
-      "community": 21,
+      "community": 13,
       "norm_label": "buildcloudinaryvideoposterurl()"
     },
     {
@@ -3260,7 +3260,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\db.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_lib_db_ts",
-      "community": 33,
+      "community": 34,
       "norm_label": "db.ts"
     },
     {
@@ -3269,7 +3269,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\db.ts",
       "source_location": "L13",
       "id": "db_maprows",
-      "community": 33,
+      "community": 34,
       "norm_label": "maprows()"
     },
     {
@@ -3278,7 +3278,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\db.ts",
       "source_location": "L30",
       "id": "db_getdb",
-      "community": 33,
+      "community": 34,
       "norm_label": "getdb()"
     },
     {
@@ -3287,7 +3287,7 @@
       "source_file": "src\\lib\\editor-utils.ts",
       "source_location": "L1",
       "id": "src_lib_editor_utils_ts",
-      "community": 6,
+      "community": 7,
       "norm_label": "editor-utils.ts"
     },
     {
@@ -3296,7 +3296,7 @@
       "source_file": "src\\lib\\editor-utils.ts",
       "source_location": "L41",
       "id": "editor_utils_ensureresizemoduleregistered",
-      "community": 6,
+      "community": 7,
       "norm_label": "ensureresizemoduleregistered()"
     },
     {
@@ -3305,7 +3305,7 @@
       "source_file": "src\\lib\\editor-utils.ts",
       "source_location": "L47",
       "id": "editor_utils_initializeeditor",
-      "community": 6,
+      "community": 7,
       "norm_label": "initializeeditor()"
     },
     {
@@ -3314,7 +3314,7 @@
       "source_file": "src\\lib\\editor-utils.ts",
       "source_location": "L102",
       "id": "editor_utils_escapehtml",
-      "community": 6,
+      "community": 7,
       "norm_label": "escapehtml()"
     },
     {
@@ -3323,7 +3323,7 @@
       "source_file": "src\\lib\\editor-utils.ts",
       "source_location": "L112",
       "id": "editor_utils_escapeattr",
-      "community": 6,
+      "community": 7,
       "norm_label": "escapeattr()"
     },
     {
@@ -3332,7 +3332,7 @@
       "source_file": "src\\lib\\editor-utils.ts",
       "source_location": "L120",
       "id": "editor_utils_previewbodytohtml",
-      "community": 6,
+      "community": 7,
       "norm_label": "previewbodytohtml()"
     },
     {
@@ -3341,7 +3341,7 @@
       "source_file": "src\\lib\\editor-utils.ts",
       "source_location": "L151",
       "id": "editor_utils_buildpreviewhtml",
-      "community": 6,
+      "community": 7,
       "norm_label": "buildpreviewhtml()"
     },
     {
@@ -3350,7 +3350,7 @@
       "source_file": "src\\lib\\editor-utils.ts",
       "source_location": "L215",
       "id": "editor_utils_createtoastmanager",
-      "community": 6,
+      "community": 7,
       "norm_label": "createtoastmanager()"
     },
     {
@@ -3359,7 +3359,7 @@
       "source_file": "src\\lib\\event-editor.types.ts",
       "source_location": "L1",
       "id": "src_lib_event_editor_types_ts",
-      "community": 71,
+      "community": 72,
       "norm_label": "event-editor.types.ts"
     },
     {
@@ -3368,7 +3368,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_lib_events_ts",
-      "community": 2,
+      "community": 3,
       "norm_label": "events.ts"
     },
     {
@@ -3377,7 +3377,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L43",
       "id": "events_topublicevent",
-      "community": 2,
+      "community": 3,
       "norm_label": "topublicevent()"
     },
     {
@@ -3386,7 +3386,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L90",
       "id": "events_ensureeventsschema",
-      "community": 2,
+      "community": 3,
       "norm_label": "ensureeventsschema()"
     },
     {
@@ -3395,7 +3395,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L117",
       "id": "events_toeventslug",
-      "community": 2,
+      "community": 3,
       "norm_label": "toeventslug()"
     },
     {
@@ -3404,7 +3404,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L125",
       "id": "events_normalizeeventstatus",
-      "community": 2,
+      "community": 3,
       "norm_label": "normalizeeventstatus()"
     },
     {
@@ -3413,7 +3413,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L131",
       "id": "events_isvalidisodate",
-      "community": 2,
+      "community": 3,
       "norm_label": "isvalidisodate()"
     },
     {
@@ -3422,7 +3422,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L135",
       "id": "events_isvalidtime24",
-      "community": 2,
+      "community": 3,
       "norm_label": "isvalidtime24()"
     },
     {
@@ -3431,7 +3431,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L139",
       "id": "events_mapeventrow",
-      "community": 2,
+      "community": 3,
       "norm_label": "mapeventrow()"
     },
     {
@@ -3440,7 +3440,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L217",
       "id": "events_geteventeffectiveenddate",
-      "community": 2,
+      "community": 3,
       "norm_label": "geteventeffectiveenddate()"
     },
     {
@@ -3449,7 +3449,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L228",
       "id": "events_tonewyorkdate",
-      "community": 2,
+      "community": 3,
       "norm_label": "tonewyorkdate()"
     },
     {
@@ -3458,7 +3458,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L246",
       "id": "events_gettodayinnewyork",
-      "community": 2,
+      "community": 3,
       "norm_label": "gettodayinnewyork()"
     },
     {
@@ -3467,7 +3467,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L254",
       "id": "events_getdaysagoinnewyork",
-      "community": 2,
+      "community": 3,
       "norm_label": "getdaysagoinnewyork()"
     },
     {
@@ -3476,7 +3476,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L263",
       "id": "events_iseventended",
-      "community": 2,
+      "community": 3,
       "norm_label": "iseventended()"
     },
     {
@@ -3485,7 +3485,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L273",
       "id": "events_iseventinarchivewindow",
-      "community": 2,
+      "community": 3,
       "norm_label": "iseventinarchivewindow()"
     },
     {
@@ -3494,7 +3494,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L287",
       "id": "events_geteventlifecyclelabel",
-      "community": 2,
+      "community": 3,
       "norm_label": "geteventlifecyclelabel()"
     },
     {
@@ -3503,7 +3503,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L303",
       "id": "events_iseventpubliclyvisible",
-      "community": 2,
+      "community": 3,
       "norm_label": "iseventpubliclyvisible()"
     },
     {
@@ -3512,7 +3512,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L313",
       "id": "events_iseventupcoming",
-      "community": 2,
+      "community": 3,
       "norm_label": "iseventupcoming()"
     },
     {
@@ -3521,7 +3521,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L322",
       "id": "events_iseventarchivable",
-      "community": 2,
+      "community": 3,
       "norm_label": "iseventarchivable()"
     },
     {
@@ -3530,7 +3530,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L332",
       "id": "events_iseventarchivedpermanently",
-      "community": 2,
+      "community": 3,
       "norm_label": "iseventarchivedpermanently()"
     },
     {
@@ -3539,7 +3539,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\events.ts",
       "source_location": "L341",
       "id": "events_getarchivebadgelabel",
-      "community": 2,
+      "community": 3,
       "norm_label": "getarchivebadgelabel()"
     },
     {
@@ -3548,7 +3548,7 @@
       "source_file": "src\\lib\\inline-images.ts",
       "source_location": "L1",
       "id": "src_lib_inline_images_ts",
-      "community": 10,
+      "community": 1,
       "norm_label": "inline-images.ts"
     },
     {
@@ -3557,7 +3557,7 @@
       "source_file": "src\\lib\\inline-images.ts",
       "source_location": "L25",
       "id": "inline_images_estimatebase64decodedbytes",
-      "community": 10,
+      "community": 1,
       "norm_label": "estimatebase64decodedbytes()"
     },
     {
@@ -3566,7 +3566,7 @@
       "source_file": "src\\lib\\inline-images.ts",
       "source_location": "L36",
       "id": "inline_images_columnexistserror",
-      "community": 10,
+      "community": 1,
       "norm_label": "columnexistserror()"
     },
     {
@@ -3575,7 +3575,7 @@
       "source_file": "src\\lib\\inline-images.ts",
       "source_location": "L44",
       "id": "inline_images_ensurecolumn",
-      "community": 10,
+      "community": 1,
       "norm_label": "ensurecolumn()"
     },
     {
@@ -3584,7 +3584,7 @@
       "source_file": "src\\lib\\inline-images.ts",
       "source_location": "L54",
       "id": "inline_images_ensureinlineimagesschema",
-      "community": 10,
+      "community": 1,
       "norm_label": "ensureinlineimagesschema()"
     },
     {
@@ -3593,7 +3593,7 @@
       "source_file": "src\\lib\\inline-images.ts",
       "source_location": "L83",
       "id": "inline_images_extractinlineimagematches",
-      "community": 10,
+      "community": 1,
       "norm_label": "extractinlineimagematches()"
     },
     {
@@ -3602,7 +3602,7 @@
       "source_file": "src\\lib\\inline-images.ts",
       "source_location": "L111",
       "id": "inline_images_rewriteinlineimagesrcs",
-      "community": 10,
+      "community": 1,
       "norm_label": "rewriteinlineimagesrcs()"
     },
     {
@@ -3611,7 +3611,7 @@
       "source_file": "src\\lib\\inline-images.ts",
       "source_location": "L128",
       "id": "inline_images_extractinlineimageidsfrombody",
-      "community": 10,
+      "community": 1,
       "norm_label": "extractinlineimageidsfrombody()"
     },
     {
@@ -3620,7 +3620,7 @@
       "source_file": "src\\lib\\inline-images.ts",
       "source_location": "L141",
       "id": "inline_images_persistinlineimagesinbody",
-      "community": 10,
+      "community": 1,
       "norm_label": "persistinlineimagesinbody()"
     },
     {
@@ -3629,7 +3629,7 @@
       "source_file": "src\\lib\\inline-images.ts",
       "source_location": "L196",
       "id": "inline_images_cleanupunusedinlineimages",
-      "community": 10,
+      "community": 1,
       "norm_label": "cleanupunusedinlineimages()"
     },
     {
@@ -3638,7 +3638,7 @@
       "source_file": "src\\lib\\inline-images.ts",
       "source_location": "L222",
       "id": "inline_images_deleteinlineimagesbyids",
-      "community": 10,
+      "community": 1,
       "norm_label": "deleteinlineimagesbyids()"
     },
     {
@@ -3647,7 +3647,7 @@
       "source_file": "src\\lib\\inline-images.ts",
       "source_location": "L239",
       "id": "inline_images_getinlineimagebyid",
-      "community": 10,
+      "community": 1,
       "norm_label": "getinlineimagebyid()"
     },
     {
@@ -3827,7 +3827,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_lib_monetization_ts",
-      "community": 3,
+      "community": 25,
       "norm_label": "monetization.ts"
     },
     {
@@ -3836,7 +3836,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
       "source_location": "L28",
       "id": "monetization_getactiveadsforslot",
-      "community": 3,
+      "community": 25,
       "norm_label": "getactiveadsforslot()"
     },
     {
@@ -3845,7 +3845,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
       "source_location": "L52",
       "id": "monetization_loganalyticsevent",
-      "community": 3,
+      "community": 25,
       "norm_label": "loganalyticsevent()"
     },
     {
@@ -3854,7 +3854,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
       "source_location": "L70",
       "id": "monetization_getusergamificationstats",
-      "community": 3,
+      "community": 25,
       "norm_label": "getusergamificationstats()"
     },
     {
@@ -3863,7 +3863,7 @@
       "source_file": "src\\lib\\panels.ts",
       "source_location": "L1",
       "id": "src_lib_panels_ts",
-      "community": 1,
+      "community": 6,
       "norm_label": "panels.ts"
     },
     {
@@ -3872,7 +3872,7 @@
       "source_file": "src\\lib\\panels.ts",
       "source_location": "L104",
       "id": "panels_ensurepanelschema",
-      "community": 1,
+      "community": 6,
       "norm_label": "ensurepanelschema()"
     },
     {
@@ -3881,7 +3881,7 @@
       "source_file": "src\\lib\\panels.ts",
       "source_location": "L117",
       "id": "panels_mapassignmentrow",
-      "community": 1,
+      "community": 6,
       "norm_label": "mapassignmentrow()"
     },
     {
@@ -3890,7 +3890,7 @@
       "source_file": "src\\lib\\panels.ts",
       "source_location": "L130",
       "id": "panels_mapmediarow",
-      "community": 1,
+      "community": 6,
       "norm_label": "mapmediarow()"
     },
     {
@@ -3899,7 +3899,7 @@
       "source_file": "src\\lib\\panels.ts",
       "source_location": "L144",
       "id": "panels_getcurrentpanelassignments",
-      "community": 1,
+      "community": 6,
       "norm_label": "getcurrentpanelassignments()"
     },
     {
@@ -3908,7 +3908,7 @@
       "source_file": "src\\lib\\panels.ts",
       "source_location": "L169",
       "id": "panels_getpanelimagemap",
-      "community": 1,
+      "community": 6,
       "norm_label": "getpanelimagemap()"
     },
     {
@@ -3917,7 +3917,7 @@
       "source_file": "src\\lib\\panels.ts",
       "source_location": "L185",
       "id": "panels_getrecentpanelmedia",
-      "community": 1,
+      "community": 6,
       "norm_label": "getrecentpanelmedia()"
     },
     {
@@ -3926,7 +3926,7 @@
       "source_file": "src\\lib\\quill-custom-colors.ts",
       "source_location": "L1",
       "id": "src_lib_quill_custom_colors_ts",
-      "community": 6,
+      "community": 7,
       "norm_label": "quill-custom-colors.ts"
     },
     {
@@ -3935,7 +3935,7 @@
       "source_file": "src\\lib\\quill-custom-colors.ts",
       "source_location": "L12",
       "id": "quill_custom_colors_applycolor",
-      "community": 6,
+      "community": 7,
       "norm_label": "applycolor()"
     },
     {
@@ -3944,7 +3944,7 @@
       "source_file": "src\\lib\\quill-custom-colors.ts",
       "source_location": "L22",
       "id": "quill_custom_colors_attachpickercontrol",
-      "community": 6,
+      "community": 7,
       "norm_label": "attachpickercontrol()"
     },
     {
@@ -3953,7 +3953,7 @@
       "source_file": "src\\lib\\quill-custom-colors.ts",
       "source_location": "L78",
       "id": "quill_custom_colors_enablecustomcolorpickers",
-      "community": 6,
+      "community": 7,
       "norm_label": "enablecustomcolorpickers()"
     },
     {
@@ -3962,7 +3962,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_lib_sales_ts",
-      "community": 18,
+      "community": 19,
       "norm_label": "sales.ts"
     },
     {
@@ -3971,7 +3971,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
       "source_location": "L78",
       "id": "sales_slugify",
-      "community": 18,
+      "community": 19,
       "norm_label": "slugify()"
     },
     {
@@ -3980,7 +3980,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
       "source_location": "L91",
       "id": "sales_formatprice",
-      "community": 18,
+      "community": 19,
       "norm_label": "formatprice()"
     },
     {
@@ -3989,7 +3989,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
       "source_location": "L104",
       "id": "sales_calcsaleprice",
-      "community": 18,
+      "community": 19,
       "norm_label": "calcsaleprice()"
     },
     {
@@ -3998,7 +3998,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
       "source_location": "L124",
       "id": "sales_ispromoactive",
-      "community": 18,
+      "community": 19,
       "norm_label": "ispromoactive()"
     },
     {
@@ -4007,7 +4007,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
       "source_location": "L141",
       "id": "sales_parsetransforms",
-      "community": 18,
+      "community": 19,
       "norm_label": "parsetransforms()"
     },
     {
@@ -4016,7 +4016,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
       "source_location": "L158",
       "id": "sales_buildsalesimageurl",
-      "community": 18,
+      "community": 19,
       "norm_label": "buildsalesimageurl()"
     },
     {
@@ -4025,7 +4025,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sales.ts",
       "source_location": "L207",
       "id": "sales_parsetags",
-      "community": 18,
+      "community": 19,
       "norm_label": "parsetags()"
     },
     {
@@ -4034,7 +4034,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L1",
       "id": "src_lib_sanitize_paypal_ts",
-      "community": 13,
+      "community": 14,
       "norm_label": "sanitize-paypal.ts"
     },
     {
@@ -4043,7 +4043,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L56",
       "id": "sanitize_paypal_extractpaypalsdkconfig",
-      "community": 13,
+      "community": 14,
       "norm_label": "extractpaypalsdkconfig()"
     },
     {
@@ -4052,7 +4052,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L83",
       "id": "sanitize_paypal_sanitizepaypalbutton",
-      "community": 13,
+      "community": 14,
       "norm_label": "sanitizepaypalbutton()"
     },
     {
@@ -4061,7 +4061,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L102",
       "id": "sanitize_paypal_hassdkscript",
-      "community": 13,
+      "community": 14,
       "norm_label": "hassdkscript()"
     },
     {
@@ -4070,7 +4070,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L108",
       "id": "sanitize_paypal_sanitizetypecbutton",
-      "community": 13,
+      "community": 14,
       "norm_label": "sanitizetypecbutton()"
     },
     {
@@ -4079,7 +4079,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L128",
       "id": "sanitize_paypal_sanitizelegacyformbutton",
-      "community": 13,
+      "community": 14,
       "norm_label": "sanitizelegacyformbutton()"
     },
     {
@@ -4088,7 +4088,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L137",
       "id": "sanitize_paypal_buildsafeform",
-      "community": 13,
+      "community": 14,
       "norm_label": "buildsafeform()"
     },
     {
@@ -4097,7 +4097,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L165",
       "id": "sanitize_paypal_sanitizeforminner",
-      "community": 13,
+      "community": 14,
       "norm_label": "sanitizeforminner()"
     },
     {
@@ -4106,7 +4106,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L202",
       "id": "sanitize_paypal_sanitizesectioncontent",
-      "community": 13,
+      "community": 14,
       "norm_label": "sanitizesectioncontent()"
     },
     {
@@ -4115,7 +4115,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L221",
       "id": "sanitize_paypal_buildsafeinput",
-      "community": 13,
+      "community": 14,
       "norm_label": "buildsafeinput()"
     },
     {
@@ -4124,7 +4124,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L250",
       "id": "sanitize_paypal_buildsafepaypalimg",
-      "community": 13,
+      "community": 14,
       "norm_label": "buildsafepaypalimg()"
     },
     {
@@ -4133,7 +4133,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L275",
       "id": "sanitize_paypal_sanitizecssblock",
-      "community": 13,
+      "community": 14,
       "norm_label": "sanitizecssblock()"
     },
     {
@@ -4142,7 +4142,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L289",
       "id": "sanitize_paypal_sanitizestylevalue",
-      "community": 13,
+      "community": 14,
       "norm_label": "sanitizestylevalue()"
     },
     {
@@ -4151,7 +4151,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L302",
       "id": "sanitize_paypal_parseattrs",
-      "community": 13,
+      "community": 14,
       "norm_label": "parseattrs()"
     },
     {
@@ -4160,7 +4160,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L314",
       "id": "sanitize_paypal_extractattr",
-      "community": 13,
+      "community": 14,
       "norm_label": "extractattr()"
     },
     {
@@ -4169,7 +4169,7 @@
       "source_file": "src\\lib\\sanitize-paypal.ts",
       "source_location": "L324",
       "id": "sanitize_paypal_escattr",
-      "community": 13,
+      "community": 14,
       "norm_label": "escattr()"
     },
     {
@@ -4178,7 +4178,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sanitize-server.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_lib_sanitize_server_ts",
-      "community": 2,
+      "community": 3,
       "norm_label": "sanitize-server.ts"
     },
     {
@@ -4187,7 +4187,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sanitize-server.ts",
       "source_location": "L11",
       "id": "sanitize_server_sanitizearticlebodyserver",
-      "community": 2,
+      "community": 3,
       "norm_label": "sanitizearticlebodyserver()"
     },
     {
@@ -4196,7 +4196,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sanitize-server.ts",
       "source_location": "L77",
       "id": "sanitize_server_sanitizeinlinestyles",
-      "community": 2,
+      "community": 3,
       "norm_label": "sanitizeinlinestyles()"
     },
     {
@@ -4205,7 +4205,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sanitize-server.ts",
       "source_location": "L103",
       "id": "sanitize_server_isvalidurlforattribute",
-      "community": 2,
+      "community": 3,
       "norm_label": "isvalidurlforattribute()"
     },
     {
@@ -4214,7 +4214,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sanitize.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_lib_sanitize_ts",
-      "community": 26,
+      "community": 27,
       "norm_label": "sanitize.ts"
     },
     {
@@ -4223,7 +4223,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sanitize.ts",
       "source_location": "L124",
       "id": "sanitize_parseinlinestyle",
-      "community": 26,
+      "community": 27,
       "norm_label": "parseinlinestyle()"
     },
     {
@@ -4232,7 +4232,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sanitize.ts",
       "source_location": "L154",
       "id": "sanitize_sanitizearticlebody",
-      "community": 26,
+      "community": 27,
       "norm_label": "sanitizearticlebody()"
     },
     {
@@ -4241,7 +4241,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sanitize.ts",
       "source_location": "L194",
       "id": "sanitize_sanitizeforpreview",
-      "community": 26,
+      "community": 27,
       "norm_label": "sanitizeforpreview()"
     },
     {
@@ -4250,7 +4250,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sanitize.ts",
       "source_location": "L201",
       "id": "sanitize_isvalidimageurl",
-      "community": 26,
+      "community": 27,
       "norm_label": "isvalidimageurl()"
     },
     {
@@ -4259,7 +4259,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\sanitize.ts",
       "source_location": "L214",
       "id": "sanitize_isvalidlinkurl",
-      "community": 26,
+      "community": 27,
       "norm_label": "isvalidlinkurl()"
     },
     {
@@ -4268,7 +4268,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\settings.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_lib_settings_ts",
-      "community": 3,
+      "community": 4,
       "norm_label": "settings.ts"
     },
     {
@@ -4277,7 +4277,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\settings.ts",
       "source_location": "L6",
       "id": "settings_getsetting",
-      "community": 3,
+      "community": 4,
       "norm_label": "getsetting()"
     },
     {
@@ -4286,7 +4286,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\settings.ts",
       "source_location": "L18",
       "id": "settings_setsetting",
-      "community": 3,
+      "community": 4,
       "norm_label": "setsetting()"
     },
     {
@@ -4295,7 +4295,7 @@
       "source_file": "src\\pages\\robots.txt.ts",
       "source_location": "L1",
       "id": "src_pages_robots_txt_ts",
-      "community": 52,
+      "community": 53,
       "norm_label": "robots.txt.ts"
     },
     {
@@ -4304,7 +4304,7 @@
       "source_file": "src\\pages\\robots.txt.ts",
       "source_location": "L3",
       "id": "robots_txt_get",
-      "community": 52,
+      "community": 53,
       "norm_label": "get()"
     },
     {
@@ -4340,7 +4340,7 @@
       "source_file": "src\\pages\\api\\contact.ts",
       "source_location": "L1",
       "id": "src_pages_api_contact_ts",
-      "community": 24,
+      "community": 3,
       "norm_label": "contact.ts"
     },
     {
@@ -4349,7 +4349,7 @@
       "source_file": "src\\pages\\api\\contact.ts",
       "source_location": "L8",
       "id": "contact_getclientip",
-      "community": 24,
+      "community": 3,
       "norm_label": "getclientip()"
     },
     {
@@ -4358,7 +4358,7 @@
       "source_file": "src\\pages\\api\\contact.ts",
       "source_location": "L16",
       "id": "contact_isratelimited",
-      "community": 24,
+      "community": 3,
       "norm_label": "isratelimited()"
     },
     {
@@ -4367,7 +4367,7 @@
       "source_file": "src\\pages\\api\\contact.ts",
       "source_location": "L23",
       "id": "contact_recordattempt",
-      "community": 24,
+      "community": 3,
       "norm_label": "recordattempt()"
     },
     {
@@ -4376,7 +4376,7 @@
       "source_file": "src\\pages\\api\\contact.ts",
       "source_location": "L33",
       "id": "contact_json",
-      "community": 24,
+      "community": 3,
       "norm_label": "json()"
     },
     {
@@ -4385,7 +4385,7 @@
       "source_file": "src\\pages\\api\\contact.ts",
       "source_location": "L40",
       "id": "contact_isvalidemail",
-      "community": 24,
+      "community": 3,
       "norm_label": "isvalidemail()"
     },
     {
@@ -4394,7 +4394,7 @@
       "source_file": "src\\pages\\api\\contact.ts",
       "source_location": "L44",
       "id": "contact_post",
-      "community": 24,
+      "community": 3,
       "norm_label": "post()"
     },
     {
@@ -4403,7 +4403,7 @@
       "source_file": "src\\pages\\api\\share.ts",
       "source_location": "L1",
       "id": "src_pages_api_share_ts",
-      "community": 3,
+      "community": 4,
       "norm_label": "share.ts"
     },
     {
@@ -4412,7 +4412,7 @@
       "source_file": "src\\pages\\api\\share.ts",
       "source_location": "L17",
       "id": "share_json",
-      "community": 3,
+      "community": 4,
       "norm_label": "json()"
     },
     {
@@ -4421,7 +4421,7 @@
       "source_file": "src\\pages\\api\\share.ts",
       "source_location": "L28",
       "id": "share_post",
-      "community": 3,
+      "community": 4,
       "norm_label": "post()"
     },
     {
@@ -4502,7 +4502,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_settings_ts",
-      "community": 3,
+      "community": 4,
       "norm_label": "settings.ts"
     },
     {
@@ -4511,7 +4511,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
       "source_location": "L4",
       "id": "settings_json",
-      "community": 3,
+      "community": 4,
       "norm_label": "json()"
     },
     {
@@ -4520,7 +4520,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
       "source_location": "L11",
       "id": "settings_get",
-      "community": 3,
+      "community": 4,
       "norm_label": "get()"
     },
     {
@@ -4529,7 +4529,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\settings.ts",
       "source_location": "L26",
       "id": "settings_put",
-      "community": 3,
+      "community": 4,
       "norm_label": "put()"
     },
     {
@@ -4538,7 +4538,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\ads\\index.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_ads_index_ts",
-      "community": 5,
+      "community": 6,
       "norm_label": "index.ts"
     },
     {
@@ -4547,7 +4547,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\sales\\index.ts",
       "source_location": "L5",
       "id": "index_json",
-      "community": 5,
+      "community": 6,
       "norm_label": "json()"
     },
     {
@@ -4556,8 +4556,44 @@
       "source_file": "src\\pages\\api\\events\\index.ts",
       "source_location": "L114",
       "id": "index_post",
-      "community": 5,
+      "community": 6,
       "norm_label": "post()"
+    },
+    {
+      "label": "[id].ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\ads\\[id].ts",
+      "source_location": "L1",
+      "id": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_ads_id_ts",
+      "community": 21,
+      "norm_label": "[id].ts"
+    },
+    {
+      "label": "json()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\inline-images\\[id].ts",
+      "source_location": "L4",
+      "id": "id_json",
+      "community": 21,
+      "norm_label": "json()"
+    },
+    {
+      "label": "PATCH()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\admin\\users\\[id].ts",
+      "source_location": "L27",
+      "id": "id_patch",
+      "community": 21,
+      "norm_label": "patch()"
+    },
+    {
+      "label": "DELETE()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
+      "source_location": "L22",
+      "id": "id_delete",
+      "community": 21,
+      "norm_label": "delete()"
     },
     {
       "label": "index.ts",
@@ -4565,7 +4601,7 @@
       "source_file": "src\\pages\\api\\admin\\articles\\index.ts",
       "source_location": "L1",
       "id": "src_pages_api_admin_articles_index_ts",
-      "community": 5,
+      "community": 6,
       "norm_label": "index.ts"
     },
     {
@@ -4574,7 +4610,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\sales\\index.ts",
       "source_location": "L43",
       "id": "index_get",
-      "community": 5,
+      "community": 6,
       "norm_label": "get()"
     },
     {
@@ -4583,7 +4619,7 @@
       "source_file": "src\\pages\\api\\admin\\articles\\[slug].ts",
       "source_location": "L1",
       "id": "src_pages_api_admin_articles_slug_ts",
-      "community": 2,
+      "community": 3,
       "norm_label": "[slug].ts"
     },
     {
@@ -4592,7 +4628,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\sales\\[slug].ts",
       "source_location": "L5",
       "id": "slug_json",
-      "community": 2,
+      "community": 3,
       "norm_label": "json()"
     },
     {
@@ -4601,7 +4637,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\sales\\[slug].ts",
       "source_location": "L43",
       "id": "slug_get",
-      "community": 0,
+      "community": 3,
       "norm_label": "get()"
     },
     {
@@ -4610,7 +4646,7 @@
       "source_file": "src\\pages\\api\\admin\\events\\archive-expired.ts",
       "source_location": "L1",
       "id": "src_pages_api_admin_events_archive_expired_ts",
-      "community": 2,
+      "community": 3,
       "norm_label": "archive-expired.ts"
     },
     {
@@ -4619,7 +4655,7 @@
       "source_file": "src\\pages\\api\\admin\\events\\archive-expired.ts",
       "source_location": "L17",
       "id": "archive_expired_json",
-      "community": 2,
+      "community": 3,
       "norm_label": "json()"
     },
     {
@@ -4628,7 +4664,7 @@
       "source_file": "src\\pages\\api\\admin\\events\\archive-expired.ts",
       "source_location": "L34",
       "id": "archive_expired_post",
-      "community": 2,
+      "community": 3,
       "norm_label": "post()"
     },
     {
@@ -4637,7 +4673,7 @@
       "source_file": "src\\pages\\api\\admin\\events\\index.ts",
       "source_location": "L1",
       "id": "src_pages_api_admin_events_index_ts",
-      "community": 5,
+      "community": 6,
       "norm_label": "index.ts"
     },
     {
@@ -4673,7 +4709,7 @@
       "source_file": "src\\pages\\api\\admin\\events\\[slug].ts",
       "source_location": "L1",
       "id": "src_pages_api_admin_events_slug_ts",
-      "community": 2,
+      "community": 3,
       "norm_label": "[slug].ts"
     },
     {
@@ -4682,7 +4718,7 @@
       "source_file": "src\\pages\\api\\admin\\panels\\assign.ts",
       "source_location": "L1",
       "id": "src_pages_api_admin_panels_assign_ts",
-      "community": 1,
+      "community": 4,
       "norm_label": "assign.ts"
     },
     {
@@ -4691,7 +4727,7 @@
       "source_file": "src\\pages\\api\\admin\\panels\\assign.ts",
       "source_location": "L8",
       "id": "assign_json",
-      "community": 1,
+      "community": 4,
       "norm_label": "json()"
     },
     {
@@ -4700,7 +4736,7 @@
       "source_file": "src\\pages\\api\\admin\\panels\\assign.ts",
       "source_location": "L24",
       "id": "assign_post",
-      "community": 1,
+      "community": 4,
       "norm_label": "post()"
     },
     {
@@ -4709,7 +4745,7 @@
       "source_file": "src\\pages\\api\\admin\\panels\\assign.ts",
       "source_location": "L95",
       "id": "assign_get",
-      "community": 1,
+      "community": 4,
       "norm_label": "get()"
     },
     {
@@ -4718,7 +4754,7 @@
       "source_file": "src\\pages\\api\\admin\\panels\\index.ts",
       "source_location": "L1",
       "id": "src_pages_api_admin_panels_index_ts",
-      "community": 5,
+      "community": 6,
       "norm_label": "index.ts"
     },
     {
@@ -4745,26 +4781,8 @@
       "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
       "source_location": "L1",
       "id": "src_pages_api_admin_panels_media_id_ts",
-      "community": 10,
+      "community": 21,
       "norm_label": "[id].ts"
-    },
-    {
-      "label": "json()",
-      "file_type": "code",
-      "source_file": "src\\pages\\api\\inline-images\\[id].ts",
-      "source_location": "L4",
-      "id": "id_json",
-      "community": 10,
-      "norm_label": "json()"
-    },
-    {
-      "label": "DELETE()",
-      "file_type": "code",
-      "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
-      "source_location": "L22",
-      "id": "id_delete",
-      "community": 10,
-      "norm_label": "delete()"
     },
     {
       "label": "GET()",
@@ -4772,7 +4790,7 @@
       "source_file": "src\\pages\\api\\inline-images\\[id].ts",
       "source_location": "L41",
       "id": "id_get",
-      "community": 10,
+      "community": 21,
       "norm_label": "get()"
     },
     {
@@ -4781,7 +4799,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\sales\\index.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_index_ts",
-      "community": 5,
+      "community": 6,
       "norm_label": "index.ts"
     },
     {
@@ -4790,7 +4808,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\sales\\[slug].ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_sales_slug_ts",
-      "community": 2,
+      "community": 3,
       "norm_label": "[slug].ts"
     },
     {
@@ -4799,7 +4817,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\events\\[slug].ts",
       "source_location": "L104",
       "id": "slug_put",
-      "community": 2,
+      "community": 3,
       "norm_label": "put()"
     },
     {
@@ -4808,7 +4826,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\events\\[slug].ts",
       "source_location": "L316",
       "id": "slug_delete",
-      "community": 2,
+      "community": 3,
       "norm_label": "delete()"
     },
     {
@@ -4817,7 +4835,7 @@
       "source_file": "src\\pages\\api\\admin\\sales\\[slug]\\images.ts",
       "source_location": "L1",
       "id": "src_pages_api_admin_sales_slug_images_ts",
-      "community": 3,
+      "community": 4,
       "norm_label": "images.ts"
     },
     {
@@ -4826,7 +4844,7 @@
       "source_file": "src\\pages\\api\\admin\\sales\\[slug]\\images.ts",
       "source_location": "L7",
       "id": "images_json",
-      "community": 3,
+      "community": 4,
       "norm_label": "json()"
     },
     {
@@ -4835,7 +4853,7 @@
       "source_file": "src\\pages\\api\\admin\\sales\\[slug]\\images.ts",
       "source_location": "L14",
       "id": "images_parsedatauri",
-      "community": 3,
+      "community": 4,
       "norm_label": "parsedatauri()"
     },
     {
@@ -4844,7 +4862,7 @@
       "source_file": "src\\pages\\api\\admin\\sales\\[slug]\\images.ts",
       "source_location": "L28",
       "id": "images_post",
-      "community": 3,
+      "community": 4,
       "norm_label": "post()"
     },
     {
@@ -4853,7 +4871,7 @@
       "source_file": "src\\pages\\api\\admin\\sales\\[slug]\\images.ts",
       "source_location": "L163",
       "id": "images_delete",
-      "community": 3,
+      "community": 4,
       "norm_label": "delete()"
     },
     {
@@ -4862,7 +4880,7 @@
       "source_file": "src\\pages\\api\\admin\\sales\\[slug]\\images.ts",
       "source_location": "L226",
       "id": "images_patch",
-      "community": 3,
+      "community": 4,
       "norm_label": "patch()"
     },
     {
@@ -5015,7 +5033,7 @@
       "source_file": "src\\pages\\api\\admin\\users\\index.ts",
       "source_location": "L1",
       "id": "src_pages_api_admin_users_index_ts",
-      "community": 5,
+      "community": 6,
       "norm_label": "index.ts"
     },
     {
@@ -5024,17 +5042,8 @@
       "source_file": "src\\pages\\api\\admin\\users\\[id].ts",
       "source_location": "L1",
       "id": "src_pages_api_admin_users_id_ts",
-      "community": 10,
+      "community": 21,
       "norm_label": "[id].ts"
-    },
-    {
-      "label": "PATCH()",
-      "file_type": "code",
-      "source_file": "src\\pages\\api\\admin\\users\\[id].ts",
-      "source_location": "L27",
-      "id": "id_patch",
-      "community": 10,
-      "norm_label": "patch()"
     },
     {
       "label": "track.ts",
@@ -5042,7 +5051,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\analytics\\track.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_pages_api_analytics_track_ts",
-      "community": 3,
+      "community": 25,
       "norm_label": "track.ts"
     },
     {
@@ -5051,7 +5060,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\analytics\\track.ts",
       "source_location": "L4",
       "id": "track_json",
-      "community": 3,
+      "community": 25,
       "norm_label": "json()"
     },
     {
@@ -5060,7 +5069,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\analytics\\track.ts",
       "source_location": "L11",
       "id": "track_post",
-      "community": 3,
+      "community": 25,
       "norm_label": "post()"
     },
     {
@@ -5069,7 +5078,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\articles\\index.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_pages_api_articles_index_ts",
-      "community": 5,
+      "community": 6,
       "norm_label": "index.ts"
     },
     {
@@ -5078,7 +5087,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\articles\\index.ts",
       "source_location": "L28",
       "id": "index_toslug",
-      "community": 5,
+      "community": 6,
       "norm_label": "toslug()"
     },
     {
@@ -5087,7 +5096,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\articles\\index.ts",
       "source_location": "L41",
       "id": "index_estimatebase64decodedbytes",
-      "community": 5,
+      "community": 6,
       "norm_label": "estimatebase64decodedbytes()"
     },
     {
@@ -5096,7 +5105,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\articles\\index.ts",
       "source_location": "L52",
       "id": "index_validatearticlebody",
-      "community": 5,
+      "community": 6,
       "norm_label": "validatearticlebody()"
     },
     {
@@ -5105,7 +5114,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\sales\\index.ts",
       "source_location": "L17",
       "id": "index_getclientip",
-      "community": 5,
+      "community": 6,
       "norm_label": "getclientip()"
     },
     {
@@ -5114,7 +5123,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\sales\\index.ts",
       "source_location": "L25",
       "id": "index_isreadratelimited",
-      "community": 5,
+      "community": 6,
       "norm_label": "isreadratelimited()"
     },
     {
@@ -5123,7 +5132,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\sales\\index.ts",
       "source_location": "L32",
       "id": "index_recordreadattempt",
-      "community": 5,
+      "community": 6,
       "norm_label": "recordreadattempt()"
     },
     {
@@ -5132,7 +5141,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\articles\\[slug].ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_pages_api_articles_slug_ts",
-      "community": 2,
+      "community": 3,
       "norm_label": "[slug].ts"
     },
     {
@@ -5141,7 +5150,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\articles\\[slug].ts",
       "source_location": "L25",
       "id": "slug_toslug",
-      "community": 2,
+      "community": 3,
       "norm_label": "toslug()"
     },
     {
@@ -5150,7 +5159,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\articles\\[slug].ts",
       "source_location": "L38",
       "id": "slug_estimatebase64decodedbytes",
-      "community": 2,
+      "community": 3,
       "norm_label": "estimatebase64decodedbytes()"
     },
     {
@@ -5159,7 +5168,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\articles\\[slug].ts",
       "source_location": "L49",
       "id": "slug_validatearticlebody",
-      "community": 2,
+      "community": 3,
       "norm_label": "validatearticlebody()"
     },
     {
@@ -5168,7 +5177,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\sales\\[slug].ts",
       "source_location": "L17",
       "id": "slug_getclientip",
-      "community": 2,
+      "community": 3,
       "norm_label": "getclientip()"
     },
     {
@@ -5177,7 +5186,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\sales\\[slug].ts",
       "source_location": "L25",
       "id": "slug_isreadratelimited",
-      "community": 2,
+      "community": 3,
       "norm_label": "isreadratelimited()"
     },
     {
@@ -5186,7 +5195,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\sales\\[slug].ts",
       "source_location": "L32",
       "id": "slug_recordreadattempt",
-      "community": 2,
+      "community": 3,
       "norm_label": "recordreadattempt()"
     },
     {
@@ -5195,7 +5204,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
-      "community": 16,
+      "community": 17,
       "norm_label": "login.ts"
     },
     {
@@ -5204,7 +5213,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
       "source_location": "L12",
       "id": "login_getclientip",
-      "community": 16,
+      "community": 17,
       "norm_label": "getclientip()"
     },
     {
@@ -5213,7 +5222,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
       "source_location": "L20",
       "id": "login_isratelimited",
-      "community": 16,
+      "community": 17,
       "norm_label": "isratelimited()"
     },
     {
@@ -5222,7 +5231,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
       "source_location": "L27",
       "id": "login_recordfailure",
-      "community": 16,
+      "community": 17,
       "norm_label": "recordfailure()"
     },
     {
@@ -5231,7 +5240,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
       "source_location": "L37",
       "id": "login_clearattempts",
-      "community": 16,
+      "community": 17,
       "norm_label": "clearattempts()"
     },
     {
@@ -5240,7 +5249,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
       "source_location": "L41",
       "id": "login_post",
-      "community": 16,
+      "community": 17,
       "norm_label": "post()"
     },
     {
@@ -5249,7 +5258,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
       "source_location": "L121",
       "id": "login_get",
-      "community": 16,
+      "community": 17,
       "norm_label": "get()"
     },
     {
@@ -5258,7 +5267,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
       "source_location": "L124",
       "id": "login_json",
-      "community": 16,
+      "community": 17,
       "norm_label": "json()"
     },
     {
@@ -5267,7 +5276,7 @@
       "source_file": "src\\pages\\api\\auth\\logout.ts",
       "source_location": "L1",
       "id": "src_pages_api_auth_logout_ts",
-      "community": 16,
+      "community": 17,
       "norm_label": "logout.ts"
     },
     {
@@ -5276,7 +5285,7 @@
       "source_file": "src\\pages\\api\\auth\\logout.ts",
       "source_location": "L4",
       "id": "logout_post",
-      "community": 16,
+      "community": 17,
       "norm_label": "post()"
     },
     {
@@ -5285,7 +5294,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\register.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_register_ts",
-      "community": 23,
+      "community": 24,
       "norm_label": "register.ts"
     },
     {
@@ -5294,7 +5303,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\register.ts",
       "source_location": "L10",
       "id": "register_getclientip",
-      "community": 23,
+      "community": 24,
       "norm_label": "getclientip()"
     },
     {
@@ -5303,7 +5312,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\register.ts",
       "source_location": "L18",
       "id": "register_isratelimited",
-      "community": 23,
+      "community": 24,
       "norm_label": "isratelimited()"
     },
     {
@@ -5312,7 +5321,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\register.ts",
       "source_location": "L25",
       "id": "register_recordattempt",
-      "community": 23,
+      "community": 24,
       "norm_label": "recordattempt()"
     },
     {
@@ -5321,7 +5330,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\register.ts",
       "source_location": "L37",
       "id": "register_json",
-      "community": 23,
+      "community": 24,
       "norm_label": "json()"
     },
     {
@@ -5330,7 +5339,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\register.ts",
       "source_location": "L45",
       "id": "register_isvalidemail",
-      "community": 23,
+      "community": 24,
       "norm_label": "isvalidemail()"
     },
     {
@@ -5339,7 +5348,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\register.ts",
       "source_location": "L53",
       "id": "register_post",
-      "community": 23,
+      "community": 24,
       "norm_label": "post()"
     },
     {
@@ -5348,7 +5357,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\register.ts",
       "source_location": "L156",
       "id": "register_get",
-      "community": 23,
+      "community": 24,
       "norm_label": "get()"
     },
     {
@@ -5357,7 +5366,7 @@
       "source_file": "src\\pages\\api\\categories\\index.ts",
       "source_location": "L1",
       "id": "src_pages_api_categories_index_ts",
-      "community": 5,
+      "community": 6,
       "norm_label": "index.ts"
     },
     {
@@ -5366,7 +5375,7 @@
       "source_file": "src\\pages\\api\\events\\index.ts",
       "source_location": "L1",
       "id": "src_pages_api_events_index_ts",
-      "community": 5,
+      "community": 6,
       "norm_label": "index.ts"
     },
     {
@@ -5375,7 +5384,7 @@
       "source_file": "src\\pages\\api\\events\\index.ts",
       "source_location": "L57",
       "id": "index_validateeventbody",
-      "community": 5,
+      "community": 6,
       "norm_label": "validateeventbody()"
     },
     {
@@ -5384,7 +5393,7 @@
       "source_file": "src\\pages\\api\\events\\index.ts",
       "source_location": "L66",
       "id": "index_normalizeoptionaltext",
-      "community": 5,
+      "community": 6,
       "norm_label": "normalizeoptionaltext()"
     },
     {
@@ -5393,7 +5402,7 @@
       "source_file": "src\\pages\\api\\events\\index.ts",
       "source_location": "L72",
       "id": "index_normalizebooleanflag",
-      "community": 5,
+      "community": 6,
       "norm_label": "normalizebooleanflag()"
     },
     {
@@ -5402,7 +5411,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\events\\[slug].ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_pages_api_events_slug_ts",
-      "community": 2,
+      "community": 3,
       "norm_label": "[slug].ts"
     },
     {
@@ -5411,7 +5420,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\events\\[slug].ts",
       "source_location": "L53",
       "id": "slug_validateeventbody",
-      "community": 2,
+      "community": 3,
       "norm_label": "validateeventbody()"
     },
     {
@@ -5420,7 +5429,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\events\\[slug].ts",
       "source_location": "L62",
       "id": "slug_normalizeoptionaltext",
-      "community": 2,
+      "community": 3,
       "norm_label": "normalizeoptionaltext()"
     },
     {
@@ -5429,7 +5438,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\events\\[slug].ts",
       "source_location": "L68",
       "id": "slug_normalizebooleanflag",
-      "community": 2,
+      "community": 3,
       "norm_label": "normalizebooleanflag()"
     },
     {
@@ -5438,7 +5447,7 @@
       "source_file": "src\\pages\\api\\inline-images\\[id].ts",
       "source_location": "L1",
       "id": "src_pages_api_inline_images_id_ts",
-      "community": 10,
+      "community": 21,
       "norm_label": "[id].ts"
     },
     {
@@ -5447,7 +5456,7 @@
       "source_file": "src\\pages\\api\\inline-images\\[id].ts",
       "source_location": "L15",
       "id": "id_getclientip",
-      "community": 10,
+      "community": 21,
       "norm_label": "getclientip()"
     },
     {
@@ -5456,7 +5465,7 @@
       "source_file": "src\\pages\\api\\inline-images\\[id].ts",
       "source_location": "L23",
       "id": "id_isratelimited",
-      "community": 10,
+      "community": 21,
       "norm_label": "isratelimited()"
     },
     {
@@ -5465,7 +5474,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\sales\\index.ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_pages_api_sales_index_ts",
-      "community": 5,
+      "community": 6,
       "norm_label": "index.ts"
     },
     {
@@ -5474,7 +5483,7 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\sales\\[slug].ts",
       "source_location": "L1",
       "id": "c_users_manag_github_repo_astro_turso_src_pages_api_sales_slug_ts",
-      "community": 2,
+      "community": 3,
       "norm_label": "[slug].ts"
     },
     {
@@ -5486,7 +5495,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "chat customization diagnostics",
       "id": "chat_customization_diagnostics"
     },
@@ -5499,7 +5508,7 @@
       "captured_at": null,
       "author": "Jimmy Burns",
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "agents.md \u2014 cursor/windsurf agent instructions",
       "id": "agents_md"
     },
@@ -5512,7 +5521,7 @@
       "captured_at": null,
       "author": "Jimmy Burns",
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "claude.md \u2014 claude code project instructions",
       "id": "claude_md"
     },
@@ -5525,7 +5534,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "astro ssr framework (output: server)",
       "id": "astro_ssr_framework"
     },
@@ -5538,7 +5547,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "turso database (@tursodatabase/serverless)",
       "id": "turso_db"
     },
@@ -5551,7 +5560,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "jwt httponly cookie auth (auth_token)",
       "id": "jwt_auth"
     },
@@ -5564,7 +5573,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "cloudinary media storage integration",
       "id": "cloudinary_integration"
     },
@@ -5577,7 +5586,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 29,
+      "community": 30,
       "norm_label": "quill 2 snow wysiwyg editor",
       "id": "quill_wysiwyg"
     },
@@ -5590,7 +5599,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "docs/project_notes/ \u2014 institutional memory files",
       "id": "project_notes_dir"
     },
@@ -5603,7 +5612,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 72,
+      "community": 73,
       "norm_label": "content security policy (addsecurityheaders in middleware)",
       "id": "csp_middleware"
     },
@@ -5616,7 +5625,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 73,
+      "community": 74,
       "norm_label": "in-memory rate limiting pattern (map-based)",
       "id": "rate_limiting_pattern"
     },
@@ -5629,7 +5638,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 29,
+      "community": 30,
       "norm_label": "css scoping trap: set:html and client:only bypass astro cid",
       "id": "css_scoping_sethtml_rule"
     },
@@ -5642,7 +5651,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 27,
+      "community": 28,
       "norm_label": "no self-fetch in astro ssr frontmatter rule",
       "id": "no_self_fetch_rule"
     },
@@ -5655,7 +5664,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "turso fresh connection per call rule",
       "id": "fresh_connection_rule"
     },
@@ -5668,7 +5677,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 53,
+      "community": 54,
       "norm_label": "two-phase middleware pattern (identification + enforcement)",
       "id": "two_phase_middleware_pattern"
     },
@@ -5681,7 +5690,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 74,
+      "community": 75,
       "norm_label": "article body guardrails (size + inline image limits)",
       "id": "article_body_guardrails"
     },
@@ -5694,7 +5703,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 75,
+      "community": 76,
       "norm_label": "event archive lifecycle (14-day window + permanent archive)",
       "id": "event_archive_lifecycle"
     },
@@ -5707,7 +5716,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 53,
+      "community": 54,
       "norm_label": "role-based access control (admin / author)",
       "id": "role_based_access"
     },
@@ -5720,7 +5729,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "mcp configuration (devtools/.mcp.json)",
       "id": "mcp_config"
     },
@@ -5733,7 +5742,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": ".github/instructions/copilot-instructions.md \u2014 github copilot agent",
       "id": "github_copilot_instructions"
     },
@@ -5746,7 +5755,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 29,
+      "community": 30,
       "norm_label": "admin layout heading bleed bug (h2-h4 into .ql-editor)",
       "id": "admin_layout_heading_bleed"
     },
@@ -5759,7 +5768,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "three-agent sync contract (claude + copilot + cursor must stay in sync)",
       "id": "three_agent_sync"
     },
@@ -5772,7 +5781,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 27,
+      "community": 28,
       "norm_label": "rationale: no self-fetch (railway/litespeed tls termination breaks loopback)",
       "id": "rationale_no_self_fetch"
     },
@@ -5785,7 +5794,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "rationale: httponly samesite=strict cookie (no localstorage, csrf via cookie policy)",
       "id": "rationale_httponly_cookie"
     },
@@ -5798,7 +5807,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "rationale: fresh turso connection (single-use http session, positional rows)",
       "id": "rationale_fresh_turso_conn"
     },
@@ -5811,7 +5820,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 29,
+      "community": 30,
       "norm_label": "rationale: set:html styles in global.css (astro cid attribute bypass)",
       "id": "rationale_global_css_sethtml"
     },
@@ -5824,7 +5833,7 @@
       "captured_at": null,
       "author": "Jimmy Burns",
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "readme \u2014 the happy feeling scriptorium",
       "id": "readme_md"
     },
@@ -5837,7 +5846,7 @@
       "captured_at": null,
       "author": "Jimmy Burns",
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "the scriptorium \u2014 full-stack blog application",
       "id": "scriptorium_app"
     },
@@ -5850,7 +5859,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 27,
+      "community": 28,
       "norm_label": "railway deployment target",
       "id": "railway_deployment"
     },
@@ -5863,7 +5872,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 27,
+      "community": 28,
       "norm_label": "cpanel/litespeed production deployment (happyfeelingprints.com)",
       "id": "cpanel_litespeed_deployment"
     },
@@ -5876,7 +5885,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "resend email service (contact form delivery)",
       "id": "resend_email"
     },
@@ -5889,7 +5898,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "frontend designer agent",
       "id": "frontend_designer_agent"
     },
@@ -5902,7 +5911,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "code development skill",
       "id": "code_development_skill"
     },
@@ -5915,7 +5924,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "base64 json upload pattern (waf-safe alternative to multipart)",
       "id": "base64_upload_pattern"
     },
@@ -5928,7 +5937,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "turso query conventions (parameterized, maprows, batch)",
       "id": "turso_query_conventions"
     },
@@ -5941,7 +5950,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "playwright mcp testing workflow",
       "id": "playwright_testing"
     },
@@ -5954,7 +5963,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "rationale: base64 json upload (waf/modsecurity blocks multipart on shared hosting)",
       "id": "rationale_base64_upload"
     },
@@ -5967,7 +5976,7 @@
       "captured_at": null,
       "author": "Eraser Labs",
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "eraser diagram generator skill",
       "id": "eraser_diagrams_skill"
     },
@@ -5980,7 +5989,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "eraser api (post /api/render/elements)",
       "id": "eraser_api"
     },
@@ -5993,7 +6002,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "eraser architecture diagram syntax reference",
       "id": "eraser_architecture_syntax"
     },
@@ -6006,7 +6015,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "eraser bpmn diagram syntax reference",
       "id": "eraser_bpmn_syntax"
     },
@@ -6019,7 +6028,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "eraser erd syntax reference",
       "id": "eraser_erd_syntax"
     },
@@ -6032,7 +6041,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "eraser flowchart syntax reference",
       "id": "eraser_flowchart_syntax"
     },
@@ -6045,7 +6054,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "eraser sequence diagram syntax reference",
       "id": "eraser_sequence_syntax"
     },
@@ -6058,7 +6067,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "frontend design skill \u2014 scriptorium visual system",
       "id": "frontend_design_skill"
     },
@@ -6071,7 +6080,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "comic/superhero aesthetic identity (watchmen/kirby/miller)",
       "id": "comic_aesthetic"
     },
@@ -6084,7 +6093,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "design token system (css custom properties)",
       "id": "design_tokens"
     },
@@ -6097,7 +6106,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "hard shadow button pattern (.btn-comic)",
       "id": "hard_shadow_buttons"
     },
@@ -6110,7 +6119,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "comic panel grid (gap-as-border technique)",
       "id": "comic_panel_grid"
     },
@@ -6123,7 +6132,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "kirby krackle css effect",
       "id": "kirby_krackle"
     },
@@ -6136,7 +6145,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "project memory skill readme",
       "id": "project_memory_readme"
     },
@@ -6149,7 +6158,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "skillzwave marketplace for ai agent skills",
       "id": "skillzwave_platform"
     },
@@ -6162,7 +6171,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "project memory skill (skill.md)",
       "id": "project_memory_skill"
     },
@@ -6175,7 +6184,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "rationale: docs/project_notes/ naming (looks like standard engineering docs, not ai tooling)",
       "id": "rationale_project_notes_dir"
     },
@@ -6188,7 +6197,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "bug log template",
       "id": "bugs_template"
     },
@@ -6201,7 +6210,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "architectural decisions template (adr)",
       "id": "decisions_template"
     },
@@ -6214,7 +6223,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "issues/work log template",
       "id": "issues_template"
     },
@@ -6227,7 +6236,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "key facts template",
       "id": "key_facts_template"
     },
@@ -6240,7 +6249,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 27,
+      "community": 28,
       "norm_label": "use railway skill",
       "id": "use_railway_skill"
     },
@@ -6253,7 +6262,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 27,
+      "community": 28,
       "norm_label": "railway resource model (workspace/project/environment/service)",
       "id": "railway_resource_model"
     },
@@ -6266,7 +6275,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "mongodb analysis reference",
       "id": "analyze_db_mongo_mongodb_analysis"
     },
@@ -6279,7 +6288,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "wiredtiger cache performance pattern",
       "id": "analyze_db_mongo_wiredtiger_cache"
     },
@@ -6292,7 +6301,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "mongodb query efficiency pattern",
       "id": "analyze_db_mongo_query_efficiency"
     },
@@ -6305,7 +6314,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "mongodb connection saturation pattern",
       "id": "analyze_db_mongo_connection_saturation"
     },
@@ -6318,7 +6327,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "mongodb oplog pressure pattern",
       "id": "analyze_db_mongo_oplog_pressure"
     },
@@ -6331,7 +6340,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "mysql analysis reference",
       "id": "analyze_db_mysql_mysql_analysis"
     },
@@ -6344,7 +6353,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "mysql innodb buffer pool",
       "id": "analyze_db_mysql_buffer_pool"
     },
@@ -6357,7 +6366,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "mysql query efficiency pattern",
       "id": "analyze_db_mysql_query_efficiency"
     },
@@ -6370,7 +6379,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "mysql lock contention pattern",
       "id": "analyze_db_mysql_lock_contention"
     },
@@ -6383,7 +6392,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "postgresql analysis reference",
       "id": "analyze_db_postgres_postgres_analysis"
     },
@@ -6396,7 +6405,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "pg_stat_statements query performance",
       "id": "analyze_db_postgres_pg_stat_statements"
     },
@@ -6409,7 +6418,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "postgresql vacuum health",
       "id": "analyze_db_postgres_vacuum_health"
     },
@@ -6422,7 +6431,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "postgresql cache hit ratio",
       "id": "analyze_db_postgres_cache_hit"
     },
@@ -6435,7 +6444,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "postgresql tuning formulas",
       "id": "analyze_db_postgres_tuning_formulas"
     },
@@ -6448,7 +6457,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "redis analysis reference",
       "id": "analyze_db_redis_redis_analysis"
     },
@@ -6461,7 +6470,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "redis memory fragmentation pattern",
       "id": "analyze_db_redis_memory_fragmentation"
     },
@@ -6474,7 +6483,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "redis cache thrashing pattern",
       "id": "analyze_db_redis_cache_thrashing"
     },
@@ -6487,7 +6496,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "redis persistence risk pattern",
       "id": "analyze_db_redis_persistence_risk"
     },
@@ -6500,7 +6509,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "database analysis common patterns",
       "id": "analyze_db_common_analysis"
     },
@@ -6513,7 +6522,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "db analysis collection status handling",
       "id": "analyze_db_collection_status"
     },
@@ -6526,7 +6535,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "railway db autoscale rules",
       "id": "analyze_db_autoscale_rules"
     },
@@ -6539,7 +6548,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "railway ssh key registration handling",
       "id": "analyze_db_ssh_key_handling"
     },
@@ -6552,7 +6561,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 34,
+      "community": 35,
       "norm_label": "railway environment management",
       "id": "configure_environments"
     },
@@ -6565,7 +6574,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 34,
+      "community": 35,
       "norm_label": "railway variable configuration",
       "id": "configure_variables"
     },
@@ -6578,7 +6587,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 34,
+      "community": 35,
       "norm_label": "railway private networking decision",
       "id": "configure_private_networking"
     },
@@ -6591,7 +6600,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 35,
+      "community": 36,
       "norm_label": "railway service config schema",
       "id": "configure_service_config"
     },
@@ -6604,7 +6613,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 35,
+      "community": 36,
       "norm_label": "railway domain configuration",
       "id": "configure_domains"
     },
@@ -6617,7 +6626,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 35,
+      "community": 36,
       "norm_label": "railway standard deploy command",
       "id": "deploy_standard_deploy"
     },
@@ -6630,7 +6639,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 76,
+      "community": 77,
       "norm_label": "railway railpack builder",
       "id": "deploy_railpack_builder"
     },
@@ -6643,7 +6652,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 54,
+      "community": 55,
       "norm_label": "railway monorepo deployment patterns",
       "id": "deploy_monorepo_patterns"
     },
@@ -6656,7 +6665,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "railway deploy troubleshooting",
       "id": "deploy_build_troubleshoot"
     },
@@ -6669,7 +6678,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "railway health snapshot commands",
       "id": "operate_health_snapshot"
     },
@@ -6682,7 +6691,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "railway log querying",
       "id": "operate_logs"
     },
@@ -6695,7 +6704,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 8,
+      "community": 9,
       "norm_label": "railway failure triage process",
       "id": "operate_failure_triage"
     },
@@ -6708,7 +6717,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 36,
+      "community": 37,
       "norm_label": "railway metrics graphql queries",
       "id": "operate_metrics"
     },
@@ -6721,7 +6730,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 36,
+      "community": 37,
       "norm_label": "railway official documentation endpoints",
       "id": "request_official_docs"
     },
@@ -6734,7 +6743,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 36,
+      "community": 37,
       "norm_label": "railway graphql api helper",
       "id": "request_graphql_helper"
     },
@@ -6747,7 +6756,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 77,
+      "community": 78,
       "norm_label": "railway central station community",
       "id": "request_central_station"
     },
@@ -6760,7 +6769,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 30,
+      "community": 31,
       "norm_label": "railway template search and deploy",
       "id": "request_template_search"
     },
@@ -6773,7 +6782,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 30,
+      "community": 31,
       "norm_label": "railway project setup",
       "id": "setup_projects"
     },
@@ -6786,7 +6795,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 30,
+      "community": 31,
       "norm_label": "railway service creation",
       "id": "setup_services"
     },
@@ -6799,7 +6808,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 30,
+      "community": 31,
       "norm_label": "railway s3 bucket management",
       "id": "setup_buckets"
     },
@@ -6812,7 +6821,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 54,
+      "community": 55,
       "norm_label": "railway monorepo detection patterns",
       "id": "setup_monorepo_detection"
     },
@@ -6890,7 +6899,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 22,
       "norm_label": "etsy product browser implementation plan",
       "id": "etsy_product_browser_plan"
     },
@@ -6903,7 +6912,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 22,
       "norm_label": "etsy browse api route design",
       "id": "etsy_browse_api_route"
     },
@@ -6916,7 +6925,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 22,
       "norm_label": "etsy section cache pattern",
       "id": "etsy_browse_section_cache"
     },
@@ -7020,7 +7029,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 37,
+      "community": 38,
       "norm_label": "phase 6 verification checklist",
       "id": "phase6_verification_checklist"
     },
@@ -7033,7 +7042,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 37,
+      "community": 38,
       "norm_label": "quill editor verification tests",
       "id": "phase6_quill_editor_tests"
     },
@@ -7046,7 +7055,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 37,
+      "community": 38,
       "norm_label": "xss sanitization smoke tests",
       "id": "phase6_xss_sanitization_tests"
     },
@@ -7085,7 +7094,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 22,
       "norm_label": "sales page feature plan v2",
       "id": "sales_page_feature_plan"
     },
@@ -7098,7 +7107,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 22,
       "norm_label": "etsy open api v3 integration research",
       "id": "sales_page_etsy_api"
     },
@@ -7111,7 +7120,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 22,
       "norm_label": "sales postings database schema",
       "id": "sales_page_db_schema"
     },
@@ -7124,7 +7133,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 22,
       "norm_label": "sales promotion display logic",
       "id": "sales_page_promo_logic"
     },
@@ -7137,7 +7146,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 22,
       "norm_label": "paypal button html sanitizer design",
       "id": "sales_page_paypal_sanitizer"
     },
@@ -7150,7 +7159,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 22,
       "norm_label": "bug: cloudinary text overlay resize order",
       "id": "bugs_cloudinary_overlay_order"
     },
@@ -7163,7 +7172,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 38,
+      "community": 39,
       "norm_label": "bug: react island css scoping trap",
       "id": "bugs_react_island_css_scoping"
     },
@@ -7176,7 +7185,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 78,
+      "community": 79,
       "norm_label": "bug: db datetime invalid date parsing",
       "id": "bugs_db_datetime_invalid"
     },
@@ -7189,7 +7198,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 79,
+      "community": 80,
       "norm_label": "bug: typescript implicit any after filter chain",
       "id": "bugs_typescript_implicit_any"
     },
@@ -7202,7 +7211,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 55,
+      "community": 56,
       "norm_label": "bug: quill 2 block formats admin css bleed",
       "id": "bugs_quill_block_formats_admin"
     },
@@ -7215,7 +7224,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 38,
+      "community": 39,
       "norm_label": "bug: quill 2 block formats public page rendering",
       "id": "bugs_quill_block_formats_public"
     },
@@ -7228,7 +7237,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 80,
+      "community": 81,
       "norm_label": "bug: sales listing silent catch{} error hiding",
       "id": "bugs_sales_silent_catch"
     },
@@ -7241,7 +7250,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 57,
+      "community": 58,
       "norm_label": "bug: cloudinary cloud name ssr env resolution",
       "id": "bugs_cloudinary_cloud_name_ssr"
     },
@@ -7254,7 +7263,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 81,
+      "community": 82,
       "norm_label": "bug: typescript narrowing drift across astro boundaries",
       "id": "bugs_type_narrowing_drift"
     },
@@ -7267,7 +7276,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 82,
+      "community": 83,
       "norm_label": "bug: admin event draft edit blank fields",
       "id": "bugs_admin_event_draft_edit"
     },
@@ -7280,7 +7289,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 83,
+      "community": 84,
       "norm_label": "bug: admin edit page 2+ min pending for draft slug",
       "id": "bugs_edit_page_pending"
     },
@@ -7293,7 +7302,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 84,
+      "community": 85,
       "norm_label": "bug: cloudinary upload guardrails + preview sanitization gaps",
       "id": "bugs_upload_guardrails"
     },
@@ -7319,7 +7328,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
+      "community": 23,
       "norm_label": "bug: socialshare panel hidden due to middleware early return",
       "id": "bugs_social_share_middleware"
     },
@@ -7332,7 +7341,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 85,
+      "community": 86,
       "norm_label": "bug: feature image upload fails typescript generic in is:inline",
       "id": "bugs_feature_image_upload"
     },
@@ -7345,7 +7354,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 86,
+      "community": 87,
       "norm_label": "bug: generated build artifacts contained inlined secrets",
       "id": "bugs_secrets_in_build_artifacts"
     },
@@ -7358,7 +7367,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 87,
+      "community": 88,
       "norm_label": "bug: article delete 500 fk constraint violation",
       "id": "bugs_article_delete_fk"
     },
@@ -7384,7 +7393,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 88,
+      "community": 89,
       "norm_label": "bug: railway cli service targeting mismatch",
       "id": "bugs_railway_cli_service_mismatch"
     },
@@ -7397,7 +7406,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 89,
+      "community": 90,
       "norm_label": "bug: panel gallery slot picker clipped by card overflow",
       "id": "bugs_panel_gallery_slot_clipped"
     },
@@ -7410,7 +7419,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 90,
+      "community": 91,
       "norm_label": "bug: db.execute() without [] args returns empty rows",
       "id": "bugs_db_execute_empty_args"
     },
@@ -7423,7 +7432,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
+      "community": 23,
       "norm_label": "bug: @tursodatabase/serverless numeric-indexed rows",
       "id": "bugs_turso_numeric_rows"
     },
@@ -7436,7 +7445,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
+      "community": 23,
       "norm_label": "bug: @tursodatabase/serverless single-use http session",
       "id": "bugs_turso_single_use_session"
     },
@@ -7449,7 +7458,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 91,
+      "community": 92,
       "norm_label": "bug: new article form re-posted on update click",
       "id": "bugs_new_article_repost"
     },
@@ -7462,7 +7471,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 56,
+      "community": 57,
       "norm_label": "bug: multi-user privacy gap in admin routes",
       "id": "bugs_multi_user_privacy"
     },
@@ -7475,7 +7484,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
+      "community": 23,
       "norm_label": "build plan phase tracker",
       "id": "build_plan_phases"
     },
@@ -7488,7 +7497,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
+      "community": 23,
       "norm_label": "phase 1: turso database schema",
       "id": "build_plan_turso_schema"
     },
@@ -7501,7 +7510,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
+      "community": 23,
       "norm_label": "phase 2: astro project bootstrap",
       "id": "build_plan_astro_bootstrap"
     },
@@ -7514,7 +7523,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
+      "community": 23,
       "norm_label": "phase 4: auth api route",
       "id": "build_plan_auth_route"
     },
@@ -7527,7 +7536,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
+      "community": 23,
       "norm_label": "phase 5: jwt middleware",
       "id": "build_plan_jwt_middleware"
     },
@@ -7540,7 +7549,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 20,
+      "community": 22,
       "norm_label": "adr-021: remove etsy integration replace with cloudinary+paypal",
       "id": "decisions_adr021_etsy_removal"
     },
@@ -7553,7 +7562,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 38,
+      "community": 39,
       "norm_label": "adr-020: global.css as escape hatch for react island css",
       "id": "decisions_adr020_global_css_islands"
     },
@@ -7566,7 +7575,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 57,
+      "community": 58,
       "norm_label": "adr-019: self-hosted fonts + cloudinary name fallback",
       "id": "decisions_adr019_self_hosted_fonts"
     },
@@ -7579,7 +7588,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 92,
+      "community": 93,
       "norm_label": "adr-018: permanent event archive 14-day window",
       "id": "decisions_adr018_event_archive"
     },
@@ -7592,7 +7601,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 55,
+      "community": 56,
       "norm_label": "adr-017: docs-first workflow for astro+typescript errors",
       "id": "decisions_adr017_docs_first"
     },
@@ -7605,7 +7614,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 93,
+      "community": 94,
       "norm_label": "adr-016: inline editor images stored in images table",
       "id": "decisions_adr016_inline_images"
     },
@@ -7644,7 +7653,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 94,
+      "community": 95,
       "norm_label": "adr-009: dark/light theme system css custom property override",
       "id": "decisions_adr009_dark_light_theme"
     },
@@ -7657,7 +7666,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 95,
+      "community": 96,
       "norm_label": "adr-008: user registration & admin approval system",
       "id": "decisions_adr008_user_registration"
     },
@@ -7670,7 +7679,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 96,
+      "community": 97,
       "norm_label": "adr-007: tailwindcss v4 vite plugin approach",
       "id": "decisions_adr007_tailwind_v4"
     },
@@ -7683,7 +7692,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 56,
+      "community": 57,
       "norm_label": "adr-006: per-user article ownership enforcement",
       "id": "decisions_adr006_article_ownership"
     },
@@ -7709,7 +7718,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 22,
+      "community": 23,
       "norm_label": "adr-003: astrojs blog core architecture stack",
       "id": "decisions_adr003_core_arch"
     },
@@ -7722,7 +7731,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 97,
+      "community": 98,
       "norm_label": "adr-001: pinecone assistant for library rag",
       "id": "decisions_adr001_pinecone_rag"
     },
@@ -7734,7 +7743,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 25,
+      "community": 26,
       "norm_label": "issues / work log",
       "id": "issues_work_log"
     },
@@ -7746,7 +7755,7 @@
       "source_url": null,
       "captured_at": "2026-04-23",
       "author": "Jimmy Burns",
-      "community": 25,
+      "community": 26,
       "norm_label": "etsy removal \u2192 cloudinary sales system (2026-04-23)",
       "id": "issues_etsy_removal"
     },
@@ -7758,7 +7767,7 @@
       "source_url": null,
       "captured_at": "2026-04-19",
       "author": "Jimmy Burns",
-      "community": 25,
+      "community": 26,
       "norm_label": "event calendar react island (2026-04-19)",
       "id": "issues_event_calendar"
     },
@@ -7770,7 +7779,7 @@
       "source_url": null,
       "captured_at": "2026-04-17",
       "author": "Jimmy Burns",
-      "community": 58,
+      "community": 59,
       "norm_label": "css dead code removal + admin-layout quill cleanup (2026-04-17)",
       "id": "issues_css_dead_code"
     },
@@ -7782,7 +7791,7 @@
       "source_url": null,
       "captured_at": "2026-04-17",
       "author": "Jimmy Burns",
-      "community": 98,
+      "community": 99,
       "norm_label": "fixed quill 2 block formatting in sales editor (2026-04-17)",
       "id": "issues_quill2_css_fix"
     },
@@ -7794,7 +7803,7 @@
       "source_url": null,
       "captured_at": "2026-04-14",
       "author": "Jimmy Burns",
-      "community": 31,
+      "community": 32,
       "norm_label": "cloudinary panel fix + self-hosted fonts rollout (2026-04-14)",
       "id": "issues_cloudinary_panel_font"
     },
@@ -7806,7 +7815,7 @@
       "source_url": null,
       "captured_at": "2026-04-13",
       "author": "Jimmy Burns",
-      "community": 99,
+      "community": 100,
       "norm_label": "event archive policy revision (2026-04-13)",
       "id": "issues_event_archive_policy"
     },
@@ -7818,7 +7827,7 @@
       "source_url": null,
       "captured_at": "2026-04-06",
       "author": "Jimmy Burns",
-      "community": 59,
+      "community": 62,
       "norm_label": "astro + typescript error resolution (2026-04-06)",
       "id": "issues_ts_error_resolution"
     },
@@ -7830,7 +7839,7 @@
       "source_url": null,
       "captured_at": "2026-04-06",
       "author": "Jimmy Burns",
-      "community": 100,
+      "community": 101,
       "norm_label": "events feature v1 implementation (2026-04-06)",
       "id": "issues_events_feature_v1"
     },
@@ -7842,7 +7851,7 @@
       "source_url": null,
       "captured_at": "2026-04-05",
       "author": "Jimmy Burns",
-      "community": 25,
+      "community": 26,
       "norm_label": "inline images persisted to images table (2026-04-05)",
       "id": "issues_inline_images"
     },
@@ -7866,7 +7875,7 @@
       "source_url": null,
       "captured_at": "2026-04-05",
       "author": "Jimmy Burns",
-      "community": 62,
+      "community": 63,
       "norm_label": "article body guardrails relaxed after author feedback (2026-04-05)",
       "id": "issues_article_guardrails"
     },
@@ -7878,7 +7887,7 @@
       "source_url": null,
       "captured_at": "2026-04-03",
       "author": "Jimmy Burns",
-      "community": 101,
+      "community": 102,
       "norm_label": "api convention audit + one-slug pending diagnosis (2026-04-03)",
       "id": "issues_api_audit"
     },
@@ -7890,7 +7899,7 @@
       "source_url": null,
       "captured_at": "2026-04-03",
       "author": "Jimmy Burns",
-      "community": 64,
+      "community": 65,
       "norm_label": "cloudinary transformation + validation sweep (2026-04-03)",
       "id": "issues_cloudinary_sweep"
     },
@@ -7902,7 +7911,7 @@
       "source_url": null,
       "captured_at": "2026-04-02",
       "author": "Jimmy Burns",
-      "community": 102,
+      "community": 103,
       "norm_label": "railway dev validation deploy (2026-04-02)",
       "id": "issues_railway_deploy"
     },
@@ -7914,7 +7923,7 @@
       "source_url": null,
       "captured_at": "2026-03-28",
       "author": "Jimmy Burns",
-      "community": 15,
+      "community": 16,
       "norm_label": "csrf 403 fixed + railway deploy (2026-03-28)",
       "id": "issues_csrf_fix"
     },
@@ -7926,7 +7935,7 @@
       "source_url": null,
       "captured_at": "2026-03-30",
       "author": "Jimmy Burns",
-      "community": 15,
+      "community": 16,
       "norm_label": "security hardening pass \u2014 hsts + csp report-only (2026-03-30)",
       "id": "issues_security_hardening"
     },
@@ -7938,7 +7947,7 @@
       "source_url": null,
       "captured_at": "2026-03-30",
       "author": "Jimmy Burns",
-      "community": 15,
+      "community": 16,
       "norm_label": "security hardening pass \u2014 rate limiting (2026-03-30)",
       "id": "issues_rate_limiting"
     },
@@ -7950,7 +7959,7 @@
       "source_url": null,
       "captured_at": "2026-03-30",
       "author": "Jimmy Burns",
-      "community": 15,
+      "community": 16,
       "norm_label": "facebook og social share fixed on cpanel lamp (2026-03-30)",
       "id": "issues_facebook_og"
     },
@@ -7962,7 +7971,7 @@
       "source_url": null,
       "captured_at": "2026-03-30",
       "author": "Jimmy Burns",
-      "community": 15,
+      "community": 16,
       "norm_label": "socialshare panel not rendering fix (2026-03-30)",
       "id": "issues_social_share_panel"
     },
@@ -7974,7 +7983,7 @@
       "source_url": null,
       "captured_at": "2026-03-22",
       "author": "Jimmy Burns",
-      "community": 4,
+      "community": 5,
       "norm_label": "pre-deploy security refactor: localstorage jwt \u2192 httponly cookie (2026-03-22)",
       "id": "issues_jwt_cookie_migration"
     },
@@ -7986,7 +7995,7 @@
       "source_url": null,
       "captured_at": "2026-03-15",
       "author": "Jimmy Burns",
-      "community": 39,
+      "community": 41,
       "norm_label": "user registration & admin approval system (2026-03-15)",
       "id": "issues_user_registration"
     },
@@ -8022,7 +8031,7 @@
       "source_url": null,
       "captured_at": "2026-02-28",
       "author": "Jimmy Burns",
-      "community": 103,
+      "community": 104,
       "norm_label": "phase 1: turso database schema (2026-02-28)",
       "id": "issues_turso_db_schema"
     },
@@ -8034,7 +8043,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 58,
+      "community": 59,
       "norm_label": "rationale: global css for set:html containers (astro scoped css never matches set:html children)",
       "id": "rationale_global_css_for_sethtml"
     },
@@ -8046,7 +8055,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 63,
+      "community": 64,
       "norm_label": "development journal",
       "id": "journal_dev_journal"
     },
@@ -8058,7 +8067,7 @@
       "source_url": null,
       "captured_at": "2026-04-14",
       "author": "Jimmy Burns",
-      "community": 31,
+      "community": 32,
       "norm_label": "cloudinary transform debugging + local font hosting (2026-04-14)",
       "id": "journal_cloudinary_font_story"
     },
@@ -8070,7 +8079,7 @@
       "source_url": null,
       "captured_at": "2026-04-06",
       "author": "Jimmy Burns",
-      "community": 59,
+      "community": 62,
       "norm_label": "astro + typescript framework boundaries (2026-04-06)",
       "id": "journal_astro_ts_boundaries"
     },
@@ -8082,7 +8091,7 @@
       "source_url": null,
       "captured_at": "2026-04-05",
       "author": "Jimmy Burns",
-      "community": 25,
+      "community": 26,
       "norm_label": "database should know about its own images (2026-04-05)",
       "id": "journal_inline_images_story"
     },
@@ -8106,7 +8115,7 @@
       "source_url": null,
       "captured_at": "2026-04-03",
       "author": "Jimmy Burns",
-      "community": 62,
+      "community": 63,
       "norm_label": "body guardrails: protecting the database (2026-04-03)",
       "id": "journal_body_guardrails_story"
     },
@@ -8118,7 +8127,7 @@
       "source_url": null,
       "captured_at": "2026-03-30",
       "author": "Jimmy Burns",
-      "community": 15,
+      "community": 16,
       "norm_label": "five days that hardened the foundation (2026-03-30)",
       "id": "journal_five_days_hardening"
     },
@@ -8130,7 +8139,7 @@
       "source_url": null,
       "captured_at": "2026-03-29",
       "author": "Jimmy Burns",
-      "community": 63,
+      "community": 64,
       "norm_label": "the bug that wasn't a network error (2026-03-29)",
       "id": "journal_promise_bug"
     },
@@ -8142,7 +8151,7 @@
       "source_url": null,
       "captured_at": "2026-04-03",
       "author": "Jimmy Burns",
-      "community": 64,
+      "community": 65,
       "norm_label": "cloudinary transformation validator sweep (2026-04-03)",
       "id": "journal_cloudinary_validator"
     },
@@ -8154,7 +8163,7 @@
       "source_url": null,
       "captured_at": "2026-03-20",
       "author": "Jimmy Burns",
-      "community": 7,
+      "community": 8,
       "norm_label": "panel gallery slot picker clipping fix (2026-03-20)",
       "id": "journal_panel_slot_picker"
     },
@@ -8190,7 +8199,7 @@
       "source_url": null,
       "captured_at": "2026-03-18",
       "author": "Jimmy Burns",
-      "community": 7,
+      "community": 8,
       "norm_label": "social share system: og meta + 10-platform author panel (2026-03-18)",
       "id": "journal_social_share_story"
     },
@@ -8202,7 +8211,7 @@
       "source_url": null,
       "captured_at": "2026-03-15",
       "author": "Jimmy Burns",
-      "community": 39,
+      "community": 41,
       "norm_label": "user visibility incident + future interconnect design (2026-03-15)",
       "id": "journal_user_visibility"
     },
@@ -8214,7 +8223,7 @@
       "source_url": null,
       "captured_at": "2026-02-27",
       "author": "Jimmy Burns",
-      "community": 7,
+      "community": 8,
       "norm_label": "session 1: project architecture planning (2026-02-27)",
       "id": "journal_session1"
     },
@@ -8226,7 +8235,7 @@
       "source_url": null,
       "captured_at": "2026-02-28",
       "author": "Jimmy Burns",
-      "community": 9,
+      "community": 10,
       "norm_label": "session 2: wsl + turso db setup (2026-02-28)",
       "id": "journal_session2"
     },
@@ -8238,7 +8247,7 @@
       "source_url": null,
       "captured_at": "2026-03-01",
       "author": "Jimmy Burns",
-      "community": 9,
+      "community": 10,
       "norm_label": "session 3: astro bootstrap + turso db client (2026-03-01)",
       "id": "journal_session3"
     },
@@ -8250,7 +8259,7 @@
       "source_url": null,
       "captured_at": "2026-03-01",
       "author": "Jimmy Burns",
-      "community": 104,
+      "community": 105,
       "norm_label": "session 4: auth api route + jwt middleware (2026-03-01)",
       "id": "journal_session4"
     },
@@ -8262,7 +8271,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 25,
+      "community": 26,
       "norm_label": "rationale: server-side inline image interception on save (transparent to author, clean db storage)",
       "id": "rationale_inline_images_server_intercept"
     },
@@ -8274,7 +8283,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 31,
+      "community": 32,
       "norm_label": "rationale: self-hosted fonts (remove google fonts cdn dependency, tighten csp)",
       "id": "rationale_self_hosted_fonts"
     },
@@ -8286,7 +8295,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 39,
+      "community": 41,
       "norm_label": "rationale: client-side draft preview (zero round-trip, no preview token system needed)",
       "id": "rationale_client_side_preview"
     },
@@ -8298,7 +8307,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 25,
+      "community": 26,
       "norm_label": "rationale: separate images (inline/base64) vs media (cloudinary) tables",
       "id": "rationale_images_vs_media_tables"
     },
@@ -8310,7 +8319,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 41,
+      "community": 42,
       "norm_label": "key facts",
       "id": "key_facts_doc"
     },
@@ -8322,7 +8331,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 9,
+      "community": 10,
       "norm_label": "turso driver: connect() single-use http session",
       "id": "key_facts_turso_driver"
     },
@@ -8334,7 +8343,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 41,
+      "community": 42,
       "norm_label": "auth: jwt httponly cookie pattern",
       "id": "key_facts_auth_jwt_cookie"
     },
@@ -8346,7 +8355,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 7,
+      "community": 8,
       "norm_label": "db tables list (users, articles, images, media, tags, etc.)",
       "id": "key_facts_db_tables"
     },
@@ -8358,7 +8367,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 41,
+      "community": 42,
       "norm_label": "event lifecycle policy",
       "id": "key_facts_event_lifecycle"
     },
@@ -8382,7 +8391,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 31,
+      "community": 32,
       "norm_label": "self-hosted fonts (fraunces, dm sans, fira code)",
       "id": "key_facts_font_hosting"
     },
@@ -8394,7 +8403,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 105,
+      "community": 106,
       "norm_label": "eraser diagrams skill config",
       "id": "key_facts_eraser_skill"
     },
@@ -8406,7 +8415,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 15,
+      "community": 16,
       "norm_label": "deployment strategy (railway + cpanel/litespeed)",
       "id": "key_facts_deployment"
     },
@@ -8418,7 +8427,7 @@
       "source_url": null,
       "captured_at": null,
       "author": "Jimmy Burns",
-      "community": 7,
+      "community": 8,
       "norm_label": "social share: 10-platform toggle picker",
       "id": "key_facts_social_share"
     },
@@ -8430,7 +8439,7 @@
       "source_url": "https://docs.astro.build/en/reference/configuration-reference/",
       "captured_at": "2026-03-28",
       "author": null,
-      "community": 15,
+      "community": 16,
       "norm_label": "astro security configuration reference",
       "id": "astro_security_ref"
     },
@@ -8442,7 +8451,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 15,
+      "community": 16,
       "norm_label": "security.checkorigin (csrf origin check)",
       "id": "astro_security_checkorigin"
     },
@@ -8454,7 +8463,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 15,
+      "community": 16,
       "norm_label": "security.alloweddomains (x-forwarded-host validation)",
       "id": "astro_security_allowed_domains"
     },
@@ -8466,7 +8475,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 15,
+      "community": 16,
       "norm_label": "security.csp (content security policy)",
       "id": "astro_security_csp"
     },
@@ -8478,7 +8487,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 15,
+      "community": 16,
       "norm_label": "@astrojs/node adapter options (standalone/middleware mode)",
       "id": "astro_node_adapter"
     },
@@ -8490,7 +8499,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 15,
+      "community": 16,
       "norm_label": "railway + checkorigin false positive (tls termination)",
       "id": "astro_railway_checkorigin_issue"
     },
@@ -8502,7 +8511,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 15,
+      "community": 16,
       "norm_label": "rationale: disable checkorigin (railway tls proxy false-positive, samesite=strict provides csrf protection)",
       "id": "rationale_checkorigin_false"
     },
@@ -8514,7 +8523,7 @@
       "source_url": null,
       "captured_at": "2026-03-19",
       "author": "Jimmy Burns",
-      "community": 7,
+      "community": 8,
       "norm_label": "panel gallery \u2014 weekly homepage image assignment plan",
       "id": "panel_gallery_plan"
     },
@@ -8526,7 +8535,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "panel slot map (panel-01 to panel-04)",
       "id": "panel_gallery_slot_map"
     },
@@ -8538,7 +8547,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "panel gallery db schema (panel_media + panel_assignments)",
       "id": "panel_gallery_schema"
     },
@@ -8550,7 +8559,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "panel gallery api routes (/api/admin/panels/*)",
       "id": "panel_gallery_api_routes"
     },
@@ -8562,7 +8571,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "panelgallery react island (admin dashboard)",
       "id": "panel_gallery_react_island"
     },
@@ -8574,7 +8583,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "panel gallery css (panel-gallery.css)",
       "id": "panel_gallery_css"
     },
@@ -8586,7 +8595,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "panel gallery homepage rendering (conditional image/dot-pattern)",
       "id": "panel_gallery_homepage_render"
     },
@@ -8598,7 +8607,7 @@
       "source_url": null,
       "captured_at": "2026-03-18",
       "author": "Jimmy Burns",
-      "community": 7,
+      "community": 8,
       "norm_label": "social share plan \u2014 blog articles",
       "id": "social_share_plan"
     },
@@ -8610,7 +8619,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "share intent urls strategy (10 platforms, $0 cost)",
       "id": "social_share_intent_urls"
     },
@@ -8622,7 +8631,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "open graph meta requirements (required + recommended tags)",
       "id": "social_share_og_meta"
     },
@@ -8634,7 +8643,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "socialshare component architecture (props + auth gate)",
       "id": "social_share_component_arch"
     },
@@ -8646,7 +8655,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "share analytics api (post /api/share + shares table)",
       "id": "social_share_analytics_api"
     },
@@ -8658,7 +8667,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "rationale: share intent urls over paid apis (zero cost, no oauth required)",
       "id": "rationale_share_intent_urls"
     },
@@ -8670,7 +8679,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "full-text search in tursodb (tantivy-based)",
       "id": "turso_fts_doc"
     },
@@ -8682,7 +8691,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "tantivy fts engine",
       "id": "turso_fts_tantivy"
     },
@@ -8694,7 +8703,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "fts ddl: create index using fts",
       "id": "turso_fts_ddl"
     },
@@ -8706,7 +8715,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "fts tokenizers (default, raw, simple, whitespace, ngram)",
       "id": "turso_fts_tokenizers"
     },
@@ -8718,7 +8727,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "fts query functions (fts_score, fts_match, fts_highlight)",
       "id": "turso_fts_functions"
     },
@@ -8730,7 +8739,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "hybridbtreedirectory (memory-bounded fts storage)",
       "id": "turso_fts_hybrid_btree"
     },
@@ -8742,7 +8751,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "optimize index (fts segment merging)",
       "id": "turso_fts_optimize"
     },
@@ -8754,7 +8763,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "turso javascript api reference",
       "id": "turso_js_api_ref"
     },
@@ -8766,7 +8775,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "connect() function (@tursodatabase/serverless)",
       "id": "turso_js_connect"
     },
@@ -8778,7 +8787,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "database class (prepare, exec, close)",
       "id": "turso_js_database_class"
     },
@@ -8790,7 +8799,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "statement class (run, get, all, iterate)",
       "id": "turso_js_statement_class"
     },
@@ -8802,7 +8811,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "turso database manual",
       "id": "turso_manual"
     },
@@ -8814,7 +8823,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "turso transactions (deferred lifecycle)",
       "id": "turso_manual_transactions"
     },
@@ -8826,7 +8835,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "turso sql shell (.tables, shell commands)",
       "id": "turso_manual_sql_shell"
     },
@@ -8838,7 +8847,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "turso vector search",
       "id": "turso_manual_vector_search"
     },
@@ -8850,7 +8859,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "turso wal (write-ahead log)",
       "id": "turso_manual_wal"
     },
@@ -8862,7 +8871,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "testing in limbo (turso compatibility tests)",
       "id": "turso_testing_doc"
     },
@@ -8874,7 +8883,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "tcl compatibility tests (users + products schema)",
       "id": "turso_testing_tcl"
     },
@@ -8886,7 +8895,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 9,
+      "community": 10,
       "norm_label": "deterministic simulation testing (dst)",
       "id": "turso_testing_dst"
     },
@@ -8898,7 +8907,7 @@
       "source_url": null,
       "captured_at": "2026-02-27",
       "author": "Jimmy Burns",
-      "community": 7,
+      "community": 8,
       "norm_label": "system architecture diagram (cloud architecture)",
       "id": "arch_diagram"
     },
@@ -8910,7 +8919,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "frontend layer (admin dashboard, article editor, blog pages, seo/og, social share)",
       "id": "arch_frontend_layer"
     },
@@ -8922,7 +8931,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "api layer (jwt middleware, /api/auth/login, /api/articles, /api/upload)",
       "id": "arch_api_layer"
     },
@@ -8934,7 +8943,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "turso layer (turso cloud, users/articles/images/tags tables)",
       "id": "arch_turso_layer"
     },
@@ -8946,7 +8955,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "cdn / image storage (external)",
       "id": "arch_cdn_storage"
     },
@@ -8958,7 +8967,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "social platforms (external share targets)",
       "id": "arch_social_platforms"
     },
@@ -8970,7 +8979,7 @@
       "source_url": null,
       "captured_at": "2026-02-27",
       "author": "Jimmy Burns",
-      "community": 7,
+      "community": 8,
       "norm_label": "sequence diagram (admin login, create article, upload image, public blog read)",
       "id": "seq_diagram"
     },
@@ -8982,7 +8991,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "admin login flow (post /api/auth/login \u2192 bcrypt \u2192 jwt)",
       "id": "seq_admin_login_flow"
     },
@@ -8994,7 +9003,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "create article flow (post /api/articles \u2192 jwt middleware \u2192 turso insert)",
       "id": "seq_create_article_flow"
     },
@@ -9006,7 +9015,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "image upload flow (post /api/upload \u2192 jwt \u2192 cdn put \u2192 turso insert)",
       "id": "seq_image_upload_flow"
     },
@@ -9018,7 +9027,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 7,
+      "community": 8,
       "norm_label": "public blog read flow (get /blog/[slug] \u2192 turso select \u2192 html with og/social share)",
       "id": "seq_public_blog_flow"
     },
@@ -9030,7 +9039,7 @@
       "source_url": null,
       "captured_at": null,
       "author": null,
-      "community": 106,
+      "community": 107,
       "norm_label": "favicon svg (yellow smiley face icon)",
       "id": "favicon_svg"
     },
@@ -9043,7 +9052,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "graph report summary (869 nodes, 1554 edges)",
       "id": "graph_report_summary"
     },
@@ -9056,7 +9065,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "inline image pipeline hyperedge",
       "id": "graph_report_inline_image_pipeline"
     },
@@ -9069,7 +9078,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "rationale: separate images (inline/base64) vs media (cloudinary) tables",
       "id": "graph_report_rationale_images_vs_media"
     },
@@ -9082,7 +9091,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "rationale: server-side inline image interception on save",
       "id": "graph_report_rationale_server_intercept"
     },
@@ -9095,7 +9104,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 65,
+      "community": 66,
       "norm_label": "rationale: global css for set:html containers",
       "id": "graph_report_css_cleanup_rationale"
     },
@@ -9108,7 +9117,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 65,
+      "community": 66,
       "norm_label": "global css policy for set:html children",
       "id": "graph_report_set_html_css_policy"
     },
@@ -9121,7 +9130,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "sales module hyperedge (db schema + promo logic + paypal sanitizer)",
       "id": "graph_report_sales_module_hyperedge"
     },
@@ -9134,7 +9143,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "paypal sanitizer concept",
       "id": "graph_report_paypal_sanitizer"
     },
@@ -9147,7 +9156,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "interactive graph visualization page",
       "id": "graph_graph_visualization_page"
     },
@@ -9160,7 +9169,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "vis-network umd library",
       "id": "graph_vis_network_library"
     },
@@ -9173,7 +9182,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "raw_nodes dataset",
       "id": "graph_raw_nodes_dataset"
     },
@@ -9186,7 +9195,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "raw_edges dataset",
       "id": "graph_raw_edges_dataset"
     },
@@ -9199,7 +9208,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "edge confidence labels (extracted/inferred)",
       "id": "graph_confidence_labels"
     },
@@ -9472,7 +9481,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "paypal buy button code pdf",
       "id": "paypal_buy_button_code_pdf_asset"
     },
@@ -9485,7 +9494,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "jspdf 3.0.2 producer metadata",
       "id": "paypal_buy_button_code_jspdf_producer"
     },
@@ -9498,7 +9507,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "image-based pdf pages (no extractable text)",
       "id": "paypal_buy_button_code_image_pages"
     },
@@ -9511,7 +9520,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 14,
+      "community": 15,
       "norm_label": "paypal buy button snippet content",
       "id": "paypal_buy_button_code_buy_button_snippet"
     }
@@ -16109,6 +16118,30 @@
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\ads\\[id].ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "_src": "id_patch",
+      "_tgt": "dal_error",
+      "source": "dal_error",
+      "target": "id_patch"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
+      "source_location": "L63",
+      "weight": 1.0,
+      "_src": "dal_error",
+      "_tgt": "id_delete",
+      "source": "dal_error",
+      "target": "id_delete"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
       "source_file": "src\\pages\\api\\admin\\articles\\[slug].ts",
       "source_location": "L86",
       "weight": 1.0,
@@ -16152,18 +16185,6 @@
       "_tgt": "index_get",
       "source": "dal_error",
       "target": "index_get"
-    },
-    {
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
-      "source_location": "L63",
-      "weight": 1.0,
-      "_src": "dal_error",
-      "_tgt": "id_delete",
-      "source": "dal_error",
-      "target": "id_delete"
     },
     {
       "relation": "calls",
@@ -17405,6 +17426,30 @@
       "relation": "calls",
       "confidence": "INFERRED",
       "confidence_score": 0.8,
+      "source_file": "src\\pages\\api\\admin\\users\\[id].ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "_src": "backfill_inline_images_execute",
+      "_tgt": "id_patch",
+      "source": "backfill_inline_images_execute",
+      "target": "id_patch"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_src": "backfill_inline_images_execute",
+      "_tgt": "id_delete",
+      "source": "backfill_inline_images_execute",
+      "target": "id_delete"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
       "source_file": "src\\pages\\api\\admin\\articles\\index.ts",
       "source_location": "L24",
       "weight": 1.0,
@@ -17460,18 +17505,6 @@
       "_tgt": "assign_post",
       "source": "backfill_inline_images_execute",
       "target": "assign_post"
-    },
-    {
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
-      "source_location": "L35",
-      "weight": 1.0,
-      "_src": "backfill_inline_images_execute",
-      "_tgt": "id_delete",
-      "source": "backfill_inline_images_execute",
-      "target": "id_delete"
     },
     {
       "relation": "calls",
@@ -17580,18 +17613,6 @@
       "_tgt": "testimonials_post",
       "source": "backfill_inline_images_execute",
       "target": "testimonials_post"
-    },
-    {
-      "relation": "calls",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src\\pages\\api\\admin\\users\\[id].ts",
-      "source_location": "L69",
-      "weight": 1.0,
-      "_src": "backfill_inline_images_execute",
-      "_tgt": "id_patch",
-      "source": "backfill_inline_images_execute",
-      "target": "id_patch"
     },
     {
       "relation": "calls",
@@ -22984,6 +23005,138 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\ads\\[id].ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_ads_id_ts",
+      "_tgt": "id_json",
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_ads_id_ts",
+      "target": "id_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\ads\\[id].ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_ads_id_ts",
+      "_tgt": "id_patch",
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_ads_id_ts",
+      "target": "id_patch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\ads\\[id].ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_src": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_ads_id_ts",
+      "_tgt": "id_delete",
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_admin_ads_id_ts",
+      "target": "id_delete",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\admin\\users\\[id].ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_src": "id_patch",
+      "_tgt": "id_json",
+      "source": "id_json",
+      "target": "id_patch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_src": "id_delete",
+      "_tgt": "id_json",
+      "source": "id_json",
+      "target": "id_delete",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_src": "src_pages_api_admin_panels_media_id_ts",
+      "_tgt": "id_json",
+      "source": "id_json",
+      "target": "src_pages_api_admin_panels_media_id_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\inline-images\\[id].ts",
+      "source_location": "L44",
+      "weight": 1.0,
+      "_src": "id_get",
+      "_tgt": "id_json",
+      "source": "id_json",
+      "target": "id_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\admin\\users\\[id].ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_src": "src_pages_api_admin_users_id_ts",
+      "_tgt": "id_json",
+      "source": "id_json",
+      "target": "src_pages_api_admin_users_id_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\inline-images\\[id].ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "src_pages_api_inline_images_id_ts",
+      "_tgt": "id_json",
+      "source": "id_json",
+      "target": "src_pages_api_inline_images_id_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\admin\\users\\[id].ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_src": "src_pages_api_admin_users_id_ts",
+      "_tgt": "id_patch",
+      "source": "id_patch",
+      "target": "src_pages_api_admin_users_id_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_src": "src_pages_api_admin_panels_media_id_ts",
+      "_tgt": "id_delete",
+      "source": "id_delete",
+      "target": "src_pages_api_admin_panels_media_id_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src\\pages\\api\\admin\\articles\\index.ts",
       "source_location": "L17",
       "weight": 1.0,
@@ -23489,96 +23642,12 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "_src": "src_pages_api_admin_panels_media_id_ts",
-      "_tgt": "id_json",
-      "source": "src_pages_api_admin_panels_media_id_ts",
-      "target": "id_json",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
-      "source_location": "L22",
-      "weight": 1.0,
-      "_src": "src_pages_api_admin_panels_media_id_ts",
-      "_tgt": "id_delete",
-      "source": "src_pages_api_admin_panels_media_id_ts",
-      "target": "id_delete",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
       "source_location": "L68",
       "weight": 1.0,
       "_src": "src_pages_api_admin_panels_media_id_ts",
       "_tgt": "id_get",
       "source": "src_pages_api_admin_panels_media_id_ts",
       "target": "id_get",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\panels\\media\\[id].ts",
-      "source_location": "L25",
-      "weight": 1.0,
-      "_src": "id_delete",
-      "_tgt": "id_json",
-      "source": "id_json",
-      "target": "id_delete",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\inline-images\\[id].ts",
-      "source_location": "L44",
-      "weight": 1.0,
-      "_src": "id_get",
-      "_tgt": "id_json",
-      "source": "id_json",
-      "target": "id_get",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\users\\[id].ts",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_src": "src_pages_api_admin_users_id_ts",
-      "_tgt": "id_json",
-      "source": "id_json",
-      "target": "src_pages_api_admin_users_id_ts",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\users\\[id].ts",
-      "source_location": "L31",
-      "weight": 1.0,
-      "_src": "id_patch",
-      "_tgt": "id_json",
-      "source": "id_json",
-      "target": "id_patch",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\inline-images\\[id].ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "_src": "src_pages_api_inline_images_id_ts",
-      "_tgt": "id_json",
-      "source": "id_json",
-      "target": "src_pages_api_inline_images_id_ts",
       "confidence_score": 1.0
     },
     {
@@ -24143,18 +24212,6 @@
       "_tgt": "sessions_json",
       "source": "sessions_json",
       "target": "sessions_post",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src\\pages\\api\\admin\\users\\[id].ts",
-      "source_location": "L27",
-      "weight": 1.0,
-      "_src": "src_pages_api_admin_users_id_ts",
-      "_tgt": "id_patch",
-      "source": "src_pages_api_admin_users_id_ts",
-      "target": "id_patch",
       "confidence_score": 1.0
     },
     {

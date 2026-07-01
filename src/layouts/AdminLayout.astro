@@ -142,6 +142,12 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
             </svg>
             Users
           </a>
+          <a href="/admin/analytics" class="nav-item" id="nav-analytics">
+            <svg class="nav-item__icon" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M1 11h3v4H1v-4zm5-4h3v8H6V7zm5-4h3v12h-3V3z"></path>
+            </svg>
+            Analytics & Reports
+          </a>
         </div>
 
         <hr class="nav-divider" />
@@ -245,6 +251,8 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
           "/admin/ads": "nav-ads",
           "/admin/events": "nav-events",
           "/admin/events/new": "nav-events-new",
+          "/admin/users": "nav-users",
+          "/admin/analytics": "nav-analytics",
         };
         if (
           path.startsWith("/admin/articles/") &&
