@@ -130,7 +130,7 @@ function addSecurityHeaders(response: Response, pathname: string): Response {
       : buildCsp({
           "script-src": `'self' ${fouc}`,
           "style-src":  "'self'",
-          "form-action":"'self'",
+          "form-action":"'self' https://www.paypal.com",
         });
   response.headers.set("Content-Security-Policy-Report-Only", csp);
 

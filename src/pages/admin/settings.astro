@@ -1,0 +1,106 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import { getSetting } from "../../lib/settings";
+
+const user = Astro.locals.user;
+if (!user || user.role !== "admin") {
+  return Astro.redirect("/admin");
+}
+
+const currentPlacement = await getSetting("donation_placement") || "footer";
+---
+
+<AdminLayout title="Site Settings">
+  <div class="page-header">
+    <div>
+      <p class="page-header__eyebrow">Global Configuration</p>
+      <h1 class="page-header__title">Site <em>Settings</em></h1>
+    </div>
+  </div>
+
+  <div class="card" style="max-width: 600px; margin-top: 2rem;">
+    <h2 style="font-family: var(--font-display); color: var(--accent); margin-bottom: 1rem;">Donation Block</h2>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+      Configure where the Admin Donation Block (PayPal) appears across the site.
+    </p>
+
+    <div id="settings-error" class="alert alert--error is-hidden" style="margin-bottom: 1rem;"></div>
+    <div id="settings-success" class="alert alert--success is-hidden" style="margin-bottom: 1rem;">Settings saved successfully.</div>
+
+    <form id="settings-form">
+      <div class="form-group">
+        <label class="form-label" for="donation_placement">Placement Location</label>
+        <select id="donation_placement" name="donation_placement" class="form-input" style="width: 100%;">
+          <option value="footer" selected={currentPlacement === "footer"}>Footer</option>
+          <option value="sidebar" selected={currentPlacement === "sidebar"}>Sidebar</option>
+          <option value="sales_shop" selected={currentPlacement === "sales_shop"}>Shop Listing Page</option>
+          <option value="none" selected={currentPlacement === "none"}>Hidden</option>
+        </select>
+      </div>
+
+      <div style="margin-top: 2rem;">
+        <button type="submit" id="save-btn" class="btn btn-primary">Save Settings</button>
+      </div>
+    </form>
+  </div>
+</AdminLayout>
+
+<style>
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  .form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .form-input {
+    padding: 0.5rem;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-main);
+    border-radius: 4px;
+  }
+  .alert--success {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border: 1px solid #22c55e;
+  }
+</style>
+
+<script>
+  const form = document.getElementById("settings-form") as HTMLFormElement;
+  const saveBtn = document.getElementById("save-btn") as HTMLButtonElement;
+  const errorAlert = document.getElementById("settings-error") as HTMLDivElement;
+  const successAlert = document.getElementById("settings-success") as HTMLDivElement;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    errorAlert.classList.add("is-hidden");
+    successAlert.classList.add("is-hidden");
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Saving...";
+
+    const placement = (document.getElementById("donation_placement") as HTMLSelectElement).value;
+
+    try {
+      const res = await fetch("/api/admin/settings", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ donation_placement: placement }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to save settings");
+      }
+
+      successAlert.classList.remove("is-hidden");
+    } catch (err: unknown) {
+      errorAlert.textContent = err instanceof Error ? err.message : "Error saving settings";
+      errorAlert.classList.remove("is-hidden");
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = "Save Settings";
+    }
+  });
+</script>

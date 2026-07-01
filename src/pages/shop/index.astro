@@ -2,6 +2,10 @@
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import { db } from "../../lib/db";
 import { calcSalePrice, formatPrice, parseTags, type SalesPosting, type SalesImage } from "../../lib/sales";
+import { getSetting } from "../../lib/settings";
+import AdminDonationBlock from "../../components/AdminDonationBlock.astro";
+
+const donationPlacement = await getSetting("donation_placement") || "footer";
 
 // Query published postings directly — never loopback-fetch in SSR (fails on Railway/cPanel)
 let postings: (SalesPosting & { cover_image: { url: string; alt_text: string } | null })[] = [];
@@ -59,6 +63,8 @@ try {
           Handcrafted items by our artists — pay securely via PayPal.
         </p>
       </header>
+
+      {donationPlacement === "sales_shop" && <AdminDonationBlock />}
 
       {
         fetchError && (

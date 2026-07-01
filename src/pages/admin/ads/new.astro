@@ -22,9 +22,10 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
     </div>
 
     <div class="form-group">
-      <label for="image_url">Image URL <span class="required">*</span></label>
-      <p class="form-help">Upload the image to Cloudinary first and paste the secure URL here.</p>
-      <input type="url" id="image_url" name="image_url" required class="form-input" />
+      <label for="image_file">Ad Image <span class="required">*</span></label>
+      <p class="form-help">Upload the ad image directly.</p>
+      <input type="file" id="image_file" name="image_file" accept="image/jpeg,image/png,image/webp,image/gif" required class="form-input" style="padding: 0.5rem;" />
+      <input type="hidden" id="image_url" name="image_url" />
     </div>
 
     <div class="form-group">
@@ -64,10 +65,54 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
     submitBtn.textContent = "Creating...";
     errorMsg.style.display = "none";
 
+    const fileInput = document.getElementById("image_file") as HTMLInputElement;
+    const file = fileInput.files?.[0];
     const formData = new FormData(form);
-    const payload = Object.fromEntries(formData.entries());
 
     try {
+      let finalImageUrl = "";
+
+      if (file) {
+        if (file.size > 10 * 1024 * 1024) {
+          throw new Error("Image is too large (max 10 MB).");
+        }
+
+        const dataUri = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+
+        // Upload to global media API
+        const uploadRes = await fetch("/api/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            file_data: dataUri,
+            mime_type: file.type,
+            file_size: file.size,
+            alt_text: formData.get("business_name") || "Ad Image",
+          }),
+        });
+
+        const uploadData = await uploadRes.json();
+        if (!uploadRes.ok) {
+          throw new Error(uploadData.error ?? "Failed to upload image");
+        }
+
+        finalImageUrl = String(uploadData.media_url ?? uploadData.image_url ?? "");
+      }
+
+      if (!finalImageUrl) {
+        throw new Error("No image was uploaded.");
+      }
+
+      // Add the final image URL to the payload
+      const payload = Object.fromEntries(formData.entries());
+      payload.image_url = finalImageUrl;
+      delete payload.image_file; // Don't send the file object to the API
+
       const res = await fetch("/api/admin/ads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

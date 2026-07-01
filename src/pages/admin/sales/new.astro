@@ -153,25 +153,30 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
           </div>
         </div>
 
-        <!-- Section 3: PayPal Button -->
+        <!-- Section 3: Payment Options -->
         <div class="card" style="margin-bottom: 1.5rem;">
-          <p class="panel-heading">PayPal Buy Button (Optional)</p>
-          <div class="form-group">
+          <p class="panel-heading">Payment Options (Optional)</p>
+          <div class="form-group" style="margin-bottom: 1.5rem;">
             <label class="form-label" for="paypal-html"
-              >Paste your PayPal button code</label
+              >PayPal Buy Button Code</label
             >
             <textarea
               class="form-input"
               id="paypal-html"
               name="paypal_button_html"
-              rows="6"
+              rows="4"
               placeholder='<div><style>...</style><form action="https://www.paypal.com/ncp/payment/...">'
             ></textarea>
             <span class="form-hint">
               Get it from paypal.com → Pay &amp; Get Paid → Payment Buttons →
-              Standard Buttons → Buy Now. Only standard form-based buttons are
-              supported.
+              Standard Buttons → Buy Now.
             </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="qr-code-file">QR Code (Venmo/CashApp/PayPal)</label>
+            <input type="file" id="qr-code-file" accept="image/jpeg,image/png,image/webp,image/gif" class="form-input" style="padding: 0.5rem;" />
+            <span class="form-hint">Upload a payment QR code for this specific item.</span>
           </div>
         </div>
       </div>
@@ -497,6 +502,47 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
       submitBtn.textContent = "Saving…";
 
       try {
+        let qr_code_url = null;
+        const qrFileInput = document.getElementById("qr-code-file") as HTMLInputElement;
+        const qrFile = qrFileInput.files?.[0];
+
+        if (qrFile) {
+          if (qrFile.size > 10 * 1024 * 1024) {
+            throw new Error("QR Code image is too large (max 10 MB).");
+          }
+          submitBtn.textContent = "Uploading QR Code…";
+          
+          const dataUri = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(qrFile);
+          });
+
+          const uploadRes = await fetch("/api/upload", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              file_data: dataUri,
+              mime_type: qrFile.type,
+              file_size: qrFile.size,
+              alt_text: title + " QR Code",
+            }),
+          });
+
+          const uploadData = await uploadRes.json();
+          if (!uploadRes.ok) {
+            throw new Error(uploadData.error ?? "Failed to upload QR Code");
+          }
+          qr_code_url = String(uploadData.media_url ?? uploadData.image_url ?? "");
+        }
+
+        if (qr_code_url) {
+          body.qr_code_url = qr_code_url;
+        }
+
+        submitBtn.textContent = "Saving Posting…";
+
         const res = await fetch("/api/admin/sales", {
           method: "POST",
           headers: { "Content-Type": "application/json" },

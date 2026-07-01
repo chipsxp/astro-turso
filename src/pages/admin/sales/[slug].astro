@@ -239,24 +239,34 @@ if (notFound || !posting) {
           </div>
         </div>
 
-        <!-- PayPal Button -->
+        <!-- Section 3: Payment Options -->
         <div class="card" style="margin-bottom: 1.5rem;">
-          <p class="panel-heading">PayPal Buy Button (Optional)</p>
-          <div class="form-group">
+          <p class="panel-heading">Payment Options (Optional)</p>
+          <div class="form-group" style="margin-bottom: 1.5rem;">
             <label class="form-label" for="paypal-html"
-              >Paste your PayPal button code</label
+              >PayPal Buy Button Code</label
             >
             <textarea
               class="form-input"
               id="paypal-html"
               name="paypal_button_html"
-              rows="6">{posting.paypal_button_html ?? ""}</textarea
+              rows="4">{posting.paypal_button_html ?? ""}</textarea
             >
             <span class="form-hint">
               Get it from paypal.com → Pay &amp; Get Paid → Payment Buttons →
-              Standard Buttons → Buy Now. Only standard form-based buttons are
-              supported.
+              Standard Buttons → Buy Now.
             </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="qr-code-file">QR Code (Venmo/CashApp/PayPal)</label>
+            {posting.qr_code_url && (
+              <div style="margin-bottom: 0.5rem;">
+                <img src={posting.qr_code_url} alt="QR Code" style="max-height: 100px; border: 1px solid var(--border); border-radius: 4px;" />
+              </div>
+            )}
+            <input type="file" id="qr-code-file" accept="image/jpeg,image/png,image/webp,image/gif" class="form-input" style="padding: 0.5rem;" />
+            <span class="form-hint">Upload a payment QR code for this specific item. {posting.qr_code_url ? "Uploading a new file will overwrite the existing one." : ""}</span>
           </div>
         </div>
 
@@ -541,7 +551,7 @@ if (notFound || !posting) {
     }
 
     const priceVal = getEl<HTMLInputElement>("price").value;
-    const body = {
+    const body: Record<string, unknown> = {
       title,
       slug: getEl<HTMLInputElement>("slug").value.trim() || undefined,
       status: getEl<HTMLSelectElement>("status").value,
@@ -564,6 +574,47 @@ if (notFound || !posting) {
     submitBtn.textContent = "Saving…";
 
     try {
+      let qr_code_url = null;
+      const qrFileInput = getEl<HTMLInputElement>("qr-code-file");
+      const qrFile = qrFileInput.files?.[0];
+
+      if (qrFile) {
+        if (qrFile.size > 10 * 1024 * 1024) {
+          throw new Error("QR Code image is too large (max 10 MB).");
+        }
+        submitBtn.textContent = "Uploading QR Code…";
+        
+        const dataUri = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(qrFile);
+        });
+
+        const uploadRes = await fetch("/api/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            file_data: dataUri,
+            mime_type: qrFile.type,
+            file_size: qrFile.size,
+            alt_text: title + " QR Code",
+          }),
+        });
+
+        const uploadData = await uploadRes.json();
+        if (!uploadRes.ok) {
+          throw new Error(uploadData.error ?? "Failed to upload QR Code");
+        }
+        qr_code_url = String(uploadData.media_url ?? uploadData.image_url ?? "");
+      }
+
+      if (qr_code_url) {
+        body.qr_code_url = qr_code_url;
+      }
+
+      submitBtn.textContent = "Saving Changes…";
+
       const res = await fetch(`/api/admin/sales/${currentSlug}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

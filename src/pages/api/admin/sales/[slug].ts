@@ -135,6 +135,8 @@ export const PUT: APIRoute = async ({ params, locals, request }) => {
     setField("promo_end", body.promo_end || null);
   if (body.paypal_button_html !== undefined)
     setField("paypal_button_html", body.paypal_button_html || null);
+  if (body.qr_code_url !== undefined)
+    setField("qr_code_url", body.qr_code_url || null);
   if (body.linked_article_slug !== undefined)
     setField("linked_article_slug", body.linked_article_slug || null);
 

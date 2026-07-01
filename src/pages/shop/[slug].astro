@@ -10,7 +10,6 @@ import {
   extractPayPalSdkConfig,
 } from "../../lib/sanitize-paypal";
 import { sanitizeArticleBodyServer } from "../../lib/sanitize-server";
-
 const { slug } = Astro.params;
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
 const canonicalUrl = `${siteUrl}/shop/${slug}`;
@@ -214,6 +213,16 @@ const galleryImages = images.map((img) => ({
             </p>
           )
         }
+
+        {posting.qr_code_url && (
+          <div class="sales-qr-wrap" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+            <p class="sales-paypal-label">Pay via QR Code:</p>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
+              <img src={String(posting.qr_code_url)} alt="Item QR Code" style="max-width: 200px; border-radius: 8px; border: 1px solid var(--border);" />
+              <a href={String(posting.qr_code_url)} download="shop-qr-code" class="btn btn-primary" target="_blank">Download QR Code</a>
+            </div>
+          </div>
+        )}
       </div>
 
       <!-- Testimonials -->

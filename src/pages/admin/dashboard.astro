@@ -2,9 +2,12 @@
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import PanelGallery from "../../components/admin/PanelGallery";
 import { getUserGamificationStats } from "../../lib/monetization";
+import { getSetting } from "../../lib/settings";
+import AdminDonationBlock from "../../components/AdminDonationBlock.astro";
 
 const userId = Astro.locals.user ? Number(Astro.locals.user.id) : 0;
 const { totalShares } = await getUserGamificationStats(userId);
+const donationPlacement = await getSetting("donation_placement") || "footer";
 
 let gamificationRank = "Novice";
 let badgeColor = "#777";
@@ -38,13 +41,15 @@ if (totalShares >= 101) {
     <a href="/admin/articles/new" class="btn btn-primary">+ New Article</a>
   </div>
 
+  {donationPlacement === "user_dashboard" && <AdminDonationBlock />}
+
   <!-- Gamification Score Keeper -->
   <div class="card" style="margin-bottom: 2rem; border-color: var(--accent); position: relative; overflow: hidden;">
     <div style="padding: 1.5rem; display: flex; align-items: center; gap: 2rem;">
       <div style="font-size: 4rem; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));">{badgeIcon}</div>
       <div>
-        <p class="page-header__eyebrow" style="color: {badgeColor};">Author Rank</p>
-        <h2 style="margin: 0 0 0.5rem 0; font-family: var(--font-display); color: {badgeColor}; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">{gamificationRank}</h2>
+        <p class="page-header__eyebrow" style={`color: ${badgeColor};`}>Author Rank</p>
+        <h2 style={`margin: 0 0 0.5rem 0; font-family: var(--font-display); color: ${badgeColor}; text-shadow: 0 2px 4px rgba(0,0,0,0.5);`}>{gamificationRank}</h2>
         <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">
           You have generated <strong>{totalShares}</strong> shares for your artwork blogs!
         </p>
@@ -56,6 +61,7 @@ if (totalShares >= 101) {
       </div>
     </div>
   </div>
+
 
   <!-- Filter bar -->
   <div class="filter-bar">
@@ -402,6 +408,8 @@ if (totalShares >= 101) {
   });
 
   cleanupUploadsBtn.addEventListener("click", runUploadCleanup);
+
+
 
   loadArticles();
 </script>

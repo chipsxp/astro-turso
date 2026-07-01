@@ -20,6 +20,7 @@ export interface SalesPosting {
   promo_end: string | null;
   paypal_button_html: string | null;
   linked_article_slug: string | null;
+  qr_code_url: string | null;
   created_at: string;
   updated_at: string;
 }

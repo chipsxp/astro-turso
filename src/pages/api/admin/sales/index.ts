@@ -77,6 +77,7 @@ export const POST: APIRoute = async ({ locals, request }) => {
   const paypal_button_html = body.paypal_button_html
     ? String(body.paypal_button_html)
     : null;
+  const qr_code_url = body.qr_code_url ? String(body.qr_code_url) : null;
   const linked_article_slug = body.linked_article_slug
     ? String(body.linked_article_slug)
     : null;
@@ -98,8 +99,8 @@ export const POST: APIRoute = async ({ locals, request }) => {
       `INSERT INTO sales_postings
         (slug, author_id, title, body, status,
          price, tags, promo_label, promo_discount_pct, promo_start, promo_end,
-         paypal_button_html, linked_article_slug)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+         paypal_button_html, qr_code_url, linked_article_slug)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         slug,
         Number(user.id),
@@ -113,6 +114,7 @@ export const POST: APIRoute = async ({ locals, request }) => {
         promo_start,
         promo_end,
         paypal_button_html,
+        qr_code_url,
         linked_article_slug,
       ],
     );
