@@ -88,33 +88,16 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
           reader.readAsDataURL(file);
         });
 
-        // Upload to global media API
-        const uploadRes = await fetch("/api/upload", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            file_data: dataUri,
-            mime_type: file.type,
-            file_size: file.size,
-            alt_text: formData.get("business_name") || "Ad Image",
-          }),
-        });
-
-        const uploadData = await uploadRes.json();
-        if (!uploadRes.ok) {
-          throw new Error(uploadData.error ?? "Failed to upload image");
-        }
-
-        finalImageUrl = String(uploadData.media_url ?? uploadData.image_url ?? "");
+        finalImageUrl = dataUri; // Store the base64 data to send
       }
 
       if (!finalImageUrl) {
         throw new Error("No image was uploaded.");
       }
 
-      // Add the final image URL to the payload
+      // Add the final image data to the payload
       const payload = Object.fromEntries(formData.entries());
-      payload.image_url = finalImageUrl;
+      payload.image_data = finalImageUrl;
       delete payload.image_file; // Don't send the file object to the API
 
       const res = await fetch("/api/admin/ads", {

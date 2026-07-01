@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
+import { cloudinary } from "../../../../lib/cloudinary-server";
 
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -17,10 +18,22 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   try {
     const payload = await request.json();
-    const { business_name, description, image_url, target_url, coupon_code, slot_type } = payload;
+    const { business_name, description, image_data, target_url, coupon_code, slot_type } = payload;
 
-    if (!business_name || !image_url || !target_url || !slot_type) {
+    if (!business_name || !image_data || !target_url || !slot_type) {
       return json({ error: "Missing required fields" }, 400);
+    }
+
+    let image_url = "";
+    try {
+      const uploadResult = await cloudinary.uploader.upload(image_data, {
+        folder: "blog/ads",
+        resource_type: "image",
+      });
+      image_url = uploadResult.secure_url;
+    } catch (err) {
+      console.error("Cloudinary ad upload error:", err);
+      return json({ error: "Image upload failed" }, 502);
     }
 
     await db.execute(
