@@ -36,14 +36,18 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   const articleId = Number(data.article_id);
-  const platform = typeof data.platform === "string" ? data.platform.trim() : "";
+  const platform =
+    typeof data.platform === "string" ? data.platform.trim() : "";
 
   if (!Number.isInteger(articleId) || articleId < 1) {
     return json({ error: "article_id must be a positive integer" }, 400);
   }
 
   if (!VALID_PLATFORMS.has(platform)) {
-    return json({ error: `platform must be one of: ${[...VALID_PLATFORMS].join(", ")}` }, 400);
+    return json(
+      { error: `platform must be one of: ${[...VALID_PLATFORMS].join(", ")}` },
+      400,
+    );
   }
 
   try {

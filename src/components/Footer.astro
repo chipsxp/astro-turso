@@ -4,8 +4,9 @@ import AdminDonationBlock from "./AdminDonationBlock.astro";
 import AdPlacement from "./AdPlacement.astro";
 
 const user = Astro.locals.user;
-const donationPlacement = await getSetting("donation_placement") || "footer";
+const donationPlacement = (await getSetting("donation_placement")) || "footer";
 ---
+
 <footer class="site-footer">
   {
     !user && (
@@ -52,8 +53,17 @@ const donationPlacement = await getSetting("donation_placement") || "footer";
       <a href="/events/archive">Event Archive</a>
       <a href="/privacy-policy">Privacy Policy</a>
     </nav>
-    <span class="site-footer__copy"
-      >Crafted by Jimmy Burns, Coded with Astro &amp; Turso</span
-    >
+    <span class="site-footer__copy">
+      <img
+        src="/images/PPS-logo.jpg"
+        alt="Pixel Prime Studio Logo"
+        width="20"
+        height="20"
+        style="vertical-align: middle; margin-right: 6px; margin-bottom: 2px;"
+      />
+      Developed by Pixel Prime Studio and deployed by Jimmy Burns with ChipsXP Servers.
+      Technology stack provided by Astro Build, Cloudinary Image &amp; Turso Tech
+      Database
+    </span>
   </div>
 </footer>

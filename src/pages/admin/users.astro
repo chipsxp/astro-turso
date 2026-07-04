@@ -162,12 +162,14 @@ const user = Astro.locals.user!;
       btns.push(
         `<button class="btn-action btn-action--danger" data-action="suspend">Suspend</button>`,
         `<button class="btn-action btn-action--promote" data-action="promote">Promote to Admin</button>`,
+        `<button class="btn-action btn-action--danger" data-action="delete">Delete User</button>`,
       );
     }
 
     if (u.status === "suspended") {
       btns.push(
         `<button class="btn-action" data-action="reinstate">Reinstate</button>`,
+        `<button class="btn-action btn-action--danger" data-action="delete">Delete User</button>`,
       );
     }
 
@@ -183,6 +185,38 @@ const user = Astro.locals.user!;
     action: string,
     btn: HTMLButtonElement,
   ) {
+    if (action === "delete") {
+      if (
+        !confirm(
+          "Are you sure you want to completely delete this user? Their articles and events will be kept, but unlinked.",
+        )
+      ) {
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "…";
+
+      try {
+        const res = await fetch(`/api/admin/users/${userId}`, {
+          method: "DELETE",
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "Failed to delete user");
+        }
+
+        showToast("User deleted successfully");
+        btn.closest("tr")?.remove();
+      } catch (err) {
+        showToast((err as Error).message, true);
+        btn.disabled = false;
+        btn.textContent = "Delete User";
+      }
+      return;
+    }
+
     btn.disabled = true;
     const original = btn.textContent;
     btn.textContent = "…";

@@ -120,8 +120,10 @@ export const POST: APIRoute = async ({ request }) => {
 
   // --- Send admin notification email ---
   const resendApiKey = import.meta.env.RESEND_API_KEY;
-  const toEmail = import.meta.env.CONTACT_TO_EMAIL ?? "support@happyfeelingprints.com";
-  const fromEmail = import.meta.env.CONTACT_FROM_EMAIL ?? "support@happyfeelingprints.com";
+  const toEmail =
+    import.meta.env.CONTACT_TO_EMAIL ?? "support@happyfeelingprints.com";
+  const fromEmail =
+    import.meta.env.CONTACT_FROM_EMAIL ?? "support@happyfeelingprints.com";
 
   if (resendApiKey) {
     try {

@@ -1,1 +1,49 @@
-{"nodes": [{"id": "use_railway_skill", "label": "Use Railway Skill", "file_type": "document", "source_file": "devtools/skills/use-railway/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "railway_resource_model", "label": "Railway Resource Model (Workspace/Project/Environment/Service)", "file_type": "document", "source_file": "devtools/skills/use-railway/SKILL.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "use_railway_skill", "target": "railway_deployment", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/SKILL.md", "source_location": null, "weight": 1.0}, {"source": "use_railway_skill", "target": "railway_resource_model", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/SKILL.md", "source_location": "line 16-23", "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "use_railway_skill",
+      "label": "Use Railway Skill",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "railway_resource_model",
+      "label": "Railway Resource Model (Workspace/Project/Environment/Service)",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "use_railway_skill",
+      "target": "railway_deployment",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "use_railway_skill",
+      "target": "railway_resource_model",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/SKILL.md",
+      "source_location": "line 16-23",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

@@ -11,21 +11,25 @@
 import { connect } from "@tursodatabase/serverless";
 import bcrypt from "bcryptjs";
 
-const email    = process.argv[2];
+const email = process.argv[2];
 const password = process.argv[3];
 
 if (!email || !password) {
-  console.error("Usage: node --env-file=.env scripts/create-admin.mjs <email> <password>");
+  console.error(
+    "Usage: node --env-file=.env scripts/create-admin.mjs <email> <password>",
+  );
   process.exit(1);
 }
 
 if (!process.env.TURSO_DATABASE_URL || !process.env.TURSO_AUTH_TOKEN) {
-  console.error("Missing TURSO_DATABASE_URL or TURSO_AUTH_TOKEN — make sure .env is loaded.");
+  console.error(
+    "Missing TURSO_DATABASE_URL or TURSO_AUTH_TOKEN — make sure .env is loaded.",
+  );
   process.exit(1);
 }
 
 const db = connect({
-  url:       process.env.TURSO_DATABASE_URL,
+  url: process.env.TURSO_DATABASE_URL,
   authToken: process.env.TURSO_AUTH_TOKEN,
 });
 
@@ -34,7 +38,7 @@ try {
 
   await db.execute(
     "INSERT INTO users (email, password_hash, role) VALUES (?, ?, 'admin')",
-    [email, hash]
+    [email, hash],
   );
 
   console.log(`✓ Admin user created: ${email}`);

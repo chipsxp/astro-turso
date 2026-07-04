@@ -1,1 +1,125 @@
-{"nodes": [{"id": "fix_403_csrf_checkorigin", "label": "Fix: 403 CSRF checkOrigin False Positive", "file_type": "document", "source_file": "docs/fix-403-csrf-checkOrigin.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "fix_403_tls_termination", "label": "TLS Termination Above Node.js Root Cause", "file_type": "document", "source_file": "docs/fix-403-csrf-checkOrigin.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "fix_403_samesite_strict", "label": "SameSite=Strict CSRF Protection Rationale", "file_type": "document", "source_file": "docs/fix-403-csrf-checkOrigin.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "fix_403_astro_config", "label": "astro.config.mjs checkOrigin:false Fix", "file_type": "document", "source_file": "docs/fix-403-csrf-checkOrigin.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "fix_403_csrf_checkorigin", "target": "fix_403_tls_termination", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/fix-403-csrf-checkOrigin.md", "source_location": "line 38", "weight": 1.0}, {"source": "fix_403_samesite_strict", "target": "fix_403_csrf_checkorigin", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/fix-403-csrf-checkOrigin.md", "source_location": "line 56", "weight": 1.0}, {"source": "fix_403_astro_config", "target": "fix_403_csrf_checkorigin", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/fix-403-csrf-checkOrigin.md", "source_location": "line 98", "weight": 1.0}, {"source": "fix_403_csrf_checkorigin", "target": "deploy_cpanel_deployment", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/fix-403-csrf-checkOrigin.md", "source_location": "line 237", "weight": 1.0}, {"source": "fix_403_csrf_checkorigin", "target": "railway_validation_plan", "relation": "references", "confidence": "INFERRED", "confidence_score": 0.8, "source_file": "docs/fix-403-csrf-checkOrigin.md", "source_location": null, "weight": 0.8}, {"source": "fix_403_tls_termination", "target": "deploy_cpanel_phusion_passenger", "relation": "semantically_similar_to", "confidence": "INFERRED", "confidence_score": 0.8, "source_file": "docs/fix-403-csrf-checkOrigin.md", "source_location": null, "weight": 0.8}], "hyperedges": [{"id": "cpanel_deployment_pipeline", "label": "cPanel Deployment Pipeline: Build + Upload + NodeApp + SSL", "nodes": ["deploy_cpanel_deployment", "deploy_cpanel_phusion_passenger", "fix_403_tls_termination"], "relation": "participate_in", "confidence": "INFERRED", "confidence_score": 0.8, "source_file": "docs/fix-403-csrf-checkOrigin.md"}]}
+{
+  "nodes": [
+    {
+      "id": "fix_403_csrf_checkorigin",
+      "label": "Fix: 403 CSRF checkOrigin False Positive",
+      "file_type": "document",
+      "source_file": "docs/fix-403-csrf-checkOrigin.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "fix_403_tls_termination",
+      "label": "TLS Termination Above Node.js Root Cause",
+      "file_type": "document",
+      "source_file": "docs/fix-403-csrf-checkOrigin.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "fix_403_samesite_strict",
+      "label": "SameSite=Strict CSRF Protection Rationale",
+      "file_type": "document",
+      "source_file": "docs/fix-403-csrf-checkOrigin.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "fix_403_astro_config",
+      "label": "astro.config.mjs checkOrigin:false Fix",
+      "file_type": "document",
+      "source_file": "docs/fix-403-csrf-checkOrigin.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "fix_403_csrf_checkorigin",
+      "target": "fix_403_tls_termination",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/fix-403-csrf-checkOrigin.md",
+      "source_location": "line 38",
+      "weight": 1.0
+    },
+    {
+      "source": "fix_403_samesite_strict",
+      "target": "fix_403_csrf_checkorigin",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/fix-403-csrf-checkOrigin.md",
+      "source_location": "line 56",
+      "weight": 1.0
+    },
+    {
+      "source": "fix_403_astro_config",
+      "target": "fix_403_csrf_checkorigin",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/fix-403-csrf-checkOrigin.md",
+      "source_location": "line 98",
+      "weight": 1.0
+    },
+    {
+      "source": "fix_403_csrf_checkorigin",
+      "target": "deploy_cpanel_deployment",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/fix-403-csrf-checkOrigin.md",
+      "source_location": "line 237",
+      "weight": 1.0
+    },
+    {
+      "source": "fix_403_csrf_checkorigin",
+      "target": "railway_validation_plan",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "docs/fix-403-csrf-checkOrigin.md",
+      "source_location": null,
+      "weight": 0.8
+    },
+    {
+      "source": "fix_403_tls_termination",
+      "target": "deploy_cpanel_phusion_passenger",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "docs/fix-403-csrf-checkOrigin.md",
+      "source_location": null,
+      "weight": 0.8
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "cpanel_deployment_pipeline",
+      "label": "cPanel Deployment Pipeline: Build + Upload + NodeApp + SSL",
+      "nodes": [
+        "deploy_cpanel_deployment",
+        "deploy_cpanel_phusion_passenger",
+        "fix_403_tls_termination"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "docs/fix-403-csrf-checkOrigin.md"
+    }
+  ]
+}

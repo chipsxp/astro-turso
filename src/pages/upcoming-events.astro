@@ -23,7 +23,7 @@ import { getSetting } from "../lib/settings";
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
 const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
 const canonicalUrl = `${siteUrl}/upcoming-events`;
-const donationPlacement = await getSetting("donation_placement") || "footer";
+const donationPlacement = (await getSetting("donation_placement")) || "footer";
 
 await ensureEventsSchema();
 

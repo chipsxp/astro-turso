@@ -58,7 +58,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
               id="body-editor"
               class="form-textarea form-textarea--body quill-editor"
               aria-labelledby="body-editor-label"
-              style="background: white; border: 1px solid var(--surface-3); border-radius: 4px; min-height: 400px;"
+              style="min-height: 400px;"
             >
             </div>
             <!-- Hidden field for form submission -->
@@ -194,7 +194,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
     initializeEditor,
   } from "../../../lib/editor-utils";
 
-  let createdArticleId: number | null = null;
+  const createdArticleId: number | null = null;
   let uploadSessionId: string | null = null;
   const previewMediaItems: Array<{
     url: string;

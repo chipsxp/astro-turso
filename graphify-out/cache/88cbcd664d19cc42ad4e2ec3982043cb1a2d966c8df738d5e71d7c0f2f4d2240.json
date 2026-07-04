@@ -1,1 +1,39 @@
-{"nodes": [{"id": "src_pages_robots_txt_ts", "label": "robots.txt.ts", "file_type": "code", "source_file": "src\\pages\\robots.txt.ts", "source_location": "L1"}, {"id": "robots_txt_get", "label": "GET()", "file_type": "code", "source_file": "src\\pages\\robots.txt.ts", "source_location": "L3"}], "edges": [{"source": "src_pages_robots_txt_ts", "target": "astro", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\pages\\robots.txt.ts", "source_location": "L1", "weight": 1.0}, {"source": "src_pages_robots_txt_ts", "target": "robots_txt_get", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\robots.txt.ts", "source_location": "L3", "weight": 1.0}], "raw_calls": []}
+{
+  "nodes": [
+    {
+      "id": "src_pages_robots_txt_ts",
+      "label": "robots.txt.ts",
+      "file_type": "code",
+      "source_file": "src\\pages\\robots.txt.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "robots_txt_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "src\\pages\\robots.txt.ts",
+      "source_location": "L3"
+    }
+  ],
+  "edges": [
+    {
+      "source": "src_pages_robots_txt_ts",
+      "target": "astro",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\robots.txt.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_robots_txt_ts",
+      "target": "robots_txt_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\robots.txt.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": []
+}

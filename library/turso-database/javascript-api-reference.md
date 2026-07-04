@@ -13,9 +13,9 @@ The API is compatible with the libSQL promise API, which is an asynchronous vari
 
 Opens a new database connection.
 
-| Param   | Type                | Description               |
-| ------- | ------------------- | ------------------------- |
-| path    | <code>string</code> | Path to the database file |
+| Param | Type                | Description               |
+| ----- | ------------------- | ------------------------- |
+| path  | <code>string</code> | Path to the database file |
 
 The `path` parameter points to the SQLite database file to open. If the file pointed to by `path` does not exists, it will be created.
 To open an in-memory database, please pass `:memory:` as the `path` parameter.
@@ -32,9 +32,9 @@ The `Database` class represents a connection that can prepare and execute SQL st
 
 Prepares a SQL statement for execution.
 
-| Param  | Type                | Description                          |
-| ------ | ------------------- | ------------------------------------ |
-| sql    | <code>string</code> | The SQL statement string to prepare. |
+| Param | Type                | Description                          |
+| ----- | ------------------- | ------------------------------------ |
+| sql   | <code>string</code> | The SQL statement string to prepare. |
 
 The function returns a `Statement` object.
 
@@ -78,9 +78,9 @@ This function is currently not supported.
 
 Executes a SQL statement.
 
-| Param  | Type                | Description                          |
-| ------ | ------------------- | ------------------------------------ |
-| sql    | <code>string</code> | The SQL statement string to execute. |
+| Param | Type                | Description                          |
+| ----- | ------------------- | ------------------------------------ |
+| sql   | <code>string</code> | The SQL statement string to execute. |
 
 #### interrupt() ⇒ this
 

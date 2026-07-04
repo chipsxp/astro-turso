@@ -1,1 +1,81 @@
-{"nodes": [{"id": "setup_projects", "label": "Railway Project Setup", "file_type": "document", "source_file": "devtools/skills/use-railway/references/setup.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "setup_services", "label": "Railway Service Creation", "file_type": "document", "source_file": "devtools/skills/use-railway/references/setup.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "setup_buckets", "label": "Railway S3 Bucket Management", "file_type": "document", "source_file": "devtools/skills/use-railway/references/setup.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "setup_monorepo_detection", "label": "Railway Monorepo Detection Patterns", "file_type": "document", "source_file": "devtools/skills/use-railway/references/setup.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "setup_services", "target": "setup_projects", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/setup.md", "source_location": "line 56", "weight": 1.0}, {"source": "setup_buckets", "target": "setup_services", "relation": "implements", "confidence": "INFERRED", "confidence_score": 0.8, "source_file": "devtools/skills/use-railway/references/setup.md", "source_location": null, "weight": 0.8}, {"source": "setup_monorepo_detection", "target": "deploy_monorepo_patterns", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/setup.md", "source_location": "line 236", "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "setup_projects",
+      "label": "Railway Project Setup",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/setup.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "setup_services",
+      "label": "Railway Service Creation",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/setup.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "setup_buckets",
+      "label": "Railway S3 Bucket Management",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/setup.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "setup_monorepo_detection",
+      "label": "Railway Monorepo Detection Patterns",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/setup.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "setup_services",
+      "target": "setup_projects",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/setup.md",
+      "source_location": "line 56",
+      "weight": 1.0
+    },
+    {
+      "source": "setup_buckets",
+      "target": "setup_services",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "devtools/skills/use-railway/references/setup.md",
+      "source_location": null,
+      "weight": 0.8
+    },
+    {
+      "source": "setup_monorepo_detection",
+      "target": "deploy_monorepo_patterns",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/setup.md",
+      "source_location": "line 236",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

@@ -1,1 +1,137 @@
-{"nodes": [{"id": "graph_graph_visualization_page", "label": "Interactive Graph Visualization Page", "file_type": "document", "source_file": "graphify-out\\graph.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "graph_vis_network_library", "label": "vis-network UMD Library", "file_type": "document", "source_file": "graphify-out\\graph.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "graph_raw_nodes_dataset", "label": "RAW_NODES Dataset", "file_type": "document", "source_file": "graphify-out\\graph.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "graph_raw_edges_dataset", "label": "RAW_EDGES Dataset", "file_type": "document", "source_file": "graphify-out\\graph.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "graph_confidence_labels", "label": "Edge Confidence Labels (EXTRACTED/INFERRED)", "file_type": "document", "source_file": "graphify-out\\graph.html", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "graph_graph_visualization_page", "target": "graph_vis_network_library", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "graphify-out\\graph.html", "source_location": null, "weight": 1.0}, {"source": "graph_graph_visualization_page", "target": "graph_raw_nodes_dataset", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "graphify-out\\graph.html", "source_location": null, "weight": 1.0}, {"source": "graph_graph_visualization_page", "target": "graph_raw_edges_dataset", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "graphify-out\\graph.html", "source_location": null, "weight": 1.0}, {"source": "graph_raw_edges_dataset", "target": "graph_confidence_labels", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "graphify-out\\graph.html", "source_location": null, "weight": 1.0}, {"source": "graph_raw_nodes_dataset", "target": "graph_raw_edges_dataset", "relation": "shares_data_with", "confidence": "INFERRED", "confidence_score": 0.9, "source_file": "graphify-out\\graph.html", "source_location": null, "weight": 1.0}, {"source": "graph_graph_visualization_page", "target": "graph_report_summary", "relation": "shares_data_with", "confidence": "INFERRED", "confidence_score": 0.88, "source_file": "graphify-out\\graph.html", "source_location": null, "weight": 1.0}], "hyperedges": [{"id": "graph_visualization_data_stack", "label": "Graph Visualization Data Stack", "nodes": ["graph_graph_visualization_page", "graph_raw_nodes_dataset", "graph_raw_edges_dataset", "graph_vis_network_library"], "relation": "implement", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "graphify-out\\graph.html"}]}
+{
+  "nodes": [
+    {
+      "id": "graph_graph_visualization_page",
+      "label": "Interactive Graph Visualization Page",
+      "file_type": "document",
+      "source_file": "graphify-out\\graph.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "graph_vis_network_library",
+      "label": "vis-network UMD Library",
+      "file_type": "document",
+      "source_file": "graphify-out\\graph.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "graph_raw_nodes_dataset",
+      "label": "RAW_NODES Dataset",
+      "file_type": "document",
+      "source_file": "graphify-out\\graph.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "graph_raw_edges_dataset",
+      "label": "RAW_EDGES Dataset",
+      "file_type": "document",
+      "source_file": "graphify-out\\graph.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "graph_confidence_labels",
+      "label": "Edge Confidence Labels (EXTRACTED/INFERRED)",
+      "file_type": "document",
+      "source_file": "graphify-out\\graph.html",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "graph_graph_visualization_page",
+      "target": "graph_vis_network_library",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "graphify-out\\graph.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "graph_graph_visualization_page",
+      "target": "graph_raw_nodes_dataset",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "graphify-out\\graph.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "graph_graph_visualization_page",
+      "target": "graph_raw_edges_dataset",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "graphify-out\\graph.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "graph_raw_edges_dataset",
+      "target": "graph_confidence_labels",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "graphify-out\\graph.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "graph_raw_nodes_dataset",
+      "target": "graph_raw_edges_dataset",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "graphify-out\\graph.html",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "graph_graph_visualization_page",
+      "target": "graph_report_summary",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.88,
+      "source_file": "graphify-out\\graph.html",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "graph_visualization_data_stack",
+      "label": "Graph Visualization Data Stack",
+      "nodes": [
+        "graph_graph_visualization_page",
+        "graph_raw_nodes_dataset",
+        "graph_raw_edges_dataset",
+        "graph_vis_network_library"
+      ],
+      "relation": "implement",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "graphify-out\\graph.html"
+    }
+  ]
+}

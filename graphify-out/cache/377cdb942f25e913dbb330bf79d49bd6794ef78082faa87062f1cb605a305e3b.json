@@ -1,1 +1,17 @@
-{"nodes": [{"id": "eraser_erd_syntax", "label": "Eraser ERD Syntax Reference", "file_type": "document", "source_file": "devtools/skills/eraser-diagrams/references/erd-syntax.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "eraser_erd_syntax",
+      "label": "Eraser ERD Syntax Reference",
+      "file_type": "document",
+      "source_file": "devtools/skills/eraser-diagrams/references/erd-syntax.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [],
+  "hyperedges": []
+}

@@ -1,1 +1,297 @@
-{"nodes": [{"id": "src_lib_panels_ts", "label": "panels.ts", "file_type": "code", "source_file": "src\\lib\\panels.ts", "source_location": "L1"}, {"id": "panels_ensurepanelschema", "label": "ensurePanelSchema()", "file_type": "code", "source_file": "src\\lib\\panels.ts", "source_location": "L104"}, {"id": "panels_mapassignmentrow", "label": "mapAssignmentRow()", "file_type": "code", "source_file": "src\\lib\\panels.ts", "source_location": "L117"}, {"id": "panels_mapmediarow", "label": "mapMediaRow()", "file_type": "code", "source_file": "src\\lib\\panels.ts", "source_location": "L130"}, {"id": "panels_getcurrentpanelassignments", "label": "getCurrentPanelAssignments()", "file_type": "code", "source_file": "src\\lib\\panels.ts", "source_location": "L144"}, {"id": "panels_getpanelimagemap", "label": "getPanelImageMap()", "file_type": "code", "source_file": "src\\lib\\panels.ts", "source_location": "L169"}, {"id": "panels_getrecentpanelmedia", "label": "getRecentPanelMedia()", "file_type": "code", "source_file": "src\\lib\\panels.ts", "source_location": "L185"}], "edges": [{"source": "src_lib_panels_ts", "target": "src_lib_db", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\lib\\panels.ts", "source_location": "L1", "weight": 1.0}, {"source": "src_lib_panels_ts", "target": "panels_ensurepanelschema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\panels.ts", "source_location": "L104", "weight": 1.0}, {"source": "src_lib_panels_ts", "target": "panels_mapassignmentrow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\panels.ts", "source_location": "L117", "weight": 1.0}, {"source": "src_lib_panels_ts", "target": "panels_mapmediarow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\panels.ts", "source_location": "L130", "weight": 1.0}, {"source": "src_lib_panels_ts", "target": "panels_getcurrentpanelassignments", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\panels.ts", "source_location": "L144", "weight": 1.0}, {"source": "src_lib_panels_ts", "target": "panels_getpanelimagemap", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\panels.ts", "source_location": "L169", "weight": 1.0}, {"source": "src_lib_panels_ts", "target": "panels_getrecentpanelmedia", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\panels.ts", "source_location": "L185", "weight": 1.0}, {"source": "panels_getcurrentpanelassignments", "target": "panels_ensurepanelschema", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\panels.ts", "source_location": "L145", "weight": 1.0}, {"source": "panels_getpanelimagemap", "target": "panels_getcurrentpanelassignments", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\panels.ts", "source_location": "L172", "weight": 1.0}, {"source": "panels_getrecentpanelmedia", "target": "panels_ensurepanelschema", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\panels.ts", "source_location": "L186", "weight": 1.0}], "raw_calls": [{"caller_nid": "panels_ensurepanelschema", "callee": "execute", "source_file": "src\\lib\\panels.ts", "source_location": "L107"}, {"caller_nid": "panels_ensurepanelschema", "callee": "execute", "source_file": "src\\lib\\panels.ts", "source_location": "L108"}, {"caller_nid": "panels_ensurepanelschema", "callee": "execute", "source_file": "src\\lib\\panels.ts", "source_location": "L109"}, {"caller_nid": "panels_ensurepanelschema", "callee": "execute", "source_file": "src\\lib\\panels.ts", "source_location": "L110"}, {"caller_nid": "panels_mapassignmentrow", "callee": "String", "source_file": "src\\lib\\panels.ts", "source_location": "L119"}, {"caller_nid": "panels_mapassignmentrow", "callee": "String", "source_file": "src\\lib\\panels.ts", "source_location": "L120"}, {"caller_nid": "panels_mapassignmentrow", "callee": "Number", "source_file": "src\\lib\\panels.ts", "source_location": "L121"}, {"caller_nid": "panels_mapassignmentrow", "callee": "String", "source_file": "src\\lib\\panels.ts", "source_location": "L123"}, {"caller_nid": "panels_mapassignmentrow", "callee": "String", "source_file": "src\\lib\\panels.ts", "source_location": "L124"}, {"caller_nid": "panels_mapassignmentrow", "callee": "String", "source_file": "src\\lib\\panels.ts", "source_location": "L125"}, {"caller_nid": "panels_mapassignmentrow", "callee": "String", "source_file": "src\\lib\\panels.ts", "source_location": "L126"}, {"caller_nid": "panels_mapmediarow", "callee": "Number", "source_file": "src\\lib\\panels.ts", "source_location": "L132"}, {"caller_nid": "panels_mapmediarow", "callee": "String", "source_file": "src\\lib\\panels.ts", "source_location": "L133"}, {"caller_nid": "panels_mapmediarow", "callee": "String", "source_file": "src\\lib\\panels.ts", "source_location": "L134"}, {"caller_nid": "panels_mapmediarow", "callee": "String", "source_file": "src\\lib\\panels.ts", "source_location": "L135"}, {"caller_nid": "panels_mapmediarow", "callee": "Number", "source_file": "src\\lib\\panels.ts", "source_location": "L136"}, {"caller_nid": "panels_mapmediarow", "callee": "Number", "source_file": "src\\lib\\panels.ts", "source_location": "L137"}, {"caller_nid": "panels_mapmediarow", "callee": "String", "source_file": "src\\lib\\panels.ts", "source_location": "L138"}, {"caller_nid": "panels_mapmediarow", "callee": "String", "source_file": "src\\lib\\panels.ts", "source_location": "L139"}, {"caller_nid": "panels_getcurrentpanelassignments", "callee": "execute", "source_file": "src\\lib\\panels.ts", "source_location": "L147"}, {"caller_nid": "panels_getcurrentpanelassignments", "callee": "map", "source_file": "src\\lib\\panels.ts", "source_location": "L154"}, {"caller_nid": "panels_getpanelimagemap", "callee": "fromEntries", "source_file": "src\\lib\\panels.ts", "source_location": "L173"}, {"caller_nid": "panels_getpanelimagemap", "callee": "map", "source_file": "src\\lib\\panels.ts", "source_location": "L174"}, {"caller_nid": "panels_getrecentpanelmedia", "callee": "execute", "source_file": "src\\lib\\panels.ts", "source_location": "L188"}, {"caller_nid": "panels_getrecentpanelmedia", "callee": "map", "source_file": "src\\lib\\panels.ts", "source_location": "L195"}]}
+{
+  "nodes": [
+    {
+      "id": "src_lib_panels_ts",
+      "label": "panels.ts",
+      "file_type": "code",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "panels_ensurepanelschema",
+      "label": "ensurePanelSchema()",
+      "file_type": "code",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L104"
+    },
+    {
+      "id": "panels_mapassignmentrow",
+      "label": "mapAssignmentRow()",
+      "file_type": "code",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L117"
+    },
+    {
+      "id": "panels_mapmediarow",
+      "label": "mapMediaRow()",
+      "file_type": "code",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L130"
+    },
+    {
+      "id": "panels_getcurrentpanelassignments",
+      "label": "getCurrentPanelAssignments()",
+      "file_type": "code",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L144"
+    },
+    {
+      "id": "panels_getpanelimagemap",
+      "label": "getPanelImageMap()",
+      "file_type": "code",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L169"
+    },
+    {
+      "id": "panels_getrecentpanelmedia",
+      "label": "getRecentPanelMedia()",
+      "file_type": "code",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L185"
+    }
+  ],
+  "edges": [
+    {
+      "source": "src_lib_panels_ts",
+      "target": "src_lib_db",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_panels_ts",
+      "target": "panels_ensurepanelschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_panels_ts",
+      "target": "panels_mapassignmentrow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L117",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_panels_ts",
+      "target": "panels_mapmediarow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L130",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_panels_ts",
+      "target": "panels_getcurrentpanelassignments",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L144",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_panels_ts",
+      "target": "panels_getpanelimagemap",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L169",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_panels_ts",
+      "target": "panels_getrecentpanelmedia",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L185",
+      "weight": 1.0
+    },
+    {
+      "source": "panels_getcurrentpanelassignments",
+      "target": "panels_ensurepanelschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "panels_getpanelimagemap",
+      "target": "panels_getcurrentpanelassignments",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L172",
+      "weight": 1.0
+    },
+    {
+      "source": "panels_getrecentpanelmedia",
+      "target": "panels_ensurepanelschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L186",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "panels_ensurepanelschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L107"
+    },
+    {
+      "caller_nid": "panels_ensurepanelschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L108"
+    },
+    {
+      "caller_nid": "panels_ensurepanelschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "panels_ensurepanelschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L110"
+    },
+    {
+      "caller_nid": "panels_mapassignmentrow",
+      "callee": "String",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L119"
+    },
+    {
+      "caller_nid": "panels_mapassignmentrow",
+      "callee": "String",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "panels_mapassignmentrow",
+      "callee": "Number",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L121"
+    },
+    {
+      "caller_nid": "panels_mapassignmentrow",
+      "callee": "String",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L123"
+    },
+    {
+      "caller_nid": "panels_mapassignmentrow",
+      "callee": "String",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L124"
+    },
+    {
+      "caller_nid": "panels_mapassignmentrow",
+      "callee": "String",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L125"
+    },
+    {
+      "caller_nid": "panels_mapassignmentrow",
+      "callee": "String",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "panels_mapmediarow",
+      "callee": "Number",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L132"
+    },
+    {
+      "caller_nid": "panels_mapmediarow",
+      "callee": "String",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L133"
+    },
+    {
+      "caller_nid": "panels_mapmediarow",
+      "callee": "String",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L134"
+    },
+    {
+      "caller_nid": "panels_mapmediarow",
+      "callee": "String",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L135"
+    },
+    {
+      "caller_nid": "panels_mapmediarow",
+      "callee": "Number",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L136"
+    },
+    {
+      "caller_nid": "panels_mapmediarow",
+      "callee": "Number",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L137"
+    },
+    {
+      "caller_nid": "panels_mapmediarow",
+      "callee": "String",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L138"
+    },
+    {
+      "caller_nid": "panels_mapmediarow",
+      "callee": "String",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L139"
+    },
+    {
+      "caller_nid": "panels_getcurrentpanelassignments",
+      "callee": "execute",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L147"
+    },
+    {
+      "caller_nid": "panels_getcurrentpanelassignments",
+      "callee": "map",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L154"
+    },
+    {
+      "caller_nid": "panels_getpanelimagemap",
+      "callee": "fromEntries",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L173"
+    },
+    {
+      "caller_nid": "panels_getpanelimagemap",
+      "callee": "map",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L174"
+    },
+    {
+      "caller_nid": "panels_getrecentpanelmedia",
+      "callee": "execute",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L188"
+    },
+    {
+      "caller_nid": "panels_getrecentpanelmedia",
+      "callee": "map",
+      "source_file": "src\\lib\\panels.ts",
+      "source_location": "L195"
+    }
+  ]
+}

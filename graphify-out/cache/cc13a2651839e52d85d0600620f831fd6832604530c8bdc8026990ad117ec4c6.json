@@ -1,1 +1,307 @@
-{"nodes": [{"id": "src_lib_sales_ts", "label": "sales.ts", "file_type": "code", "source_file": "src\\lib\\sales.ts", "source_location": "L1"}, {"id": "sales_slugify", "label": "slugify()", "file_type": "code", "source_file": "src\\lib\\sales.ts", "source_location": "L77"}, {"id": "sales_formatprice", "label": "formatPrice()", "file_type": "code", "source_file": "src\\lib\\sales.ts", "source_location": "L90"}, {"id": "sales_calcsaleprice", "label": "calcSalePrice()", "file_type": "code", "source_file": "src\\lib\\sales.ts", "source_location": "L103"}, {"id": "sales_ispromoactive", "label": "isPromoActive()", "file_type": "code", "source_file": "src\\lib\\sales.ts", "source_location": "L123"}, {"id": "sales_parsetransforms", "label": "parseTransforms()", "file_type": "code", "source_file": "src\\lib\\sales.ts", "source_location": "L140"}, {"id": "sales_buildsalesimageurl", "label": "buildSalesImageUrl()", "file_type": "code", "source_file": "src\\lib\\sales.ts", "source_location": "L157"}, {"id": "sales_parsetags", "label": "parseTags()", "file_type": "code", "source_file": "src\\lib\\sales.ts", "source_location": "L206"}], "edges": [{"source": "src_lib_sales_ts", "target": "sales_slugify", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\sales.ts", "source_location": "L77", "weight": 1.0}, {"source": "src_lib_sales_ts", "target": "sales_formatprice", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\sales.ts", "source_location": "L90", "weight": 1.0}, {"source": "src_lib_sales_ts", "target": "sales_calcsaleprice", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\sales.ts", "source_location": "L103", "weight": 1.0}, {"source": "src_lib_sales_ts", "target": "sales_ispromoactive", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\sales.ts", "source_location": "L123", "weight": 1.0}, {"source": "src_lib_sales_ts", "target": "sales_parsetransforms", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\sales.ts", "source_location": "L140", "weight": 1.0}, {"source": "src_lib_sales_ts", "target": "sales_buildsalesimageurl", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\sales.ts", "source_location": "L157", "weight": 1.0}, {"source": "src_lib_sales_ts", "target": "sales_parsetags", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\sales.ts", "source_location": "L206", "weight": 1.0}, {"source": "sales_ispromoactive", "target": "sales_calcsaleprice", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\sales.ts", "source_location": "L124", "weight": 1.0}, {"source": "sales_buildsalesimageurl", "target": "sales_parsetransforms", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\sales.ts", "source_location": "L163", "weight": 1.0}], "raw_calls": [{"caller_nid": "sales_slugify", "callee": "replace", "source_file": "src\\lib\\sales.ts", "source_location": "L78"}, {"caller_nid": "sales_slugify", "callee": "replace", "source_file": "src\\lib\\sales.ts", "source_location": "L78"}, {"caller_nid": "sales_slugify", "callee": "trim", "source_file": "src\\lib\\sales.ts", "source_location": "L78"}, {"caller_nid": "sales_slugify", "callee": "toLowerCase", "source_file": "src\\lib\\sales.ts", "source_location": "L78"}, {"caller_nid": "sales_formatprice", "callee": "format", "source_file": "src\\lib\\sales.ts", "source_location": "L92"}, {"caller_nid": "sales_calcsaleprice", "callee": "getTime", "source_file": "src\\lib\\sales.ts", "source_location": "L109"}, {"caller_nid": "sales_calcsaleprice", "callee": "now", "source_file": "src\\lib\\sales.ts", "source_location": "L109"}, {"caller_nid": "sales_calcsaleprice", "callee": "getTime", "source_file": "src\\lib\\sales.ts", "source_location": "L111"}, {"caller_nid": "sales_calcsaleprice", "callee": "now", "source_file": "src\\lib\\sales.ts", "source_location": "L111"}, {"caller_nid": "sales_calcsaleprice", "callee": "parseFloat", "source_file": "src\\lib\\sales.ts", "source_location": "L113"}, {"caller_nid": "sales_calcsaleprice", "callee": "toFixed", "source_file": "src\\lib\\sales.ts", "source_location": "L114"}, {"caller_nid": "sales_parsetransforms", "callee": "parse", "source_file": "src\\lib\\sales.ts", "source_location": "L142"}, {"caller_nid": "sales_buildsalesimageurl", "callee": "push", "source_file": "src\\lib\\sales.ts", "source_location": "L167"}, {"caller_nid": "sales_buildsalesimageurl", "callee": "startsWith", "source_file": "src\\lib\\sales.ts", "source_location": "L169"}, {"caller_nid": "sales_buildsalesimageurl", "callee": "push", "source_file": "src\\lib\\sales.ts", "source_location": "L170"}, {"caller_nid": "sales_buildsalesimageurl", "callee": "push", "source_file": "src\\lib\\sales.ts", "source_location": "L176"}, {"caller_nid": "sales_buildsalesimageurl", "callee": "trim", "source_file": "src\\lib\\sales.ts", "source_location": "L178"}, {"caller_nid": "sales_buildsalesimageurl", "callee": "replace", "source_file": "src\\lib\\sales.ts", "source_location": "L179"}, {"caller_nid": "sales_buildsalesimageurl", "callee": "encodeURIComponent", "source_file": "src\\lib\\sales.ts", "source_location": "L179"}, {"caller_nid": "sales_buildsalesimageurl", "callee": "trim", "source_file": "src\\lib\\sales.ts", "source_location": "L179"}, {"caller_nid": "sales_buildsalesimageurl", "callee": "startsWith", "source_file": "src\\lib\\sales.ts", "source_location": "L187"}, {"caller_nid": "sales_buildsalesimageurl", "callee": "push", "source_file": "src\\lib\\sales.ts", "source_location": "L193"}, {"caller_nid": "sales_buildsalesimageurl", "callee": "push", "source_file": "src\\lib\\sales.ts", "source_location": "L198"}, {"caller_nid": "sales_buildsalesimageurl", "callee": "join", "source_file": "src\\lib\\sales.ts", "source_location": "L200"}, {"caller_nid": "sales_parsetags", "callee": "parse", "source_file": "src\\lib\\sales.ts", "source_location": "L208"}, {"caller_nid": "sales_parsetags", "callee": "isArray", "source_file": "src\\lib\\sales.ts", "source_location": "L209"}, {"caller_nid": "sales_parsetags", "callee": "map", "source_file": "src\\lib\\sales.ts", "source_location": "L209"}]}
+{
+  "nodes": [
+    {
+      "id": "src_lib_sales_ts",
+      "label": "sales.ts",
+      "file_type": "code",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "sales_slugify",
+      "label": "slugify()",
+      "file_type": "code",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L77"
+    },
+    {
+      "id": "sales_formatprice",
+      "label": "formatPrice()",
+      "file_type": "code",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L90"
+    },
+    {
+      "id": "sales_calcsaleprice",
+      "label": "calcSalePrice()",
+      "file_type": "code",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L103"
+    },
+    {
+      "id": "sales_ispromoactive",
+      "label": "isPromoActive()",
+      "file_type": "code",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L123"
+    },
+    {
+      "id": "sales_parsetransforms",
+      "label": "parseTransforms()",
+      "file_type": "code",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L140"
+    },
+    {
+      "id": "sales_buildsalesimageurl",
+      "label": "buildSalesImageUrl()",
+      "file_type": "code",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L157"
+    },
+    {
+      "id": "sales_parsetags",
+      "label": "parseTags()",
+      "file_type": "code",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L206"
+    }
+  ],
+  "edges": [
+    {
+      "source": "src_lib_sales_ts",
+      "target": "sales_slugify",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_sales_ts",
+      "target": "sales_formatprice",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L90",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_sales_ts",
+      "target": "sales_calcsaleprice",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_sales_ts",
+      "target": "sales_ispromoactive",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L123",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_sales_ts",
+      "target": "sales_parsetransforms",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L140",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_sales_ts",
+      "target": "sales_buildsalesimageurl",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L157",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_sales_ts",
+      "target": "sales_parsetags",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "sales_ispromoactive",
+      "target": "sales_calcsaleprice",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "sales_buildsalesimageurl",
+      "target": "sales_parsetransforms",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L163",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "sales_slugify",
+      "callee": "replace",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "sales_slugify",
+      "callee": "replace",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "sales_slugify",
+      "callee": "trim",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "sales_slugify",
+      "callee": "toLowerCase",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L78"
+    },
+    {
+      "caller_nid": "sales_formatprice",
+      "callee": "format",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "sales_calcsaleprice",
+      "callee": "getTime",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "sales_calcsaleprice",
+      "callee": "now",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L109"
+    },
+    {
+      "caller_nid": "sales_calcsaleprice",
+      "callee": "getTime",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "sales_calcsaleprice",
+      "callee": "now",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "sales_calcsaleprice",
+      "callee": "parseFloat",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "sales_calcsaleprice",
+      "callee": "toFixed",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L114"
+    },
+    {
+      "caller_nid": "sales_parsetransforms",
+      "callee": "parse",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L142"
+    },
+    {
+      "caller_nid": "sales_buildsalesimageurl",
+      "callee": "push",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L167"
+    },
+    {
+      "caller_nid": "sales_buildsalesimageurl",
+      "callee": "startsWith",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L169"
+    },
+    {
+      "caller_nid": "sales_buildsalesimageurl",
+      "callee": "push",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L170"
+    },
+    {
+      "caller_nid": "sales_buildsalesimageurl",
+      "callee": "push",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L176"
+    },
+    {
+      "caller_nid": "sales_buildsalesimageurl",
+      "callee": "trim",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "sales_buildsalesimageurl",
+      "callee": "replace",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L179"
+    },
+    {
+      "caller_nid": "sales_buildsalesimageurl",
+      "callee": "encodeURIComponent",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L179"
+    },
+    {
+      "caller_nid": "sales_buildsalesimageurl",
+      "callee": "trim",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L179"
+    },
+    {
+      "caller_nid": "sales_buildsalesimageurl",
+      "callee": "startsWith",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L187"
+    },
+    {
+      "caller_nid": "sales_buildsalesimageurl",
+      "callee": "push",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L193"
+    },
+    {
+      "caller_nid": "sales_buildsalesimageurl",
+      "callee": "push",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L198"
+    },
+    {
+      "caller_nid": "sales_buildsalesimageurl",
+      "callee": "join",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "sales_parsetags",
+      "callee": "parse",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L208"
+    },
+    {
+      "caller_nid": "sales_parsetags",
+      "callee": "isArray",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L209"
+    },
+    {
+      "caller_nid": "sales_parsetags",
+      "callee": "map",
+      "source_file": "src\\lib\\sales.ts",
+      "source_location": "L209"
+    }
+  ]
+}

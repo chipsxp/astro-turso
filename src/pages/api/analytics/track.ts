@@ -24,14 +24,14 @@ export const POST: APIRoute = async ({ request, locals }) => {
     // Extract user ID from Locals if they are logged in
     const userId = locals?.user?.id ? Number(locals.user.id) : null;
 
-    // Log the event asynchronously (don't wait/block the client response strictly if we don't have to, 
+    // Log the event asynchronously (don't wait/block the client response strictly if we don't have to,
     // but in serverless we should await it to ensure it completes).
     await logAnalyticsEvent(
       event_type,
       target_type,
       target_id ? Number(target_id) : null,
       page_path,
-      userId
+      userId,
     );
 
     return json({ ok: true }, 201);

@@ -10,7 +10,9 @@ export interface TypedResultSet<T> extends Omit<ResultSet, "rows"> {
 
 // @tursodatabase/serverless returns rows as numeric-indexed objects {"0": val, "1": val, ...}.
 // This wrapper maps each row to a named-property object using result.columns.
-function mapRows<T = Record<string, unknown>>(result: ResultSet): TypedResultSet<T> {
+function mapRows<T = Record<string, unknown>>(
+  result: ResultSet,
+): TypedResultSet<T> {
   if (!Array.isArray(result?.columns) || result.columns.length === 0) {
     return result as unknown as TypedResultSet<T>;
   }
@@ -19,7 +21,7 @@ function mapRows<T = Record<string, unknown>>(result: ResultSet): TypedResultSet
     rows: result.rows.map((row: unknown) => {
       const r = row as Record<string, unknown>;
       return Object.fromEntries(
-        result.columns.map((col: string, i: number) => [col, r[i]])
+        result.columns.map((col: string, i: number) => [col, r[i]]),
       ) as T;
     }),
   };
@@ -35,9 +37,14 @@ function getDb() {
 }
 
 export const db = {
-  execute: async <T = Record<string, unknown>>(sql: string, args?: InArgs): Promise<TypedResultSet<T>> => {
+  execute: async <T = Record<string, unknown>>(
+    sql: string,
+    args?: InArgs,
+  ): Promise<TypedResultSet<T>> => {
     const conn = getDb();
-    const result = await (args !== undefined ? conn.execute(sql, args) : conn.execute(sql));
+    const result = await (args !== undefined
+      ? conn.execute(sql, args)
+      : conn.execute(sql));
     return mapRows<T>(result);
   },
 };

@@ -1,1 +1,303 @@
-{"nodes": [{"id": "src_pages_api_contact_ts", "label": "contact.ts", "file_type": "code", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L1"}, {"id": "contact_getclientip", "label": "getClientIp()", "file_type": "code", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L8"}, {"id": "contact_isratelimited", "label": "isRateLimited()", "file_type": "code", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L16"}, {"id": "contact_recordattempt", "label": "recordAttempt()", "file_type": "code", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L23"}, {"id": "contact_json", "label": "json()", "file_type": "code", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L33"}, {"id": "contact_isvalidemail", "label": "isValidEmail()", "file_type": "code", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L40"}, {"id": "contact_post", "label": "POST()", "file_type": "code", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L44"}], "edges": [{"source": "src_pages_api_contact_ts", "target": "astro", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L1", "weight": 1.0}, {"source": "src_pages_api_contact_ts", "target": "contact_getclientip", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L8", "weight": 1.0}, {"source": "src_pages_api_contact_ts", "target": "contact_isratelimited", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L16", "weight": 1.0}, {"source": "src_pages_api_contact_ts", "target": "contact_recordattempt", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L23", "weight": 1.0}, {"source": "src_pages_api_contact_ts", "target": "contact_json", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L33", "weight": 1.0}, {"source": "src_pages_api_contact_ts", "target": "contact_isvalidemail", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L40", "weight": 1.0}, {"source": "src_pages_api_contact_ts", "target": "contact_post", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L44", "weight": 1.0}, {"source": "contact_post", "target": "contact_getclientip", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L45", "weight": 1.0}, {"source": "contact_post", "target": "contact_isratelimited", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L47", "weight": 1.0}, {"source": "contact_post", "target": "contact_json", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L48", "weight": 1.0}, {"source": "contact_post", "target": "contact_recordattempt", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L51", "weight": 1.0}, {"source": "contact_post", "target": "contact_isvalidemail", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L78", "weight": 1.0}], "raw_calls": [{"caller_nid": "contact_getclientip", "callee": "trim", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L10"}, {"caller_nid": "contact_getclientip", "callee": "split", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L10"}, {"caller_nid": "contact_getclientip", "callee": "get", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L10"}, {"caller_nid": "contact_getclientip", "callee": "get", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L11"}, {"caller_nid": "contact_isratelimited", "callee": "now", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L17"}, {"caller_nid": "contact_isratelimited", "callee": "get", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L18"}, {"caller_nid": "contact_recordattempt", "callee": "now", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L24"}, {"caller_nid": "contact_recordattempt", "callee": "get", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L25"}, {"caller_nid": "contact_recordattempt", "callee": "set", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L27"}, {"caller_nid": "contact_json", "callee": "stringify", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L34"}, {"caller_nid": "contact_isvalidemail", "callee": "test", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L41"}, {"caller_nid": "contact_post", "callee": "trim", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L61"}, {"caller_nid": "contact_post", "callee": "String", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L61"}, {"caller_nid": "contact_post", "callee": "trim", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L62"}, {"caller_nid": "contact_post", "callee": "String", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L62"}, {"caller_nid": "contact_post", "callee": "trim", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L63"}, {"caller_nid": "contact_post", "callee": "String", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L63"}, {"caller_nid": "contact_post", "callee": "trim", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L64"}, {"caller_nid": "contact_post", "callee": "String", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L64"}, {"caller_nid": "contact_post", "callee": "fetch", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L107"}, {"caller_nid": "contact_post", "callee": "stringify", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L113"}, {"caller_nid": "contact_post", "callee": "join", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L118"}, {"caller_nid": "contact_post", "callee": "text", "source_file": "src\\pages\\api\\contact.ts", "source_location": "L131"}]}
+{
+  "nodes": [
+    {
+      "id": "src_pages_api_contact_ts",
+      "label": "contact.ts",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "contact_getclientip",
+      "label": "getClientIp()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L8"
+    },
+    {
+      "id": "contact_isratelimited",
+      "label": "isRateLimited()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L16"
+    },
+    {
+      "id": "contact_recordattempt",
+      "label": "recordAttempt()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L23"
+    },
+    {
+      "id": "contact_json",
+      "label": "json()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L33"
+    },
+    {
+      "id": "contact_isvalidemail",
+      "label": "isValidEmail()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L40"
+    },
+    {
+      "id": "contact_post",
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L44"
+    }
+  ],
+  "edges": [
+    {
+      "source": "src_pages_api_contact_ts",
+      "target": "astro",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_contact_ts",
+      "target": "contact_getclientip",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_contact_ts",
+      "target": "contact_isratelimited",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_contact_ts",
+      "target": "contact_recordattempt",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_contact_ts",
+      "target": "contact_json",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_contact_ts",
+      "target": "contact_isvalidemail",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_contact_ts",
+      "target": "contact_post",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_post",
+      "target": "contact_getclientip",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_post",
+      "target": "contact_isratelimited",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_post",
+      "target": "contact_json",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_post",
+      "target": "contact_recordattempt",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "contact_post",
+      "target": "contact_isvalidemail",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L78",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "contact_getclientip",
+      "callee": "trim",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L10"
+    },
+    {
+      "caller_nid": "contact_getclientip",
+      "callee": "split",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L10"
+    },
+    {
+      "caller_nid": "contact_getclientip",
+      "callee": "get",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L10"
+    },
+    {
+      "caller_nid": "contact_getclientip",
+      "callee": "get",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L11"
+    },
+    {
+      "caller_nid": "contact_isratelimited",
+      "callee": "now",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L17"
+    },
+    {
+      "caller_nid": "contact_isratelimited",
+      "callee": "get",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "contact_recordattempt",
+      "callee": "now",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L24"
+    },
+    {
+      "caller_nid": "contact_recordattempt",
+      "callee": "get",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L25"
+    },
+    {
+      "caller_nid": "contact_recordattempt",
+      "callee": "set",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "contact_json",
+      "callee": "stringify",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L34"
+    },
+    {
+      "caller_nid": "contact_isvalidemail",
+      "callee": "test",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L41"
+    },
+    {
+      "caller_nid": "contact_post",
+      "callee": "trim",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L61"
+    },
+    {
+      "caller_nid": "contact_post",
+      "callee": "String",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L61"
+    },
+    {
+      "caller_nid": "contact_post",
+      "callee": "trim",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "contact_post",
+      "callee": "String",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L62"
+    },
+    {
+      "caller_nid": "contact_post",
+      "callee": "trim",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "contact_post",
+      "callee": "String",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L63"
+    },
+    {
+      "caller_nid": "contact_post",
+      "callee": "trim",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "contact_post",
+      "callee": "String",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "contact_post",
+      "callee": "fetch",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L107"
+    },
+    {
+      "caller_nid": "contact_post",
+      "callee": "stringify",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "contact_post",
+      "callee": "join",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L118"
+    },
+    {
+      "caller_nid": "contact_post",
+      "callee": "text",
+      "source_file": "src\\pages\\api\\contact.ts",
+      "source_location": "L131"
+    }
+  ]
+}

@@ -155,7 +155,10 @@ export function sanitizeArticleBody(html: string): string {
   if (!html) return "";
 
   // Parse and sanitize with DOMPurify
-  const cleaned = DOMPurify.sanitize(html, ARTICLE_SANITIZE_CONFIG as Record<string, unknown>);
+  const cleaned = DOMPurify.sanitize(
+    html,
+    ARTICLE_SANITIZE_CONFIG as Record<string, unknown>,
+  );
   const cleanedHtml = String(cleaned);
 
   // Additional validation: ensure links use safe protocols

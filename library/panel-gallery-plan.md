@@ -461,18 +461,23 @@ When no image is assigned, frame renders exactly as today — no class change, n
 **Astro template pattern (Panel 02 example):**
 
 ```astro
-{panelImages['panel-02']
-  ? (
+{
+  panelImages["panel-02"] ? (
     <div class="panel-deco__frame panel-deco__frame--has-image">
-      <div class="panel-deco__inner panel-deco__inner--b" style="position:relative">
+      <div
+        class="panel-deco__inner panel-deco__inner--b"
+        style="position:relative"
+      >
         <img
           class="panel-deco__img"
-          src={panelImages['panel-02']!}
+          src={panelImages["panel-02"]!}
           alt=""
           aria-hidden="true"
           loading="eager"
         />
-        <span class="panel-deco__label" style="position:relative;z-index:1">Panel&nbsp;02</span>
+        <span class="panel-deco__label" style="position:relative;z-index:1">
+          Panel&nbsp;02
+        </span>
       </div>
     </div>
   ) : (
@@ -523,7 +528,10 @@ The badge stays at `z-index: 2`.
 Update the mount in `index.astro`:
 
 ```astro
-<SplashScreen client:only="react" panelImageUrl={panelImages['panel-04'] ?? undefined} />
+<SplashScreen
+  client:only="react"
+  panelImageUrl={panelImages["panel-04"] ?? undefined}
+/>
 ```
 
 > `client:only="react"` — Astro will NOT server-render this component, but it **does** pass props to the client hydration. String props work correctly with `client:only`.

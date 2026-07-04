@@ -22,6 +22,7 @@ export interface ArticleData {
   category_id?: number | null;
   media?: MediaRecord[];
   images?: MediaRecord[];
+  views?: number;
 }
 
 export interface ArticleUpdatePayload {

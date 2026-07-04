@@ -1,1 +1,475 @@
-{"nodes": [{"id": "src_lib_categories_ts", "label": "categories.ts", "file_type": "code", "source_file": "src\\lib\\categories.ts", "source_location": "L1"}, {"id": "categories_categoryinputerror", "label": "CategoryInputError", "file_type": "code", "source_file": "src\\lib\\categories.ts", "source_location": "L9"}, {"id": "categories_categoryinputerror_constructor", "label": ".constructor()", "file_type": "code", "source_file": "src\\lib\\categories.ts", "source_location": "L12"}, {"id": "categories_toslug", "label": "toSlug()", "file_type": "code", "source_file": "src\\lib\\categories.ts", "source_location": "L26"}, {"id": "categories_mapcategoryrow", "label": "mapCategoryRow()", "file_type": "code", "source_file": "src\\lib\\categories.ts", "source_location": "L34"}, {"id": "categories_ensurecategoryschema", "label": "ensureCategorySchema()", "file_type": "code", "source_file": "src\\lib\\categories.ts", "source_location": "L42"}, {"id": "categories_listcategories", "label": "listCategories()", "file_type": "code", "source_file": "src\\lib\\categories.ts", "source_location": "L83"}, {"id": "categories_findcategorybyid", "label": "findCategoryById()", "file_type": "code", "source_file": "src\\lib\\categories.ts", "source_location": "L93"}, {"id": "categories_findcategorybynameorslug", "label": "findCategoryByNameOrSlug()", "file_type": "code", "source_file": "src\\lib\\categories.ts", "source_location": "L107"}, {"id": "categories_createcategory", "label": "createCategory()", "file_type": "code", "source_file": "src\\lib\\categories.ts", "source_location": "L126"}, {"id": "categories_resolvecategoryid", "label": "resolveCategoryId()", "file_type": "code", "source_file": "src\\lib\\categories.ts", "source_location": "L152"}], "edges": [{"source": "src_lib_categories_ts", "target": "src_lib_db", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L1", "weight": 1.0}, {"source": "src_lib_categories_ts", "target": "categories_categoryinputerror", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L9", "weight": 1.0}, {"source": "categories_categoryinputerror", "target": "categories_categoryinputerror_constructor", "relation": "method", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L12", "weight": 1.0}, {"source": "src_lib_categories_ts", "target": "categories_toslug", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L26", "weight": 1.0}, {"source": "src_lib_categories_ts", "target": "categories_mapcategoryrow", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L34", "weight": 1.0}, {"source": "src_lib_categories_ts", "target": "categories_ensurecategoryschema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L42", "weight": 1.0}, {"source": "src_lib_categories_ts", "target": "categories_listcategories", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L83", "weight": 1.0}, {"source": "src_lib_categories_ts", "target": "categories_findcategorybyid", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L93", "weight": 1.0}, {"source": "src_lib_categories_ts", "target": "categories_findcategorybynameorslug", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L107", "weight": 1.0}, {"source": "src_lib_categories_ts", "target": "categories_createcategory", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L126", "weight": 1.0}, {"source": "src_lib_categories_ts", "target": "categories_resolvecategoryid", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L152", "weight": 1.0}, {"source": "categories_ensurecategoryschema", "target": "categories_toslug", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L76", "weight": 1.0}, {"source": "categories_listcategories", "target": "categories_ensurecategoryschema", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L84", "weight": 1.0}, {"source": "categories_findcategorybyid", "target": "categories_ensurecategoryschema", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L96", "weight": 1.0}, {"source": "categories_findcategorybyid", "target": "categories_mapcategoryrow", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L104", "weight": 1.0}, {"source": "categories_findcategorybynameorslug", "target": "categories_ensurecategoryschema", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L110", "weight": 1.0}, {"source": "categories_findcategorybynameorslug", "target": "categories_toslug", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L115", "weight": 1.0}, {"source": "categories_findcategorybynameorslug", "target": "categories_mapcategoryrow", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L123", "weight": 1.0}, {"source": "categories_createcategory", "target": "categories_ensurecategoryschema", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L127", "weight": 1.0}, {"source": "categories_createcategory", "target": "categories_toslug", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L134", "weight": 1.0}, {"source": "categories_createcategory", "target": "categories_findcategorybynameorslug", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L144", "weight": 1.0}, {"source": "categories_resolvecategoryid", "target": "categories_findcategorybyid", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L172", "weight": 1.0}, {"source": "categories_resolvecategoryid", "target": "categories_findcategorybynameorslug", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L186", "weight": 1.0}, {"source": "categories_resolvecategoryid", "target": "categories_createcategory", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\categories.ts", "source_location": "L193", "weight": 1.0}], "raw_calls": [{"caller_nid": "categories_categoryinputerror_constructor", "callee": "super", "source_file": "src\\lib\\categories.ts", "source_location": "L13"}, {"caller_nid": "categories_toslug", "callee": "replace", "source_file": "src\\lib\\categories.ts", "source_location": "L27"}, {"caller_nid": "categories_toslug", "callee": "replace", "source_file": "src\\lib\\categories.ts", "source_location": "L27"}, {"caller_nid": "categories_toslug", "callee": "trim", "source_file": "src\\lib\\categories.ts", "source_location": "L27"}, {"caller_nid": "categories_toslug", "callee": "toLowerCase", "source_file": "src\\lib\\categories.ts", "source_location": "L27"}, {"caller_nid": "categories_mapcategoryrow", "callee": "Number", "source_file": "src\\lib\\categories.ts", "source_location": "L36"}, {"caller_nid": "categories_mapcategoryrow", "callee": "String", "source_file": "src\\lib\\categories.ts", "source_location": "L37"}, {"caller_nid": "categories_mapcategoryrow", "callee": "String", "source_file": "src\\lib\\categories.ts", "source_location": "L38"}, {"caller_nid": "categories_ensurecategoryschema", "callee": "execute", "source_file": "src\\lib\\categories.ts", "source_location": "L45"}, {"caller_nid": "categories_ensurecategoryschema", "callee": "execute", "source_file": "src\\lib\\categories.ts", "source_location": "L54"}, {"caller_nid": "categories_ensurecategoryschema", "callee": "execute", "source_file": "src\\lib\\categories.ts", "source_location": "L58"}, {"caller_nid": "categories_ensurecategoryschema", "callee": "some", "source_file": "src\\lib\\categories.ts", "source_location": "L59"}, {"caller_nid": "categories_ensurecategoryschema", "callee": "execute", "source_file": "src\\lib\\categories.ts", "source_location": "L64"}, {"caller_nid": "categories_ensurecategoryschema", "callee": "execute", "source_file": "src\\lib\\categories.ts", "source_location": "L69"}, {"caller_nid": "categories_ensurecategoryschema", "callee": "execute", "source_file": "src\\lib\\categories.ts", "source_location": "L74"}, {"caller_nid": "categories_listcategories", "callee": "execute", "source_file": "src\\lib\\categories.ts", "source_location": "L86"}, {"caller_nid": "categories_listcategories", "callee": "map", "source_file": "src\\lib\\categories.ts", "source_location": "L90"}, {"caller_nid": "categories_findcategorybyid", "callee": "execute", "source_file": "src\\lib\\categories.ts", "source_location": "L98"}, {"caller_nid": "categories_findcategorybynameorslug", "callee": "trim", "source_file": "src\\lib\\categories.ts", "source_location": "L112"}, {"caller_nid": "categories_findcategorybynameorslug", "callee": "execute", "source_file": "src\\lib\\categories.ts", "source_location": "L117"}, {"caller_nid": "categories_createcategory", "callee": "trim", "source_file": "src\\lib\\categories.ts", "source_location": "L129"}, {"caller_nid": "categories_createcategory", "callee": "execute", "source_file": "src\\lib\\categories.ts", "source_location": "L139"}, {"caller_nid": "categories_resolvecategoryid", "callee": "call", "source_file": "src\\lib\\categories.ts", "source_location": "L157"}, {"caller_nid": "categories_resolvecategoryid", "callee": "call", "source_file": "src\\lib\\categories.ts", "source_location": "L158"}, {"caller_nid": "categories_resolvecategoryid", "callee": "call", "source_file": "src\\lib\\categories.ts", "source_location": "L159"}, {"caller_nid": "categories_resolvecategoryid", "callee": "Number", "source_file": "src\\lib\\categories.ts", "source_location": "L167"}, {"caller_nid": "categories_resolvecategoryid", "callee": "isFinite", "source_file": "src\\lib\\categories.ts", "source_location": "L168"}, {"caller_nid": "categories_resolvecategoryid", "callee": "trim", "source_file": "src\\lib\\categories.ts", "source_location": "L183"}, {"caller_nid": "categories_resolvecategoryid", "callee": "String", "source_file": "src\\lib\\categories.ts", "source_location": "L183"}]}
+{
+  "nodes": [
+    {
+      "id": "src_lib_categories_ts",
+      "label": "categories.ts",
+      "file_type": "code",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "categories_categoryinputerror",
+      "label": "CategoryInputError",
+      "file_type": "code",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L9"
+    },
+    {
+      "id": "categories_categoryinputerror_constructor",
+      "label": ".constructor()",
+      "file_type": "code",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L12"
+    },
+    {
+      "id": "categories_toslug",
+      "label": "toSlug()",
+      "file_type": "code",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "categories_mapcategoryrow",
+      "label": "mapCategoryRow()",
+      "file_type": "code",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L34"
+    },
+    {
+      "id": "categories_ensurecategoryschema",
+      "label": "ensureCategorySchema()",
+      "file_type": "code",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L42"
+    },
+    {
+      "id": "categories_listcategories",
+      "label": "listCategories()",
+      "file_type": "code",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L83"
+    },
+    {
+      "id": "categories_findcategorybyid",
+      "label": "findCategoryById()",
+      "file_type": "code",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L93"
+    },
+    {
+      "id": "categories_findcategorybynameorslug",
+      "label": "findCategoryByNameOrSlug()",
+      "file_type": "code",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L107"
+    },
+    {
+      "id": "categories_createcategory",
+      "label": "createCategory()",
+      "file_type": "code",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L126"
+    },
+    {
+      "id": "categories_resolvecategoryid",
+      "label": "resolveCategoryId()",
+      "file_type": "code",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L152"
+    }
+  ],
+  "edges": [
+    {
+      "source": "src_lib_categories_ts",
+      "target": "src_lib_db",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_categories_ts",
+      "target": "categories_categoryinputerror",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_categoryinputerror",
+      "target": "categories_categoryinputerror_constructor",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_categories_ts",
+      "target": "categories_toslug",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_categories_ts",
+      "target": "categories_mapcategoryrow",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_categories_ts",
+      "target": "categories_ensurecategoryschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_categories_ts",
+      "target": "categories_listcategories",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_categories_ts",
+      "target": "categories_findcategorybyid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_categories_ts",
+      "target": "categories_findcategorybynameorslug",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_categories_ts",
+      "target": "categories_createcategory",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L126",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_categories_ts",
+      "target": "categories_resolvecategoryid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_ensurecategoryschema",
+      "target": "categories_toslug",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_listcategories",
+      "target": "categories_ensurecategoryschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L84",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_findcategorybyid",
+      "target": "categories_ensurecategoryschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_findcategorybyid",
+      "target": "categories_mapcategoryrow",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_findcategorybynameorslug",
+      "target": "categories_ensurecategoryschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_findcategorybynameorslug",
+      "target": "categories_toslug",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_findcategorybynameorslug",
+      "target": "categories_mapcategoryrow",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L123",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_createcategory",
+      "target": "categories_ensurecategoryschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L127",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_createcategory",
+      "target": "categories_toslug",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_createcategory",
+      "target": "categories_findcategorybynameorslug",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L144",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_resolvecategoryid",
+      "target": "categories_findcategorybyid",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L172",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_resolvecategoryid",
+      "target": "categories_findcategorybynameorslug",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L186",
+      "weight": 1.0
+    },
+    {
+      "source": "categories_resolvecategoryid",
+      "target": "categories_createcategory",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L193",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "categories_categoryinputerror_constructor",
+      "callee": "super",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L13"
+    },
+    {
+      "caller_nid": "categories_toslug",
+      "callee": "replace",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "categories_toslug",
+      "callee": "replace",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "categories_toslug",
+      "callee": "trim",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "categories_toslug",
+      "callee": "toLowerCase",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "categories_mapcategoryrow",
+      "callee": "Number",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "categories_mapcategoryrow",
+      "callee": "String",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L37"
+    },
+    {
+      "caller_nid": "categories_mapcategoryrow",
+      "callee": "String",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "categories_ensurecategoryschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L45"
+    },
+    {
+      "caller_nid": "categories_ensurecategoryschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L54"
+    },
+    {
+      "caller_nid": "categories_ensurecategoryschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L58"
+    },
+    {
+      "caller_nid": "categories_ensurecategoryschema",
+      "callee": "some",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "categories_ensurecategoryschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L64"
+    },
+    {
+      "caller_nid": "categories_ensurecategoryschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L69"
+    },
+    {
+      "caller_nid": "categories_ensurecategoryschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "categories_listcategories",
+      "callee": "execute",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L86"
+    },
+    {
+      "caller_nid": "categories_listcategories",
+      "callee": "map",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L90"
+    },
+    {
+      "caller_nid": "categories_findcategorybyid",
+      "callee": "execute",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "categories_findcategorybynameorslug",
+      "callee": "trim",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "categories_findcategorybynameorslug",
+      "callee": "execute",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L117"
+    },
+    {
+      "caller_nid": "categories_createcategory",
+      "callee": "trim",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "categories_createcategory",
+      "callee": "execute",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L139"
+    },
+    {
+      "caller_nid": "categories_resolvecategoryid",
+      "callee": "call",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L157"
+    },
+    {
+      "caller_nid": "categories_resolvecategoryid",
+      "callee": "call",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L158"
+    },
+    {
+      "caller_nid": "categories_resolvecategoryid",
+      "callee": "call",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L159"
+    },
+    {
+      "caller_nid": "categories_resolvecategoryid",
+      "callee": "Number",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L167"
+    },
+    {
+      "caller_nid": "categories_resolvecategoryid",
+      "callee": "isFinite",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L168"
+    },
+    {
+      "caller_nid": "categories_resolvecategoryid",
+      "callee": "trim",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L183"
+    },
+    {
+      "caller_nid": "categories_resolvecategoryid",
+      "callee": "String",
+      "source_file": "src\\lib\\categories.ts",
+      "source_location": "L183"
+    }
+  ]
+}

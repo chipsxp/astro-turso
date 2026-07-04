@@ -15,7 +15,8 @@ export const GET: APIRoute = async (context) => {
   }
 
   try {
-    const donation_placement = (await getSetting("donation_placement")) || "footer";
+    const donation_placement =
+      (await getSetting("donation_placement")) || "footer";
     return json({ donation_placement });
   } catch (error: unknown) {
     console.error("GET /api/admin/settings error:", error);

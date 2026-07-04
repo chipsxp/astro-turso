@@ -1,1 +1,16 @@
-{"nodes": [{"id": "favicon_svg", "label": "Favicon SVG (yellow smiley face icon)", "file_type": "image", "source_file": "public/favicon.svg", "source_location": null, "source_url": null, "captured_at": null, "author": null}], "edges": [], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "favicon_svg",
+      "label": "Favicon SVG (yellow smiley face icon)",
+      "file_type": "image",
+      "source_file": "public/favicon.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null
+    }
+  ],
+  "edges": [],
+  "hyperedges": []
+}

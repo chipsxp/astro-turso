@@ -1,1 +1,760 @@
-{"nodes": [{"id": "claude_md", "label": "CLAUDE.md \u2014 Claude Code Project Instructions", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": "Jimmy Burns", "contributor": null}, {"id": "astro_ssr_framework", "label": "Astro SSR Framework (output: server)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "turso_db", "label": "Turso Database (@tursodatabase/serverless)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "db_ts", "label": "src/lib/db.ts \u2014 Turso DB Wrapper", "file_type": "code", "source_file": "CLAUDE.md", "source_location": "src/lib/db.ts", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "auth_ts", "label": "src/lib/auth.ts \u2014 Auth Helpers", "file_type": "code", "source_file": "CLAUDE.md", "source_location": "src/lib/auth.ts", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "middleware_ts", "label": "src/middleware.ts \u2014 Two-Phase Auth Middleware", "file_type": "code", "source_file": "CLAUDE.md", "source_location": "src/middleware.ts", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "jwt_auth", "label": "JWT HttpOnly Cookie Auth (auth_token)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "cloudinary_integration", "label": "Cloudinary Media Storage Integration", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "inline_images_ts", "label": "src/lib/inline-images.ts \u2014 Inline Image Persistence", "file_type": "code", "source_file": "CLAUDE.md", "source_location": "src/lib/inline-images.ts", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "media_ts", "label": "src/lib/media.ts \u2014 Upload Size Limits", "file_type": "code", "source_file": "CLAUDE.md", "source_location": "src/lib/media.ts", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "sanitize_server_ts", "label": "src/lib/sanitize-server.ts \u2014 SSR HTML Sanitizer", "file_type": "code", "source_file": "CLAUDE.md", "source_location": "src/lib/sanitize-server.ts", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "sanitize_ts", "label": "src/lib/sanitize.ts \u2014 Client-Side HTML Sanitizer (DOMPurify)", "file_type": "code", "source_file": "CLAUDE.md", "source_location": "src/lib/sanitize.ts", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "editor_utils_ts", "label": "src/lib/editor-utils.ts \u2014 Quill Editor Init", "file_type": "code", "source_file": "CLAUDE.md", "source_location": "src/lib/editor-utils.ts", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "quill_wysiwyg", "label": "Quill 2 Snow WYSIWYG Editor", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "admin_layout_css", "label": "src/styles/layouts/admin-layout.css \u2014 Admin Layout Styles", "file_type": "code", "source_file": "CLAUDE.md", "source_location": "src/styles/layouts/admin-layout.css", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "project_notes_dir", "label": "docs/project_notes/ \u2014 Institutional Memory Files", "file_type": "document", "source_file": "CLAUDE.md", "source_location": "docs/project_notes/", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "csp_middleware", "label": "Content Security Policy (addSecurityHeaders in middleware)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": "src/middleware.ts", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "rate_limiting_pattern", "label": "In-Memory Rate Limiting Pattern (Map-based)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "css_scoping_sethtml_rule", "label": "CSS Scoping Trap: set:html and client:only Bypass Astro CID", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "no_self_fetch_rule", "label": "No Self-Fetch in Astro SSR Frontmatter Rule", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "fresh_connection_rule", "label": "Turso Fresh Connection Per Call Rule", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "two_phase_middleware_pattern", "label": "Two-Phase Middleware Pattern (Identification + Enforcement)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "article_body_guardrails", "label": "Article Body Guardrails (Size + Inline Image Limits)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "event_archive_lifecycle", "label": "Event Archive Lifecycle (14-day window + permanent archive)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "role_based_access", "label": "Role-Based Access Control (admin / author)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "mcp_config", "label": "MCP Configuration (devtools/.mcp.json)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": "devtools/.mcp.json", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "github_copilot_instructions", "label": ".github/instructions/copilot-instructions.md \u2014 GitHub Copilot Agent", "file_type": "document", "source_file": "CLAUDE.md", "source_location": ".github/instructions/copilot-instructions.md", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "admin_layout_heading_bleed", "label": "Admin Layout Heading Bleed Bug (h2-h4 into .ql-editor)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": "src/styles/layouts/admin-layout.css", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "three_agent_sync", "label": "Three-Agent Sync Contract (Claude + Copilot + Cursor must stay in sync)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "rationale_no_self_fetch", "label": "Rationale: No Self-Fetch (Railway/LiteSpeed TLS termination breaks loopback)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "rationale_httponly_cookie", "label": "Rationale: HttpOnly SameSite=Strict Cookie (No localStorage, CSRF via cookie policy)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "rationale_fresh_turso_conn", "label": "Rationale: Fresh Turso Connection (single-use HTTP session, positional rows)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "rationale_global_css_sethtml", "label": "Rationale: set:html styles in global.css (Astro cid attribute bypass)", "file_type": "document", "source_file": "CLAUDE.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "claude_md", "target": "agents_md", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 11", "weight": 1.0}, {"source": "claude_md", "target": "github_copilot_instructions", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 11", "weight": 1.0}, {"source": "three_agent_sync", "target": "claude_md", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 11", "weight": 1.0}, {"source": "three_agent_sync", "target": "agents_md", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 11", "weight": 1.0}, {"source": "three_agent_sync", "target": "github_copilot_instructions", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 11", "weight": 1.0}, {"source": "claude_md", "target": "scriptorium_app", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 9", "weight": 1.0}, {"source": "scriptorium_app", "target": "astro_ssr_framework", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": null, "weight": 1.0}, {"source": "scriptorium_app", "target": "turso_db", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": null, "weight": 1.0}, {"source": "scriptorium_app", "target": "cloudinary_integration", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": null, "weight": 1.0}, {"source": "scriptorium_app", "target": "jwt_auth", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": null, "weight": 1.0}, {"source": "db_ts", "target": "turso_db", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 58", "weight": 1.0}, {"source": "db_ts", "target": "fresh_connection_rule", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 60-61", "weight": 1.0}, {"source": "fresh_connection_rule", "target": "turso_db", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": null, "weight": 1.0}, {"source": "rationale_fresh_turso_conn", "target": "fresh_connection_rule", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 60-61", "weight": 1.0}, {"source": "auth_ts", "target": "jwt_auth", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 78", "weight": 1.0}, {"source": "middleware_ts", "target": "two_phase_middleware_pattern", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 80", "weight": 1.0}, {"source": "middleware_ts", "target": "csp_middleware", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 154", "weight": 1.0}, {"source": "middleware_ts", "target": "jwt_auth", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 80-83", "weight": 1.0}, {"source": "rationale_httponly_cookie", "target": "jwt_auth", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 76-77", "weight": 1.0}, {"source": "two_phase_middleware_pattern", "target": "role_based_access", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 0.9, "source_file": "CLAUDE.md", "source_location": "line 93-96", "weight": 0.9}, {"source": "inline_images_ts", "target": "quill_wysiwyg", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 102", "weight": 1.0}, {"source": "editor_utils_ts", "target": "quill_wysiwyg", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 136", "weight": 1.0}, {"source": "media_ts", "target": "cloudinary_integration", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 104", "weight": 1.0}, {"source": "media_ts", "target": "article_body_guardrails", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 0.9, "source_file": "CLAUDE.md", "source_location": "line 104-105", "weight": 0.9}, {"source": "sanitize_server_ts", "target": "astro_ssr_framework", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 0.9, "source_file": "CLAUDE.md", "source_location": "line 147", "weight": 0.9}, {"source": "sanitize_ts", "target": "quill_wysiwyg", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.8, "source_file": "CLAUDE.md", "source_location": "line 148", "weight": 0.8}, {"source": "admin_layout_css", "target": "admin_layout_heading_bleed", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 196", "weight": 1.0}, {"source": "admin_layout_heading_bleed", "target": "quill_wysiwyg", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 196", "weight": 1.0}, {"source": "css_scoping_sethtml_rule", "target": "global_css", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 192-194", "weight": 1.0}, {"source": "rationale_global_css_sethtml", "target": "css_scoping_sethtml_rule", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 192-194", "weight": 1.0}, {"source": "no_self_fetch_rule", "target": "railway_deployment", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 212-216", "weight": 1.0}, {"source": "no_self_fetch_rule", "target": "cpanel_litespeed_deployment", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 212-216", "weight": 1.0}, {"source": "rationale_no_self_fetch", "target": "no_self_fetch_rule", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 212-216", "weight": 1.0}, {"source": "claude_md", "target": "project_notes_dir", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 267-282", "weight": 1.0}, {"source": "claude_md", "target": "mcp_config", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 260", "weight": 1.0}, {"source": "no_self_fetch_rule", "target": "db_ts", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md", "source_location": "line 216", "weight": 1.0}, {"source": "css_scoping_sethtml_rule", "target": "admin_layout_heading_bleed", "relation": "semantically_similar_to", "confidence": "INFERRED", "confidence_score": 0.8, "source_file": "CLAUDE.md", "source_location": null, "weight": 0.8}, {"source": "use_railway_skill", "target": "no_self_fetch_rule", "relation": "conceptually_related_to", "confidence": "INFERRED", "confidence_score": 0.7, "source_file": "CLAUDE.md", "source_location": null, "weight": 0.7}], "hyperedges": [{"id": "three_agent_sync_contract", "label": "Three-Agent Sync Contract (Claude + Copilot + Cursor/Windsurf)", "nodes": ["claude_md", "agents_md", "github_copilot_instructions"], "relation": "form", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "CLAUDE.md"}]}
+{
+  "nodes": [
+    {
+      "id": "claude_md",
+      "label": "CLAUDE.md \u2014 Claude Code Project Instructions",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": "Jimmy Burns",
+      "contributor": null
+    },
+    {
+      "id": "astro_ssr_framework",
+      "label": "Astro SSR Framework (output: server)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "turso_db",
+      "label": "Turso Database (@tursodatabase/serverless)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "db_ts",
+      "label": "src/lib/db.ts \u2014 Turso DB Wrapper",
+      "file_type": "code",
+      "source_file": "CLAUDE.md",
+      "source_location": "src/lib/db.ts",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "auth_ts",
+      "label": "src/lib/auth.ts \u2014 Auth Helpers",
+      "file_type": "code",
+      "source_file": "CLAUDE.md",
+      "source_location": "src/lib/auth.ts",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "middleware_ts",
+      "label": "src/middleware.ts \u2014 Two-Phase Auth Middleware",
+      "file_type": "code",
+      "source_file": "CLAUDE.md",
+      "source_location": "src/middleware.ts",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "jwt_auth",
+      "label": "JWT HttpOnly Cookie Auth (auth_token)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "cloudinary_integration",
+      "label": "Cloudinary Media Storage Integration",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "inline_images_ts",
+      "label": "src/lib/inline-images.ts \u2014 Inline Image Persistence",
+      "file_type": "code",
+      "source_file": "CLAUDE.md",
+      "source_location": "src/lib/inline-images.ts",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "media_ts",
+      "label": "src/lib/media.ts \u2014 Upload Size Limits",
+      "file_type": "code",
+      "source_file": "CLAUDE.md",
+      "source_location": "src/lib/media.ts",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sanitize_server_ts",
+      "label": "src/lib/sanitize-server.ts \u2014 SSR HTML Sanitizer",
+      "file_type": "code",
+      "source_file": "CLAUDE.md",
+      "source_location": "src/lib/sanitize-server.ts",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "sanitize_ts",
+      "label": "src/lib/sanitize.ts \u2014 Client-Side HTML Sanitizer (DOMPurify)",
+      "file_type": "code",
+      "source_file": "CLAUDE.md",
+      "source_location": "src/lib/sanitize.ts",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "editor_utils_ts",
+      "label": "src/lib/editor-utils.ts \u2014 Quill Editor Init",
+      "file_type": "code",
+      "source_file": "CLAUDE.md",
+      "source_location": "src/lib/editor-utils.ts",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "quill_wysiwyg",
+      "label": "Quill 2 Snow WYSIWYG Editor",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "admin_layout_css",
+      "label": "src/styles/layouts/admin-layout.css \u2014 Admin Layout Styles",
+      "file_type": "code",
+      "source_file": "CLAUDE.md",
+      "source_location": "src/styles/layouts/admin-layout.css",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "project_notes_dir",
+      "label": "docs/project_notes/ \u2014 Institutional Memory Files",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "docs/project_notes/",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "csp_middleware",
+      "label": "Content Security Policy (addSecurityHeaders in middleware)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "src/middleware.ts",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "rate_limiting_pattern",
+      "label": "In-Memory Rate Limiting Pattern (Map-based)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "css_scoping_sethtml_rule",
+      "label": "CSS Scoping Trap: set:html and client:only Bypass Astro CID",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "no_self_fetch_rule",
+      "label": "No Self-Fetch in Astro SSR Frontmatter Rule",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "fresh_connection_rule",
+      "label": "Turso Fresh Connection Per Call Rule",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "two_phase_middleware_pattern",
+      "label": "Two-Phase Middleware Pattern (Identification + Enforcement)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "article_body_guardrails",
+      "label": "Article Body Guardrails (Size + Inline Image Limits)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "event_archive_lifecycle",
+      "label": "Event Archive Lifecycle (14-day window + permanent archive)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "role_based_access",
+      "label": "Role-Based Access Control (admin / author)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "mcp_config",
+      "label": "MCP Configuration (devtools/.mcp.json)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "devtools/.mcp.json",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "github_copilot_instructions",
+      "label": ".github/instructions/copilot-instructions.md \u2014 GitHub Copilot Agent",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": ".github/instructions/copilot-instructions.md",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "admin_layout_heading_bleed",
+      "label": "Admin Layout Heading Bleed Bug (h2-h4 into .ql-editor)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "src/styles/layouts/admin-layout.css",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "three_agent_sync",
+      "label": "Three-Agent Sync Contract (Claude + Copilot + Cursor must stay in sync)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "rationale_no_self_fetch",
+      "label": "Rationale: No Self-Fetch (Railway/LiteSpeed TLS termination breaks loopback)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "rationale_httponly_cookie",
+      "label": "Rationale: HttpOnly SameSite=Strict Cookie (No localStorage, CSRF via cookie policy)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "rationale_fresh_turso_conn",
+      "label": "Rationale: Fresh Turso Connection (single-use HTTP session, positional rows)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "rationale_global_css_sethtml",
+      "label": "Rationale: set:html styles in global.css (Astro cid attribute bypass)",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "claude_md",
+      "target": "agents_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 11",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_md",
+      "target": "github_copilot_instructions",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 11",
+      "weight": 1.0
+    },
+    {
+      "source": "three_agent_sync",
+      "target": "claude_md",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 11",
+      "weight": 1.0
+    },
+    {
+      "source": "three_agent_sync",
+      "target": "agents_md",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 11",
+      "weight": 1.0
+    },
+    {
+      "source": "three_agent_sync",
+      "target": "github_copilot_instructions",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 11",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_md",
+      "target": "scriptorium_app",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 9",
+      "weight": 1.0
+    },
+    {
+      "source": "scriptorium_app",
+      "target": "astro_ssr_framework",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "scriptorium_app",
+      "target": "turso_db",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "scriptorium_app",
+      "target": "cloudinary_integration",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "scriptorium_app",
+      "target": "jwt_auth",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "db_ts",
+      "target": "turso_db",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 58",
+      "weight": 1.0
+    },
+    {
+      "source": "db_ts",
+      "target": "fresh_connection_rule",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 60-61",
+      "weight": 1.0
+    },
+    {
+      "source": "fresh_connection_rule",
+      "target": "turso_db",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "rationale_fresh_turso_conn",
+      "target": "fresh_connection_rule",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 60-61",
+      "weight": 1.0
+    },
+    {
+      "source": "auth_ts",
+      "target": "jwt_auth",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 78",
+      "weight": 1.0
+    },
+    {
+      "source": "middleware_ts",
+      "target": "two_phase_middleware_pattern",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 80",
+      "weight": 1.0
+    },
+    {
+      "source": "middleware_ts",
+      "target": "csp_middleware",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 154",
+      "weight": 1.0
+    },
+    {
+      "source": "middleware_ts",
+      "target": "jwt_auth",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 80-83",
+      "weight": 1.0
+    },
+    {
+      "source": "rationale_httponly_cookie",
+      "target": "jwt_auth",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 76-77",
+      "weight": 1.0
+    },
+    {
+      "source": "two_phase_middleware_pattern",
+      "target": "role_based_access",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.9,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 93-96",
+      "weight": 0.9
+    },
+    {
+      "source": "inline_images_ts",
+      "target": "quill_wysiwyg",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 102",
+      "weight": 1.0
+    },
+    {
+      "source": "editor_utils_ts",
+      "target": "quill_wysiwyg",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 136",
+      "weight": 1.0
+    },
+    {
+      "source": "media_ts",
+      "target": "cloudinary_integration",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 104",
+      "weight": 1.0
+    },
+    {
+      "source": "media_ts",
+      "target": "article_body_guardrails",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.9,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 104-105",
+      "weight": 0.9
+    },
+    {
+      "source": "sanitize_server_ts",
+      "target": "astro_ssr_framework",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.9,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 147",
+      "weight": 0.9
+    },
+    {
+      "source": "sanitize_ts",
+      "target": "quill_wysiwyg",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 148",
+      "weight": 0.8
+    },
+    {
+      "source": "admin_layout_css",
+      "target": "admin_layout_heading_bleed",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 196",
+      "weight": 1.0
+    },
+    {
+      "source": "admin_layout_heading_bleed",
+      "target": "quill_wysiwyg",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 196",
+      "weight": 1.0
+    },
+    {
+      "source": "css_scoping_sethtml_rule",
+      "target": "global_css",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 192-194",
+      "weight": 1.0
+    },
+    {
+      "source": "rationale_global_css_sethtml",
+      "target": "css_scoping_sethtml_rule",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 192-194",
+      "weight": 1.0
+    },
+    {
+      "source": "no_self_fetch_rule",
+      "target": "railway_deployment",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 212-216",
+      "weight": 1.0
+    },
+    {
+      "source": "no_self_fetch_rule",
+      "target": "cpanel_litespeed_deployment",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 212-216",
+      "weight": 1.0
+    },
+    {
+      "source": "rationale_no_self_fetch",
+      "target": "no_self_fetch_rule",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 212-216",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_md",
+      "target": "project_notes_dir",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 267-282",
+      "weight": 1.0
+    },
+    {
+      "source": "claude_md",
+      "target": "mcp_config",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 260",
+      "weight": 1.0
+    },
+    {
+      "source": "no_self_fetch_rule",
+      "target": "db_ts",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md",
+      "source_location": "line 216",
+      "weight": 1.0
+    },
+    {
+      "source": "css_scoping_sethtml_rule",
+      "target": "admin_layout_heading_bleed",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "weight": 0.8
+    },
+    {
+      "source": "use_railway_skill",
+      "target": "no_self_fetch_rule",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "CLAUDE.md",
+      "source_location": null,
+      "weight": 0.7
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "three_agent_sync_contract",
+      "label": "Three-Agent Sync Contract (Claude + Copilot + Cursor/Windsurf)",
+      "nodes": ["claude_md", "agents_md", "github_copilot_instructions"],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "CLAUDE.md"
+    }
+  ]
+}

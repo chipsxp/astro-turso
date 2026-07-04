@@ -70,8 +70,6 @@ export const GET: APIRoute = async ({ request }) => {
        ORDER BY created_at DESC`,
     );
 
-
-
     // Attach cover image (first image by sort_order) for each posting
     const postings = result.rows;
     if (postings.length === 0) return json({ postings: [] }, 200);

@@ -10,6 +10,7 @@
 ## Current State
 
 Two components already exist from Phase 10:
+
 - `src/components/SEOMeta.astro` — OG meta tag output
 - `src/components/SocialShare.astro` — shell share component (Phase 10 baseline)
 
@@ -23,18 +24,18 @@ The cheapest and most maintainable approach is **share intent URLs** — every m
 
 ### Platform Coverage
 
-| Platform  | Method              | Cost | API Key Required |
-|-----------|---------------------|------|-----------------|
-| Facebook  | Share intent URL    | Free | No (fb:app_id optional for Insights only) |
-| X (Twitter) | Tweet intent URL  | Free | No |
-| LinkedIn  | Share article URL   | Free | No |
-| Reddit    | Submit URL          | Free | No |
-| Pinterest | Pin create URL      | Free | No |
-| WhatsApp  | wa.me share URL     | Free | No |
-| Threads   | Intent compose URL  | Free | No |
-| Bluesky   | Intent compose URL  | Free | No |
-| Instagram | Clipboard + deep link | Free | No (full API requires Meta Business — complex) |
-| Medium    | Clipboard copy      | Free | No (no public share intent URL) |
+| Platform    | Method                | Cost | API Key Required                               |
+| ----------- | --------------------- | ---- | ---------------------------------------------- |
+| Facebook    | Share intent URL      | Free | No (fb:app_id optional for Insights only)      |
+| X (Twitter) | Tweet intent URL      | Free | No                                             |
+| LinkedIn    | Share article URL     | Free | No                                             |
+| Reddit      | Submit URL            | Free | No                                             |
+| Pinterest   | Pin create URL        | Free | No                                             |
+| WhatsApp    | wa.me share URL       | Free | No                                             |
+| Threads     | Intent compose URL    | Free | No                                             |
+| Bluesky     | Intent compose URL    | Free | No                                             |
+| Instagram   | Clipboard + deep link | Free | No (full API requires Meta Business — complex) |
+| Medium      | Clipboard copy        | Free | No (no public share intent URL)                |
 
 **Total cost: $0** for all 10 platforms using this approach.
 
@@ -62,41 +63,45 @@ Based on ogp.me and Facebook developer docs, each article page must emit these t
 ### Required Tags (all 4 must be present)
 
 ```html
-<meta property="og:title"       content="{article.title}" />
-<meta property="og:type"        content="article" />
-<meta property="og:url"         content="https://chipsxp.com/blog/{slug}" />
-<meta property="og:image"       content="{article.cover_image_url}" />
+<meta property="og:title" content="{article.title}" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chipsxp.com/blog/{slug}" />
+<meta property="og:image" content="{article.cover_image_url}" />
 ```
 
 ### Recommended Tags (strong impact on feed appearance)
 
 ```html
-<meta property="og:image:width"   content="1200" />
-<meta property="og:image:height"  content="630" />
-<meta property="og:image:type"    content="image/jpeg" />
-<meta property="og:image:alt"     content="{image.alt_text}" />
-<meta property="og:description"   content="{article.description}" />
-<meta property="og:site_name"     content="ChipsXP" />
-<meta property="og:locale"        content="en_US" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:alt" content="{image.alt_text}" />
+<meta property="og:description" content="{article.description}" />
+<meta property="og:site_name" content="ChipsXP" />
+<meta property="og:locale" content="en_US" />
 ```
 
 ### Article Object Type Tags (og:type="article" unlocks these)
 
 ```html
-<meta property="article:published_time" content="{article.created_at ISO8601}" />
-<meta property="article:modified_time"  content="{article.updated_at ISO8601}" />
-<meta property="article:author"         content="https://chipsxp.com" />
-<meta property="article:section"        content="{category.name}" />
-<meta property="article:tag"            content="{tag}" />  <!-- repeat per tag -->
+<meta
+  property="article:published_time"
+  content="{article.created_at ISO8601}"
+/>
+<meta property="article:modified_time" content="{article.updated_at ISO8601}" />
+<meta property="article:author" content="https://chipsxp.com" />
+<meta property="article:section" content="{category.name}" />
+<meta property="article:tag" content="{tag}" />
+<!-- repeat per tag -->
 ```
 
 ### Twitter/X Card Tags (separate spec, same `<head>`)
 
 ```html
-<meta name="twitter:card"        content="summary_large_image" />
-<meta name="twitter:title"       content="{article.title}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{article.title}" />
 <meta name="twitter:description" content="{article.description}" />
-<meta name="twitter:image"       content="{article.cover_image_url}" />
+<meta name="twitter:image" content="{article.cover_image_url}" />
 ```
 
 ### Optional Facebook Insights Tag
@@ -104,6 +109,7 @@ Based on ogp.me and Facebook developer docs, each article page must emit these t
 ```html
 <meta property="fb:app_id" content="{PUBLIC_FB_APP_ID}" />
 ```
+
 Only needed if you want Facebook traffic analytics. Requires creating a free Facebook App at developers.facebook.com. Safe to skip initially.
 
 ---
@@ -126,10 +132,10 @@ blog/[slug].astro
 interface SocialShareProps {
   title: string;
   description: string;
-  url: string;           // canonical full URL
-  image: string;         // Cloudinary secure_url of cover image
-  tags: string[];        // article tags → hashtags for X
-  authorId: number;      // used to gate: only show to article author or admin
+  url: string; // canonical full URL
+  image: string; // Cloudinary secure_url of cover image
+  tags: string[]; // article tags → hashtags for X
+  authorId: number; // used to gate: only show to article author or admin
   currentUserId: number | null;
 }
 ```
@@ -217,14 +223,14 @@ The component renders only when `currentUserId === authorId || currentUserId is 
 
 ## Cost Summary
 
-| Item | Cost |
-|------|------|
-| Share intent URLs for Facebook, X, LinkedIn, Reddit, Pinterest, WhatsApp, Threads, Bluesky | **$0** |
-| Instagram (clipboard + open site) | **$0** |
-| Medium (clipboard + open site) | **$0** |
-| Facebook fb:app_id for Insights | **$0** (free Facebook developer account) |
-| Turso shares table | **$0** (within free tier row limits) |
-| **Total** | **$0** |
+| Item                                                                                       | Cost                                     |
+| ------------------------------------------------------------------------------------------ | ---------------------------------------- |
+| Share intent URLs for Facebook, X, LinkedIn, Reddit, Pinterest, WhatsApp, Threads, Bluesky | **$0**                                   |
+| Instagram (clipboard + open site)                                                          | **$0**                                   |
+| Medium (clipboard + open site)                                                             | **$0**                                   |
+| Facebook fb:app_id for Insights                                                            | **$0** (free Facebook developer account) |
+| Turso shares table                                                                         | **$0** (within free tier row limits)     |
+| **Total**                                                                                  | **$0**                                   |
 
 Full posting capability for 10 platforms with zero recurring costs.
 
@@ -245,12 +251,12 @@ All of these are bypassed by using share intent URLs, which delegate the actual 
 
 ## Files to Create or Modify
 
-| File | Action |
-|------|--------|
-| `src/components/SEOMeta.astro` | Modify — add missing OG + Twitter Card + article tags |
-| `src/pages/blog/[slug].astro` | Modify — pass additional props (image, tags, category, authorId) to SEOMeta and SocialShare |
-| `src/components/SocialShare.astro` | Rewrite — full 10-platform UI |
-| `src/pages/api/share.ts` | Create — optional share event logging |
-| `.env.example` | Modify — add PUBLIC_SITE_URL, PUBLIC_FB_APP_ID |
-| `docs/project_notes/key_facts.md` | Modify — add new env vars |
-| (optional) DB migration script | Create — `shares` table DDL |
+| File                               | Action                                                                                      |
+| ---------------------------------- | ------------------------------------------------------------------------------------------- |
+| `src/components/SEOMeta.astro`     | Modify — add missing OG + Twitter Card + article tags                                       |
+| `src/pages/blog/[slug].astro`      | Modify — pass additional props (image, tags, category, authorId) to SEOMeta and SocialShare |
+| `src/components/SocialShare.astro` | Rewrite — full 10-platform UI                                                               |
+| `src/pages/api/share.ts`           | Create — optional share event logging                                                       |
+| `.env.example`                     | Modify — add PUBLIC_SITE_URL, PUBLIC_FB_APP_ID                                              |
+| `docs/project_notes/key_facts.md`  | Modify — add new env vars                                                                   |
+| (optional) DB migration script     | Create — `shares` table DDL                                                                 |

@@ -1,1 +1,46 @@
-{"nodes": [{"id": "scripts_create_panel_tables_mjs", "label": "create-panel-tables.mjs", "file_type": "code", "source_file": "scripts\\create-panel-tables.mjs", "source_location": "L1"}, {"id": "create_panel_tables_getdb", "label": "getDb()", "file_type": "code", "source_file": "scripts\\create-panel-tables.mjs", "source_location": "L20"}], "edges": [{"source": "scripts_create_panel_tables_mjs", "target": "serverless", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\create-panel-tables.mjs", "source_location": "L11", "weight": 1.0}, {"source": "scripts_create_panel_tables_mjs", "target": "create_panel_tables_getdb", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\create-panel-tables.mjs", "source_location": "L20", "weight": 1.0}], "raw_calls": [{"caller_nid": "create_panel_tables_getdb", "callee": "connect", "source_file": "scripts\\create-panel-tables.mjs", "source_location": "L21"}]}
+{
+  "nodes": [
+    {
+      "id": "scripts_create_panel_tables_mjs",
+      "label": "create-panel-tables.mjs",
+      "file_type": "code",
+      "source_file": "scripts\\create-panel-tables.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "create_panel_tables_getdb",
+      "label": "getDb()",
+      "file_type": "code",
+      "source_file": "scripts\\create-panel-tables.mjs",
+      "source_location": "L20"
+    }
+  ],
+  "edges": [
+    {
+      "source": "scripts_create_panel_tables_mjs",
+      "target": "serverless",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\create-panel-tables.mjs",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_create_panel_tables_mjs",
+      "target": "create_panel_tables_getdb",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\create-panel-tables.mjs",
+      "source_location": "L20",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "create_panel_tables_getdb",
+      "callee": "connect",
+      "source_file": "scripts\\create-panel-tables.mjs",
+      "source_location": "L21"
+    }
+  ]
+}

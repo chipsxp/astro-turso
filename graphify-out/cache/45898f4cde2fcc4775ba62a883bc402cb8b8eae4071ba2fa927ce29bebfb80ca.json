@@ -1,1 +1,46 @@
-{"nodes": [{"id": "c_users_manag_github_repo_astro_turso_scripts_create_monetization_tables_mjs", "label": "create-monetization-tables.mjs", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-monetization-tables.mjs", "source_location": "L1"}, {"id": "create_monetization_tables_getdb", "label": "getDb()", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-monetization-tables.mjs", "source_location": "L19"}], "edges": [{"source": "c_users_manag_github_repo_astro_turso_scripts_create_monetization_tables_mjs", "target": "serverless", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-monetization-tables.mjs", "source_location": "L10", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_scripts_create_monetization_tables_mjs", "target": "create_monetization_tables_getdb", "relation": "contains", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-monetization-tables.mjs", "source_location": "L19", "weight": 1.0}], "raw_calls": [{"caller_nid": "create_monetization_tables_getdb", "callee": "connect", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-monetization-tables.mjs", "source_location": "L20"}]}
+{
+  "nodes": [
+    {
+      "id": "c_users_manag_github_repo_astro_turso_scripts_create_monetization_tables_mjs",
+      "label": "create-monetization-tables.mjs",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-monetization-tables.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "create_monetization_tables_getdb",
+      "label": "getDb()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-monetization-tables.mjs",
+      "source_location": "L19"
+    }
+  ],
+  "edges": [
+    {
+      "source": "c_users_manag_github_repo_astro_turso_scripts_create_monetization_tables_mjs",
+      "target": "serverless",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-monetization-tables.mjs",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_scripts_create_monetization_tables_mjs",
+      "target": "create_monetization_tables_getdb",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-monetization-tables.mjs",
+      "source_location": "L19",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "create_monetization_tables_getdb",
+      "callee": "connect",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-monetization-tables.mjs",
+      "source_location": "L20"
+    }
+  ]
+}

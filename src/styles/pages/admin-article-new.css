@@ -380,7 +380,9 @@ body.preview-open {
   border-radius: 50%;
   background: var(--swatch);
   border: 2px solid transparent;
-  transition: border-color 0.12s, transform 0.1s;
+  transition:
+    border-color 0.12s,
+    transform 0.1s;
 }
 
 .color-swatch input[type="radio"]:checked + .color-swatch__dot {

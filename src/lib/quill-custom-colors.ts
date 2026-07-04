@@ -77,8 +77,7 @@ function attachPickerControl(
 
 export function enableCustomColorPickers(editor: QuillColorEditor): void {
   const toolbarModule = editor.getModule("toolbar") as
-    | { container?: HTMLElement }
-    | undefined;
+    { container?: HTMLElement } | undefined;
   const toolbar = toolbarModule?.container;
   if (!toolbar) return;
 

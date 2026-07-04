@@ -2,7 +2,12 @@
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 import SalesImageManager from "../../../components/admin/SalesImageManager";
 import { db } from "../../../lib/db";
-import type { SalesPosting, SalesImage, SalesTestimonial, SalesReview } from "../../../lib/sales";
+import type {
+  SalesPosting,
+  SalesImage,
+  SalesTestimonial,
+  SalesReview,
+} from "../../../lib/sales";
 
 const { slug } = Astro.params;
 const user = Astro.locals.user!;
@@ -66,8 +71,6 @@ try {
 if (notFound || !posting) {
   return Astro.redirect("/admin/sales", 302);
 }
-
-
 ---
 
 <AdminLayout title={`Edit: ${posting.title}`}>
@@ -259,14 +262,34 @@ if (notFound || !posting) {
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="qr-code-file">QR Code (Venmo/CashApp/PayPal)</label>
-            {posting.qr_code_url && (
-              <div style="margin-bottom: 0.5rem;">
-                <img src={posting.qr_code_url} alt="QR Code" style="max-height: 100px; border: 1px solid var(--border); border-radius: 4px;" />
-              </div>
-            )}
-            <input type="file" id="qr-code-file" accept="image/jpeg,image/png,image/webp,image/gif" class="form-input" style="padding: 0.5rem;" />
-            <span class="form-hint">Upload a payment QR code for this specific item. {posting.qr_code_url ? "Uploading a new file will overwrite the existing one." : ""}</span>
+            <label class="form-label" for="qr-code-file"
+              >QR Code (Venmo/CashApp/PayPal)</label
+            >
+            {
+              posting.qr_code_url && (
+                <div style="margin-bottom: 0.5rem;">
+                  <img
+                    src={posting.qr_code_url}
+                    alt="QR Code"
+                    style="max-height: 100px; border: 1px solid var(--border); border-radius: 4px;"
+                  />
+                </div>
+              )
+            }
+            <input
+              type="file"
+              id="qr-code-file"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+              class="form-input"
+              style="padding: 0.5rem;"
+            />
+            <span class="form-hint"
+              >Upload a payment QR code for this specific item. {
+                posting.qr_code_url
+                  ? "Uploading a new file will overwrite the existing one."
+                  : ""
+              }</span
+            >
           </div>
         </div>
 
@@ -388,12 +411,12 @@ if (notFound || !posting) {
   const initialBody = getEl<HTMLInputElement>("body-input").value;
   const currentSlug = getEl<HTMLFormElement>("sales-form").dataset.slug ?? "";
 
-  let currentTestimonials: SalesTestimonial[] = JSON.parse(
-    getEl<HTMLInputElement>("testimonials-json").value || "[]",
-  );
-  let currentReviews: SalesReview[] = JSON.parse(
-    getEl<HTMLInputElement>("reviews-json").value || "[]",
-  );
+  const currentTestimonials: SalesTestimonial[] = JSON.parse(
+  getEl<HTMLInputElement>("testimonials-json").value || "[]",
+);
+  const currentReviews: SalesReview[] = JSON.parse(
+  getEl<HTMLInputElement>("reviews-json").value || "[]",
+);
 
   // ── Quill ─────────────────────────────────────────────────────────────────
   const editor = initializeEditor({
@@ -583,7 +606,7 @@ if (notFound || !posting) {
           throw new Error("QR Code image is too large (max 10 MB).");
         }
         submitBtn.textContent = "Uploading QR Code…";
-        
+
         const dataUri = await new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => resolve(reader.result as string);
@@ -606,7 +629,9 @@ if (notFound || !posting) {
         if (!uploadRes.ok) {
           throw new Error(uploadData.error ?? "Failed to upload QR Code");
         }
-        qr_code_url = String(uploadData.media_url ?? uploadData.image_url ?? "");
+        qr_code_url = String(
+          uploadData.media_url ?? uploadData.image_url ?? "",
+        );
       }
 
       if (qr_code_url) {

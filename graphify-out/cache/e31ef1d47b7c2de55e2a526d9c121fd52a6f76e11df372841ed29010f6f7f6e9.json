@@ -1,1 +1,669 @@
-{"nodes": [{"id": "scripts_regenerate_chat_customization_diagnostics_mjs", "label": "regenerate-chat-customization-diagnostics.mjs", "file_type": "code", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L1"}, {"id": "regenerate_chat_customization_diagnostics_fileexists", "label": "fileExists()", "file_type": "code", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L11"}, {"id": "regenerate_chat_customization_diagnostics_listfiles", "label": "listFiles()", "file_type": "code", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L20"}, {"id": "regenerate_chat_customization_diagnostics_findlatestextensionfolder", "label": "findLatestExtensionFolder()", "file_type": "code", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L32"}, {"id": "regenerate_chat_customization_diagnostics_relfromroot", "label": "relFromRoot()", "file_type": "code", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L47"}, {"id": "regenerate_chat_customization_diagnostics_rendertreeline", "label": "renderTreeLine()", "file_type": "code", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L54"}, {"id": "regenerate_chat_customization_diagnostics_main", "label": "main()", "file_type": "code", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L59"}], "edges": [{"source": "scripts_regenerate_chat_customization_diagnostics_mjs", "target": "node_fs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L1", "weight": 1.0}, {"source": "scripts_regenerate_chat_customization_diagnostics_mjs", "target": "node_os", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L2", "weight": 1.0}, {"source": "scripts_regenerate_chat_customization_diagnostics_mjs", "target": "node_path", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L3", "weight": 1.0}, {"source": "scripts_regenerate_chat_customization_diagnostics_mjs", "target": "regenerate_chat_customization_diagnostics_fileexists", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L11", "weight": 1.0}, {"source": "scripts_regenerate_chat_customization_diagnostics_mjs", "target": "regenerate_chat_customization_diagnostics_listfiles", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L20", "weight": 1.0}, {"source": "scripts_regenerate_chat_customization_diagnostics_mjs", "target": "regenerate_chat_customization_diagnostics_findlatestextensionfolder", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L32", "weight": 1.0}, {"source": "scripts_regenerate_chat_customization_diagnostics_mjs", "target": "regenerate_chat_customization_diagnostics_relfromroot", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L47", "weight": 1.0}, {"source": "scripts_regenerate_chat_customization_diagnostics_mjs", "target": "regenerate_chat_customization_diagnostics_rendertreeline", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L54", "weight": 1.0}, {"source": "scripts_regenerate_chat_customization_diagnostics_mjs", "target": "regenerate_chat_customization_diagnostics_main", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L59", "weight": 1.0}, {"source": "regenerate_chat_customization_diagnostics_listfiles", "target": "regenerate_chat_customization_diagnostics_fileexists", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L21", "weight": 1.0}, {"source": "regenerate_chat_customization_diagnostics_findlatestextensionfolder", "target": "regenerate_chat_customization_diagnostics_fileexists", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L34", "weight": 1.0}, {"source": "regenerate_chat_customization_diagnostics_main", "target": "regenerate_chat_customization_diagnostics_listfiles", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L60", "weight": 1.0}, {"source": "regenerate_chat_customization_diagnostics_main", "target": "regenerate_chat_customization_diagnostics_findlatestextensionfolder", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L77", "weight": 1.0}, {"source": "regenerate_chat_customization_diagnostics_main", "target": "regenerate_chat_customization_diagnostics_relfromroot", "relation": "calls", "confidence": "EXTRACTED", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L85", "weight": 1.0}], "raw_calls": [{"caller_nid": "regenerate_chat_customization_diagnostics_fileexists", "callee": "access", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L13"}, {"caller_nid": "regenerate_chat_customization_diagnostics_listfiles", "callee": "readdir", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L25"}, {"caller_nid": "regenerate_chat_customization_diagnostics_listfiles", "callee": "sort", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L26"}, {"caller_nid": "regenerate_chat_customization_diagnostics_listfiles", "callee": "map", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L26"}, {"caller_nid": "regenerate_chat_customization_diagnostics_listfiles", "callee": "filter", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L26"}, {"caller_nid": "regenerate_chat_customization_diagnostics_findlatestextensionfolder", "callee": "join", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L33"}, {"caller_nid": "regenerate_chat_customization_diagnostics_findlatestextensionfolder", "callee": "homedir", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L33"}, {"caller_nid": "regenerate_chat_customization_diagnostics_findlatestextensionfolder", "callee": "readdir", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L38"}, {"caller_nid": "regenerate_chat_customization_diagnostics_findlatestextensionfolder", "callee": "sort", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L39"}, {"caller_nid": "regenerate_chat_customization_diagnostics_findlatestextensionfolder", "callee": "map", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L39"}, {"caller_nid": "regenerate_chat_customization_diagnostics_findlatestextensionfolder", "callee": "filter", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L39"}, {"caller_nid": "regenerate_chat_customization_diagnostics_relfromroot", "callee": "replace", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L48"}, {"caller_nid": "regenerate_chat_customization_diagnostics_relfromroot", "callee": "replace", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L48"}, {"caller_nid": "regenerate_chat_customization_diagnostics_relfromroot", "callee": "relative", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L48"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "join", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L61"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "join", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L65"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "join", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L69"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "join", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L73"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "join", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L86"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "homedir", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L86"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "join", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L92"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "homedir", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L92"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L101"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L102"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L104"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L105"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L106"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "forEach", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L107"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L111"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L112"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L113"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L114"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L117"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L120"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L121"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L124"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L126"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L127"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L128"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "forEach", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L129"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L135"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L136"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L137"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L138"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L139"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L140"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L142"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L143"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L144"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "forEach", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L145"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L149"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L150"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L151"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L154"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L157"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L160"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L162"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L163"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L164"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L165"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L166"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L169"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L170"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L173"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L174"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L175"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L178"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L179"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L180"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L183"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L185"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L186"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L187"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "push", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L190"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "forEach", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L193"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "writeFile", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L199"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "join", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L199"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "log", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L200"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "basename", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L200"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "log", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L201"}, {"caller_nid": "regenerate_chat_customization_diagnostics_main", "callee": "log", "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs", "source_location": "L204"}]}
+{
+  "nodes": [
+    {
+      "id": "scripts_regenerate_chat_customization_diagnostics_mjs",
+      "label": "regenerate-chat-customization-diagnostics.mjs",
+      "file_type": "code",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "regenerate_chat_customization_diagnostics_fileexists",
+      "label": "fileExists()",
+      "file_type": "code",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L11"
+    },
+    {
+      "id": "regenerate_chat_customization_diagnostics_listfiles",
+      "label": "listFiles()",
+      "file_type": "code",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L20"
+    },
+    {
+      "id": "regenerate_chat_customization_diagnostics_findlatestextensionfolder",
+      "label": "findLatestExtensionFolder()",
+      "file_type": "code",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L32"
+    },
+    {
+      "id": "regenerate_chat_customization_diagnostics_relfromroot",
+      "label": "relFromRoot()",
+      "file_type": "code",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L47"
+    },
+    {
+      "id": "regenerate_chat_customization_diagnostics_rendertreeline",
+      "label": "renderTreeLine()",
+      "file_type": "code",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L54"
+    },
+    {
+      "id": "regenerate_chat_customization_diagnostics_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L59"
+    }
+  ],
+  "edges": [
+    {
+      "source": "scripts_regenerate_chat_customization_diagnostics_mjs",
+      "target": "node_fs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_regenerate_chat_customization_diagnostics_mjs",
+      "target": "node_os",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_regenerate_chat_customization_diagnostics_mjs",
+      "target": "node_path",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_regenerate_chat_customization_diagnostics_mjs",
+      "target": "regenerate_chat_customization_diagnostics_fileexists",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L11",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_regenerate_chat_customization_diagnostics_mjs",
+      "target": "regenerate_chat_customization_diagnostics_listfiles",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_regenerate_chat_customization_diagnostics_mjs",
+      "target": "regenerate_chat_customization_diagnostics_findlatestextensionfolder",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_regenerate_chat_customization_diagnostics_mjs",
+      "target": "regenerate_chat_customization_diagnostics_relfromroot",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_regenerate_chat_customization_diagnostics_mjs",
+      "target": "regenerate_chat_customization_diagnostics_rendertreeline",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_regenerate_chat_customization_diagnostics_mjs",
+      "target": "regenerate_chat_customization_diagnostics_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "regenerate_chat_customization_diagnostics_listfiles",
+      "target": "regenerate_chat_customization_diagnostics_fileexists",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "regenerate_chat_customization_diagnostics_findlatestextensionfolder",
+      "target": "regenerate_chat_customization_diagnostics_fileexists",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "regenerate_chat_customization_diagnostics_main",
+      "target": "regenerate_chat_customization_diagnostics_listfiles",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "regenerate_chat_customization_diagnostics_main",
+      "target": "regenerate_chat_customization_diagnostics_findlatestextensionfolder",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "regenerate_chat_customization_diagnostics_main",
+      "target": "regenerate_chat_customization_diagnostics_relfromroot",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L85",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_fileexists",
+      "callee": "access",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L13"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_listfiles",
+      "callee": "readdir",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L25"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_listfiles",
+      "callee": "sort",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_listfiles",
+      "callee": "map",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_listfiles",
+      "callee": "filter",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_findlatestextensionfolder",
+      "callee": "join",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_findlatestextensionfolder",
+      "callee": "homedir",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_findlatestextensionfolder",
+      "callee": "readdir",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_findlatestextensionfolder",
+      "callee": "sort",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L39"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_findlatestextensionfolder",
+      "callee": "map",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L39"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_findlatestextensionfolder",
+      "callee": "filter",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L39"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_relfromroot",
+      "callee": "replace",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L48"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_relfromroot",
+      "callee": "replace",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L48"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_relfromroot",
+      "callee": "relative",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L48"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "join",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L61"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "join",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "join",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L69"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "join",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "join",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L86"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "homedir",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L86"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "join",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "homedir",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L101"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L104"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L105"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L106"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "forEach",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L107"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L113"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L114"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L117"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L120"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L121"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L124"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L126"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L127"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L128"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "forEach",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L129"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L135"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L136"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L137"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L138"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L139"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L140"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L142"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L143"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L144"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "forEach",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L145"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L149"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L150"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L151"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L154"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L157"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L160"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L162"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L163"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L164"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L165"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L166"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L169"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L170"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L173"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L174"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L175"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L179"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L180"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L183"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L185"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L186"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L187"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "push",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L190"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "forEach",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L193"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "writeFile",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L199"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "join",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L199"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "log",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "basename",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L200"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "log",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L201"
+    },
+    {
+      "caller_nid": "regenerate_chat_customization_diagnostics_main",
+      "callee": "log",
+      "source_file": "scripts\\regenerate-chat-customization-diagnostics.mjs",
+      "source_location": "L204"
+    }
+  ]
+}

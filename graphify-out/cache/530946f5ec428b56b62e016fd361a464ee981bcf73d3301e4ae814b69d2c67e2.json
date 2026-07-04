@@ -1,1 +1,325 @@
-{"nodes": [{"id": "src_pages_api_auth_register_ts", "label": "register.ts", "file_type": "code", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L1"}, {"id": "register_getclientip", "label": "getClientIp()", "file_type": "code", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L10"}, {"id": "register_isratelimited", "label": "isRateLimited()", "file_type": "code", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L18"}, {"id": "register_recordattempt", "label": "recordAttempt()", "file_type": "code", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L25"}, {"id": "register_json", "label": "json()", "file_type": "code", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L37"}, {"id": "register_isvalidemail", "label": "isValidEmail()", "file_type": "code", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L45"}, {"id": "register_post", "label": "POST()", "file_type": "code", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L53"}, {"id": "register_get", "label": "GET()", "file_type": "code", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L131"}], "edges": [{"source": "src_pages_api_auth_register_ts", "target": "astro", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L1", "weight": 1.0}, {"source": "src_pages_api_auth_register_ts", "target": "bcryptjs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L2", "weight": 1.0}, {"source": "src_pages_api_auth_register_ts", "target": "src_lib_db", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L3", "weight": 1.0}, {"source": "src_pages_api_auth_register_ts", "target": "register_getclientip", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L10", "weight": 1.0}, {"source": "src_pages_api_auth_register_ts", "target": "register_isratelimited", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L18", "weight": 1.0}, {"source": "src_pages_api_auth_register_ts", "target": "register_recordattempt", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L25", "weight": 1.0}, {"source": "src_pages_api_auth_register_ts", "target": "register_json", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L37", "weight": 1.0}, {"source": "src_pages_api_auth_register_ts", "target": "register_isvalidemail", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L45", "weight": 1.0}, {"source": "src_pages_api_auth_register_ts", "target": "register_post", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L53", "weight": 1.0}, {"source": "src_pages_api_auth_register_ts", "target": "register_get", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L131", "weight": 1.0}, {"source": "register_getclientip", "target": "register_get", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L12", "weight": 1.0}, {"source": "register_isratelimited", "target": "register_get", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L20", "weight": 1.0}, {"source": "register_recordattempt", "target": "register_get", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L27", "weight": 1.0}, {"source": "register_post", "target": "register_getclientip", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L54", "weight": 1.0}, {"source": "register_post", "target": "register_isratelimited", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L56", "weight": 1.0}, {"source": "register_post", "target": "register_json", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L57", "weight": 1.0}, {"source": "register_post", "target": "register_recordattempt", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L63", "weight": 1.0}, {"source": "register_post", "target": "register_isvalidemail", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L82", "weight": 1.0}, {"source": "register_get", "target": "register_json", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L131", "weight": 1.0}], "raw_calls": [{"caller_nid": "register_getclientip", "callee": "trim", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L12"}, {"caller_nid": "register_getclientip", "callee": "split", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L12"}, {"caller_nid": "register_isratelimited", "callee": "now", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L19"}, {"caller_nid": "register_recordattempt", "callee": "now", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L26"}, {"caller_nid": "register_recordattempt", "callee": "set", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L29"}, {"caller_nid": "register_json", "callee": "stringify", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L38"}, {"caller_nid": "register_isvalidemail", "callee": "includes", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L46"}, {"caller_nid": "register_isvalidemail", "callee": "includes", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L46"}, {"caller_nid": "register_post", "callee": "trim", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L71"}, {"caller_nid": "register_post", "callee": "execute", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L94"}, {"caller_nid": "register_post", "callee": "Number", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L98"}, {"caller_nid": "register_post", "callee": "error", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L100"}, {"caller_nid": "register_post", "callee": "hash", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L111"}, {"caller_nid": "register_post", "callee": "execute", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L112"}, {"caller_nid": "register_post", "callee": "error", "source_file": "src\\pages\\api\\auth\\register.ts", "source_location": "L117"}]}
+{
+  "nodes": [
+    {
+      "id": "src_pages_api_auth_register_ts",
+      "label": "register.ts",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "register_getclientip",
+      "label": "getClientIp()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L10"
+    },
+    {
+      "id": "register_isratelimited",
+      "label": "isRateLimited()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L18"
+    },
+    {
+      "id": "register_recordattempt",
+      "label": "recordAttempt()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L25"
+    },
+    {
+      "id": "register_json",
+      "label": "json()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L37"
+    },
+    {
+      "id": "register_isvalidemail",
+      "label": "isValidEmail()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L45"
+    },
+    {
+      "id": "register_post",
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L53"
+    },
+    {
+      "id": "register_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L131"
+    }
+  ],
+  "edges": [
+    {
+      "source": "src_pages_api_auth_register_ts",
+      "target": "astro",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_auth_register_ts",
+      "target": "bcryptjs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_auth_register_ts",
+      "target": "src_lib_db",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_auth_register_ts",
+      "target": "register_getclientip",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_auth_register_ts",
+      "target": "register_isratelimited",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_auth_register_ts",
+      "target": "register_recordattempt",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_auth_register_ts",
+      "target": "register_json",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_auth_register_ts",
+      "target": "register_isvalidemail",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_auth_register_ts",
+      "target": "register_post",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "src_pages_api_auth_register_ts",
+      "target": "register_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L131",
+      "weight": 1.0
+    },
+    {
+      "source": "register_getclientip",
+      "target": "register_get",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "register_isratelimited",
+      "target": "register_get",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "register_recordattempt",
+      "target": "register_get",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "register_post",
+      "target": "register_getclientip",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "register_post",
+      "target": "register_isratelimited",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "register_post",
+      "target": "register_json",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "register_post",
+      "target": "register_recordattempt",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "register_post",
+      "target": "register_isvalidemail",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "register_get",
+      "target": "register_json",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L131",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "register_getclientip",
+      "callee": "trim",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L12"
+    },
+    {
+      "caller_nid": "register_getclientip",
+      "callee": "split",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L12"
+    },
+    {
+      "caller_nid": "register_isratelimited",
+      "callee": "now",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L19"
+    },
+    {
+      "caller_nid": "register_recordattempt",
+      "callee": "now",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "register_recordattempt",
+      "callee": "set",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L29"
+    },
+    {
+      "caller_nid": "register_json",
+      "callee": "stringify",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "register_isvalidemail",
+      "callee": "includes",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L46"
+    },
+    {
+      "caller_nid": "register_isvalidemail",
+      "callee": "includes",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L46"
+    },
+    {
+      "caller_nid": "register_post",
+      "callee": "trim",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L71"
+    },
+    {
+      "caller_nid": "register_post",
+      "callee": "execute",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L94"
+    },
+    {
+      "caller_nid": "register_post",
+      "callee": "Number",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "register_post",
+      "callee": "error",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L100"
+    },
+    {
+      "caller_nid": "register_post",
+      "callee": "hash",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "register_post",
+      "callee": "execute",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "register_post",
+      "callee": "error",
+      "source_file": "src\\pages\\api\\auth\\register.ts",
+      "source_location": "L117"
+    }
+  ]
+}

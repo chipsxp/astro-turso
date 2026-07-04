@@ -13,7 +13,9 @@ async function getPostingId(
   userId: string,
   role: string,
 ): Promise<number | null | "forbidden" | "error"> {
-  let result: Awaited<ReturnType<typeof db.execute<{ id: number; author_id: number }>>>;
+  let result: Awaited<
+    ReturnType<typeof db.execute<{ id: number; author_id: number }>>
+  >;
   try {
     result = await db.execute<{ id: number; author_id: number }>(
       "SELECT id, author_id FROM sales_postings WHERE slug = ?",

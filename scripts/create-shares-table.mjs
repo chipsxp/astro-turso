@@ -67,6 +67,10 @@ try {
 
 console.log("");
 console.log("Migration complete.");
-console.log("  Run `POST /api/share` with { article_id, platform } to log shares.");
+console.log(
+  "  Run `POST /api/share` with { article_id, platform } to log shares.",
+);
 console.log("  Query example:");
-console.log("    SELECT platform, COUNT(*) FROM shares WHERE article_id = ? GROUP BY platform;");
+console.log(
+  "    SELECT platform, COUNT(*) FROM shares WHERE article_id = ? GROUP BY platform;",
+);

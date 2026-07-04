@@ -2,7 +2,10 @@ import type { APIRoute } from "astro";
 import { db } from "../../../lib/db";
 import crypto from "node:crypto";
 
-const forgotPasswordAttempts = new Map<string, { count: number; resetAt: number }>();
+const forgotPasswordAttempts = new Map<
+  string,
+  { count: number; resetAt: number }
+>();
 const MAX_ATTEMPTS = 5;
 const WINDOW_MS = 60 * 60 * 1000;
 
@@ -65,13 +68,16 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const userResult = await db.execute(
       "SELECT id, email FROM users WHERE email = ?",
-      [email]
+      [email],
     );
     const user = userResult.rows[0];
 
     if (!user) {
       // Don't leak whether the email exists or not
-      return json({ message: "If that email exists, a reset link has been sent." }, 200);
+      return json(
+        { message: "If that email exists, a reset link has been sent." },
+        200,
+      );
     }
 
     const token = crypto.randomBytes(32).toString("hex");
@@ -79,11 +85,12 @@ export const POST: APIRoute = async ({ request }) => {
 
     await db.execute(
       "INSERT INTO password_resets (user_id, token, expires_at) VALUES (?, ?, ?)",
-      [Number(user.id), token, expiresAt]
+      [Number(user.id), token, expiresAt],
     );
 
     const resendApiKey = import.meta.env.RESEND_API_KEY;
-    const fromEmail = import.meta.env.CONTACT_FROM_EMAIL ?? "support@happyfeelingprints.com";
+    const fromEmail =
+      import.meta.env.CONTACT_FROM_EMAIL ?? "support@happyfeelingprints.com";
     const siteUrl = process.env.SITE_URL ?? new URL(request.url).origin;
     const resetLink = `${siteUrl}/reset-password?token=${token}`;
 
@@ -103,14 +110,23 @@ export const POST: APIRoute = async ({ request }) => {
       });
 
       if (!emailResp.ok) {
-        console.error("[forgot-password] Failed to send email:", await emailResp.text());
+        console.error(
+          "[forgot-password] Failed to send email:",
+          await emailResp.text(),
+        );
         return json({ error: "Failed to send email" }, 500);
       }
     } else {
-      console.warn("[forgot-password] RESEND_API_KEY not configured. Reset link:", resetLink);
+      console.warn(
+        "[forgot-password] RESEND_API_KEY not configured. Reset link:",
+        resetLink,
+      );
     }
 
-    return json({ message: "If that email exists, a reset link has been sent." }, 200);
+    return json(
+      { message: "If that email exists, a reset link has been sent." },
+      200,
+    );
   } catch (err) {
     console.error("[forgot-password] Error:", err);
     return json({ error: "An internal error occurred" }, 500);

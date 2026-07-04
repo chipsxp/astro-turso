@@ -10,7 +10,7 @@ function json(data: unknown, status = 200) {
 }
 
 export const POST: APIRoute = async ({ request, locals }) => {
-  // Rely on middleware for auth check. 
+  // Rely on middleware for auth check.
   // If we reach here, locals.user should be an admin (or we enforce it).
   if (locals.user?.role !== "admin") {
     return json({ error: "Unauthorized" }, 403);
@@ -18,7 +18,14 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   try {
     const payload = await request.json();
-    const { business_name, description, image_data, target_url, coupon_code, slot_type } = payload;
+    const {
+      business_name,
+      description,
+      image_data,
+      target_url,
+      coupon_code,
+      slot_type,
+    } = payload;
 
     if (!business_name || !image_data || !target_url || !slot_type) {
       return json({ error: "Missing required fields" }, 400);
@@ -46,13 +53,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
         image_url,
         target_url,
         coupon_code || null,
-        slot_type
-      ]
+        slot_type,
+      ],
     );
 
     return json({ ok: true }, 201);
   } catch (err: unknown) {
-    console.error("Ad creation failed:", err instanceof Error ? err.message : err);
+    console.error(
+      "Ad creation failed:",
+      err instanceof Error ? err.message : err,
+    );
     return json({ error: "Internal Server Error" }, 500);
   }
 };

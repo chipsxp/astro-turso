@@ -1,1 +1,46 @@
-{"nodes": [{"id": "scripts_create_shares_table_mjs", "label": "create-shares-table.mjs", "file_type": "code", "source_file": "scripts\\create-shares-table.mjs", "source_location": "L1"}, {"id": "create_shares_table_getdb", "label": "getDb()", "file_type": "code", "source_file": "scripts\\create-shares-table.mjs", "source_location": "L19"}], "edges": [{"source": "scripts_create_shares_table_mjs", "target": "serverless", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\create-shares-table.mjs", "source_location": "L10", "weight": 1.0}, {"source": "scripts_create_shares_table_mjs", "target": "create_shares_table_getdb", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\create-shares-table.mjs", "source_location": "L19", "weight": 1.0}], "raw_calls": [{"caller_nid": "create_shares_table_getdb", "callee": "connect", "source_file": "scripts\\create-shares-table.mjs", "source_location": "L20"}]}
+{
+  "nodes": [
+    {
+      "id": "scripts_create_shares_table_mjs",
+      "label": "create-shares-table.mjs",
+      "file_type": "code",
+      "source_file": "scripts\\create-shares-table.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "create_shares_table_getdb",
+      "label": "getDb()",
+      "file_type": "code",
+      "source_file": "scripts\\create-shares-table.mjs",
+      "source_location": "L19"
+    }
+  ],
+  "edges": [
+    {
+      "source": "scripts_create_shares_table_mjs",
+      "target": "serverless",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\create-shares-table.mjs",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_create_shares_table_mjs",
+      "target": "create_shares_table_getdb",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\create-shares-table.mjs",
+      "source_location": "L19",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "create_shares_table_getdb",
+      "callee": "connect",
+      "source_file": "scripts\\create-shares-table.mjs",
+      "source_location": "L20"
+    }
+  ]
+}

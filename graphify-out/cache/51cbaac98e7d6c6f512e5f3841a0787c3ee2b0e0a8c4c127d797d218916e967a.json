@@ -1,1 +1,236 @@
-{"nodes": [{"id": "frontend_design_skill", "label": "Frontend Design Skill \u2014 Scriptorium Visual System", "file_type": "document", "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "global_css", "label": "src/styles/global.css \u2014 Design Tokens and Global Styles", "file_type": "code", "source_file": "devtools/skills/frontend-design/skill.md", "source_location": "src/styles/global.css", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "splash_css", "label": "src/styles/splash.css \u2014 Splash Screen Animations", "file_type": "code", "source_file": "devtools/skills/frontend-design/skill.md", "source_location": "src/styles/splash.css", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "splash_screen_tsx", "label": "src/components/SplashScreen.tsx \u2014 React Island", "file_type": "code", "source_file": "devtools/skills/frontend-design/skill.md", "source_location": "src/components/SplashScreen.tsx", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "comic_aesthetic", "label": "Comic/Superhero Aesthetic Identity (Watchmen/Kirby/Miller)", "file_type": "document", "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "design_tokens", "label": "Design Token System (CSS custom properties)", "file_type": "document", "source_file": "devtools/skills/frontend-design/skill.md", "source_location": "src/styles/global.css", "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "hard_shadow_buttons", "label": "Hard Shadow Button Pattern (.btn-comic)", "file_type": "document", "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "comic_panel_grid", "label": "Comic Panel Grid (Gap-as-Border Technique)", "file_type": "document", "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "kirby_krackle", "label": "Kirby Krackle CSS Effect", "file_type": "document", "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "frontend_design_skill", "target": "global_css", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": "line 22", "weight": 1.0}, {"source": "frontend_design_skill", "target": "design_tokens", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "weight": 1.0}, {"source": "frontend_design_skill", "target": "comic_aesthetic", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": "line 9", "weight": 1.0}, {"source": "frontend_design_skill", "target": "hard_shadow_buttons", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "weight": 1.0}, {"source": "frontend_design_skill", "target": "comic_panel_grid", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "weight": 1.0}, {"source": "frontend_design_skill", "target": "kirby_krackle", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "weight": 1.0}, {"source": "frontend_design_skill", "target": "splash_css", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": "line 78", "weight": 1.0}, {"source": "frontend_design_skill", "target": "splash_screen_tsx", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": "line 203", "weight": 1.0}, {"source": "splash_screen_tsx", "target": "splash_css", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": "line 253", "weight": 1.0}, {"source": "design_tokens", "target": "comic_aesthetic", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "weight": 1.0}, {"source": "hard_shadow_buttons", "target": "comic_aesthetic", "relation": "implements", "confidence": "INFERRED", "confidence_score": 0.9, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "weight": 0.9}, {"source": "comic_panel_grid", "target": "comic_aesthetic", "relation": "implements", "confidence": "INFERRED", "confidence_score": 0.9, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "weight": 0.9}, {"source": "kirby_krackle", "target": "comic_aesthetic", "relation": "implements", "confidence": "INFERRED", "confidence_score": 0.9, "source_file": "devtools/skills/frontend-design/skill.md", "source_location": null, "weight": 0.9}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "frontend_design_skill",
+      "label": "Frontend Design Skill \u2014 Scriptorium Visual System",
+      "file_type": "document",
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "global_css",
+      "label": "src/styles/global.css \u2014 Design Tokens and Global Styles",
+      "file_type": "code",
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": "src/styles/global.css",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "splash_css",
+      "label": "src/styles/splash.css \u2014 Splash Screen Animations",
+      "file_type": "code",
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": "src/styles/splash.css",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "splash_screen_tsx",
+      "label": "src/components/SplashScreen.tsx \u2014 React Island",
+      "file_type": "code",
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": "src/components/SplashScreen.tsx",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "comic_aesthetic",
+      "label": "Comic/Superhero Aesthetic Identity (Watchmen/Kirby/Miller)",
+      "file_type": "document",
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "design_tokens",
+      "label": "Design Token System (CSS custom properties)",
+      "file_type": "document",
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": "src/styles/global.css",
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "hard_shadow_buttons",
+      "label": "Hard Shadow Button Pattern (.btn-comic)",
+      "file_type": "document",
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "comic_panel_grid",
+      "label": "Comic Panel Grid (Gap-as-Border Technique)",
+      "file_type": "document",
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "kirby_krackle",
+      "label": "Kirby Krackle CSS Effect",
+      "file_type": "document",
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "frontend_design_skill",
+      "target": "global_css",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": "line 22",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_design_skill",
+      "target": "design_tokens",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_design_skill",
+      "target": "comic_aesthetic",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": "line 9",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_design_skill",
+      "target": "hard_shadow_buttons",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_design_skill",
+      "target": "comic_panel_grid",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_design_skill",
+      "target": "kirby_krackle",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_design_skill",
+      "target": "splash_css",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": "line 78",
+      "weight": 1.0
+    },
+    {
+      "source": "frontend_design_skill",
+      "target": "splash_screen_tsx",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": "line 203",
+      "weight": 1.0
+    },
+    {
+      "source": "splash_screen_tsx",
+      "target": "splash_css",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": "line 253",
+      "weight": 1.0
+    },
+    {
+      "source": "design_tokens",
+      "target": "comic_aesthetic",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "hard_shadow_buttons",
+      "target": "comic_aesthetic",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "weight": 0.9
+    },
+    {
+      "source": "comic_panel_grid",
+      "target": "comic_aesthetic",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "weight": 0.9
+    },
+    {
+      "source": "kirby_krackle",
+      "target": "comic_aesthetic",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "devtools/skills/frontend-design/skill.md",
+      "source_location": null,
+      "weight": 0.9
+    }
+  ],
+  "hyperedges": []
+}

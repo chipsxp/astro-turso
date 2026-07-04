@@ -176,7 +176,6 @@
 
 /* Hide Author + Tags columns on small screens */
 @media (max-width: 640px) {
-
   #state-table th:nth-child(3),
   #state-table td:nth-child(3),
   #state-table th:nth-child(5),
@@ -187,7 +186,6 @@
 
 /* Also hide Created on very small screens */
 @media (max-width: 440px) {
-
   #state-table th:nth-child(4),
   #state-table td:nth-child(4) {
     display: none;

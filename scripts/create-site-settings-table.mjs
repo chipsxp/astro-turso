@@ -25,7 +25,7 @@ function getDb() {
 
 try {
   const db = getDb();
-  
+
   await db.execute(`
     CREATE TABLE IF NOT EXISTS site_settings (
       key TEXT PRIMARY KEY,
@@ -41,7 +41,6 @@ try {
     ('donation_placement', 'footer')
   `);
   console.log("✓ Default site settings initialized.");
-
 } catch (err) {
   console.error("✗ Migration failed:", err.message);
   process.exit(1);

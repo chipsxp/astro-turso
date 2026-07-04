@@ -17,37 +17,39 @@ const ad = ads.length > 0 ? ads[Math.floor(Math.random() * ads.length)] : null;
 // For now we rely on the click tracking via data attributes
 ---
 
-{ad && (
-  <div class="ad-container">
-    <div class="ad-label">Sponsored</div>
-    <a
-      href={ad.target_url || "#"}
-      target="_blank"
-      rel="noopener noreferrer"
-      data-track-type="ad"
-      data-track-id={ad.id}
-      class="ad-link"
-    >
-      {ad.image_url && (
-        <img
-          src={ad.image_url}
-          alt={`Ad by ${ad.business_name}`}
-          loading="lazy"
-          class="ad-image"
-        />
-      )}
-      <div class="ad-content">
-        <h4 class="ad-business">{ad.business_name}</h4>
-        {ad.description && <p class="ad-desc">{ad.description}</p>}
-        {ad.coupon_code && (
-          <div class="ad-coupon">
-            Use code: <strong>{ad.coupon_code}</strong>
-          </div>
+{
+  ad && (
+    <div class="ad-container">
+      <div class="ad-label">Sponsored</div>
+      <a
+        href={ad.target_url || "#"}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-track-type="ad"
+        data-track-id={ad.id}
+        class="ad-link"
+      >
+        {ad.image_url && (
+          <img
+            src={ad.image_url}
+            alt={`Ad by ${ad.business_name}`}
+            loading="lazy"
+            class="ad-image"
+          />
         )}
-      </div>
-    </a>
-  </div>
-)}
+        <div class="ad-content">
+          <h4 class="ad-business">{ad.business_name}</h4>
+          {ad.description && <p class="ad-desc">{ad.description}</p>}
+          {ad.coupon_code && (
+            <div class="ad-coupon">
+              Use code: <strong>{ad.coupon_code}</strong>
+            </div>
+          )}
+        </div>
+      </a>
+    </div>
+  )
+}
 
 <style>
   .ad-container {
@@ -57,9 +59,11 @@ const ad = ads.length > 0 ? ads[Math.floor(Math.random() * ads.length)] : null;
     overflow: hidden;
     margin: 1.5rem 0;
     position: relative;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease;
   }
-  
+
   .ad-container:hover {
     transform: translateY(-2px);
     border-color: var(--accent, #a274ff);
@@ -88,7 +92,7 @@ const ad = ads.length > 0 ? ads[Math.floor(Math.random() * ads.length)] : null;
   .ad-image {
     width: 100%;
     height: auto;
-    max-height: 200px;
+    max-height: 350px;
     object-fit: cover;
     border-bottom: 1px solid var(--border, #333);
   }

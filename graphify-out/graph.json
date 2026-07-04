@@ -6,11 +6,7 @@
       {
         "id": "three_agent_sync_contract",
         "label": "Three-Agent Sync Contract (Claude + Copilot + Cursor/Windsurf)",
-        "nodes": [
-          "claude_md",
-          "agents_md",
-          "github_copilot_instructions"
-        ],
+        "nodes": ["claude_md", "agents_md", "github_copilot_instructions"],
         "relation": "form",
         "confidence": "EXTRACTED",
         "confidence_score": 1.0,
@@ -16121,8 +16117,8 @@
       "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\admin\\ads\\[id].ts",
       "source_location": "L30",
       "weight": 1.0,
-      "_src": "id_patch",
-      "_tgt": "dal_error",
+      "_src": "dal_error",
+      "_tgt": "id_patch",
       "source": "dal_error",
       "target": "id_patch"
     },
@@ -28599,11 +28595,7 @@
     {
       "id": "three_agent_sync_contract",
       "label": "Three-Agent Sync Contract (Claude + Copilot + Cursor/Windsurf)",
-      "nodes": [
-        "claude_md",
-        "agents_md",
-        "github_copilot_instructions"
-      ],
+      "nodes": ["claude_md", "agents_md", "github_copilot_instructions"],
       "relation": "form",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,

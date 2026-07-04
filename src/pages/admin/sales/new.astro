@@ -174,9 +174,19 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="qr-code-file">QR Code (Venmo/CashApp/PayPal)</label>
-            <input type="file" id="qr-code-file" accept="image/jpeg,image/png,image/webp,image/gif" class="form-input" style="padding: 0.5rem;" />
-            <span class="form-hint">Upload a payment QR code for this specific item.</span>
+            <label class="form-label" for="qr-code-file"
+              >QR Code (Venmo/CashApp/PayPal)</label
+            >
+            <input
+              type="file"
+              id="qr-code-file"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+              class="form-input"
+              style="padding: 0.5rem;"
+            />
+            <span class="form-hint"
+              >Upload a payment QR code for this specific item.</span
+            >
           </div>
         </div>
       </div>
@@ -273,18 +283,18 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
 
   const toast = createToastManager();
 
-  let testimonials: Array<{
-    author_name: string;
-    quote: string;
-    rating: number | null;
-  }> = [];
-  let reviews: Array<{
-    reviewer_name: string;
-    review_text: string;
-    rating: number | null;
-    is_verified: boolean;
-    review_date: string;
-  }> = [];
+  const testimonials: Array<{
+  author_name: string;
+  quote: string;
+  rating: number | null;
+}> = [];
+  const reviews: Array<{
+  reviewer_name: string;
+  review_text: string;
+  rating: number | null;
+  is_verified: boolean;
+  review_date: string;
+}> = [];
 
   // ── Quill editor ──────────────────────────────────────────────────────────
   initializeEditor({
@@ -375,10 +385,13 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
           const idx = Number(el.dataset.idx);
           const field = el.dataset.field as string;
           if (field === "rating")
-            (testimonials[idx] as Record<string, string | number | null>)[field] = el.value
-              ? Number(el.value)
-              : null;
-          else (testimonials[idx] as Record<string, string | number | null>)[field] = el.value;
+            (testimonials[idx] as Record<string, string | number | null>)[
+              field
+            ] = el.value ? Number(el.value) : null;
+          else
+            (testimonials[idx] as Record<string, string | number | null>)[
+              field
+            ] = el.value;
           (
             document.getElementById("testimonials-json") as HTMLInputElement
           ).value = JSON.stringify(testimonials);
@@ -428,12 +441,19 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
           const idx = Number(el.dataset.idx);
           const field = el.dataset.field as string;
           if (field === "rating")
-            (reviews[idx] as Record<string, string | number | boolean | null>)[field] = (el as HTMLInputElement).value
+            (reviews[idx] as Record<string, string | number | boolean | null>)[
+              field
+            ] = (el as HTMLInputElement).value
               ? Number((el as HTMLInputElement).value)
               : null;
           else if (field === "is_verified")
-            (reviews[idx] as Record<string, string | number | boolean | null>)[field] = (el as HTMLInputElement).checked;
-          else (reviews[idx] as Record<string, string | number | boolean | null>)[field] = (el as HTMLInputElement).value;
+            (reviews[idx] as Record<string, string | number | boolean | null>)[
+              field
+            ] = (el as HTMLInputElement).checked;
+          else
+            (reviews[idx] as Record<string, string | number | boolean | null>)[
+              field
+            ] = (el as HTMLInputElement).value;
           (document.getElementById("reviews-json") as HTMLInputElement).value =
             JSON.stringify(reviews);
         });
@@ -503,7 +523,9 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
 
       try {
         let qr_code_url = null;
-        const qrFileInput = document.getElementById("qr-code-file") as HTMLInputElement;
+        const qrFileInput = document.getElementById(
+          "qr-code-file",
+        ) as HTMLInputElement;
         const qrFile = qrFileInput.files?.[0];
 
         if (qrFile) {
@@ -511,7 +533,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
             throw new Error("QR Code image is too large (max 10 MB).");
           }
           submitBtn.textContent = "Uploading QR Code…";
-          
+
           const dataUri = await new Promise<string>((resolve, reject) => {
             const reader = new FileReader();
             reader.onload = () => resolve(reader.result as string);
@@ -534,7 +556,9 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
           if (!uploadRes.ok) {
             throw new Error(uploadData.error ?? "Failed to upload QR Code");
           }
-          qr_code_url = String(uploadData.media_url ?? uploadData.image_url ?? "");
+          qr_code_url = String(
+            uploadData.media_url ?? uploadData.image_url ?? "",
+          );
         }
 
         if (qr_code_url) {

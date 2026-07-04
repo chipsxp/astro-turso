@@ -1,14 +1,14 @@
 # Full-Text Search in tursodb
 
-This proposal is to use the https://github.com/quickwit-oss/tantivy library to provide full-text search capabilities in tursodb. 
+This proposal is to use the https://github.com/quickwit-oss/tantivy library to provide full-text search capabilities in tursodb.
 
 # Tantivy overview
 
-*introduction and terminology*:
+_introduction and terminology_:
 
 **Term:** a normalized token extracted from text during indexing.
 
-**Posting list:** (also referred to as an *inverted list*) is the list of all documents that contain a given term, along with metadata needed for scoring the results.
+**Posting list:** (also referred to as an _inverted list_) is the list of all documents that contain a given term, along with metadata needed for scoring the results.
 
 **Document:** Tantivy’s unit of indexing and retrieval, analogous to a single row in a db table.
 
@@ -16,7 +16,7 @@ This proposal is to use the https://github.com/quickwit-oss/tantivy library to p
 
 **Position:** The sequential offset/token index of a term within a field.
 
-**Segment:**  self-contained and immutable chunk of the index. Each commit writes one or more new segments to disk, searches query all active segments in parallel.
+**Segment:** self-contained and immutable chunk of the index. Each commit writes one or more new segments to disk, searches query all active segments in parallel.
 
 Inside each segment:
 
@@ -29,22 +29,22 @@ More details on everything here: https://fulmicoton.gitbooks.io/tantivy-doc/cont
 
 ### Note: this blog post here is a bit old but is a very interesting read. https://fulmicoton.com/posts/behold-tantivy-part2/
 
-At a high level, a Tantivy index is a self-contained directory containing immutable “segments” of inverted index data file. 
+At a high level, a Tantivy index is a self-contained directory containing immutable “segments” of inverted index data file.
 
-*“Your index is in fact divided into smaller independent indexes called **segments**. The reason for this division is explained in [Incremental Indexing](https://fulmicoton.gitbooks.io/tantivy-doc/content/incremental-indexing.html). The UUID part stands as the segment name, while the extension express which data-structure is stored in the file.*
+_“Your index is in fact divided into smaller independent indexes called **segments**. The reason for this division is explained in [Incremental Indexing](https://fulmicoton.gitbooks.io/tantivy-doc/content/incremental-indexing.html). The UUID part stands as the segment name, while the extension express which data-structure is stored in the file._
 
-- ***.info** contains some meta information about the segment*
-- ***.term** contains the term dictionary*
-- ***.idx** contains the inverted lists*
-- ***.fieldnorm** contains the field norms*
-- ***.pos** contains the positions information*
-- ***.store** contains the stored documents*
-- ***.fas**t contains the fast terms*
+- _**.info** contains some meta information about the segment_
+- _**.term** contains the term dictionary_
+- _**.idx** contains the inverted lists_
+- _**.fieldnorm** contains the field norms_
+- _**.pos** contains the positions information_
+- _**.store** contains the stored documents_
+- _**.fas**t contains the fast terms_
 
-*The last file, meta.json, contains in a JSON format :*
+_The last file, meta.json, contains in a JSON format :_
 
-- *The schema of your index*
-- *The name of the segments that were committed and are available for search.”*
+- _The schema of your index_
+- _The name of the segments that were committed and are available for search.”_
 
 source: https://fulmicoton.gitbooks.io/tantivy-doc/content/index-files.html
 
@@ -104,13 +104,13 @@ CREATE INDEX idx_products ON products USING fts (name) WITH (tokenizer = 'ngram'
 
 #### Available Tokenizers
 
-| Tokenizer | Description | Use Case |
-|-----------|-------------|----------|
-| `default` | Lowercase, punctuation split, 40 char limit | General English text |
-| `raw` | No tokenization - exact match only | IDs, UUIDs, tags, categories |
-| `simple` | Basic whitespace/punctuation split | Simple text without lowercase |
-| `whitespace` | Split on whitespace only | Space-separated tokens |
-| `ngram` | 2-3 character n-grams | Autocomplete, substring matching |
+| Tokenizer    | Description                                 | Use Case                         |
+| ------------ | ------------------------------------------- | -------------------------------- |
+| `default`    | Lowercase, punctuation split, 40 char limit | General English text             |
+| `raw`        | No tokenization - exact match only          | IDs, UUIDs, tags, categories     |
+| `simple`     | Basic whitespace/punctuation split          | Simple text without lowercase    |
+| `whitespace` | Split on whitespace only                    | Space-separated tokens           |
+| `ngram`      | 2-3 character n-grams                       | Autocomplete, substring matching |
 
 ### Field Weights
 
@@ -127,6 +127,7 @@ WITH (tokenizer = 'simple', weights = 'name=3.0,description=1.0');
 ```
 
 **Weight behavior:**
+
 - Default weight is `1.0` for all fields
 - Weights affect the BM25 relevance score from `fts_score()`
 - Higher weights increase the score contribution from that field
@@ -199,6 +200,7 @@ SELECT fts_highlight('The quick brown fox', '<em>', '</em>', 'quick fox');
 ```
 
 **Features:**
+
 - Supports multiple text columns (concatenated with spaces)
 - Case-insensitive matching (uses the default tokenizer)
 - Highlights all occurrences of matching terms
@@ -211,19 +213,20 @@ SELECT fts_highlight('The quick brown fox', '<em>', '</em>', 'quick fox');
 
 The FTS index recognizes and optimizes these query patterns:
 
-| Pattern | Description |
-|---------|-------------|
-| `SELECT fts_score(...) as score FROM t ORDER BY score DESC LIMIT ?` | Score with ORDER BY and LIMIT |
+| Pattern                                                                                  | Description                                  |
+| ---------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `SELECT fts_score(...) as score FROM t ORDER BY score DESC LIMIT ?`                      | Score with ORDER BY and LIMIT                |
 | `SELECT fts_score(...) as score FROM t WHERE fts_match(...) ORDER BY score DESC LIMIT ?` | Combined score+match with ORDER BY and LIMIT |
-| `SELECT fts_score(...) as score FROM t WHERE fts_match(...) ORDER BY score DESC` | Combined without LIMIT |
-| `SELECT fts_score(...) as score FROM t WHERE fts_match(...) LIMIT ?` | Combined with LIMIT only |
-| `SELECT fts_score(...) as score FROM t WHERE fts_match(...)` | Combined without ORDER BY or LIMIT |
-| `SELECT * FROM t WHERE fts_match(...) LIMIT ?` | Match filter with LIMIT |
-| `SELECT * FROM t WHERE fts_match(...)` | Match filter only |
+| `SELECT fts_score(...) as score FROM t WHERE fts_match(...) ORDER BY score DESC`         | Combined without LIMIT                       |
+| `SELECT fts_score(...) as score FROM t WHERE fts_match(...) LIMIT ?`                     | Combined with LIMIT only                     |
+| `SELECT fts_score(...) as score FROM t WHERE fts_match(...)`                             | Combined without ORDER BY or LIMIT           |
+| `SELECT * FROM t WHERE fts_match(...) LIMIT ?`                                           | Match filter with LIMIT                      |
+| `SELECT * FROM t WHERE fts_match(...)`                                                   | Match filter only                            |
 
 ### Function Recognition Mode
 
 Queries that don't exactly match the predefined patterns still work via **function recognition**. When `fts_match()` or `fts_score()` functions are detected in a query, the FTS index is used even with:
+
 - Additional SELECT columns
 - Extra WHERE conditions (e.g., `AND category = 'tech'`)
 - ORDER BY non-score columns
@@ -246,16 +249,16 @@ SELECT id, title FROM docs WHERE fts_match(title, body, 'Rust') ORDER BY created
 
 The query string passed to `fts_match`/`fts_score` supports Tantivy's QueryParser syntax:
 
-| Syntax | Example | Description |
-|--------|---------|-------------|
-| Single term | `database` | Match documents containing "database" |
-| Multiple terms (OR) | `database sql` | Match documents with "database" OR "sql" |
-| AND operator | `database AND sql` | Match documents with both terms |
-| NOT operator | `database NOT nosql` | Match "database" but exclude "nosql" |
-| Phrase search | `"full text search"` | Match exact phrase |
-| Prefix search | `data*` | Match terms starting with "data" |
-| Column filter | `title:database` | Match "database" only in title field |
-| Boosting | `title:database^2 body:database` | Boost title matches |
+| Syntax              | Example                          | Description                              |
+| ------------------- | -------------------------------- | ---------------------------------------- |
+| Single term         | `database`                       | Match documents containing "database"    |
+| Multiple terms (OR) | `database sql`                   | Match documents with "database" OR "sql" |
+| AND operator        | `database AND sql`               | Match documents with both terms          |
+| NOT operator        | `database NOT nosql`             | Match "database" but exclude "nosql"     |
+| Phrase search       | `"full text search"`             | Match exact phrase                       |
+| Prefix search       | `data*`                          | Match terms starting with "data"         |
+| Column filter       | `title:database`                 | Match "database" only in title field     |
+| Boosting            | `title:database^2 body:database` | Boost title matches                      |
 
 This syntax can be improved on in the future, and maybe eventually we can support some fancy elasticsearch/paradeDB syntax.
 
@@ -276,7 +279,7 @@ DELETE FROM articles WHERE id = 1;
 
 # Planning
 
-For the above SELECT query, we would look up which FTS index handles `t.name` from the in-memory schema representation, construct a Tantivy query for this index with `QueryParser::parse_query("tursodb")`. Tantivy then returns a list of `(score, doc_address)` pairs, which we translate each result into `(rowid, rating)` because we stored the table’s PK or rowid as a field during the indexing. Then an index lookup/SeekRowID for each of those result rows from the FtsQuery internal function fetches the `t.*` columns and no extra sort is required. 
+For the above SELECT query, we would look up which FTS index handles `t.name` from the in-memory schema representation, construct a Tantivy query for this index with `QueryParser::parse_query("tursodb")`. Tantivy then returns a list of `(score, doc_address)` pairs, which we translate each result into `(rowid, rating)` because we stored the table’s PK or rowid as a field during the indexing. Then an index lookup/SeekRowID for each of those result rows from the FtsQuery internal function fetches the `t.*` columns and no extra sort is required.
 
 If there are additional filters on `t` (`WHERE t.created_at > ...`) we should probably prefer ‘fts-first’, then filter out results from that. Run the Tantivy query, materialize results into an ephemeral table of some sort and then discard rows failing the post-filter. TODO: expand on this a bit more
 
@@ -291,21 +294,20 @@ We implement Tantivy’s `Directory` over our pager/B-tree but just as a regular
 One table, and one index: per each FTS index
 
 - **Data table:**
-    
-    ```sql
-    CREATE TABLE fts_dir_{idx_id} ( 
-      path TEXT NOT NULL, 
-      chunk_no INTEGER NOT NULL,
-      bytes BLOB NOT NULL
-    );
-    ```
-    
+
+  ```sql
+  CREATE TABLE fts_dir_{idx_id} (
+    path TEXT NOT NULL,
+    chunk_no INTEGER NOT NULL,
+    bytes BLOB NOT NULL
+  );
+  ```
+
 - **Index:**
-    
-    ```sql
-    CREATE INDEX IF NOT EXISTS idx_name ON table_name USING backing_btree (path, chunk_no, bytes)
-    ```
- 
+
+  ```sql
+  CREATE INDEX IF NOT EXISTS idx_name ON table_name USING backing_btree (path, chunk_no, bytes)
+  ```
 
 Use `backing_btree` to create a BTree that stores all columns without rowid indirection
 This allows direct cursor access with the exact key structure. This way we can use an index cursor to `SeekGE` (path, chunk_no) where chunk_no is just computed from the offset requested by `read_bytes` on the file handle.
@@ -336,12 +338,12 @@ The architecture uses a hybrid approach that balances memory usage and performan
 
 Files are classified based on their role in Tantivy operations:
 
-| Category | Files | Behavior |
-|----------|-------|----------|
-| Metadata | `meta.json`, `.managed.json`, `.lock` | Always in hot cache |
-| TermDictionary | `*.term` | Hot, loaded on first access |
-| FastFields | `*.fast`, `*.fieldnorm` | Hot, small and frequent |
-| SegmentData | `*.idx`, `*.pos`, `*.store` | Lazy-loaded on demand |
+| Category       | Files                                 | Behavior                    |
+| -------------- | ------------------------------------- | --------------------------- |
+| Metadata       | `meta.json`, `.managed.json`, `.lock` | Always in hot cache         |
+| TermDictionary | `*.term`                              | Hot, loaded on first access |
+| FastFields     | `*.fast`, `*.fieldnorm`               | Hot, small and frequent     |
+| SegmentData    | `*.idx`, `*.pos`, `*.store`           | Lazy-loaded on demand       |
 
 ### Loading Flow (Catalog-First)
 
@@ -353,6 +355,7 @@ The FTS cursor uses an async state machine to load the index:
 4. **Ready**: Index is usable; segment data lazy-loaded on query
 
 Additional states for write operations:
+
 - **FlushingWrites**: Persisting pending writes to BTree
 - **Querying**: Executing a Tantivy search
 
@@ -386,21 +389,21 @@ The `ChunkLruCache` evicts least-recently-used chunks when over capacity. Each F
 
 ### Key Components
 
-| Component | Purpose |
-|-----------|---------|
-| `FileCategory` | Classifies files for caching decisions |
-| `FileMetadata` | Stores file size, chunk count, category |
-| `ChunkLruCache` | Memory-bounded LRU cache for segment chunks |
-| `HybridBTreeDirectory` | Implements Tantivy's Directory trait |
-| `LazyFileHandle` | Fetches chunks on demand |
+| Component              | Purpose                                     |
+| ---------------------- | ------------------------------------------- |
+| `FileCategory`         | Classifies files for caching decisions      |
+| `FileMetadata`         | Stores file size, chunk count, category     |
+| `ChunkLruCache`        | Memory-bounded LRU cache for segment chunks |
+| `HybridBTreeDirectory` | Implements Tantivy's Directory trait        |
+| `LazyFileHandle`       | Fetches chunks on demand                    |
 
 ### Memory Usage Comparison
 
 | Index Size | Old (CachedBTreeDirectory) | New (HybridBTreeDirectory) |
-|------------|---------------------------|---------------------------|
-| 100MB | ~100MB | ~25MB |
-| 500MB | ~500MB | ~80MB |
-| 1GB | ~1GB | ~150MB |
+| ---------- | -------------------------- | -------------------------- |
+| 100MB      | ~100MB                     | ~25MB                      |
+| 500MB      | ~500MB                     | ~80MB                      |
+| 1GB        | ~1GB                       | ~150MB                     |
 
 ### Configuration Constants
 
@@ -431,11 +434,13 @@ OPTIMIZE INDEX;
 ```
 
 **When to use:**
+
 - After bulk data imports (many INSERTs)
 - When you notice query performance degradation
 - During maintenance windows
 
 **What it does:**
+
 - Merges all segments into one optimized segment
 - Flushes any pending documents first
 - Invalidates caches to ensure fresh reads
@@ -449,26 +454,26 @@ OPTIMIZE INDEX;
 
 The FTS implementation has some known limitations that may be addressed in future versions:
 
-| Limitation | Description |
-|------------|-------------|
-| No `snippet()` function | Cannot return context snippets around matches (highlight is available) |
-| No automatic segment merging | Uses `NoMergePolicy` - use `OPTIMIZE INDEX` for manual segment merging |
+| Limitation                         | Description                                                             |
+| ---------------------------------- | ----------------------------------------------------------------------- |
+| No `snippet()` function            | Cannot return context snippets around matches (highlight is available)  |
+| No automatic segment merging       | Uses `NoMergePolicy` - use `OPTIMIZE INDEX` for manual segment merging  |
 | No read-your-writes in transaction | FTS changes within a transaction aren't visible to queries until COMMIT |
-| No MATCH operator syntax | Must use `fts_match()` function instead of `WHERE table MATCH 'query'` |
+| No MATCH operator syntax           | Must use `fts_match()` function instead of `WHERE table MATCH 'query'`  |
 
 **Note on transactions:** ROLLBACK works correctly - FTS data is stored in BTrees that participate in the same WAL transaction as table data. When a transaction is rolled back, both table changes and FTS index changes are discarded together.
 
 # Comparison with SQLite FTS5
 
-| Feature | SQLite FTS5 | tursodb FTS |
-|---------|-------------|-------------|
-| MATCH operator | `WHERE t MATCH 'query'` | `WHERE fts_match(col, 'query')` |
-| Ranking | `bm25(t)`, `rank` column | `fts_score(col, 'query')` |
-| Highlighting | `highlight(t, ...)` | `fts_highlight(text, query, before, after)` ✓ |
-| Snippets | `snippet(t, ...)` | Not implemented |
-| Boolean operators | AND, OR, NOT | AND, OR, NOT ✓ |
-| Phrase search | `"exact phrase"` | `"exact phrase"` ✓ |
-| Prefix search | `word*` | `word*` ✓ |
-| Column filter | `col:term` | `col:term` ✓ |
-| Tokenizers | unicode61, ascii, porter | default, raw, simple, whitespace, ngram ✓ |
-| External content | contentless tables | Not supported |
+| Feature           | SQLite FTS5              | tursodb FTS                                   |
+| ----------------- | ------------------------ | --------------------------------------------- |
+| MATCH operator    | `WHERE t MATCH 'query'`  | `WHERE fts_match(col, 'query')`               |
+| Ranking           | `bm25(t)`, `rank` column | `fts_score(col, 'query')`                     |
+| Highlighting      | `highlight(t, ...)`      | `fts_highlight(text, query, before, after)` ✓ |
+| Snippets          | `snippet(t, ...)`        | Not implemented                               |
+| Boolean operators | AND, OR, NOT             | AND, OR, NOT ✓                                |
+| Phrase search     | `"exact phrase"`         | `"exact phrase"` ✓                            |
+| Prefix search     | `word*`                  | `word*` ✓                                     |
+| Column filter     | `col:term`               | `col:term` ✓                                  |
+| Tokenizers        | unicode61, ascii, porter | default, raw, simple, whitespace, ngram ✓     |
+| External content  | contentless tables       | Not supported                                 |

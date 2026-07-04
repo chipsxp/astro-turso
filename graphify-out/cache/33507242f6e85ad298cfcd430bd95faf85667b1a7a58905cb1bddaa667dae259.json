@@ -1,1 +1,102 @@
-{"nodes": [{"id": "c_users_manag_github_repo_astro_turso_src_lib_monetization_ts", "label": "monetization.ts", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L1"}, {"id": "monetization_getactiveadsforslot", "label": "getActiveAdsForSlot()", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L28"}, {"id": "monetization_loganalyticsevent", "label": "logAnalyticsEvent()", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L52"}, {"id": "monetization_getusergamificationstats", "label": "getUserGamificationStats()", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L70"}], "edges": [{"source": "c_users_manag_github_repo_astro_turso_src_lib_monetization_ts", "target": "c_users_manag_github_repo_astro_turso_src_lib_db", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L1", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_lib_monetization_ts", "target": "monetization_getactiveadsforslot", "relation": "contains", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L28", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_lib_monetization_ts", "target": "monetization_loganalyticsevent", "relation": "contains", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L52", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_lib_monetization_ts", "target": "monetization_getusergamificationstats", "relation": "contains", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L70", "weight": 1.0}], "raw_calls": [{"caller_nid": "monetization_getactiveadsforslot", "callee": "await db.execute", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L29"}, {"caller_nid": "monetization_getactiveadsforslot", "callee": "map", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L36"}, {"caller_nid": "monetization_loganalyticsevent", "callee": "execute", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L59"}, {"caller_nid": "monetization_getusergamificationstats", "callee": "await db.execute", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L72"}, {"caller_nid": "monetization_getusergamificationstats", "callee": "Number", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts", "source_location": "L76"}]}
+{
+  "nodes": [
+    {
+      "id": "c_users_manag_github_repo_astro_turso_src_lib_monetization_ts",
+      "label": "monetization.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "monetization_getactiveadsforslot",
+      "label": "getActiveAdsForSlot()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L28"
+    },
+    {
+      "id": "monetization_loganalyticsevent",
+      "label": "logAnalyticsEvent()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L52"
+    },
+    {
+      "id": "monetization_getusergamificationstats",
+      "label": "getUserGamificationStats()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L70"
+    }
+  ],
+  "edges": [
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_monetization_ts",
+      "target": "c_users_manag_github_repo_astro_turso_src_lib_db",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_monetization_ts",
+      "target": "monetization_getactiveadsforslot",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_monetization_ts",
+      "target": "monetization_loganalyticsevent",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_lib_monetization_ts",
+      "target": "monetization_getusergamificationstats",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L70",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "monetization_getactiveadsforslot",
+      "callee": "await db.execute",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L29"
+    },
+    {
+      "caller_nid": "monetization_getactiveadsforslot",
+      "callee": "map",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L36"
+    },
+    {
+      "caller_nid": "monetization_loganalyticsevent",
+      "callee": "execute",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "monetization_getusergamificationstats",
+      "callee": "await db.execute",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "monetization_getusergamificationstats",
+      "callee": "Number",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\lib\\monetization.ts",
+      "source_location": "L76"
+    }
+  ]
+}

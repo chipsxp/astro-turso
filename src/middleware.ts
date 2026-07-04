@@ -18,14 +18,15 @@ const JWT_SECRET_KEY = new TextEncoder().encode(import.meta.env.JWT_SECRET);
 // ── CSP builder ───────────────────────────────────────────────────────────────
 // Directives shared across every CSP tier (admin / shop / public)
 const BASE_CSP: Record<string, string> = {
-  "default-src":     "'self'",
-  "img-src":         "'self' data: blob: https://res.cloudinary.com https://*.etsystatic.com https://www.paypalobjects.com",
-  "font-src":        "'self'",
-  "connect-src":     "'self'",
-  "frame-src":       "'none'",
+  "default-src": "'self'",
+  "img-src":
+    "'self' data: blob: https://res.cloudinary.com https://*.etsystatic.com https://www.paypalobjects.com",
+  "font-src": "'self'",
+  "connect-src": "'self'",
+  "frame-src": "'none'",
   "frame-ancestors": "'none'",
-  "object-src":      "'none'",
-  "base-uri":        "'self'",
+  "object-src": "'none'",
+  "base-uri": "'self'",
 };
 
 function buildCsp(overrides: Record<string, string>): string {
@@ -111,26 +112,27 @@ function addSecurityHeaders(response: Response, pathname: string): Response {
   // Admin pages will keep 'unsafe-inline' due to define:vars in [slug].astro.
   // Anchored regex avoids false matches: /admin-panel → not admin, /shopify → not shop
   const isAdmin = /^\/admin(?:\/|$)/.test(pathname);
-  const isShop  = /^\/shop(?:\/|$)/.test(pathname);
+  const isShop = /^\/shop(?:\/|$)/.test(pathname);
   // sha256 hash of the anti-FOUC is:inline script in BlogLayout.astro
   const fouc = "'sha256-HPPfxiskdCPpqDyDMT/Cc9sakRhGIC0x+o5OZyk+BdM='";
   const csp = isAdmin
     ? buildCsp({
-        "script-src":  "'self' 'unsafe-inline'",
-        "style-src":   "'self' 'unsafe-inline'",
+        "script-src": "'self' 'unsafe-inline'",
+        "style-src": "'self' 'unsafe-inline'",
         "form-action": "'self' https://www.paypal.com",
       })
     : isShop
       ? buildCsp({
-          "script-src":  `'self' ${fouc} https://www.paypal.com`,
-          "style-src":   "'self' 'unsafe-inline'",
-          "connect-src": "'self' https://www.paypal.com https://api.paypal.com https://api-m.paypal.com",
+          "script-src": `'self' ${fouc} https://www.paypal.com`,
+          "style-src": "'self' 'unsafe-inline'",
+          "connect-src":
+            "'self' https://www.paypal.com https://api.paypal.com https://api-m.paypal.com",
           "form-action": "'self' https://www.paypal.com",
         })
       : buildCsp({
           "script-src": `'self' ${fouc}`,
-          "style-src":  "'self'",
-          "form-action":"'self' https://www.paypal.com",
+          "style-src": "'self' 'unsafe-inline'",
+          "form-action": "'self' https://www.paypal.com",
         });
   response.headers.set("Content-Security-Policy-Report-Only", csp);
 

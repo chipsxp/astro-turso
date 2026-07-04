@@ -1,1 +1,74 @@
-{"nodes": [{"id": "scripts_diagnose_sales_mjs", "label": "diagnose-sales.mjs", "file_type": "code", "source_file": "scripts\\diagnose-sales.mjs", "source_location": "L1"}, {"id": "diagnose_sales_getdb", "label": "getDb()", "file_type": "code", "source_file": "scripts\\diagnose-sales.mjs", "source_location": "L16"}, {"id": "diagnose_sales_maprows", "label": "mapRows()", "file_type": "code", "source_file": "scripts\\diagnose-sales.mjs", "source_location": "L23"}], "edges": [{"source": "scripts_diagnose_sales_mjs", "target": "serverless", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "scripts\\diagnose-sales.mjs", "source_location": "L9", "weight": 1.0}, {"source": "scripts_diagnose_sales_mjs", "target": "diagnose_sales_getdb", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\diagnose-sales.mjs", "source_location": "L16", "weight": 1.0}, {"source": "scripts_diagnose_sales_mjs", "target": "diagnose_sales_maprows", "relation": "contains", "confidence": "EXTRACTED", "source_file": "scripts\\diagnose-sales.mjs", "source_location": "L23", "weight": 1.0}], "raw_calls": [{"caller_nid": "diagnose_sales_getdb", "callee": "connect", "source_file": "scripts\\diagnose-sales.mjs", "source_location": "L17"}, {"caller_nid": "diagnose_sales_maprows", "callee": "isArray", "source_file": "scripts\\diagnose-sales.mjs", "source_location": "L24"}, {"caller_nid": "diagnose_sales_maprows", "callee": "map", "source_file": "scripts\\diagnose-sales.mjs", "source_location": "L28"}]}
+{
+  "nodes": [
+    {
+      "id": "scripts_diagnose_sales_mjs",
+      "label": "diagnose-sales.mjs",
+      "file_type": "code",
+      "source_file": "scripts\\diagnose-sales.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "diagnose_sales_getdb",
+      "label": "getDb()",
+      "file_type": "code",
+      "source_file": "scripts\\diagnose-sales.mjs",
+      "source_location": "L16"
+    },
+    {
+      "id": "diagnose_sales_maprows",
+      "label": "mapRows()",
+      "file_type": "code",
+      "source_file": "scripts\\diagnose-sales.mjs",
+      "source_location": "L23"
+    }
+  ],
+  "edges": [
+    {
+      "source": "scripts_diagnose_sales_mjs",
+      "target": "serverless",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\diagnose-sales.mjs",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_diagnose_sales_mjs",
+      "target": "diagnose_sales_getdb",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\diagnose-sales.mjs",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_diagnose_sales_mjs",
+      "target": "diagnose_sales_maprows",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts\\diagnose-sales.mjs",
+      "source_location": "L23",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "diagnose_sales_getdb",
+      "callee": "connect",
+      "source_file": "scripts\\diagnose-sales.mjs",
+      "source_location": "L17"
+    },
+    {
+      "caller_nid": "diagnose_sales_maprows",
+      "callee": "isArray",
+      "source_file": "scripts\\diagnose-sales.mjs",
+      "source_location": "L24"
+    },
+    {
+      "caller_nid": "diagnose_sales_maprows",
+      "callee": "map",
+      "source_file": "scripts\\diagnose-sales.mjs",
+      "source_location": "L28"
+    }
+  ]
+}

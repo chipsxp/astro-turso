@@ -7,7 +7,7 @@ if (!user || user.role !== "admin") {
   return Astro.redirect("/admin");
 }
 
-const currentPlacement = await getSetting("donation_placement") || "footer";
+const currentPlacement = (await getSetting("donation_placement")) || "footer";
 ---
 
 <AdminLayout title="Site Settings">
@@ -19,30 +19,78 @@ const currentPlacement = await getSetting("donation_placement") || "footer";
   </div>
 
   <div class="card" style="max-width: 600px; margin-top: 2rem;">
-    <h2 style="font-family: var(--font-display); color: var(--accent); margin-bottom: 1rem;">Donation Block</h2>
+    <h2
+      style="font-family: var(--font-display); color: var(--accent); margin-bottom: 1rem;"
+    >
+      Donation Block
+    </h2>
     <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
       Configure where the Admin Donation Block (PayPal) appears across the site.
     </p>
 
-    <div id="settings-error" class="alert alert--error is-hidden" style="margin-bottom: 1rem;"></div>
-    <div id="settings-success" class="alert alert--success is-hidden" style="margin-bottom: 1rem;">Settings saved successfully.</div>
+    <div
+      id="settings-error"
+      class="alert alert--error is-hidden"
+      style="margin-bottom: 1rem;"
+    >
+    </div>
+    <div
+      id="settings-success"
+      class="alert alert--success is-hidden"
+      style="margin-bottom: 1rem;"
+    >
+      Settings saved successfully.
+    </div>
 
     <form id="settings-form">
       <div class="form-group">
-        <label class="form-label" for="donation_placement">Placement Location</label>
-        <select id="donation_placement" name="donation_placement" class="form-input" style="width: 100%;">
-          <option value="dashboard_sidebar" selected={currentPlacement === "dashboard_sidebar"}>Dashboard Sidebar</option>
-          <option value="article_index_top" selected={currentPlacement === "article_index_top"}>Top of Article Listings Page</option>
-          <option value="shop_index_top" selected={currentPlacement === "shop_index_top"}>Top of Shop Item Posting Listings</option>
-          <option value="footer" selected={currentPlacement === "footer"}>Footer</option>
-          <option value="homepage_grid" selected={currentPlacement === "homepage_grid"}>Homepage Grid</option>
-          <option value="event_index_top" selected={currentPlacement === "event_index_top"}>Event Listing Page</option>
-          <option value="hidden" selected={currentPlacement === "hidden"}>Hidden</option>
+        <label class="form-label" for="donation_placement"
+          >Placement Location</label
+        >
+        <select
+          id="donation_placement"
+          name="donation_placement"
+          class="form-input"
+          style="width: 100%;"
+        >
+          <option
+            value="dashboard_sidebar"
+            selected={currentPlacement === "dashboard_sidebar"}
+            >Dashboard Sidebar</option
+          >
+          <option
+            value="article_index_top"
+            selected={currentPlacement === "article_index_top"}
+            >Top of Article Listings Page</option
+          >
+          <option
+            value="shop_index_top"
+            selected={currentPlacement === "shop_index_top"}
+            >Top of Shop Item Posting Listings</option
+          >
+          <option value="footer" selected={currentPlacement === "footer"}
+            >Footer</option
+          >
+          <option
+            value="homepage_grid"
+            selected={currentPlacement === "homepage_grid"}
+            >Homepage Grid</option
+          >
+          <option
+            value="event_index_top"
+            selected={currentPlacement === "event_index_top"}
+            >Event Listing Page</option
+          >
+          <option value="hidden" selected={currentPlacement === "hidden"}
+            >Hidden</option
+          >
         </select>
       </div>
 
       <div style="margin-top: 2rem;">
-        <button type="submit" id="save-btn" class="btn btn-primary">Save Settings</button>
+        <button type="submit" id="save-btn" class="btn btn-primary"
+          >Save Settings</button
+        >
       </div>
     </form>
   </div>
@@ -74,8 +122,12 @@ const currentPlacement = await getSetting("donation_placement") || "footer";
 <script>
   const form = document.getElementById("settings-form") as HTMLFormElement;
   const saveBtn = document.getElementById("save-btn") as HTMLButtonElement;
-  const errorAlert = document.getElementById("settings-error") as HTMLDivElement;
-  const successAlert = document.getElementById("settings-success") as HTMLDivElement;
+  const errorAlert = document.getElementById(
+    "settings-error",
+  ) as HTMLDivElement;
+  const successAlert = document.getElementById(
+    "settings-success",
+  ) as HTMLDivElement;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -84,7 +136,9 @@ const currentPlacement = await getSetting("donation_placement") || "footer";
     saveBtn.disabled = true;
     saveBtn.textContent = "Saving...";
 
-    const placement = (document.getElementById("donation_placement") as HTMLSelectElement).value;
+    const placement = (
+      document.getElementById("donation_placement") as HTMLSelectElement
+    ).value;
 
     try {
       const res = await fetch("/api/admin/settings", {
@@ -99,7 +153,8 @@ const currentPlacement = await getSetting("donation_placement") || "footer";
 
       successAlert.classList.remove("is-hidden");
     } catch (err: unknown) {
-      errorAlert.textContent = err instanceof Error ? err.message : "Error saving settings";
+      errorAlert.textContent =
+        err instanceof Error ? err.message : "Error saving settings";
       errorAlert.classList.remove("is-hidden");
     } finally {
       saveBtn.disabled = false;

@@ -8,12 +8,12 @@ This repository is meant to be practical for developers who want to learn from i
 
 ## Branches
 
-| Branch               | Version | Description                                                                                                                        |
-| -------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `main`               | 1.0.0   | Base blog platform — no events module                                                                                              |
-| `feature/events`     | 1.1.0   | Adds the Upcoming Events module (this branch)                                                                                      |
-| `feature/etsy-sales` | 1.2.0   | Adds Etsy sales module and storefront integration, improves event flow, and raises Lighthouse score via WebP and alt-text delivery |
-| `feature/monetization`| 1.3.0  | Adds gamification scoring for social shares and an advertisement placement module                                                  |
+| Branch                 | Version | Description                                                                                                                        |
+| ---------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `main`                 | 1.0.0   | Base blog platform — no events module                                                                                              |
+| `feature/events`       | 1.1.0   | Adds the Upcoming Events module (this branch)                                                                                      |
+| `feature/etsy-sales`   | 1.2.0   | Adds Etsy sales module and storefront integration, improves event flow, and raises Lighthouse score via WebP and alt-text delivery |
+| `feature/monetization` | 1.3.0   | Adds gamification scoring for social shares and an advertisement placement module                                                  |
 
 Clone the branch that matches what you need:
 
@@ -295,11 +295,13 @@ If you are new to Astro or full-stack content apps, start in this order:
 Adds an Author Score Keeper to gamify social shares and an Advertisement Management system for site monetization.
 
 **Gamification Score Keeper**
+
 - Automatically awards Authors ranks (Novice, Bronze, Silver, Gold, Platinum) based on how many times they share their articles.
 - Calculates and displays the rank securely on the Author Dashboard.
 - Issues a special "Top Artist" badge for Platinum ranks.
 
 **Monetization & Ads**
+
 - Introduced the `AdPlacement` component to easily drop sponsored ad spots anywhere in the platform.
 - Created an Ads Admin Dashboard to manage active and inactive advertisement campaigns with Cloudinary image upload integration.
 - Built a non-blocking `navigator.sendBeacon` telemetry tracker to transparently record ad clicks without impacting Lighthouse scores.
@@ -405,8 +407,8 @@ Then create your admin user and start the server as usual.
 
 ### Planned Releases
 
-| Version   | Feature               | Status      |
-| --------- | --------------------- | ----------- |
-| **1.1.0** | Upcoming Events page  | Released    |
-| **1.2.0** | Art Sales / Shop page | In Progress |
+| Version   | Feature                            | Status      |
+| --------- | ---------------------------------- | ----------- |
+| **1.1.0** | Upcoming Events page               | Released    |
+| **1.2.0** | Art Sales / Shop page              | In Progress |
 | **1.3.0** | Gamification & Monetization module | Released    |

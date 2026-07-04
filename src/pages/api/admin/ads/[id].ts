@@ -22,7 +22,7 @@ export const PATCH: APIRoute = async ({ params, locals }) => {
     // Toggle the is_active status
     await db.execute(
       `UPDATE advertisements SET is_active = CASE WHEN is_active = 1 THEN 0 ELSE 1 END WHERE id = ?`,
-      [id]
+      [id],
     );
 
     return json({ ok: true });

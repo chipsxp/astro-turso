@@ -6,7 +6,7 @@ import AdPlacement from "../../components/AdPlacement.astro";
 import AdminDonationBlock from "../../components/AdminDonationBlock.astro";
 import { getSetting } from "../../lib/settings";
 
-const donationPlacement = await getSetting("donation_placement") || "footer";
+const donationPlacement = (await getSetting("donation_placement")) || "footer";
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
 const canonicalUrl = `${siteUrl}/blog`;
 const selectedCategorySlug =

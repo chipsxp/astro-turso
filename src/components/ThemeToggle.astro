@@ -17,7 +17,7 @@
 
 <script is:inline>
   (function () {
-    var btn = document.getElementById("theme-toggle");
+    const btn = document.getElementById("theme-toggle");
     if (!btn) return;
 
     function syncLabel(theme) {
@@ -31,8 +31,8 @@
     syncLabel(document.documentElement.dataset.theme || "dark");
 
     btn.addEventListener("click", function () {
-      var html = document.documentElement;
-      var next = html.dataset.theme === "dark" ? "light" : "dark";
+      const html = document.documentElement;
+      const next = html.dataset.theme === "dark" ? "light" : "dark";
       html.dataset.theme = next;
       localStorage.setItem("scriptorium_theme", next);
       syncLabel(next);

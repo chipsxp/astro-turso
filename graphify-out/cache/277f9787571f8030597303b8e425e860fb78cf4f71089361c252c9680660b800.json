@@ -1,1 +1,157 @@
-{"nodes": [{"id": "arch_diagram", "label": "System Architecture Diagram (Cloud Architecture)", "file_type": "image", "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "source_url": null, "captured_at": "2026-02-27", "author": "Jimmy Burns"}, {"id": "arch_frontend_layer", "label": "Frontend Layer (Admin Dashboard, Article Editor, Blog Pages, SEO/OG, Social Share)", "file_type": "image", "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "source_url": null, "captured_at": null, "author": null}, {"id": "arch_api_layer", "label": "API Layer (JWT Middleware, /api/auth/login, /api/articles, /api/upload)", "file_type": "image", "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "source_url": null, "captured_at": null, "author": null}, {"id": "arch_turso_layer", "label": "Turso Layer (Turso Cloud, users/articles/images/tags tables)", "file_type": "image", "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "source_url": null, "captured_at": null, "author": null}, {"id": "arch_cdn_storage", "label": "CDN / Image Storage (external)", "file_type": "image", "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "source_url": null, "captured_at": null, "author": null}, {"id": "arch_social_platforms", "label": "Social Platforms (external share targets)", "file_type": "image", "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "source_url": null, "captured_at": null, "author": null}], "edges": [{"source": "arch_frontend_layer", "target": "arch_diagram", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "weight": 1.0}, {"source": "arch_api_layer", "target": "arch_diagram", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "weight": 1.0}, {"source": "arch_turso_layer", "target": "arch_diagram", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "weight": 1.0}, {"source": "arch_cdn_storage", "target": "arch_diagram", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "weight": 1.0}, {"source": "arch_social_platforms", "target": "arch_diagram", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "weight": 1.0}, {"source": "arch_api_layer", "target": "arch_turso_layer", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "weight": 1.0}, {"source": "arch_frontend_layer", "target": "arch_api_layer", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "weight": 1.0}, {"source": "arch_api_layer", "target": "arch_cdn_storage", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "weight": 1.0}, {"source": "arch_frontend_layer", "target": "arch_social_platforms", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/diagrams/architecture-eraser-diagram.png", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "arch_diagram",
+      "label": "System Architecture Diagram (Cloud Architecture)",
+      "file_type": "image",
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-02-27",
+      "author": "Jimmy Burns"
+    },
+    {
+      "id": "arch_frontend_layer",
+      "label": "Frontend Layer (Admin Dashboard, Article Editor, Blog Pages, SEO/OG, Social Share)",
+      "file_type": "image",
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null
+    },
+    {
+      "id": "arch_api_layer",
+      "label": "API Layer (JWT Middleware, /api/auth/login, /api/articles, /api/upload)",
+      "file_type": "image",
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null
+    },
+    {
+      "id": "arch_turso_layer",
+      "label": "Turso Layer (Turso Cloud, users/articles/images/tags tables)",
+      "file_type": "image",
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null
+    },
+    {
+      "id": "arch_cdn_storage",
+      "label": "CDN / Image Storage (external)",
+      "file_type": "image",
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null
+    },
+    {
+      "id": "arch_social_platforms",
+      "label": "Social Platforms (external share targets)",
+      "file_type": "image",
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "arch_frontend_layer",
+      "target": "arch_diagram",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "arch_api_layer",
+      "target": "arch_diagram",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "arch_turso_layer",
+      "target": "arch_diagram",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "arch_cdn_storage",
+      "target": "arch_diagram",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "arch_social_platforms",
+      "target": "arch_diagram",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "arch_api_layer",
+      "target": "arch_turso_layer",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "arch_frontend_layer",
+      "target": "arch_api_layer",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "arch_api_layer",
+      "target": "arch_cdn_storage",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "arch_frontend_layer",
+      "target": "arch_social_platforms",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagrams/architecture-eraser-diagram.png",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

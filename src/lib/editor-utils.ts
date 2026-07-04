@@ -84,6 +84,17 @@ export function initializeEditor(config: EditorConfig): Quill {
   // Preserve palette swatches and add a custom color control for both pickers.
   enableCustomColorPickers(editor);
 
+  // Strip background and text colors when pasting
+  editor.clipboard.addMatcher(Node.ELEMENT_NODE, (_node, delta) => {
+    delta.ops.forEach((op: { attributes?: Record<string, unknown> }) => {
+      if (op.attributes) {
+        delete op.attributes.color;
+        delete op.attributes.background;
+      }
+    });
+    return delta;
+  });
+
   // Handle content changes
   if (config.onContentChange) {
     editor.on("text-change", () => {

@@ -68,8 +68,12 @@ try {
 // --- 3. Create indexes for reporting ---
 try {
   const db3 = getDb();
-  await db3.execute("CREATE INDEX IF NOT EXISTS idx_analytics_target ON analytics_events(target_type, target_id)");
-  await db3.execute("CREATE INDEX IF NOT EXISTS idx_ads_slot ON advertisements(slot_type, is_active)");
+  await db3.execute(
+    "CREATE INDEX IF NOT EXISTS idx_analytics_target ON analytics_events(target_type, target_id)",
+  );
+  await db3.execute(
+    "CREATE INDEX IF NOT EXISTS idx_ads_slot ON advertisements(slot_type, is_active)",
+  );
   console.log("✓ Indexes created.");
 } catch (err) {
   console.error("✗ CREATE INDEX failed:", err.message);

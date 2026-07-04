@@ -1,1 +1,554 @@
-{"nodes": [{"id": "src_lib_inline_images_ts", "label": "inline-images.ts", "file_type": "code", "source_file": "src\\lib\\inline-images.ts", "source_location": "L1"}, {"id": "inline_images_estimatebase64decodedbytes", "label": "estimateBase64DecodedBytes()", "file_type": "code", "source_file": "src\\lib\\inline-images.ts", "source_location": "L25"}, {"id": "inline_images_columnexistserror", "label": "columnExistsError()", "file_type": "code", "source_file": "src\\lib\\inline-images.ts", "source_location": "L36"}, {"id": "inline_images_ensurecolumn", "label": "ensureColumn()", "file_type": "code", "source_file": "src\\lib\\inline-images.ts", "source_location": "L44"}, {"id": "inline_images_ensureinlineimagesschema", "label": "ensureInlineImagesSchema()", "file_type": "code", "source_file": "src\\lib\\inline-images.ts", "source_location": "L54"}, {"id": "inline_images_extractinlineimagematches", "label": "extractInlineImageMatches()", "file_type": "code", "source_file": "src\\lib\\inline-images.ts", "source_location": "L83"}, {"id": "inline_images_rewriteinlineimagesrcs", "label": "rewriteInlineImageSrcs()", "file_type": "code", "source_file": "src\\lib\\inline-images.ts", "source_location": "L111"}, {"id": "inline_images_extractinlineimageidsfrombody", "label": "extractInlineImageIdsFromBody()", "file_type": "code", "source_file": "src\\lib\\inline-images.ts", "source_location": "L128"}, {"id": "inline_images_persistinlineimagesinbody", "label": "persistInlineImagesInBody()", "file_type": "code", "source_file": "src\\lib\\inline-images.ts", "source_location": "L141"}, {"id": "inline_images_cleanupunusedinlineimages", "label": "cleanupUnusedInlineImages()", "file_type": "code", "source_file": "src\\lib\\inline-images.ts", "source_location": "L196"}, {"id": "inline_images_deleteinlineimagesbyids", "label": "deleteInlineImagesByIds()", "file_type": "code", "source_file": "src\\lib\\inline-images.ts", "source_location": "L222"}, {"id": "inline_images_getinlineimagebyid", "label": "getInlineImageById()", "file_type": "code", "source_file": "src\\lib\\inline-images.ts", "source_location": "L239"}], "edges": [{"source": "src_lib_inline_images_ts", "target": "src_lib_db", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L1", "weight": 1.0}, {"source": "src_lib_inline_images_ts", "target": "inline_images_estimatebase64decodedbytes", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L25", "weight": 1.0}, {"source": "src_lib_inline_images_ts", "target": "inline_images_columnexistserror", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L36", "weight": 1.0}, {"source": "src_lib_inline_images_ts", "target": "inline_images_ensurecolumn", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L44", "weight": 1.0}, {"source": "src_lib_inline_images_ts", "target": "inline_images_ensureinlineimagesschema", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L54", "weight": 1.0}, {"source": "src_lib_inline_images_ts", "target": "inline_images_extractinlineimagematches", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L83", "weight": 1.0}, {"source": "src_lib_inline_images_ts", "target": "inline_images_rewriteinlineimagesrcs", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L111", "weight": 1.0}, {"source": "src_lib_inline_images_ts", "target": "inline_images_extractinlineimageidsfrombody", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L128", "weight": 1.0}, {"source": "src_lib_inline_images_ts", "target": "inline_images_persistinlineimagesinbody", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L141", "weight": 1.0}, {"source": "src_lib_inline_images_ts", "target": "inline_images_cleanupunusedinlineimages", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L196", "weight": 1.0}, {"source": "src_lib_inline_images_ts", "target": "inline_images_deleteinlineimagesbyids", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L222", "weight": 1.0}, {"source": "src_lib_inline_images_ts", "target": "inline_images_getinlineimagebyid", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L239", "weight": 1.0}, {"source": "inline_images_ensurecolumn", "target": "inline_images_columnexistserror", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L48", "weight": 1.0}, {"source": "inline_images_ensureinlineimagesschema", "target": "inline_images_ensurecolumn", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L67", "weight": 1.0}, {"source": "inline_images_extractinlineimagematches", "target": "inline_images_estimatebase64decodedbytes", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L104", "weight": 1.0}, {"source": "inline_images_persistinlineimagesinbody", "target": "inline_images_ensureinlineimagesschema", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L145", "weight": 1.0}, {"source": "inline_images_persistinlineimagesinbody", "target": "inline_images_extractinlineimagematches", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L147", "weight": 1.0}, {"source": "inline_images_persistinlineimagesinbody", "target": "inline_images_rewriteinlineimagesrcs", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L191", "weight": 1.0}, {"source": "inline_images_cleanupunusedinlineimages", "target": "inline_images_ensureinlineimagesschema", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L200", "weight": 1.0}, {"source": "inline_images_cleanupunusedinlineimages", "target": "inline_images_extractinlineimageidsfrombody", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L202", "weight": 1.0}, {"source": "inline_images_deleteinlineimagesbyids", "target": "inline_images_ensureinlineimagesschema", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L225", "weight": 1.0}, {"source": "inline_images_getinlineimagebyid", "target": "inline_images_ensureinlineimagesschema", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\inline-images.ts", "source_location": "L245", "weight": 1.0}], "raw_calls": [{"caller_nid": "inline_images_estimatebase64decodedbytes", "callee": "replace", "source_file": "src\\lib\\inline-images.ts", "source_location": "L26"}, {"caller_nid": "inline_images_estimatebase64decodedbytes", "callee": "endsWith", "source_file": "src\\lib\\inline-images.ts", "source_location": "L27"}, {"caller_nid": "inline_images_estimatebase64decodedbytes", "callee": "endsWith", "source_file": "src\\lib\\inline-images.ts", "source_location": "L29"}, {"caller_nid": "inline_images_estimatebase64decodedbytes", "callee": "max", "source_file": "src\\lib\\inline-images.ts", "source_location": "L33"}, {"caller_nid": "inline_images_estimatebase64decodedbytes", "callee": "floor", "source_file": "src\\lib\\inline-images.ts", "source_location": "L33"}, {"caller_nid": "inline_images_columnexistserror", "callee": "String", "source_file": "src\\lib\\inline-images.ts", "source_location": "L37"}, {"caller_nid": "inline_images_columnexistserror", "callee": "includes", "source_file": "src\\lib\\inline-images.ts", "source_location": "L39"}, {"caller_nid": "inline_images_columnexistserror", "callee": "includes", "source_file": "src\\lib\\inline-images.ts", "source_location": "L40"}, {"caller_nid": "inline_images_ensurecolumn", "callee": "execute", "source_file": "src\\lib\\inline-images.ts", "source_location": "L46"}, {"caller_nid": "inline_images_ensureinlineimagesschema", "callee": "execute", "source_file": "src\\lib\\inline-images.ts", "source_location": "L57"}, {"caller_nid": "inline_images_ensureinlineimagesschema", "callee": "execute", "source_file": "src\\lib\\inline-images.ts", "source_location": "L73"}, {"caller_nid": "inline_images_ensureinlineimagesschema", "callee": "execute", "source_file": "src\\lib\\inline-images.ts", "source_location": "L76"}, {"caller_nid": "inline_images_extractinlineimagematches", "callee": "match", "source_file": "src\\lib\\inline-images.ts", "source_location": "L85"}, {"caller_nid": "inline_images_extractinlineimagematches", "callee": "match", "source_file": "src\\lib\\inline-images.ts", "source_location": "L88"}, {"caller_nid": "inline_images_extractinlineimagematches", "callee": "match", "source_file": "src\\lib\\inline-images.ts", "source_location": "L92"}, {"caller_nid": "inline_images_extractinlineimagematches", "callee": "toLowerCase", "source_file": "src\\lib\\inline-images.ts", "source_location": "L93"}, {"caller_nid": "inline_images_extractinlineimagematches", "callee": "match", "source_file": "src\\lib\\inline-images.ts", "source_location": "L95"}, {"caller_nid": "inline_images_extractinlineimagematches", "callee": "trim", "source_file": "src\\lib\\inline-images.ts", "source_location": "L96"}, {"caller_nid": "inline_images_extractinlineimagematches", "callee": "push", "source_file": "src\\lib\\inline-images.ts", "source_location": "L98"}, {"caller_nid": "inline_images_rewriteinlineimagesrcs", "callee": "replace", "source_file": "src\\lib\\inline-images.ts", "source_location": "L117"}, {"caller_nid": "inline_images_extractinlineimageidsfrombody", "callee": "matchAll", "source_file": "src\\lib\\inline-images.ts", "source_location": "L131"}, {"caller_nid": "inline_images_extractinlineimageidsfrombody", "callee": "Number", "source_file": "src\\lib\\inline-images.ts", "source_location": "L132"}, {"caller_nid": "inline_images_extractinlineimageidsfrombody", "callee": "isInteger", "source_file": "src\\lib\\inline-images.ts", "source_location": "L133"}, {"caller_nid": "inline_images_extractinlineimageidsfrombody", "callee": "add", "source_file": "src\\lib\\inline-images.ts", "source_location": "L134"}, {"caller_nid": "inline_images_persistinlineimagesinbody", "callee": "execute", "source_file": "src\\lib\\inline-images.ts", "source_location": "L156"}, {"caller_nid": "inline_images_persistinlineimagesinbody", "callee": "Number", "source_file": "src\\lib\\inline-images.ts", "source_location": "L178"}, {"caller_nid": "inline_images_persistinlineimagesinbody", "callee": "execute", "source_file": "src\\lib\\inline-images.ts", "source_location": "L181"}, {"caller_nid": "inline_images_persistinlineimagesinbody", "callee": "push", "source_file": "src\\lib\\inline-images.ts", "source_location": "L186"}, {"caller_nid": "inline_images_persistinlineimagesinbody", "callee": "push", "source_file": "src\\lib\\inline-images.ts", "source_location": "L187"}, {"caller_nid": "inline_images_cleanupunusedinlineimages", "callee": "execute", "source_file": "src\\lib\\inline-images.ts", "source_location": "L205"}, {"caller_nid": "inline_images_cleanupunusedinlineimages", "callee": "join", "source_file": "src\\lib\\inline-images.ts", "source_location": "L212"}, {"caller_nid": "inline_images_cleanupunusedinlineimages", "callee": "map", "source_file": "src\\lib\\inline-images.ts", "source_location": "L212"}, {"caller_nid": "inline_images_cleanupunusedinlineimages", "callee": "execute", "source_file": "src\\lib\\inline-images.ts", "source_location": "L213"}, {"caller_nid": "inline_images_deleteinlineimagesbyids", "callee": "filter", "source_file": "src\\lib\\inline-images.ts", "source_location": "L227"}, {"caller_nid": "inline_images_deleteinlineimagesbyids", "callee": "join", "source_file": "src\\lib\\inline-images.ts", "source_location": "L230"}, {"caller_nid": "inline_images_deleteinlineimagesbyids", "callee": "map", "source_file": "src\\lib\\inline-images.ts", "source_location": "L230"}, {"caller_nid": "inline_images_deleteinlineimagesbyids", "callee": "execute", "source_file": "src\\lib\\inline-images.ts", "source_location": "L231"}, {"caller_nid": "inline_images_getinlineimagebyid", "callee": "execute", "source_file": "src\\lib\\inline-images.ts", "source_location": "L247"}, {"caller_nid": "inline_images_getinlineimagebyid", "callee": "trim", "source_file": "src\\lib\\inline-images.ts", "source_location": "L259"}, {"caller_nid": "inline_images_getinlineimagebyid", "callee": "String", "source_file": "src\\lib\\inline-images.ts", "source_location": "L259"}, {"caller_nid": "inline_images_getinlineimagebyid", "callee": "trim", "source_file": "src\\lib\\inline-images.ts", "source_location": "L260"}, {"caller_nid": "inline_images_getinlineimagebyid", "callee": "String", "source_file": "src\\lib\\inline-images.ts", "source_location": "L260"}, {"caller_nid": "inline_images_getinlineimagebyid", "callee": "Number", "source_file": "src\\lib\\inline-images.ts", "source_location": "L264"}, {"caller_nid": "inline_images_getinlineimagebyid", "callee": "String", "source_file": "src\\lib\\inline-images.ts", "source_location": "L267"}]}
+{
+  "nodes": [
+    {
+      "id": "src_lib_inline_images_ts",
+      "label": "inline-images.ts",
+      "file_type": "code",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "inline_images_estimatebase64decodedbytes",
+      "label": "estimateBase64DecodedBytes()",
+      "file_type": "code",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L25"
+    },
+    {
+      "id": "inline_images_columnexistserror",
+      "label": "columnExistsError()",
+      "file_type": "code",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L36"
+    },
+    {
+      "id": "inline_images_ensurecolumn",
+      "label": "ensureColumn()",
+      "file_type": "code",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L44"
+    },
+    {
+      "id": "inline_images_ensureinlineimagesschema",
+      "label": "ensureInlineImagesSchema()",
+      "file_type": "code",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L54"
+    },
+    {
+      "id": "inline_images_extractinlineimagematches",
+      "label": "extractInlineImageMatches()",
+      "file_type": "code",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L83"
+    },
+    {
+      "id": "inline_images_rewriteinlineimagesrcs",
+      "label": "rewriteInlineImageSrcs()",
+      "file_type": "code",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L111"
+    },
+    {
+      "id": "inline_images_extractinlineimageidsfrombody",
+      "label": "extractInlineImageIdsFromBody()",
+      "file_type": "code",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L128"
+    },
+    {
+      "id": "inline_images_persistinlineimagesinbody",
+      "label": "persistInlineImagesInBody()",
+      "file_type": "code",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L141"
+    },
+    {
+      "id": "inline_images_cleanupunusedinlineimages",
+      "label": "cleanupUnusedInlineImages()",
+      "file_type": "code",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L196"
+    },
+    {
+      "id": "inline_images_deleteinlineimagesbyids",
+      "label": "deleteInlineImagesByIds()",
+      "file_type": "code",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L222"
+    },
+    {
+      "id": "inline_images_getinlineimagebyid",
+      "label": "getInlineImageById()",
+      "file_type": "code",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L239"
+    }
+  ],
+  "edges": [
+    {
+      "source": "src_lib_inline_images_ts",
+      "target": "src_lib_db",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_inline_images_ts",
+      "target": "inline_images_estimatebase64decodedbytes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_inline_images_ts",
+      "target": "inline_images_columnexistserror",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_inline_images_ts",
+      "target": "inline_images_ensurecolumn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_inline_images_ts",
+      "target": "inline_images_ensureinlineimagesschema",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_inline_images_ts",
+      "target": "inline_images_extractinlineimagematches",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_inline_images_ts",
+      "target": "inline_images_rewriteinlineimagesrcs",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_inline_images_ts",
+      "target": "inline_images_extractinlineimageidsfrombody",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L128",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_inline_images_ts",
+      "target": "inline_images_persistinlineimagesinbody",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L141",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_inline_images_ts",
+      "target": "inline_images_cleanupunusedinlineimages",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L196",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_inline_images_ts",
+      "target": "inline_images_deleteinlineimagesbyids",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L222",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_inline_images_ts",
+      "target": "inline_images_getinlineimagebyid",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L239",
+      "weight": 1.0
+    },
+    {
+      "source": "inline_images_ensurecolumn",
+      "target": "inline_images_columnexistserror",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "inline_images_ensureinlineimagesschema",
+      "target": "inline_images_ensurecolumn",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "inline_images_extractinlineimagematches",
+      "target": "inline_images_estimatebase64decodedbytes",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L104",
+      "weight": 1.0
+    },
+    {
+      "source": "inline_images_persistinlineimagesinbody",
+      "target": "inline_images_ensureinlineimagesschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L145",
+      "weight": 1.0
+    },
+    {
+      "source": "inline_images_persistinlineimagesinbody",
+      "target": "inline_images_extractinlineimagematches",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L147",
+      "weight": 1.0
+    },
+    {
+      "source": "inline_images_persistinlineimagesinbody",
+      "target": "inline_images_rewriteinlineimagesrcs",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "inline_images_cleanupunusedinlineimages",
+      "target": "inline_images_ensureinlineimagesschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L200",
+      "weight": 1.0
+    },
+    {
+      "source": "inline_images_cleanupunusedinlineimages",
+      "target": "inline_images_extractinlineimageidsfrombody",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L202",
+      "weight": 1.0
+    },
+    {
+      "source": "inline_images_deleteinlineimagesbyids",
+      "target": "inline_images_ensureinlineimagesschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L225",
+      "weight": 1.0
+    },
+    {
+      "source": "inline_images_getinlineimagebyid",
+      "target": "inline_images_ensureinlineimagesschema",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L245",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "inline_images_estimatebase64decodedbytes",
+      "callee": "replace",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L26"
+    },
+    {
+      "caller_nid": "inline_images_estimatebase64decodedbytes",
+      "callee": "endsWith",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "inline_images_estimatebase64decodedbytes",
+      "callee": "endsWith",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L29"
+    },
+    {
+      "caller_nid": "inline_images_estimatebase64decodedbytes",
+      "callee": "max",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "inline_images_estimatebase64decodedbytes",
+      "callee": "floor",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L33"
+    },
+    {
+      "caller_nid": "inline_images_columnexistserror",
+      "callee": "String",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L37"
+    },
+    {
+      "caller_nid": "inline_images_columnexistserror",
+      "callee": "includes",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L39"
+    },
+    {
+      "caller_nid": "inline_images_columnexistserror",
+      "callee": "includes",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L40"
+    },
+    {
+      "caller_nid": "inline_images_ensurecolumn",
+      "callee": "execute",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L46"
+    },
+    {
+      "caller_nid": "inline_images_ensureinlineimagesschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L57"
+    },
+    {
+      "caller_nid": "inline_images_ensureinlineimagesschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L73"
+    },
+    {
+      "caller_nid": "inline_images_ensureinlineimagesschema",
+      "callee": "execute",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L76"
+    },
+    {
+      "caller_nid": "inline_images_extractinlineimagematches",
+      "callee": "match",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L85"
+    },
+    {
+      "caller_nid": "inline_images_extractinlineimagematches",
+      "callee": "match",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L88"
+    },
+    {
+      "caller_nid": "inline_images_extractinlineimagematches",
+      "callee": "match",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "inline_images_extractinlineimagematches",
+      "callee": "toLowerCase",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "inline_images_extractinlineimagematches",
+      "callee": "match",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L95"
+    },
+    {
+      "caller_nid": "inline_images_extractinlineimagematches",
+      "callee": "trim",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L96"
+    },
+    {
+      "caller_nid": "inline_images_extractinlineimagematches",
+      "callee": "push",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L98"
+    },
+    {
+      "caller_nid": "inline_images_rewriteinlineimagesrcs",
+      "callee": "replace",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L117"
+    },
+    {
+      "caller_nid": "inline_images_extractinlineimageidsfrombody",
+      "callee": "matchAll",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L131"
+    },
+    {
+      "caller_nid": "inline_images_extractinlineimageidsfrombody",
+      "callee": "Number",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L132"
+    },
+    {
+      "caller_nid": "inline_images_extractinlineimageidsfrombody",
+      "callee": "isInteger",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L133"
+    },
+    {
+      "caller_nid": "inline_images_extractinlineimageidsfrombody",
+      "callee": "add",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L134"
+    },
+    {
+      "caller_nid": "inline_images_persistinlineimagesinbody",
+      "callee": "execute",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L156"
+    },
+    {
+      "caller_nid": "inline_images_persistinlineimagesinbody",
+      "callee": "Number",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L178"
+    },
+    {
+      "caller_nid": "inline_images_persistinlineimagesinbody",
+      "callee": "execute",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L181"
+    },
+    {
+      "caller_nid": "inline_images_persistinlineimagesinbody",
+      "callee": "push",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L186"
+    },
+    {
+      "caller_nid": "inline_images_persistinlineimagesinbody",
+      "callee": "push",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L187"
+    },
+    {
+      "caller_nid": "inline_images_cleanupunusedinlineimages",
+      "callee": "execute",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L205"
+    },
+    {
+      "caller_nid": "inline_images_cleanupunusedinlineimages",
+      "callee": "join",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L212"
+    },
+    {
+      "caller_nid": "inline_images_cleanupunusedinlineimages",
+      "callee": "map",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L212"
+    },
+    {
+      "caller_nid": "inline_images_cleanupunusedinlineimages",
+      "callee": "execute",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L213"
+    },
+    {
+      "caller_nid": "inline_images_deleteinlineimagesbyids",
+      "callee": "filter",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L227"
+    },
+    {
+      "caller_nid": "inline_images_deleteinlineimagesbyids",
+      "callee": "join",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L230"
+    },
+    {
+      "caller_nid": "inline_images_deleteinlineimagesbyids",
+      "callee": "map",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L230"
+    },
+    {
+      "caller_nid": "inline_images_deleteinlineimagesbyids",
+      "callee": "execute",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L231"
+    },
+    {
+      "caller_nid": "inline_images_getinlineimagebyid",
+      "callee": "execute",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L247"
+    },
+    {
+      "caller_nid": "inline_images_getinlineimagebyid",
+      "callee": "trim",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L259"
+    },
+    {
+      "caller_nid": "inline_images_getinlineimagebyid",
+      "callee": "String",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L259"
+    },
+    {
+      "caller_nid": "inline_images_getinlineimagebyid",
+      "callee": "trim",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L260"
+    },
+    {
+      "caller_nid": "inline_images_getinlineimagebyid",
+      "callee": "String",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L260"
+    },
+    {
+      "caller_nid": "inline_images_getinlineimagebyid",
+      "callee": "Number",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L264"
+    },
+    {
+      "caller_nid": "inline_images_getinlineimagebyid",
+      "callee": "String",
+      "source_file": "src\\lib\\inline-images.ts",
+      "source_location": "L267"
+    }
+  ]
+}

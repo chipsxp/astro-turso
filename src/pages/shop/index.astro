@@ -1,15 +1,23 @@
 ---
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import { db } from "../../lib/db";
-import { calcSalePrice, formatPrice, parseTags, type SalesPosting, type SalesImage } from "../../lib/sales";
+import {
+  calcSalePrice,
+  formatPrice,
+  parseTags,
+  type SalesPosting,
+  type SalesImage,
+} from "../../lib/sales";
 import { getSetting } from "../../lib/settings";
 import AdminDonationBlock from "../../components/AdminDonationBlock.astro";
 import AdPlacement from "../../components/AdPlacement.astro";
 
-const donationPlacement = await getSetting("donation_placement") || "footer";
+const donationPlacement = (await getSetting("donation_placement")) || "footer";
 
 // Query published postings directly — never loopback-fetch in SSR (fails on Railway/cPanel)
-let postings: (SalesPosting & { cover_image: { url: string; alt_text: string } | null })[] = [];
+let postings: (SalesPosting & {
+  cover_image: { url: string; alt_text: string } | null;
+})[] = [];
 let fetchError = false;
 try {
   const result = await db.execute<SalesPosting>(

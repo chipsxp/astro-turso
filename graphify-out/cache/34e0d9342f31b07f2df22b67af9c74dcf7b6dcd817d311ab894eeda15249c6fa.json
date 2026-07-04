@@ -1,1 +1,102 @@
-{"nodes": [{"id": "build_plan_phases", "label": "Build Plan Phase Tracker", "file_type": "document", "source_file": "docs/project_notes/build-plan.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "build_plan_turso_schema", "label": "Phase 1: Turso Database Schema", "file_type": "document", "source_file": "docs/project_notes/build-plan.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "build_plan_astro_bootstrap", "label": "Phase 2: Astro Project Bootstrap", "file_type": "document", "source_file": "docs/project_notes/build-plan.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "build_plan_auth_route", "label": "Phase 4: Auth API Route", "file_type": "document", "source_file": "docs/project_notes/build-plan.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "build_plan_jwt_middleware", "label": "Phase 5: JWT Middleware", "file_type": "document", "source_file": "docs/project_notes/build-plan.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "build_plan_phases", "target": "build_plan_turso_schema", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/project_notes/build-plan.md", "source_location": "line 7", "weight": 1.0}, {"source": "build_plan_phases", "target": "build_plan_astro_bootstrap", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/project_notes/build-plan.md", "source_location": "line 8", "weight": 1.0}, {"source": "build_plan_phases", "target": "build_plan_auth_route", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/project_notes/build-plan.md", "source_location": "line 10", "weight": 1.0}, {"source": "build_plan_phases", "target": "build_plan_jwt_middleware", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/project_notes/build-plan.md", "source_location": "line 11", "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "build_plan_phases",
+      "label": "Build Plan Phase Tracker",
+      "file_type": "document",
+      "source_file": "docs/project_notes/build-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "build_plan_turso_schema",
+      "label": "Phase 1: Turso Database Schema",
+      "file_type": "document",
+      "source_file": "docs/project_notes/build-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "build_plan_astro_bootstrap",
+      "label": "Phase 2: Astro Project Bootstrap",
+      "file_type": "document",
+      "source_file": "docs/project_notes/build-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "build_plan_auth_route",
+      "label": "Phase 4: Auth API Route",
+      "file_type": "document",
+      "source_file": "docs/project_notes/build-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "build_plan_jwt_middleware",
+      "label": "Phase 5: JWT Middleware",
+      "file_type": "document",
+      "source_file": "docs/project_notes/build-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "build_plan_phases",
+      "target": "build_plan_turso_schema",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/project_notes/build-plan.md",
+      "source_location": "line 7",
+      "weight": 1.0
+    },
+    {
+      "source": "build_plan_phases",
+      "target": "build_plan_astro_bootstrap",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/project_notes/build-plan.md",
+      "source_location": "line 8",
+      "weight": 1.0
+    },
+    {
+      "source": "build_plan_phases",
+      "target": "build_plan_auth_route",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/project_notes/build-plan.md",
+      "source_location": "line 10",
+      "weight": 1.0
+    },
+    {
+      "source": "build_plan_phases",
+      "target": "build_plan_jwt_middleware",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/project_notes/build-plan.md",
+      "source_location": "line 11",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

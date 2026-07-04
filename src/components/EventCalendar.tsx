@@ -30,8 +30,7 @@ export interface SaleItem {
 }
 
 type SelectedItem =
-  | { kind: "event"; data: CalendarEvent }
-  | { kind: "sale"; data: SaleItem };
+  { kind: "event"; data: CalendarEvent } | { kind: "sale"; data: SaleItem };
 
 const MONTH_NAMES = [
   "January",
@@ -379,16 +378,6 @@ export default function EventCalendar({ events, sales, siteUrl }: Props) {
               >
                 View Listing →
               </a>
-              {selected.data.etsy_listing_url && (
-                <a
-                  href={selected.data.etsy_listing_url}
-                  className="cal-panel__cta cal-panel__cta--secondary"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View on Etsy →
-                </a>
-              )}
             </div>
           )}
         </aside>

@@ -1,1 +1,252 @@
-{"nodes": [{"id": "decisions_adr021_etsy_removal", "label": "ADR-021: Remove Etsy Integration Replace with Cloudinary+PayPal", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr020_global_css_islands", "label": "ADR-020: global.css as Escape Hatch for React Island CSS", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr019_self_hosted_fonts", "label": "ADR-019: Self-Hosted Fonts + Cloudinary Name Fallback", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr018_event_archive", "label": "ADR-018: Permanent Event Archive 14-Day Window", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr017_docs_first", "label": "ADR-017: Docs-First Workflow for Astro+TypeScript Errors", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr016_inline_images", "label": "ADR-016: Inline Editor Images Stored in images Table", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr013_hsts_csp", "label": "ADR-013: HSTS + CSP Report-Only Headers", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr012_rate_limiting", "label": "ADR-012: In-Memory Rate Limiting on Public API Endpoints", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr009_dark_light_theme", "label": "ADR-009: Dark/Light Theme System CSS Custom Property Override", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr008_user_registration", "label": "ADR-008: User Registration & Admin Approval System", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr007_tailwind_v4", "label": "ADR-007: TailwindCSS v4 Vite Plugin Approach", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr006_article_ownership", "label": "ADR-006: Per-User Article Ownership Enforcement", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr004_httponly_cookie", "label": "ADR-004: Admin JWT HttpOnly Cookie Auth", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr003_core_arch", "label": "ADR-003: AstroJS Blog Core Architecture Stack", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "decisions_adr001_pinecone_rag", "label": "ADR-001: Pinecone Assistant for Library RAG", "file_type": "document", "source_file": "docs/project_notes/decisions.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "decisions_adr021_etsy_removal", "target": "sales_page_feature_plan", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/project_notes/decisions.md", "source_location": "line 11", "weight": 1.0}, {"source": "decisions_adr021_etsy_removal", "target": "sales_page_etsy_api", "relation": "references", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "docs/project_notes/decisions.md", "source_location": null, "weight": 0.85}, {"source": "decisions_adr020_global_css_islands", "target": "bugs_react_island_css_scoping", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/project_notes/decisions.md", "source_location": "line 43", "weight": 1.0}, {"source": "decisions_adr013_hsts_csp", "target": "decisions_adr004_httponly_cookie", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/project_notes/decisions.md", "source_location": "line 252", "weight": 1.0}, {"source": "decisions_adr012_rate_limiting", "target": "bugs_facebook_modsecurity", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/project_notes/decisions.md", "source_location": "line 276", "weight": 1.0}, {"source": "decisions_adr004_httponly_cookie", "target": "fix_403_samesite_strict", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/project_notes/decisions.md", "source_location": "line 599", "weight": 1.0}, {"source": "decisions_adr003_core_arch", "target": "build_plan_phases", "relation": "references", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "docs/project_notes/decisions.md", "source_location": null, "weight": 0.85}, {"source": "decisions_adr019_self_hosted_fonts", "target": "bugs_cloudinary_cloud_name_ssr", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "docs/project_notes/decisions.md", "source_location": "line 72", "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "decisions_adr021_etsy_removal",
+      "label": "ADR-021: Remove Etsy Integration Replace with Cloudinary+PayPal",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr020_global_css_islands",
+      "label": "ADR-020: global.css as Escape Hatch for React Island CSS",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr019_self_hosted_fonts",
+      "label": "ADR-019: Self-Hosted Fonts + Cloudinary Name Fallback",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr018_event_archive",
+      "label": "ADR-018: Permanent Event Archive 14-Day Window",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr017_docs_first",
+      "label": "ADR-017: Docs-First Workflow for Astro+TypeScript Errors",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr016_inline_images",
+      "label": "ADR-016: Inline Editor Images Stored in images Table",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr013_hsts_csp",
+      "label": "ADR-013: HSTS + CSP Report-Only Headers",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr012_rate_limiting",
+      "label": "ADR-012: In-Memory Rate Limiting on Public API Endpoints",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr009_dark_light_theme",
+      "label": "ADR-009: Dark/Light Theme System CSS Custom Property Override",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr008_user_registration",
+      "label": "ADR-008: User Registration & Admin Approval System",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr007_tailwind_v4",
+      "label": "ADR-007: TailwindCSS v4 Vite Plugin Approach",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr006_article_ownership",
+      "label": "ADR-006: Per-User Article Ownership Enforcement",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr004_httponly_cookie",
+      "label": "ADR-004: Admin JWT HttpOnly Cookie Auth",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr003_core_arch",
+      "label": "ADR-003: AstroJS Blog Core Architecture Stack",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "decisions_adr001_pinecone_rag",
+      "label": "ADR-001: Pinecone Assistant for Library RAG",
+      "file_type": "document",
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "decisions_adr021_etsy_removal",
+      "target": "sales_page_feature_plan",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": "line 11",
+      "weight": 1.0
+    },
+    {
+      "source": "decisions_adr021_etsy_removal",
+      "target": "sales_page_etsy_api",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "decisions_adr020_global_css_islands",
+      "target": "bugs_react_island_css_scoping",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": "line 43",
+      "weight": 1.0
+    },
+    {
+      "source": "decisions_adr013_hsts_csp",
+      "target": "decisions_adr004_httponly_cookie",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": "line 252",
+      "weight": 1.0
+    },
+    {
+      "source": "decisions_adr012_rate_limiting",
+      "target": "bugs_facebook_modsecurity",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": "line 276",
+      "weight": 1.0
+    },
+    {
+      "source": "decisions_adr004_httponly_cookie",
+      "target": "fix_403_samesite_strict",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": "line 599",
+      "weight": 1.0
+    },
+    {
+      "source": "decisions_adr003_core_arch",
+      "target": "build_plan_phases",
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": null,
+      "weight": 0.85
+    },
+    {
+      "source": "decisions_adr019_self_hosted_fonts",
+      "target": "bugs_cloudinary_cloud_name_ssr",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/project_notes/decisions.md",
+      "source_location": "line 72",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

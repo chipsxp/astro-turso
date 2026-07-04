@@ -1,1 +1,361 @@
-{"nodes": [{"id": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "label": "login.ts", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L1"}, {"id": "login_getclientip", "label": "getClientIp()", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L12"}, {"id": "login_isratelimited", "label": "isRateLimited()", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L20"}, {"id": "login_recordfailure", "label": "recordFailure()", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L27"}, {"id": "login_clearattempts", "label": "clearAttempts()", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L37"}, {"id": "login_post", "label": "POST()", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L41"}, {"id": "login_get", "label": "GET()", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L121"}, {"id": "login_json", "label": "json()", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L124"}], "edges": [{"source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "target": "astro", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L1", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "target": "bcryptjs", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L2", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "target": "jose", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L3", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "target": "c_users_manag_github_repo_astro_turso_src_lib_auth", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L4", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "target": "c_users_manag_github_repo_astro_turso_src_lib_db", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L5", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "target": "login_getclientip", "relation": "contains", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L12", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "target": "login_isratelimited", "relation": "contains", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L20", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "target": "login_recordfailure", "relation": "contains", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L27", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "target": "login_clearattempts", "relation": "contains", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L37", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "target": "login_post", "relation": "contains", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L41", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "target": "login_get", "relation": "contains", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L121", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts", "target": "login_json", "relation": "contains", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L124", "weight": 1.0}, {"source": "login_getclientip", "target": "login_get", "relation": "calls", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L14", "weight": 1.0}, {"source": "login_isratelimited", "target": "login_get", "relation": "calls", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L22", "weight": 1.0}, {"source": "login_recordfailure", "target": "login_get", "relation": "calls", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L29", "weight": 1.0}, {"source": "login_post", "target": "login_getclientip", "relation": "calls", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L42", "weight": 1.0}, {"source": "login_post", "target": "login_isratelimited", "relation": "calls", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L44", "weight": 1.0}, {"source": "login_post", "target": "login_json", "relation": "calls", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L45", "weight": 1.0}, {"source": "login_post", "target": "login_recordfailure", "relation": "calls", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L86", "weight": 1.0}, {"source": "login_post", "target": "login_clearattempts", "relation": "calls", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L99", "weight": 1.0}, {"source": "login_get", "target": "login_json", "relation": "calls", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L121", "weight": 1.0}], "raw_calls": [{"caller_nid": "login_getclientip", "callee": "trim", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L14"}, {"caller_nid": "login_getclientip", "callee": "split", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L14"}, {"caller_nid": "login_isratelimited", "callee": "now", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L21"}, {"caller_nid": "login_recordfailure", "callee": "now", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L28"}, {"caller_nid": "login_recordfailure", "callee": "set", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L31"}, {"caller_nid": "login_clearattempts", "callee": "delete", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L38"}, {"caller_nid": "login_post", "callee": "trim", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L57"}, {"caller_nid": "login_post", "callee": "await db.execute", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L71"}, {"caller_nid": "login_post", "callee": "compare", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L83"}, {"caller_nid": "login_post", "callee": "encode", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L100"}, {"caller_nid": "login_post", "callee": "sign", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L102"}, {"caller_nid": "login_post", "callee": "setExpirationTime", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L102"}, {"caller_nid": "login_post", "callee": "setIssuedAt", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L102"}, {"caller_nid": "login_post", "callee": "setProtectedHeader", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L102"}, {"caller_nid": "login_post", "callee": "String", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L103"}, {"caller_nid": "login_post", "callee": "stringify", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L111"}, {"caller_nid": "login_post", "callee": "setAuthCookie", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L115"}, {"caller_nid": "login_json", "callee": "stringify", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts", "source_location": "L125"}]}
+{
+  "nodes": [
+    {
+      "id": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "label": "login.ts",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "login_getclientip",
+      "label": "getClientIp()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L12"
+    },
+    {
+      "id": "login_isratelimited",
+      "label": "isRateLimited()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "login_recordfailure",
+      "label": "recordFailure()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L27"
+    },
+    {
+      "id": "login_clearattempts",
+      "label": "clearAttempts()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L37"
+    },
+    {
+      "id": "login_post",
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L41"
+    },
+    {
+      "id": "login_get",
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L121"
+    },
+    {
+      "id": "login_json",
+      "label": "json()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L124"
+    }
+  ],
+  "edges": [
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "target": "astro",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "target": "bcryptjs",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "target": "jose",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "target": "c_users_manag_github_repo_astro_turso_src_lib_auth",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "target": "c_users_manag_github_repo_astro_turso_src_lib_db",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "target": "login_getclientip",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "target": "login_isratelimited",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "target": "login_recordfailure",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "target": "login_clearattempts",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "target": "login_post",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "target": "login_get",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_src_pages_api_auth_login_ts",
+      "target": "login_json",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "login_getclientip",
+      "target": "login_get",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "login_isratelimited",
+      "target": "login_get",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "login_recordfailure",
+      "target": "login_get",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "login_post",
+      "target": "login_getclientip",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "login_post",
+      "target": "login_isratelimited",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "login_post",
+      "target": "login_json",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "login_post",
+      "target": "login_recordfailure",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "login_post",
+      "target": "login_clearattempts",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "login_get",
+      "target": "login_json",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L121",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "login_getclientip",
+      "callee": "trim",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L14"
+    },
+    {
+      "caller_nid": "login_getclientip",
+      "callee": "split",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L14"
+    },
+    {
+      "caller_nid": "login_isratelimited",
+      "callee": "now",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L21"
+    },
+    {
+      "caller_nid": "login_recordfailure",
+      "callee": "now",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L28"
+    },
+    {
+      "caller_nid": "login_recordfailure",
+      "callee": "set",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L31"
+    },
+    {
+      "caller_nid": "login_clearattempts",
+      "callee": "delete",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L38"
+    },
+    {
+      "caller_nid": "login_post",
+      "callee": "trim",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L57"
+    },
+    {
+      "caller_nid": "login_post",
+      "callee": "await db.execute",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L71"
+    },
+    {
+      "caller_nid": "login_post",
+      "callee": "compare",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L83"
+    },
+    {
+      "caller_nid": "login_post",
+      "callee": "encode",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L100"
+    },
+    {
+      "caller_nid": "login_post",
+      "callee": "sign",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "login_post",
+      "callee": "setExpirationTime",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "login_post",
+      "callee": "setIssuedAt",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "login_post",
+      "callee": "setProtectedHeader",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L102"
+    },
+    {
+      "caller_nid": "login_post",
+      "callee": "String",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L103"
+    },
+    {
+      "caller_nid": "login_post",
+      "callee": "stringify",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "login_post",
+      "callee": "setAuthCookie",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L115"
+    },
+    {
+      "caller_nid": "login_json",
+      "callee": "stringify",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\src\\pages\\api\\auth\\login.ts",
+      "source_location": "L125"
+    }
+  ]
+}

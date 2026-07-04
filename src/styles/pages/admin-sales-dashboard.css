@@ -58,7 +58,6 @@
 
 /* Hide Price and Author columns on small screens (640px and below) */
 @media (max-width: 640px) {
-
   #state-table th:nth-child(3),
   #state-table td:nth-child(3),
   #state-table th:nth-child(4),
@@ -69,7 +68,6 @@
 
 /* Hide Updated column on very small screens (440px and below) */
 @media (max-width: 440px) {
-
   #state-table th:nth-child(5),
   #state-table td:nth-child(5) {
     display: none;

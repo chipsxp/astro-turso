@@ -53,7 +53,7 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script is:inline>
       (function () {
-        var t = localStorage.getItem("scriptorium_theme");
+        const t = localStorage.getItem("scriptorium_theme");
         document.documentElement.dataset.theme =
           t ||
           (window.matchMedia("(prefers-color-scheme: light)").matches
@@ -80,6 +80,20 @@ const {
       fbAppId={fbAppId}
     />
     <link rel="stylesheet" href="/fonts/fonts.css" />
+    
+    {import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}></script>
+        <script is:inline define:vars={{ gaId: import.meta.env.PUBLIC_GA_MEASUREMENT_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          // eslint-disable-next-line prefer-rest-params
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', gaId);
+        </script>
+      </>
+    )}
   </head>
   <body>
     <Header />

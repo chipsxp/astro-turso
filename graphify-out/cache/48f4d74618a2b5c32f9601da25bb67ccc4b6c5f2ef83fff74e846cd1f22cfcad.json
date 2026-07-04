@@ -1,1 +1,180 @@
-{"nodes": [{"id": "src_middleware_ts", "label": "middleware.ts", "file_type": "code", "source_file": "src\\middleware.ts", "source_location": "L1"}, {"id": "middleware_buildcsp", "label": "buildCsp()", "file_type": "code", "source_file": "src\\middleware.ts", "source_location": "L29"}, {"id": "middleware_addsecurityheaders", "label": "addSecurityHeaders()", "file_type": "code", "source_file": "src\\middleware.ts", "source_location": "L89"}, {"id": "middleware_unauthorized", "label": "unauthorized()", "file_type": "code", "source_file": "src\\middleware.ts", "source_location": "L138"}], "edges": [{"source": "src_middleware_ts", "target": "astro_middleware", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\middleware.ts", "source_location": "L1", "weight": 1.0}, {"source": "src_middleware_ts", "target": "jose", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\middleware.ts", "source_location": "L2", "weight": 1.0}, {"source": "src_middleware_ts", "target": "src_lib_db", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "src\\middleware.ts", "source_location": "L3", "weight": 1.0}, {"source": "src_middleware_ts", "target": "middleware_buildcsp", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\middleware.ts", "source_location": "L29", "weight": 1.0}, {"source": "src_middleware_ts", "target": "middleware_addsecurityheaders", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\middleware.ts", "source_location": "L89", "weight": 1.0}, {"source": "src_middleware_ts", "target": "middleware_unauthorized", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\middleware.ts", "source_location": "L138", "weight": 1.0}, {"source": "middleware_addsecurityheaders", "target": "middleware_buildcsp", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\middleware.ts", "source_location": "L116", "weight": 1.0}, {"source": "middleware_unauthorized", "target": "middleware_addsecurityheaders", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\middleware.ts", "source_location": "L139", "weight": 1.0}], "raw_calls": [{"caller_nid": "middleware_buildcsp", "callee": "join", "source_file": "src\\middleware.ts", "source_location": "L30"}, {"caller_nid": "middleware_buildcsp", "callee": "map", "source_file": "src\\middleware.ts", "source_location": "L30"}, {"caller_nid": "middleware_buildcsp", "callee": "entries", "source_file": "src\\middleware.ts", "source_location": "L30"}, {"caller_nid": "middleware_addsecurityheaders", "callee": "set", "source_file": "src\\middleware.ts", "source_location": "L90"}, {"caller_nid": "middleware_addsecurityheaders", "callee": "set", "source_file": "src\\middleware.ts", "source_location": "L91"}, {"caller_nid": "middleware_addsecurityheaders", "callee": "set", "source_file": "src\\middleware.ts", "source_location": "L92"}, {"caller_nid": "middleware_addsecurityheaders", "callee": "set", "source_file": "src\\middleware.ts", "source_location": "L93"}, {"caller_nid": "middleware_addsecurityheaders", "callee": "set", "source_file": "src\\middleware.ts", "source_location": "L100"}, {"caller_nid": "middleware_addsecurityheaders", "callee": "test", "source_file": "src\\middleware.ts", "source_location": "L111"}, {"caller_nid": "middleware_addsecurityheaders", "callee": "test", "source_file": "src\\middleware.ts", "source_location": "L112"}, {"caller_nid": "middleware_addsecurityheaders", "callee": "set", "source_file": "src\\middleware.ts", "source_location": "L133"}, {"caller_nid": "middleware_unauthorized", "callee": "stringify", "source_file": "src\\middleware.ts", "source_location": "L140"}]}
+{
+  "nodes": [
+    {
+      "id": "src_middleware_ts",
+      "label": "middleware.ts",
+      "file_type": "code",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "middleware_buildcsp",
+      "label": "buildCsp()",
+      "file_type": "code",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L29"
+    },
+    {
+      "id": "middleware_addsecurityheaders",
+      "label": "addSecurityHeaders()",
+      "file_type": "code",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L89"
+    },
+    {
+      "id": "middleware_unauthorized",
+      "label": "unauthorized()",
+      "file_type": "code",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L138"
+    }
+  ],
+  "edges": [
+    {
+      "source": "src_middleware_ts",
+      "target": "astro_middleware",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_middleware_ts",
+      "target": "jose",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "src_middleware_ts",
+      "target": "src_lib_db",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L3",
+      "weight": 1.0
+    },
+    {
+      "source": "src_middleware_ts",
+      "target": "middleware_buildcsp",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "src_middleware_ts",
+      "target": "middleware_addsecurityheaders",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L89",
+      "weight": 1.0
+    },
+    {
+      "source": "src_middleware_ts",
+      "target": "middleware_unauthorized",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "middleware_addsecurityheaders",
+      "target": "middleware_buildcsp",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L116",
+      "weight": 1.0
+    },
+    {
+      "source": "middleware_unauthorized",
+      "target": "middleware_addsecurityheaders",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L139",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "middleware_buildcsp",
+      "callee": "join",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L30"
+    },
+    {
+      "caller_nid": "middleware_buildcsp",
+      "callee": "map",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L30"
+    },
+    {
+      "caller_nid": "middleware_buildcsp",
+      "callee": "entries",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L30"
+    },
+    {
+      "caller_nid": "middleware_addsecurityheaders",
+      "callee": "set",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L90"
+    },
+    {
+      "caller_nid": "middleware_addsecurityheaders",
+      "callee": "set",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L91"
+    },
+    {
+      "caller_nid": "middleware_addsecurityheaders",
+      "callee": "set",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L92"
+    },
+    {
+      "caller_nid": "middleware_addsecurityheaders",
+      "callee": "set",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L93"
+    },
+    {
+      "caller_nid": "middleware_addsecurityheaders",
+      "callee": "set",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L100"
+    },
+    {
+      "caller_nid": "middleware_addsecurityheaders",
+      "callee": "test",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L111"
+    },
+    {
+      "caller_nid": "middleware_addsecurityheaders",
+      "callee": "test",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L112"
+    },
+    {
+      "caller_nid": "middleware_addsecurityheaders",
+      "callee": "set",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L133"
+    },
+    {
+      "caller_nid": "middleware_unauthorized",
+      "callee": "stringify",
+      "source_file": "src\\middleware.ts",
+      "source_location": "L140"
+    }
+  ]
+}

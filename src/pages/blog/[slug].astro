@@ -506,3 +506,12 @@ const fbAppId = import.meta.env.PUBLIC_FB_APP_ID || undefined;
     }
   });
 </script>
+
+<script is:inline define:vars={{ articleId: article.id }}>
+  // Increment view count on load
+  fetch("/api/articles/view", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id: articleId }),
+  }).catch((err) => console.error("Failed to track view", err));
+</script>

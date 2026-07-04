@@ -1,4 +1,6 @@
 ---
+import AdPlacement from "../components/AdPlacement.astro";
+import AdminDonationBlock from "../components/AdminDonationBlock.astro";
 import SplashScreen from "../components/SplashScreen";
 import BlogLayout from "../layouts/BlogLayout.astro";
 import { ensureCategorySchema } from "../lib/categories";
@@ -8,11 +10,9 @@ import {
 } from "../lib/cloudinary";
 import { db } from "../lib/db";
 import { getPanelImageMap } from "../lib/panels";
-import AdPlacement from "../components/AdPlacement.astro";
-import AdminDonationBlock from "../components/AdminDonationBlock.astro";
 import { getSetting } from "../lib/settings";
 
-const donationPlacement = await getSetting("donation_placement") || "footer";
+const donationPlacement = (await getSetting("donation_placement")) || "footer";
 
 const PRIMARY_CATEGORY_SLUGS = [
   "for-artists",
@@ -122,7 +122,19 @@ function formatArticleCount(count: number): string {
   <!-- ─── Hero diptych ─── -->
   <section class="hero">
     <div class="hero__left">
-      <span class="hero__eyebrow">CraftedCode & Clicks Proudly Presents</span>
+      <span
+        class="hero__eyebrow"
+        style="display: inline-flex; align-items: center;"
+      >
+        <img
+          src="/images/PPS-logo.jpg"
+          alt="Pixel Prime Studio Logo"
+          width="24"
+          height="24"
+          style="margin-right: 8px;"
+        />
+        Pixel Prime Studio Proudly Presents
+      </span>
       <h2 class="hero__title">
         <span class="hero__title-the">The</span>
         Happy Feeling Prints Scriptorium
@@ -225,7 +237,10 @@ function formatArticleCount(count: number): string {
     </div>
   </section>
 
-  <div class="page-wrap" style="margin: 2rem auto; max-width: 1200px; padding: 0 1rem;">
+  <div
+    class="page-wrap"
+    style="margin: 2rem auto; max-width: 1200px; padding: 0 1rem;"
+  >
     <AdPlacement slotType="homepage_grid" />
     {donationPlacement === "homepage_grid" && <AdminDonationBlock />}
   </div>

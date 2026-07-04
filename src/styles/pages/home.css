@@ -299,7 +299,9 @@
   background-color: rgba(128, 128, 128, 0.2);
   border-radius: 15px;
   border-bottom: 1px solid transparent;
-  transition: border-color 0.15s, background-color 0.15s;
+  transition:
+    border-color 0.15s,
+    background-color 0.15s;
   text-decoration: none;
 }
 
@@ -450,7 +452,9 @@
   text-decoration: none;
   padding: 11px 24px;
   border: 2px solid var(--accent);
-  transition: background 0.12s, color 0.12s;
+  transition:
+    background 0.12s,
+    color 0.12s;
   white-space: nowrap;
 }
 

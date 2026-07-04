@@ -46,31 +46,29 @@ def test_uuid():
     limbo.quit()
 ```
 
-You can use run_test, run_test_fn, or run_debug to interact with the shell and validate results. 
-The constructor takes an optional argument with the `sql` you want to initiate the tests with.  You can also enable blob testing or override the executable and flags.
+You can use run_test, run_test_fn, or run_debug to interact with the shell and validate results.
+The constructor takes an optional argument with the `sql` you want to initiate the tests with. You can also enable blob testing or override the executable and flags.
 
 Use these Python-based tests for validating:
 
-  - Output formatting
+- Output formatting
 
-  - Shell commands and .dot interactions
+- Shell commands and .dot interactions
 
-  - Limbo-specific extensions in `testing/cli_tests/extensions.py`
+- Limbo-specific extensions in `testing/cli_tests/extensions.py`
 
-  - Any known divergence from SQLite behavior
-
+- Any known divergence from SQLite behavior
 
 > Logging and Tracing
-If you wish to trace internal events during test execution, you can set the RUST_LOG environment variable before running the test. For example:
+> If you wish to trace internal events during test execution, you can set the RUST_LOG environment variable before running the test. For example:
 
 ```bash
 RUST_LOG=none,turso_core=trace make test
 ```
 
-This will enable trace-level logs for the turso_core crate and disable logs elsewhere. Logging all internal traces to the `testing/test.log` file. 
+This will enable trace-level logs for the turso_core crate and disable logs elsewhere. Logging all internal traces to the `testing/test.log` file.
 
 **Note:** trace logs can be very verbose—it's not uncommon for a single test run to generate megabytes of logs.
-
 
 ## Deterministic Simulation Testing (DST):
 
@@ -135,6 +133,3 @@ Options:
 ## Fuzzing
 
 TODO!
-
-
-

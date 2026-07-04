@@ -395,7 +395,9 @@ export const DELETE: APIRoute = async ({ request, locals }) => {
         return json({ error: "CDN delete failed" }, 502);
       }
     } catch (err) {
-      const message = (err instanceof Error ? err.message : String(err)).toLowerCase();
+      const message = (
+        err instanceof Error ? err.message : String(err)
+      ).toLowerCase();
       if (!message.includes("not found")) {
         return json({ error: "CDN delete failed" }, 502);
       }

@@ -1,1 +1,92 @@
-{"nodes": [{"id": "configure_environments", "label": "Railway Environment Management", "file_type": "document", "source_file": "devtools/skills/use-railway/references/configure.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "configure_variables", "label": "Railway Variable Configuration", "file_type": "document", "source_file": "devtools/skills/use-railway/references/configure.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "configure_private_networking", "label": "Railway Private Networking Decision", "file_type": "document", "source_file": "devtools/skills/use-railway/references/configure.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "configure_service_config", "label": "Railway Service Config Schema", "file_type": "document", "source_file": "devtools/skills/use-railway/references/configure.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "configure_domains", "label": "Railway Domain Configuration", "file_type": "document", "source_file": "devtools/skills/use-railway/references/configure.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "configure_variables", "target": "configure_environments", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/configure.md", "source_location": "line 22", "weight": 1.0}, {"source": "configure_private_networking", "target": "configure_variables", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/configure.md", "source_location": "line 63", "weight": 1.0}, {"source": "configure_domains", "target": "configure_service_config", "relation": "implements", "confidence": "INFERRED", "confidence_score": 0.85, "source_file": "devtools/skills/use-railway/references/configure.md", "source_location": null, "weight": 0.85}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "configure_environments",
+      "label": "Railway Environment Management",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/configure.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "configure_variables",
+      "label": "Railway Variable Configuration",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/configure.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "configure_private_networking",
+      "label": "Railway Private Networking Decision",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/configure.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "configure_service_config",
+      "label": "Railway Service Config Schema",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/configure.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "configure_domains",
+      "label": "Railway Domain Configuration",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/configure.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "configure_variables",
+      "target": "configure_environments",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/configure.md",
+      "source_location": "line 22",
+      "weight": 1.0
+    },
+    {
+      "source": "configure_private_networking",
+      "target": "configure_variables",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/configure.md",
+      "source_location": "line 63",
+      "weight": 1.0
+    },
+    {
+      "source": "configure_domains",
+      "target": "configure_service_config",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "devtools/skills/use-railway/references/configure.md",
+      "source_location": null,
+      "weight": 0.85
+    }
+  ],
+  "hyperedges": []
+}

@@ -1,1 +1,142 @@
-{"nodes": [{"id": "analyze_db_postgres_postgres_analysis", "label": "PostgreSQL Analysis Reference", "file_type": "document", "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "analyze_db_postgres_pg_stat_statements", "label": "pg_stat_statements Query Performance", "file_type": "document", "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "analyze_db_postgres_vacuum_health", "label": "PostgreSQL Vacuum Health", "file_type": "document", "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "analyze_db_postgres_cache_hit", "label": "PostgreSQL Cache Hit Ratio", "file_type": "document", "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "analyze_db_postgres_tuning_formulas", "label": "PostgreSQL Tuning Formulas", "file_type": "document", "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "analyze_db_postgres_postgres_analysis", "target": "analyze_db_common_analysis", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": "line 4", "weight": 1.0}, {"source": "analyze_db_postgres_postgres_analysis", "target": "analyze_db_autoscale_rules", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": "line 222", "weight": 1.0}, {"source": "analyze_db_postgres_pg_stat_statements", "target": "analyze_db_postgres_postgres_analysis", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": "line 50", "weight": 1.0}, {"source": "analyze_db_postgres_vacuum_health", "target": "analyze_db_postgres_postgres_analysis", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": "line 41", "weight": 1.0}, {"source": "analyze_db_postgres_cache_hit", "target": "analyze_db_postgres_postgres_analysis", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": "line 37", "weight": 1.0}, {"source": "analyze_db_postgres_tuning_formulas", "target": "analyze_db_postgres_postgres_analysis", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": "line 176", "weight": 1.0}, {"source": "analyze_db_postgres_cache_hit", "target": "analyze_db_redis_cache_thrashing", "relation": "semantically_similar_to", "confidence": "INFERRED", "confidence_score": 0.7, "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": null, "weight": 0.7}, {"source": "analyze_db_postgres_vacuum_health", "target": "analyze_db_mysql_query_efficiency", "relation": "semantically_similar_to", "confidence": "INFERRED", "confidence_score": 0.62, "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md", "source_location": null, "weight": 0.62}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "analyze_db_postgres_postgres_analysis",
+      "label": "PostgreSQL Analysis Reference",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "analyze_db_postgres_pg_stat_statements",
+      "label": "pg_stat_statements Query Performance",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "analyze_db_postgres_vacuum_health",
+      "label": "PostgreSQL Vacuum Health",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "analyze_db_postgres_cache_hit",
+      "label": "PostgreSQL Cache Hit Ratio",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "analyze_db_postgres_tuning_formulas",
+      "label": "PostgreSQL Tuning Formulas",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "analyze_db_postgres_postgres_analysis",
+      "target": "analyze_db_common_analysis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": "line 4",
+      "weight": 1.0
+    },
+    {
+      "source": "analyze_db_postgres_postgres_analysis",
+      "target": "analyze_db_autoscale_rules",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": "line 222",
+      "weight": 1.0
+    },
+    {
+      "source": "analyze_db_postgres_pg_stat_statements",
+      "target": "analyze_db_postgres_postgres_analysis",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": "line 50",
+      "weight": 1.0
+    },
+    {
+      "source": "analyze_db_postgres_vacuum_health",
+      "target": "analyze_db_postgres_postgres_analysis",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": "line 41",
+      "weight": 1.0
+    },
+    {
+      "source": "analyze_db_postgres_cache_hit",
+      "target": "analyze_db_postgres_postgres_analysis",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": "line 37",
+      "weight": 1.0
+    },
+    {
+      "source": "analyze_db_postgres_tuning_formulas",
+      "target": "analyze_db_postgres_postgres_analysis",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": "line 176",
+      "weight": 1.0
+    },
+    {
+      "source": "analyze_db_postgres_cache_hit",
+      "target": "analyze_db_redis_cache_thrashing",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": null,
+      "weight": 0.7
+    },
+    {
+      "source": "analyze_db_postgres_vacuum_health",
+      "target": "analyze_db_mysql_query_efficiency",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.62,
+      "source_file": "devtools/skills/use-railway/references/analyze-db-postgres.md",
+      "source_location": null,
+      "weight": 0.62
+    }
+  ],
+  "hyperedges": []
+}

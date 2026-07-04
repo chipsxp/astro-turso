@@ -1,1 +1,48 @@
-{"nodes": [{"id": "chat_customization_diagnostics", "label": "Chat Customization Diagnostics", "file_type": "document", "source_file": "## Chat Customization Diagnostics.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "chat_customization_diagnostics", "target": "agents_md", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "## Chat Customization Diagnostics.md", "source_location": "line 29", "weight": 1.0}, {"source": "chat_customization_diagnostics", "target": "eraser_diagrams_skill", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "## Chat Customization Diagnostics.md", "source_location": "line 48", "weight": 1.0}, {"source": "chat_customization_diagnostics", "target": "project_memory_skill", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "## Chat Customization Diagnostics.md", "source_location": "line 50", "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "chat_customization_diagnostics",
+      "label": "Chat Customization Diagnostics",
+      "file_type": "document",
+      "source_file": "## Chat Customization Diagnostics.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "chat_customization_diagnostics",
+      "target": "agents_md",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "## Chat Customization Diagnostics.md",
+      "source_location": "line 29",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_customization_diagnostics",
+      "target": "eraser_diagrams_skill",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "## Chat Customization Diagnostics.md",
+      "source_location": "line 48",
+      "weight": 1.0
+    },
+    {
+      "source": "chat_customization_diagnostics",
+      "target": "project_memory_skill",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "## Chat Customization Diagnostics.md",
+      "source_location": "line 50",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

@@ -90,10 +90,7 @@ export class EventFormManager {
 
   private setValue(id: string, value: string | null | undefined): void {
     const el = document.getElementById(id) as
-      | HTMLInputElement
-      | HTMLTextAreaElement
-      | HTMLSelectElement
-      | null;
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null;
     if (!el) return;
     el.value = value ?? "";
   }

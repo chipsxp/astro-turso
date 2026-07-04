@@ -12,7 +12,7 @@ import AdPlacement from "../components/AdPlacement.astro";
 const user = Astro.locals.user;
 if (!user) return Astro.redirect("/admin");
 
-const donationPlacement = await getSetting("donation_placement") || "footer";
+const donationPlacement = (await getSetting("donation_placement")) || "footer";
 const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
 ---
 
@@ -24,7 +24,7 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
     <link rel="shortcut icon" href="/favicon.svg" />
     <script is:inline>
       (function () {
-        var t = localStorage.getItem("scriptorium_theme");
+        const t = localStorage.getItem("scriptorium_theme");
         document.documentElement.dataset.theme =
           t ||
           (window.matchMedia("(prefers-color-scheme: light)").matches
@@ -208,9 +208,9 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
 
       // Mobile sidebar toggle
       (function () {
-        var toggle = document.getElementById("menu-toggle");
-        var sidebar = document.getElementById("sidebar");
-        var overlay = document.getElementById("sidebar-overlay");
+        const toggle = document.getElementById("menu-toggle");
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("sidebar-overlay");
         if (!toggle || !sidebar || !overlay) return;
 
         function openSidebar() {
@@ -242,18 +242,18 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
       })();
 
       (function () {
-        var path = window.location.pathname;
-        var map = {
-          "/admin/dashboard": "nav-dashboard",
-          "/admin/articles/new": "nav-new",
-          "/admin/sales": "nav-sales",
-          "/admin/sales/new": "nav-sales-new",
-          "/admin/ads": "nav-ads",
-          "/admin/events": "nav-events",
-          "/admin/events/new": "nav-events-new",
-          "/admin/users": "nav-users",
-          "/admin/analytics": "nav-analytics",
-        };
+        let path = window.location.pathname;
+        const map = {
+    "/admin/dashboard": "nav-dashboard",
+    "/admin/articles/new": "nav-new",
+    "/admin/sales": "nav-sales",
+    "/admin/sales/new": "nav-sales-new",
+    "/admin/ads": "nav-ads",
+    "/admin/events": "nav-events",
+    "/admin/events/new": "nav-events-new",
+    "/admin/users": "nav-users",
+    "/admin/analytics": "nav-analytics",
+  };
         if (
           path.startsWith("/admin/articles/") &&
           path !== "/admin/articles/new"
@@ -266,9 +266,9 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
         if (path.startsWith("/admin/events/") && path !== "/admin/events/new") {
           path = "/admin/events";
         }
-        var id = map[path];
+        const id = map[path];
         if (id) {
-          var el = document.getElementById(id);
+          const el = document.getElementById(id);
           if (el) el.classList.add("active");
         }
       })();
@@ -305,33 +305,33 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
     <script is:inline>
       window.showEditorDialog = function (config) {
         return new Promise(function (resolve) {
-          var backdrop = document.getElementById("editor-dialog-backdrop");
-          var dialog = document.getElementById("editor-dialog");
-          var titleEl = document.getElementById("editor-dialog-title");
-          var fieldsEl = document.getElementById("editor-dialog-fields");
-          var okBtn = document.getElementById("editor-dialog-ok");
-          var cancelBtn = document.getElementById("editor-dialog-cancel");
+          const backdrop = document.getElementById("editor-dialog-backdrop");
+          const dialog = document.getElementById("editor-dialog");
+          const titleEl = document.getElementById("editor-dialog-title");
+          const fieldsEl = document.getElementById("editor-dialog-fields");
+          const okBtn = document.getElementById("editor-dialog-ok");
+          const cancelBtn = document.getElementById("editor-dialog-cancel");
 
           titleEl.textContent = config.title || "Insert";
           fieldsEl.innerHTML = "";
 
           (config.fields || []).forEach(function (field) {
-            var group = document.createElement("div");
+            const group = document.createElement("div");
             group.className = "form-group";
 
-            var label = document.createElement("label");
+            const label = document.createElement("label");
             label.className = "form-label";
             label.setAttribute("for", "edialog-" + field.id);
             label.textContent = field.label;
             group.appendChild(label);
 
             if (field.type === "select") {
-              var sel = document.createElement("select");
+              const sel = document.createElement("select");
               sel.className = "form-select";
               sel.id = "edialog-" + field.id;
               sel.name = field.id;
               (field.options || []).forEach(function (opt) {
-                var option = document.createElement("option");
+                const option = document.createElement("option");
                 option.value = opt.value;
                 option.textContent = opt.label;
                 if (String(opt.value) === String(field.default)) {
@@ -341,7 +341,7 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
               });
               group.appendChild(sel);
             } else {
-              var inp = document.createElement("input");
+              const inp = document.createElement("input");
               inp.className = "form-input";
               inp.id = "edialog-" + field.id;
               inp.name = field.id;
@@ -356,16 +356,16 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
 
           backdrop.hidden = false;
           dialog.hidden = false;
-          var firstInput = fieldsEl.querySelector("input, select");
+          const firstInput = fieldsEl.querySelector("input, select");
           if (firstInput) {
             firstInput.focus();
             if (firstInput.tagName === "INPUT") firstInput.select();
           }
 
           function collect() {
-            var result = {};
+            const result = {};
             (config.fields || []).forEach(function (field) {
-              var el = document.getElementById("edialog-" + field.id);
+              const el = document.getElementById("edialog-" + field.id);
               result[field.id] = el ? el.value : "";
             });
             return result;

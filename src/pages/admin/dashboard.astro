@@ -1,33 +1,37 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import PanelGallery from "../../components/admin/PanelGallery";
-import { getUserGamificationStats } from "../../lib/monetization";
+import {
+  getUserGamificationStats,
+  isTopSharerOfMonth,
+} from "../../lib/monetization";
 import { getSetting } from "../../lib/settings";
 import AdminDonationBlock from "../../components/AdminDonationBlock.astro";
 
 const userId = Astro.locals.user ? Number(Astro.locals.user.id) : 0;
 const { totalShares } = await getUserGamificationStats(userId);
-const donationPlacement = await getSetting("donation_placement") || "footer";
+const topSharer = await isTopSharerOfMonth(userId);
+const donationPlacement = (await getSetting("donation_placement")) || "footer";
 
 let gamificationRank = "Novice";
 let badgeColor = "#777";
 let badgeIcon = "🌟";
 
-if (totalShares >= 101) { 
-  gamificationRank = "Platinum"; 
-  badgeColor = "#e5e4e2"; 
+if (totalShares >= 101) {
+  gamificationRank = "Platinum";
+  badgeColor = "#e5e4e2";
   badgeIcon = "💎";
-} else if (totalShares >= 51) { 
-  gamificationRank = "Gold"; 
-  badgeColor = "#ffd700"; 
+} else if (totalShares >= 51) {
+  gamificationRank = "Gold";
+  badgeColor = "#ffd700";
   badgeIcon = "🥇";
-} else if (totalShares >= 11) { 
-  gamificationRank = "Silver"; 
-  badgeColor = "#c0c0c0"; 
+} else if (totalShares >= 11) {
+  gamificationRank = "Silver";
+  badgeColor = "#c0c0c0";
   badgeIcon = "🥈";
-} else if (totalShares >= 1) { 
-  gamificationRank = "Bronze"; 
-  badgeColor = "#cd7f32"; 
+} else if (totalShares >= 1) {
+  gamificationRank = "Bronze";
+  badgeColor = "#cd7f32";
   badgeIcon = "🥉";
 }
 ---
@@ -44,24 +48,53 @@ if (totalShares >= 101) {
   {donationPlacement === "user_dashboard" && <AdminDonationBlock />}
 
   <!-- Gamification Score Keeper -->
-  <div class="card" style="margin-bottom: 2rem; border-color: var(--accent); position: relative; overflow: hidden;">
-    <div style="padding: 1.5rem; display: flex; align-items: center; gap: 2rem;">
-      <div style="font-size: 4rem; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));">{badgeIcon}</div>
+  <div
+    class="card"
+    style="margin-bottom: 2rem; border-color: var(--accent); position: relative; overflow: hidden;"
+  >
+    <div
+      style="padding: 1.5rem; display: flex; align-items: center; gap: 2rem;"
+    >
+      <div
+        style="font-size: 4rem; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));"
+      >
+        {badgeIcon}
+      </div>
       <div>
-        <p class="page-header__eyebrow" style={`color: ${badgeColor};`}>Author Rank</p>
-        <h2 style={`margin: 0 0 0.5rem 0; font-family: var(--font-display); color: ${badgeColor}; text-shadow: 0 2px 4px rgba(0,0,0,0.5);`}>{gamificationRank}</h2>
-        <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">
-          You have generated <strong>{totalShares}</strong> shares for your artwork blogs!
+        <p class="page-header__eyebrow" style={`color: ${badgeColor};`}>
+          Author Rank
         </p>
-        {gamificationRank === "Platinum" && (
-          <div style="margin-top: 0.5rem; display: inline-block; background: var(--accent-transparent); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">
-            👑 Top Artist — Most Social Shares!
-          </div>
-        )}
+        <h2
+          style={`margin: 0 0 0.5rem 0; font-family: var(--font-display); color: ${badgeColor}; text-shadow: 0 2px 4px rgba(0,0,0,0.5);`}
+        >
+          {gamificationRank}
+        </h2>
+        <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">
+          You have generated <strong>{totalShares}</strong> shares for your artwork
+          blogs!
+        </p>
+        {
+          gamificationRank === "Platinum" && (
+            <div style="margin-top: 0.5rem; display: inline-block; background: var(--accent-transparent); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">
+              👑 Top Tier Artist
+            </div>
+          )
+        }
+        {
+          topSharer && (
+            <div style="margin-top: 1rem; background: rgba(242, 200, 90, 0.15); border: 1px solid var(--accent); color: var(--accent); padding: 1rem; border-radius: 8px;">
+              <strong style="font-size: 1.1rem; display: block; margin-bottom: 0.25rem;">
+                🏆 Artist of the Month!
+              </strong>
+              You have the most social shares this month. Thank you for
+              promoting the site! Enjoy your free advertisement block for the
+              week.
+            </div>
+          )
+        }
       </div>
     </div>
   </div>
-
 
   <!-- Filter bar -->
   <div class="filter-bar">
@@ -308,7 +341,8 @@ if (totalShares >= 101) {
     } catch (err) {
       stateLoading.style.display = "none";
       stateError.style.display = "block";
-      stateError.textContent = err instanceof Error ? err.message : "Failed to load articles.";
+      stateError.textContent =
+        err instanceof Error ? err.message : "Failed to load articles.";
     }
   }
 
@@ -408,8 +442,6 @@ if (totalShares >= 101) {
   });
 
   cleanupUploadsBtn.addEventListener("click", runUploadCleanup);
-
-
 
   loadArticles();
 </script>

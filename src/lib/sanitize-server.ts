@@ -80,7 +80,7 @@ function sanitizeInlineStyles(html: string): string {
     /style\s*=\s*["']([^"']*)["']/gi,
     (_match, styleContent) => {
       // Blocked CSS that can execute code
-      let clean = styleContent
+      const clean = styleContent
         .replace(/binding\s*:[^;]*/gi, "") // VML binding
         .replace(/behavior\s*:[^;]*/gi, "") // IE behavior
         .replace(/expression\s*\([^)]*\)/gi, "") // IE expression()

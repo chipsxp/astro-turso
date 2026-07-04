@@ -1,6 +1,12 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../lib/db";
-import { calcSalePrice, type SalesPosting, type SalesImage, type SalesTestimonial, type SalesReview } from "../../../lib/sales";
+import {
+  calcSalePrice,
+  type SalesPosting,
+  type SalesImage,
+  type SalesTestimonial,
+  type SalesReview,
+} from "../../../lib/sales";
 
 function json(data: unknown, status: number): Response {
   return new Response(JSON.stringify(data), {

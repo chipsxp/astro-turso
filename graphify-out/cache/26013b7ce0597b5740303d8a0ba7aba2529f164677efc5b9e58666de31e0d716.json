@@ -1,1 +1,46 @@
-{"nodes": [{"id": "c_users_manag_github_repo_astro_turso_scripts_create_site_settings_table_mjs", "label": "create-site-settings-table.mjs", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs", "source_location": "L1"}, {"id": "create_site_settings_table_getdb", "label": "getDb()", "file_type": "code", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs", "source_location": "L19"}], "edges": [{"source": "c_users_manag_github_repo_astro_turso_scripts_create_site_settings_table_mjs", "target": "serverless", "relation": "imports_from", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs", "source_location": "L10", "weight": 1.0}, {"source": "c_users_manag_github_repo_astro_turso_scripts_create_site_settings_table_mjs", "target": "create_site_settings_table_getdb", "relation": "contains", "confidence": "EXTRACTED", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs", "source_location": "L19", "weight": 1.0}], "raw_calls": [{"caller_nid": "create_site_settings_table_getdb", "callee": "connect", "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs", "source_location": "L20"}]}
+{
+  "nodes": [
+    {
+      "id": "c_users_manag_github_repo_astro_turso_scripts_create_site_settings_table_mjs",
+      "label": "create-site-settings-table.mjs",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "create_site_settings_table_getdb",
+      "label": "getDb()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs",
+      "source_location": "L19"
+    }
+  ],
+  "edges": [
+    {
+      "source": "c_users_manag_github_repo_astro_turso_scripts_create_site_settings_table_mjs",
+      "target": "serverless",
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "c_users_manag_github_repo_astro_turso_scripts_create_site_settings_table_mjs",
+      "target": "create_site_settings_table_getdb",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs",
+      "source_location": "L19",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "create_site_settings_table_getdb",
+      "callee": "connect",
+      "source_file": "C:\\Users\\manag\\Github-repo\\astro-turso\\scripts\\create-site-settings-table.mjs",
+      "source_location": "L20"
+    }
+  ]
+}

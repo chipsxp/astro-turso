@@ -132,7 +132,14 @@ export const POST: APIRoute = async ({ params, locals, request }) => {
     const ins = await db.execute(
       `INSERT INTO sales_images (posting_id, url, public_id, alt_text, transforms, source, sort_order)
        VALUES (?, ?, ?, ?, ?, 'cloudinary', ?)`,
-      [postingId, uploadUrl, uploadPublicId, altText, transformsJson, sortOrder],
+      [
+        postingId,
+        uploadUrl,
+        uploadPublicId,
+        altText,
+        transformsJson,
+        sortOrder,
+      ],
     );
     newId = Number(ins.lastInsertRowid);
   } catch (err: unknown) {

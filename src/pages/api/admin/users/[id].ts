@@ -135,4 +135,53 @@ export const PATCH: APIRoute = async ({ params, locals, request }) => {
   return json({ success: true, action, userId: targetId }, 200);
 };
 
-export const GET: APIRoute = () => json({ error: "Method not allowed" }, 405);
+export const DELETE: APIRoute = async ({ params, locals }) => {
+  const user = locals.user!;
+
+  if (user.role !== "admin") {
+    return json({ error: "Forbidden" }, 403);
+  }
+
+  const { id } = params;
+  if (!id || isNaN(Number(id))) {
+    return json({ error: "Invalid user id" }, 400);
+  }
+
+  const targetId = Number(id);
+
+  if (targetId === Number(user.id)) {
+    return json({ error: "You cannot delete your own account" }, 403);
+  }
+
+  try {
+    const result = await db.execute("SELECT role FROM users WHERE id = ?", [
+      targetId,
+    ]);
+    const target = result.rows[0];
+
+    if (!target) {
+      return json({ error: "User not found" }, 404);
+    }
+
+    if (target.role === "admin") {
+      return json({ error: "Admin accounts cannot be deleted" }, 403);
+    }
+
+    // Unlink any articles or events they created so we don't break existing content
+    await db.execute(
+      "UPDATE articles SET author_id = NULL WHERE author_id = ?",
+      [targetId],
+    );
+    await db.execute("UPDATE events SET owner_id = NULL WHERE owner_id = ?", [
+      targetId,
+    ]);
+
+    // Delete the user
+    await db.execute("DELETE FROM users WHERE id = ?", [targetId]);
+
+    return json({ success: true, userId: targetId }, 200);
+  } catch (error) {
+    console.error("Failed to delete user:", error);
+    return json({ error: "Database error" }, 500);
+  }
+};

@@ -1,1 +1,192 @@
-{"nodes": [{"id": "src_lib_quill_custom_colors_ts", "label": "quill-custom-colors.ts", "file_type": "code", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L1"}, {"id": "quill_custom_colors_applycolor", "label": "applyColor()", "file_type": "code", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L12"}, {"id": "quill_custom_colors_attachpickercontrol", "label": "attachPickerControl()", "file_type": "code", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L22"}, {"id": "quill_custom_colors_enablecustomcolorpickers", "label": "enableCustomColorPickers()", "file_type": "code", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L78"}], "edges": [{"source": "src_lib_quill_custom_colors_ts", "target": "quill_custom_colors_applycolor", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L12", "weight": 1.0}, {"source": "src_lib_quill_custom_colors_ts", "target": "quill_custom_colors_attachpickercontrol", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L22", "weight": 1.0}, {"source": "src_lib_quill_custom_colors_ts", "target": "quill_custom_colors_enablecustomcolorpickers", "relation": "contains", "confidence": "EXTRACTED", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L78", "weight": 1.0}, {"source": "quill_custom_colors_enablecustomcolorpickers", "target": "quill_custom_colors_attachpickercontrol", "relation": "calls", "confidence": "EXTRACTED", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L89", "weight": 1.0}], "raw_calls": [{"caller_nid": "quill_custom_colors_applycolor", "callee": "focus", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L17"}, {"caller_nid": "quill_custom_colors_applycolor", "callee": "getSelection", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L18"}, {"caller_nid": "quill_custom_colors_applycolor", "callee": "format", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L19"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "querySelector", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L27"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "createElement", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L32"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "createElement", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L35"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "createElement", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L39"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "setAttribute", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L42"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "addEventListener", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L50"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "addEventListener", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L54"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "appendChild", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L58"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "appendChild", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L59"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "createElement", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L61"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "setAttribute", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L65"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "addEventListener", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L69"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "appendChild", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L72"}, {"caller_nid": "quill_custom_colors_attachpickercontrol", "callee": "appendChild", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L74"}, {"caller_nid": "quill_custom_colors_enablecustomcolorpickers", "callee": "getModule", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L79"}, {"caller_nid": "quill_custom_colors_enablecustomcolorpickers", "callee": "querySelector", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L85"}, {"caller_nid": "quill_custom_colors_enablecustomcolorpickers", "callee": "querySelector", "source_file": "src\\lib\\quill-custom-colors.ts", "source_location": "L86"}]}
+{
+  "nodes": [
+    {
+      "id": "src_lib_quill_custom_colors_ts",
+      "label": "quill-custom-colors.ts",
+      "file_type": "code",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "quill_custom_colors_applycolor",
+      "label": "applyColor()",
+      "file_type": "code",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L12"
+    },
+    {
+      "id": "quill_custom_colors_attachpickercontrol",
+      "label": "attachPickerControl()",
+      "file_type": "code",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L22"
+    },
+    {
+      "id": "quill_custom_colors_enablecustomcolorpickers",
+      "label": "enableCustomColorPickers()",
+      "file_type": "code",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L78"
+    }
+  ],
+  "edges": [
+    {
+      "source": "src_lib_quill_custom_colors_ts",
+      "target": "quill_custom_colors_applycolor",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_quill_custom_colors_ts",
+      "target": "quill_custom_colors_attachpickercontrol",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_quill_custom_colors_ts",
+      "target": "quill_custom_colors_enablecustomcolorpickers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "quill_custom_colors_enablecustomcolorpickers",
+      "target": "quill_custom_colors_attachpickercontrol",
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L89",
+      "weight": 1.0
+    }
+  ],
+  "raw_calls": [
+    {
+      "caller_nid": "quill_custom_colors_applycolor",
+      "callee": "focus",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L17"
+    },
+    {
+      "caller_nid": "quill_custom_colors_applycolor",
+      "callee": "getSelection",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L18"
+    },
+    {
+      "caller_nid": "quill_custom_colors_applycolor",
+      "callee": "format",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L19"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "querySelector",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L27"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "createElement",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L32"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "createElement",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L35"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "createElement",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L39"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "setAttribute",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L42"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "addEventListener",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L50"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "addEventListener",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L54"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "appendChild",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L58"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "appendChild",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L59"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "createElement",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L61"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "setAttribute",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L65"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "addEventListener",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L69"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "appendChild",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L72"
+    },
+    {
+      "caller_nid": "quill_custom_colors_attachpickercontrol",
+      "callee": "appendChild",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L74"
+    },
+    {
+      "caller_nid": "quill_custom_colors_enablecustomcolorpickers",
+      "callee": "getModule",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L79"
+    },
+    {
+      "caller_nid": "quill_custom_colors_enablecustomcolorpickers",
+      "callee": "querySelector",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L85"
+    },
+    {
+      "caller_nid": "quill_custom_colors_enablecustomcolorpickers",
+      "callee": "querySelector",
+      "source_file": "src\\lib\\quill-custom-colors.ts",
+      "source_location": "L86"
+    }
+  ]
+}

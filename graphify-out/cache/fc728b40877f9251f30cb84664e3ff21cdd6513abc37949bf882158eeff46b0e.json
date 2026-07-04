@@ -1,1 +1,295 @@
-{"nodes": [{"id": "astro_framework_astro_framework", "label": "Astro Framework", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "astro_framework_islands_architecture", "label": "Islands Architecture", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "astro_framework_client_islands", "label": "Client Islands", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "astro_framework_server_islands", "label": "Server Islands", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "astro_framework_server_first", "label": "Server-First Rendering", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "astro_framework_spa_model", "label": "Single-Page App (SPA) Model", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "astro_framework_mpa_model", "label": "Multi-Page App (MPA) Model", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "astro_framework_fast_by_default", "label": "Fast by Default", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "astro_framework_rationale_selective_hydration", "label": "Rationale: Selective hydration avoids monolithic JavaScript payloads", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "astro_framework_rationale_server_first_tti", "label": "Rationale: Server-first rendering improves first-load and TTI for content sites", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "astro_framework_rationale_low_js_performance", "label": "Rationale: Less client JavaScript yields better performance and conversion outcomes", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "astro_framework_jason_miller_post", "label": "Jason Miller Islands Architecture Post (2020)", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "astro_framework_katie_sylor_miller", "label": "Katie Sylor-Miller 'component island' origin (2019)", "file_type": "document", "source_file": "library\\astro-framework.txt", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "astro_framework_astro_framework", "target": "astro_framework_islands_architecture", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}, {"source": "astro_framework_astro_framework", "target": "astro_framework_server_first", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}, {"source": "astro_framework_astro_framework", "target": "astro_framework_fast_by_default", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}, {"source": "astro_framework_client_islands", "target": "astro_framework_islands_architecture", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}, {"source": "astro_framework_server_islands", "target": "astro_framework_islands_architecture", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}, {"source": "astro_framework_server_first", "target": "astro_framework_mpa_model", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}, {"source": "astro_framework_server_first", "target": "astro_framework_spa_model", "relation": "conceptually_related_to", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}, {"source": "astro_framework_rationale_selective_hydration", "target": "astro_framework_islands_architecture", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}, {"source": "astro_framework_rationale_server_first_tti", "target": "astro_framework_server_first", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}, {"source": "astro_framework_rationale_low_js_performance", "target": "astro_framework_fast_by_default", "relation": "rationale_for", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}, {"source": "astro_framework_islands_architecture", "target": "astro_framework_jason_miller_post", "relation": "cites", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}, {"source": "astro_framework_islands_architecture", "target": "astro_framework_katie_sylor_miller", "relation": "cites", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}, {"source": "astro_framework_fast_by_default", "target": "cloudinary_llms_optimization_overview", "relation": "semantically_similar_to", "confidence": "INFERRED", "confidence_score": 0.82, "source_file": "library\\astro-framework.txt", "source_location": null, "weight": 1.0}], "hyperedges": [{"id": "astro_performance_principles", "label": "Astro Performance Design Principles", "nodes": ["astro_framework_islands_architecture", "astro_framework_server_first", "astro_framework_fast_by_default", "astro_framework_rationale_low_js_performance"], "relation": "form", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library\\astro-framework.txt"}]}
+{
+  "nodes": [
+    {
+      "id": "astro_framework_astro_framework",
+      "label": "Astro Framework",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "astro_framework_islands_architecture",
+      "label": "Islands Architecture",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "astro_framework_client_islands",
+      "label": "Client Islands",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "astro_framework_server_islands",
+      "label": "Server Islands",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "astro_framework_server_first",
+      "label": "Server-First Rendering",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "astro_framework_spa_model",
+      "label": "Single-Page App (SPA) Model",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "astro_framework_mpa_model",
+      "label": "Multi-Page App (MPA) Model",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "astro_framework_fast_by_default",
+      "label": "Fast by Default",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "astro_framework_rationale_selective_hydration",
+      "label": "Rationale: Selective hydration avoids monolithic JavaScript payloads",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "astro_framework_rationale_server_first_tti",
+      "label": "Rationale: Server-first rendering improves first-load and TTI for content sites",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "astro_framework_rationale_low_js_performance",
+      "label": "Rationale: Less client JavaScript yields better performance and conversion outcomes",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "astro_framework_jason_miller_post",
+      "label": "Jason Miller Islands Architecture Post (2020)",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "astro_framework_katie_sylor_miller",
+      "label": "Katie Sylor-Miller 'component island' origin (2019)",
+      "file_type": "document",
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "astro_framework_astro_framework",
+      "target": "astro_framework_islands_architecture",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "astro_framework_astro_framework",
+      "target": "astro_framework_server_first",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "astro_framework_astro_framework",
+      "target": "astro_framework_fast_by_default",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "astro_framework_client_islands",
+      "target": "astro_framework_islands_architecture",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "astro_framework_server_islands",
+      "target": "astro_framework_islands_architecture",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "astro_framework_server_first",
+      "target": "astro_framework_mpa_model",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "astro_framework_server_first",
+      "target": "astro_framework_spa_model",
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "astro_framework_rationale_selective_hydration",
+      "target": "astro_framework_islands_architecture",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "astro_framework_rationale_server_first_tti",
+      "target": "astro_framework_server_first",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "astro_framework_rationale_low_js_performance",
+      "target": "astro_framework_fast_by_default",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "astro_framework_islands_architecture",
+      "target": "astro_framework_jason_miller_post",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "astro_framework_islands_architecture",
+      "target": "astro_framework_katie_sylor_miller",
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "astro_framework_fast_by_default",
+      "target": "cloudinary_llms_optimization_overview",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.82,
+      "source_file": "library\\astro-framework.txt",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "astro_performance_principles",
+      "label": "Astro Performance Design Principles",
+      "nodes": [
+        "astro_framework_islands_architecture",
+        "astro_framework_server_first",
+        "astro_framework_fast_by_default",
+        "astro_framework_rationale_low_js_performance"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library\\astro-framework.txt"
+    }
+  ]
+}

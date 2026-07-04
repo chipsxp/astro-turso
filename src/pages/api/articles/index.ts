@@ -159,14 +159,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const author = locals.user!;
   let data: Record<string, unknown>;
 
-  let title: string;
-  let body: string;
-  let slug: string;
-  let description: string | undefined;
-  let status = "draft";
-  let tags: string[] = [];
-  let categoryId: number | null | undefined;
-  let uploadSessionId: string | undefined;
 
   try {
     await ensureCategorySchema();
@@ -180,25 +172,26 @@ export const POST: APIRoute = async ({ request, locals }) => {
     return json({ error: "Invalid JSON body" }, 400);
   }
 
-  title = String(data.title ?? "").trim();
-  body = String(data.body ?? "").trim();
-  slug = String(data.slug ?? "").trim() || toSlug(title ?? "");
-  description =
+  const title = String(data.title ?? "").trim();
+  let body = String(data.body ?? "").trim();
+  const slug = String(data.slug ?? "").trim() || toSlug(title ?? "");
+  const description =
     typeof data.description === "string" && data.description.trim().length > 0
       ? data.description.trim()
       : undefined;
-  status =
+  const status =
     typeof data.status === "string" &&
     ["draft", "published"].includes(data.status)
       ? data.status
       : "draft";
-  tags = Array.isArray(data.tags) ? data.tags : [];
-  uploadSessionId =
+  const tags = Array.isArray(data.tags) ? data.tags : [];
+  const uploadSessionId =
     typeof data.upload_session_id === "string" &&
     data.upload_session_id.trim().length > 0
       ? data.upload_session_id.trim()
       : undefined;
 
+  let categoryId: number | null | undefined;
   try {
     categoryId = await resolveCategoryId(data, author.role === "admin");
   } catch (err) {
@@ -316,7 +309,10 @@ export const POST: APIRoute = async ({ request, locals }) => {
       }
     }
 
-    if (err instanceof Error && err.message.includes("UNIQUE constraint failed")) {
+    if (
+      err instanceof Error &&
+      err.message.includes("UNIQUE constraint failed")
+    ) {
       return json({ error: "An article with that slug already exists" }, 409);
     }
     return json({ error: "Database error" }, 500);

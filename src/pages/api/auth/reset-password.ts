@@ -9,7 +9,10 @@ function json(data: unknown, status: number): Response {
   });
 }
 
-const resetPasswordAttempts = new Map<string, { count: number; resetAt: number }>();
+const resetPasswordAttempts = new Map<
+  string,
+  { count: number; resetAt: number }
+>();
 const MAX_ATTEMPTS = 5;
 const WINDOW_MS = 60 * 60 * 1000;
 
@@ -69,7 +72,7 @@ export const POST: APIRoute = async ({ request }) => {
     // Look up token
     const result = await db.execute(
       "SELECT user_id, expires_at FROM password_resets WHERE token = ?",
-      [token]
+      [token],
     );
 
     const resetRecord = result.rows[0];
@@ -88,10 +91,10 @@ export const POST: APIRoute = async ({ request }) => {
     const hash = await bcrypt.hash(password, 12);
     const userId = Number(resetRecord.user_id);
 
-    await db.execute(
-      "UPDATE users SET password_hash = ? WHERE id = ?",
-      [hash, userId]
-    );
+    await db.execute("UPDATE users SET password_hash = ? WHERE id = ?", [
+      hash,
+      userId,
+    ]);
 
     // Delete the used token
     await db.execute("DELETE FROM password_resets WHERE token = ?", [token]);

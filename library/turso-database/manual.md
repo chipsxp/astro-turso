@@ -74,7 +74,6 @@ curl --proto '=https' --tlsv1.2 -LsSf \
   https://github.com/tursodatabase/turso/releases/latest/download/turso_cli-installer.sh | sh
 ```
 
-
 ```
 brew install turso
 ```
@@ -95,14 +94,14 @@ hello, world
 
 Turso aims towards full SQLite compatibility but has the following limitations:
 
-* Query result ordering is not guaranteed to be the same (see [#2964](https://github.com/tursodatabase/turso/issues/2964) for more discussion)
-* No multi-process access
-* No multi-threading
-* No savepoints
-* No triggers
-* No views
-* No vacuum
-* UTF-8 is the only supported character encoding
+- Query result ordering is not guaranteed to be the same (see [#2964](https://github.com/tursodatabase/turso/issues/2964) for more discussion)
+- No multi-process access
+- No multi-threading
+- No savepoints
+- No triggers
+- No views
+- No vacuum
+- UTF-8 is the only supported character encoding
 
 For more detailed list of SQLite compatibility, please refer to [COMPAT.md](../COMPAT.md).
 
@@ -110,12 +109,12 @@ For more detailed list of SQLite compatibility, please refer to [COMPAT.md](../C
 
 The MVCC implementation is experimental and has the following limitations:
 
-* Indexes cannot be created and databases with indexes cannot be used.
-* All the data is eagerly loaded from disk to memory on first access so using big databases may take a long time to start, and will consume a lot of memory
-* Only `PRAGMA wal_checkpoint(TRUNCATE)` is supported and it blocks both readers and writers
-* Many features may not work, work incorrectly, and/or cause a panic.
-* Queries may return incorrect results
-* If a database is written to using MVCC and then opened again without MVCC, the changes are not visible unless first checkpointed
+- Indexes cannot be created and databases with indexes cannot be used.
+- All the data is eagerly loaded from disk to memory on first access so using big databases may take a long time to start, and will consume a lot of memory
+- Only `PRAGMA wal_checkpoint(TRUNCATE)` is supported and it blocks both readers and writers
+- Many features may not work, work incorrectly, and/or cause a panic.
+- Queries may return incorrect results
+- If a database is written to using MVCC and then opened again without MVCC, the changes are not visible unless first checkpointed
 
 ## The SQL shell
 
@@ -135,27 +134,27 @@ hello, world
 
 The shell supports commands in addition to SQL statements. The commands start with a dot (".") followed by the command. The supported commands are:
 
-| Command | Description |
-|---------|-------------|
-| `.schema` | Display the database schema |
-| `.dump` | Dump database contents as SQL statements |
+| Command    | Description                              |
+| ---------- | ---------------------------------------- |
+| `.schema`  | Display the database schema              |
+| `.dump`    | Dump database contents as SQL statements |
 
 ### Command line options
 
 The SQL shell supports the following command line options:
 
-| Option | Description |
-|--------|-------------|
-| `-m`, `--output-mode` `<mode>` | Configure output mode. Supported values for `<mode>`: <ul><li>`pretty` for pretty output (default)</li><li>`list` for minimal SQLite compatible format</li></ul>
-| `-q`, `--quiet` | Don't display program information at startup |
-| `-e`, `--echo` | Print commands before execution |
-| `--readonly` | Open database in read-only mode |
-| `-h`, `--help` | Print help |
-| `-V`, `--version` | Print version |
-| `--mcp` | Start a MCP server instead of the interactive shell |
-| `--experimental-encryption` | Enable experimental encryption at rest feature. **Note:** the feature is not production ready so do not use it for critical data right now. |
-| `--experimental-strict` | Enable experimental strict schema feature. **Note**: the feature is not production ready so do not use it for critical data right now. |
-| `--experimental-views` | Enable experimental views feature. **Note**: the feature is not production ready so do not use it for critical data right now. |
+| Option                         | Description                                                                                                                                                      |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-m`, `--output-mode` `<mode>` | Configure output mode. Supported values for `<mode>`: <ul><li>`pretty` for pretty output (default)</li><li>`list` for minimal SQLite compatible format</li></ul> |
+| `-q`, `--quiet`                | Don't display program information at startup                                                                                                                     |
+| `-e`, `--echo`                 | Print commands before execution                                                                                                                                  |
+| `--readonly`                   | Open database in read-only mode                                                                                                                                  |
+| `-h`, `--help`                 | Print help                                                                                                                                                       |
+| `-V`, `--version`              | Print version                                                                                                                                                    |
+| `--mcp`                        | Start a MCP server instead of the interactive shell                                                                                                              |
+| `--experimental-encryption`    | Enable experimental encryption at rest feature. **Note:** the feature is not production ready so do not use it for critical data right now.                      |
+| `--experimental-strict`        | Enable experimental strict schema feature. **Note**: the feature is not production ready so do not use it for critical data right now.                           |
+| `--experimental-views`         | Enable experimental views feature. **Note**: the feature is not production ready so do not use it for critical data right now.                                   |
 
 ## Transactions
 
@@ -163,13 +162,13 @@ A transaction is a sequence of one or more SQL statements that execute as a sing
 A transaction ensures **atomicity** and **isolation**, meaning that either all SQL statements are executed or none of them are, and that concurrent transactions don't interfere with other transactions.
 Transactions maintain database integrity in the presence of errors, crashes, and concurrent access.
 
-Each connection can have exactly one active transaction at a time. All statements prepared on a connection belong to the same transaction context. You cannot interleave statement execution across different transactions on a single connection. When you need concurrency (including `BEGIN CONCURRENT`), you need to use *different connections*, not parallel statements within the same connection.
+Each connection can have exactly one active transaction at a time. All statements prepared on a connection belong to the same transaction context. You cannot interleave statement execution across different transactions on a single connection. When you need concurrency (including `BEGIN CONCURRENT`), you need to use _different connections_, not parallel statements within the same connection.
 
 Turso supports three types of transactions: **deferred**, **immediate**, and **concurrent** transactions:
 
-* **Deferred (default)**: The transaction begins in a suspended state and does not acquire locks immediately. It starts a read transaction when the first read SQL statement (e.g., `SELECT`) runs, and upgrades to a write transaction only when the first write SQL statement (e.g., `INSERT`, `UPDATE`, `DELETE`) executes. This mode allows concurrency for reads and delays write locks, which can reduce contention.
-* **Immediate**: The transaction starts immediately with a reserved write lock, preventing other write transactions from starting concurrently but allowing reads. It attempts to acquire the write lock right away on the `BEGIN` statement, which can fail if another write transaction exists. The `EXCLUSIVE` mode is always an alias for `IMMEDIATE` in Turso, just like it is in SQLite in WAL mode.
-* **Concurrent (MVCC only)**: The transaction begins immediately and allows multiple concurrent read and write transactions. When a concurrent transaction commits, the database performs row-level conflict detection and returns a `SQLITE_BUSY` (write-write conflict) error if the transaction attempted to modify a row that was concurrently modified by another transaction. This mode provides the highest level of concurrency at the cost of potential transaction conflicts that must be retried by the application. The transaction isolation level provided by concurrent transactions is snapshot isolation.
+- **Deferred (default)**: The transaction begins in a suspended state and does not acquire locks immediately. It starts a read transaction when the first read SQL statement (e.g., `SELECT`) runs, and upgrades to a write transaction only when the first write SQL statement (e.g., `INSERT`, `UPDATE`, `DELETE`) executes. This mode allows concurrency for reads and delays write locks, which can reduce contention.
+- **Immediate**: The transaction starts immediately with a reserved write lock, preventing other write transactions from starting concurrently but allowing reads. It attempts to acquire the write lock right away on the `BEGIN` statement, which can fail if another write transaction exists. The `EXCLUSIVE` mode is always an alias for `IMMEDIATE` in Turso, just like it is in SQLite in WAL mode.
+- **Concurrent (MVCC only)**: The transaction begins immediately and allows multiple concurrent read and write transactions. When a concurrent transaction commits, the database performs row-level conflict detection and returns a `SQLITE_BUSY` (write-write conflict) error if the transaction attempted to modify a row that was concurrently modified by another transaction. This mode provides the highest level of concurrency at the cost of potential transaction conflicts that must be retried by the application. The transaction isolation level provided by concurrent transactions is snapshot isolation.
 
 ### Deferred transaction lifecycle
 
@@ -263,15 +262,15 @@ BEGIN [ transaction_mode ] [ TRANSACTION ]
 
 where `transaction_mode` is one of the following:
 
-* A `DEFERRED` transaction in a suspended state and does not acquire locks immediately. It starts a read transaction when the first read SQL statement (e.g., `SELECT`) runs, and upgrades to a write transaction only when the first write SQL statement (e.g., `INSERT`, `UPDATE`, `DELETE`) executes.
-* An `IMMEDIATE` transaction starts immediately with a reserved write lock, preventing other write transactions from starting concurrently but allowing reads. It attempts to acquire the write lock right away on the `BEGIN` statement, which can fail if another write transaction exists.
-* An `EXCLUSIVE` transaction is always an alias for `IMMEDIATE`.
-* A `CONCURRENT` transaction begins immediately, but allows other concurrent transactions.
+- A `DEFERRED` transaction in a suspended state and does not acquire locks immediately. It starts a read transaction when the first read SQL statement (e.g., `SELECT`) runs, and upgrades to a write transaction only when the first write SQL statement (e.g., `INSERT`, `UPDATE`, `DELETE`) executes.
+- An `IMMEDIATE` transaction starts immediately with a reserved write lock, preventing other write transactions from starting concurrently but allowing reads. It attempts to acquire the write lock right away on the `BEGIN` statement, which can fail if another write transaction exists.
+- An `EXCLUSIVE` transaction is always an alias for `IMMEDIATE`.
+- A `CONCURRENT` transaction begins immediately, but allows other concurrent transactions.
 
 **See also:**
 
-* [Transactions](#transactions)
-* [END TRANSACTION](#end-transaction--commit-the-current-transaction)
+- [Transactions](#transactions)
+- [END TRANSACTION](#end-transaction--commit-the-current-transaction)
 
 ### `COMMIT TRANSACTION` — commit the current transaction
 
@@ -283,7 +282,7 @@ COMMIT [ TRANSACTION ]
 
 **See also:**
 
-* [END TRANSACTION](#end-transaction--commit-the-current-transaction)
+- [END TRANSACTION](#end-transaction--commit-the-current-transaction)
 
 ### `CREATE INDEX` — define a new index
 
@@ -361,7 +360,7 @@ END [ TRANSACTION ]
 
 **See also:**
 
-* `COMMIT TRANSACTION`
+- `COMMIT TRANSACTION`
 
 ### `INSERT` — create new rows in a table
 
@@ -500,7 +499,7 @@ Turso supports a subset of the SQLite C API, including libSQL extensions.
 
 ### Basic operations
 
-#### `sqlite3_open` 
+#### `sqlite3_open`
 
 Open a connection to a database.
 
@@ -568,17 +567,17 @@ in the `p_frame_count` parameter.
 
 **Return Values:**
 
-* `SQLITE_OK` if the number of frames in the WAL file is successfully returned.
-* `SQLITE_MISUSE` if the `db` is NULL.
-* SQLITE_ERROR if an error occurs while getting the number of frames in the WAL
+- `SQLITE_OK` if the number of frames in the WAL file is successfully returned.
+- `SQLITE_MISUSE` if the `db` is NULL.
+- SQLITE_ERROR if an error occurs while getting the number of frames in the WAL
   file.
 
 **Safety Requirements:**
 
-* The `db` parameter must be a valid pointer to a `sqlite3` database
+- The `db` parameter must be a valid pointer to a `sqlite3` database
   connection.
-* The `p_frame_count` must be a valid pointer to a `u32` that will store the
-* number of frames in the WAL file.
+- The `p_frame_count` must be a valid pointer to a `u32` that will store the
+- number of frames in the WAL file.
 
 ## Journal Mode
 
@@ -586,9 +585,9 @@ Turso supports switching between different journal modes at runtime using the `P
 
 ### Supported Modes
 
-| Mode | Description |
-|------|-------------|
-| `wal` | Write-Ahead Logging mode. The default mode for new databases. Provides good concurrency for readers and writers. |
+| Mode                | Description                                                                                                                                                                                  |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `wal`               | Write-Ahead Logging mode. The default mode for new databases. Provides good concurrency for readers and writers.                                                                             |
 | `experimental_mvcc` | Multi-Version Concurrency Control mode. Enables concurrent transactions with snapshot isolation. **Note:** the feature is not production ready so do not use it for critical data right now. |
 
 > **Note:** Legacy SQLite journal modes (`delete`, `truncate`, `persist`, `memory`, `off`) are recognized but not currently supported. Attempting to switch to these modes will return an error.
@@ -640,7 +639,7 @@ turso> PRAGMA journal_mode = experimental_mvcc;
 
 The work-in-progress RFC is [here](https://github.com/tursodatabase/turso/issues/2447).
 To use encryption, you need to enable it via flag `experimental-encryption`.
-To get started, generate a secure 32 byte key in hex: 
+To get started, generate a secure 32 byte key in hex:
 
 ```shell
 $ openssl rand -hex 32
@@ -655,20 +654,20 @@ $ cargo run -- --experimental-encryption database.db
 PRAGMA cipher = 'aegis256'; -- or 'aes256gcm'
 PRAGMA hexkey = '2d7a30108d3eb3e45c90a732041fe54778bdcf707c76749fab7da335d1b39c1d';
 ```
+
 Alternatively you can provide the encryption parameters directly in a **URI**. For example:
+
 ```shell
 $ cargo run -- --experimental-encryption \
 "file:database.db?cipher=aegis256&hexkey=2d7a30108d3eb3e45c90a732041fe54778bdcf707c76749fab7da335d1b39c1d"
 ```
 
-
-> **Note:**  To reopen an already *encrypted database*, the file **must** be opened in URI format with the `cipher` and `hexkey` passed as URI parameters. Now, to reopen `database.db` the command below must be run:
+> **Note:** To reopen an already _encrypted database_, the file **must** be opened in URI format with the `cipher` and `hexkey` passed as URI parameters. Now, to reopen `database.db` the command below must be run:
 
 ```shell
 $ cargo run -- --experimental-encryption \
    "file:database.db?cipher=aegis256hexkey=2d7a30108d3eb3e45c90a732041fe54778bdcf707c76749fab7da335d1b39c1d"
 ```
-
 
 ## Vector search
 
@@ -682,8 +681,8 @@ Turso supports **dense**, **sparse**, **quantized**, and **binary** vector repre
 
 Dense vectors store a value for every dimension. Turso provides two precision levels:
 
-* **Float32 dense vectors** (`vector32`): 32-bit floating-point values, suitable for most machine learning embeddings (e.g., OpenAI embeddings, sentence transformers). Uses 4 bytes per dimension.
-* **Float64 dense vectors** (`vector64`): 64-bit floating-point values for applications requiring higher precision. Uses 8 bytes per dimension.
+- **Float32 dense vectors** (`vector32`): 32-bit floating-point values, suitable for most machine learning embeddings (e.g., OpenAI embeddings, sentence transformers). Uses 4 bytes per dimension.
+- **Float64 dense vectors** (`vector64`): 64-bit floating-point values for applications requiring higher precision. Uses 8 bytes per dimension.
 
 Dense vectors are ideal for embeddings from neural networks where most dimensions contain non-zero values.
 
@@ -691,19 +690,19 @@ Dense vectors are ideal for embeddings from neural networks where most dimension
 
 Sparse vectors only store non-zero values and their indices, making them memory-efficient for high-dimensional data with many zero values:
 
-* **Float32 sparse vectors** (`vector32_sparse`): Stores only non-zero 32-bit float values along with their dimension indices.
+- **Float32 sparse vectors** (`vector32_sparse`): Stores only non-zero 32-bit float values along with their dimension indices.
 
 Sparse vectors are ideal for TF-IDF representations, bag-of-words models, and other scenarios where most dimensions are zero.
 
 #### Quantized vectors
 
-* **8-bit quantized vectors** (`vector8`): Linearly quantizes each float value to an 8-bit integer using min/max scaling. Uses 1 byte per dimension plus 8 bytes for quantization parameters (alpha and shift). Dequantization formula: `f_i = alpha * q_i + shift`.
+- **8-bit quantized vectors** (`vector8`): Linearly quantizes each float value to an 8-bit integer using min/max scaling. Uses 1 byte per dimension plus 8 bytes for quantization parameters (alpha and shift). Dequantization formula: `f_i = alpha * q_i + shift`.
 
 Quantized vectors reduce memory usage by ~4x compared to Float32 with minimal precision loss, ideal for large-scale similarity search where storage is a concern.
 
 #### Binary vectors
 
-* **1-bit binary vectors** (`vector1bit`): Packs each dimension into a single bit (positive values → 1, non-positive → 0). Uses 1 bit per dimension. Extracted values are displayed as +1/-1.
+- **1-bit binary vectors** (`vector1bit`): Packs each dimension into a single bit (positive values → 1, non-positive → 0). Uses 1 bit per dimension. Extracted values are displayed as +1/-1.
 
 Binary vectors provide extreme compression (~32x vs Float32) and fast distance computation via bitwise operations. Ideal for binary hashing techniques and approximate nearest neighbor search.
 
@@ -769,6 +768,7 @@ Turso provides three distance metrics for measuring vector similarity. Both vect
 Computes the cosine distance between two vectors. Returns a value between 0 (identical direction) and 2 (opposite direction). Cosine distance is computed as `1 - cosine_similarity`. For `vector1bit` vectors, returns the Hamming distance (number of differing bits).
 
 Cosine distance is ideal for:
+
 - Text embeddings where magnitude is less important than direction
 - Comparing document similarity
 
@@ -784,6 +784,7 @@ LIMIT 10;
 Computes the Euclidean (L2) distance between two vectors. Returns the straight-line distance in n-dimensional space. Not supported for `vector1bit` vectors (returns an error).
 
 L2 distance is ideal for:
+
 - Image embeddings where absolute differences matter
 - Spatial data and geometric problems
 - When embeddings are not normalized
@@ -800,6 +801,7 @@ LIMIT 10;
 Computes the negative dot product between two vectors. Returns `-sum(v1[i] * v2[i])`. Lower values indicate more similar vectors.
 
 Dot product distance is ideal for:
+
 - Normalized embeddings (equivalent to cosine distance when vectors are unit-length)
 - Maximum inner product search (MIPS)
 
@@ -815,6 +817,7 @@ LIMIT 10;
 Computes the weighted Jaccard distance between two vectors, measuring dissimilarity based on the ratio of minimum to maximum values across dimensions. For `vector1bit` vectors, computes binary Jaccard distance: `1 - |intersection| / |union|` over set bits.
 
 Jaccard distance is ideal for:
+
 - Sparse vectors with many zero values
 - Set-like comparisons
 - TF-IDF and bag-of-words representations
@@ -906,13 +909,13 @@ CREATE INDEX idx_tags ON articles USING fts (tag) WITH (tokenizer = 'raw');
 
 **Available tokenizers:**
 
-| Tokenizer | Description | Use Case |
-|-----------|-------------|----------|
-| `default` | Lowercase, punctuation split, 40 char limit | General English text |
-| `raw` | No tokenization - exact match only | IDs, UUIDs, tags |
-| `simple` | Basic whitespace/punctuation split | Simple text without lowercase |
-| `whitespace` | Split on whitespace only | Space-separated tokens |
-| `ngram` | 2-3 character n-grams | Autocomplete, substring matching |
+| Tokenizer    | Description                                 | Use Case                         |
+| ------------ | ------------------------------------------- | -------------------------------- |
+| `default`    | Lowercase, punctuation split, 40 char limit | General English text             |
+| `raw`        | No tokenization - exact match only          | IDs, UUIDs, tags                 |
+| `simple`     | Basic whitespace/punctuation split          | Simple text without lowercase    |
+| `whitespace` | Split on whitespace only                    | Space-separated tokens           |
+| `ngram`      | 2-3 character n-grams                       | Autocomplete, substring matching |
 
 ### Field Weights
 
@@ -933,6 +936,7 @@ WITH (tokenizer = 'simple', weights = 'name=3.0,description=1.0');
 Turso provides three FTS functions:
 
 #### `fts_match(col1, col2, ..., 'query')`
+
 #### or `WHERE col1, col2 MATCH 'query'`
 
 Returns a boolean indicating if the row matches the query. Used in `WHERE` clauses:
@@ -969,16 +973,16 @@ WHERE fts_match(title, body, 'database');
 The query string supports Tantivy's query syntax:
 [docs](https://docs.rs/tantivy/latest/tantivy/query/struct.QueryParser.html)
 
-| Syntax | Example | Description |
-|--------|---------|-------------|
-| Single term | `database` | Match documents containing "database" |
-| Multiple terms (OR) | `database sql` | Match documents with "database" OR "sql" |
-| AND operator | `database AND sql` | Match documents with both terms |
-| NOT operator | `database NOT nosql` | Match "database" but exclude "nosql" |
-| Phrase search | `"full text search"` | Match exact phrase |
-| Prefix search | `data*` | Match terms starting with "data" |
-| Column filter | `title:database` | Match "database" only in title field |
-| Boosting | `title:database^2` | Boost matches in title field |
+| Syntax              | Example              | Description                              |
+| ------------------- | -------------------- | ---------------------------------------- |
+| Single term         | `database`           | Match documents containing "database"    |
+| Multiple terms (OR) | `database sql`       | Match documents with "database" OR "sql" |
+| AND operator        | `database AND sql`   | Match documents with both terms          |
+| NOT operator        | `database NOT nosql` | Match "database" but exclude "nosql"     |
+| Phrase search       | `"full text search"` | Match exact phrase                       |
+| Prefix search       | `data*`              | Match terms starting with "data"         |
+| Column filter       | `title:database`     | Match "database" only in title field     |
+| Boosting            | `title:database^2`   | Boost matches in title field             |
 
 ### Complex Queries
 
@@ -1041,10 +1045,10 @@ ORDER BY score DESC;
 
 ### Limitations
 
-| Limitation | Description |
-|------------|-------------|
-| No MATCH operator | Use `fts_match()` function instead of `WHERE table MATCH 'query'` |
-| No read-your-writes in transaction | FTS changes visible only after COMMIT |
+| Limitation                         | Description                                                       |
+| ---------------------------------- | ----------------------------------------------------------------- |
+| No MATCH operator                  | Use `fts_match()` function instead of `WHERE table MATCH 'query'` |
+| No read-your-writes in transaction | FTS changes visible only after COMMIT                             |
 
 ## CDC (Early Preview)
 
@@ -1057,64 +1061,63 @@ PRAGMA unstable_capture_data_changes_conn('<mode>[,custom_cdc_table]');
 ```
 
 ### Parameters
+
 - `<mode>` can be:
-    - `off`: Turn off CDC for the connection
-    - `id`: Logs only the `rowid` (most compact)
-    - `before`: Captures row state before updates and deletes
-    - `after`: Captures row state after inserts and updates
-    - `full`: Captures both before and after states (recommended for complete audit trail)
+  - `off`: Turn off CDC for the connection
+  - `id`: Logs only the `rowid` (most compact)
+  - `before`: Captures row state before updates and deletes
+  - `after`: Captures row state after inserts and updates
+  - `full`: Captures both before and after states (recommended for complete audit trail)
 
 - `custom_cdc` is optional, It lets you specify a custom table to capture changes.
-If no table is provided, Turso uses a default `turso_cdc` table.
-
+  If no table is provided, Turso uses a default `turso_cdc` table.
 
 When **Change Data Capture (CDC)** is enabled for a connection, Turso automatically logs all modifications from that connection into a dedicated table (default: `turso_cdc`). This table records each change with details about the operation, the affected row or schema object, and its state **before** and **after** the modification.
 
 > **Note:** Currently, the CDC table is a regular table stored explicitly on disk. If you use full CDC mode and update rows frequently, each update of size N bytes will be written three times to disk (once for the before state, once for the after state, and once for the actual value in the WAL). Frequent updates in full mode can therefore significantly increase disk I/O.
 
-
-
 - **`change_id` (INTEGER)**  
-  A monotonically increasing integer uniquely identifying each change record.(guaranteed by turso-db) 
-  - Always strictly increasing.  
-  - Serves as the primary key.  
+  A monotonically increasing integer uniquely identifying each change record.(guaranteed by turso-db)
+  - Always strictly increasing.
+  - Serves as the primary key.
 
-- **`change_time` (INTEGER)**  
-> turso-db guarantee nothing about properties of the change_time sequence 
-  Local timestamp (Unix epoch, seconds) when the change was recorded.  
-  - Not guaranteed to be strictly increasing (can drift or repeat).  
+- **`change_time` (INTEGER)**
+
+> turso-db guarantee nothing about properties of the change_time sequence
+> Local timestamp (Unix epoch, seconds) when the change was recorded.
+
+- Not guaranteed to be strictly increasing (can drift or repeat).
 
 - **`change_type` (INTEGER)**  
-  Indicates the type of operation:  
-  - `1` → INSERT  
-  - `0` → UPDATE (also used for ALTER TABLE)  
-  - `-1` → DELETE (also covers DROP TABLE, DROP INDEX)  
+  Indicates the type of operation:
+  - `1` → INSERT
+  - `0` → UPDATE (also used for ALTER TABLE)
+  - `-1` → DELETE (also covers DROP TABLE, DROP INDEX)
 
 - **`table_name` (TEXT)**  
-  Name of the affected table.  
-  - For schema changes (DDL), this is always `"sqlite_schema"`.  
+  Name of the affected table.
+  - For schema changes (DDL), this is always `"sqlite_schema"`.
 
 - **`id` (INTEGER)**  
-  Rowid of the affected row in the source table.  
-  - For DDL operations: rowid of the `sqlite_schema` entry.  
+  Rowid of the affected row in the source table.
+  - For DDL operations: rowid of the `sqlite_schema` entry.
   - **Note:** `WITHOUT ROWID` tables are not supported in the tursodb and CDC
 
 - **`before` (BLOB)**  
   Full state of the row/schema **before** an UPDATE or DELETE
-  - NULL for INSERT.  
-  - For DDL changes, may contain the definition of the object before modification.  
+  - NULL for INSERT.
+  - For DDL changes, may contain the definition of the object before modification.
 
 - **`after` (BLOB)**  
   Full state of the row/schema **after** an INSERT or UPDATE
-  - NULL for DELETE.  
-  - For DDL changes, may contain the definition of the object after modification.  
+  - NULL for DELETE.
+  - For DDL changes, may contain the definition of the object after modification.
 
 - **`updates` (BLOB)**  
-  Granular details about the change.  
-  - For UPDATE: shows specific column modifications.  
+  Granular details about the change.
+  - For UPDATE: shows specific column modifications.
 
-
-> CDC records are visible even before a transaction commits. 
+> CDC records are visible even before a transaction commits.
 > Operations that fail (e.g., constraint violations) are not recorded in CDC.
 
 > Changes to the CDC table itself are also logged to CDC table. if CDC is enabled for that connection.
@@ -1200,7 +1203,7 @@ The planner can match this pattern against a user query like:
 SELECT id, content, created_at FROM documents ORDER BY vector_distance_jaccard(embedding, ?) LIMIT 10;
 ```
 
-Because the query is a *superset* of the pattern, the planner can safely apply the Index Method, enriching its output (`distance`) with data from the main table (`id`, `content`, `created_at`), using the `rowid` provided by each row from the Index Method.
+Because the query is a _superset_ of the pattern, the planner can safely apply the Index Method, enriching its output (`distance`) with data from the main table (`id`, `content`, `created_at`), using the `rowid` provided by each row from the Index Method.
 
 The query planner is conservative and will avoid using an Index Method if doing so would alter the query's semantics. Consider:
 
@@ -1214,9 +1217,9 @@ The additional filter `WHERE user = ?` does not fit the Index Method's query pat
 
 Each Index Method consists of three traits that work together (for details, see the index method module [root](../core/index_method/mod.rs)):
 
-* **`IndexMethod`** — the root trait for all Index Methods, responsible for creating `IndexMethodAttachment` instances for a given table.
-* **`IndexMethodAttachment`** — represents an Index Method instance bound to a specific table. It can create cursors for query execution and defines the metadata needed for integration with the query planner.
-* **`IndexMethodCursor`** — provides methods for accessing and updating data, as well as for managing the underlying storage during `CREATE INDEX` and `DROP INDEX` operations.
+- **`IndexMethod`** — the root trait for all Index Methods, responsible for creating `IndexMethodAttachment` instances for a given table.
+- **`IndexMethodAttachment`** — represents an Index Method instance bound to a specific table. It can create cursors for query execution and defines the metadata needed for integration with the query planner.
+- **`IndexMethodCursor`** — provides methods for accessing and updating data, as well as for managing the underlying storage during `CREATE INDEX` and `DROP INDEX` operations.
 
 While Index Methods can implement arbitrary logic internally, it's generally recommended to use a B-tree as the underlying storage mechanism. To support this, `tursodb` provides a special `backing_btree` Index Method that other Index Methods can use to create auxiliary tables for storing supporting data.
 
@@ -1234,10 +1237,10 @@ networked storage capabilities.
 
 The high-level interface to Turso is the same as in SQLite:
 
-* SQLite query language
-* The `sqlite3_prepare()` function for translating SQL statements to programs
+- SQLite query language
+- The `sqlite3_prepare()` function for translating SQL statements to programs
   ("prepared statements")
-* The `sqlite3_step()` function for executing programs
+- The `sqlite3_step()` function for executing programs
 
 If we start with the SQLite query language, you can use the `turso`
 command, for example, to evaluate SQL statements in the shell:
@@ -1278,7 +1281,7 @@ Parser->>Connection: Cmd::Stmt (ast/mod.rs)
 Note right of translate: Translates SQL statement into bytecode
 Connection->>translate:translate(stmt)
 
-translate->>Connection: Program 
+translate->>Connection: Program
 
 Connection->>main: Ok(Some(Rows { Statement }))
 
@@ -1333,7 +1336,7 @@ The code generator module takes AST as input and produces virtual machine progra
 2. `WHERE` clauses are mapped into bytecode loops
 3. `ORDER BY` causes the bytecode program to pass result rows to a sorter before returned to the application.
 4. `GROUP BY` also causes the bytecode programs to pass result rows to an aggregation function before results are returned to the application.
-  
+
 #### Query optimizer
 
 TODO
@@ -1364,39 +1367,40 @@ TODO
 
 Every I/O operation shall be tracked by a corresponding `Completion`. A `Completion` is just an object that tracks a particular I/O operation. The database `IO` will call it's complete callback to signal that the operation was complete, thus ensuring that every tracker can be poll to see if the operation succeeded.
 
-
 To advance the Program State Machines, you must first wait for the tracked completions to complete. This can be done either by busy polling (`io.wait_for_completion`) or polling once and then yielding - e.g
 
-  ```rust
-  if !completion.is_completed {
-    return StepResult::IO;
-  }
-  ```
+```rust
+if !completion.is_completed {
+  return StepResult::IO;
+}
+```
 
 This allows us to be flexible in places where we do not have the state machines in place to correctly return the Completion. Thus, we can block in certain places to avoid bigger refactorings, which opens up the opportunity for such refactorings in separate PRs.
 
 To know if a function does any sort of I/O we just have to look at the function signature. If it returns `Completion`, `Vec<Completion>` or `IOResult`, then it does I/O.
 
 The `IOResult` struct looks as follows:
-  ```rust
-  pub enum IOCompletions {
-    Single(Completion),
-  }
 
-  #[must_use]
-  pub enum IOResult<T> {
-    Done(T),
-    IO(IOCompletions),
-  }
-  ```
+```rust
+pub enum IOCompletions {
+  Single(Completion),
+}
+
+#[must_use]
+pub enum IOResult<T> {
+  Done(T),
+  IO(IOCompletions),
+}
+```
 
 To combine multiple completions, use `CompletionGroup`:
-  ```rust
-  let mut group = CompletionGroup::new(|_| {});
-  group.add(&completion1);
-  group.add(&completion2);
-  let combined = group.build();  // Single completion that waits for all
-  ```
+
+```rust
+let mut group = CompletionGroup::new(|_| {});
+group.add(&completion1);
+group.add(&completion2);
+let combined = group.build();  // Single completion that waits for all
+```
 
 This implies that when a function returns an `IOResult`, it must be called again until it returns an `IOResult::Done` variant. This works similarly to how `Future`s are polled in rust. When you receive a `Poll::Ready(None)`, it means that the future stopped it's execution. In a similar vein, if we receive `IOResult::Done`, the function/state machine has reached the end of it's execution. `IOCompletions` is here to signal that, if we are executing any I/O operation, that we need to propagate the completions that are generated from it. This design forces us to handle the fact that a function is asynchronous in nature. This is essentially [function coloring](https://www.tedinski.com/2018/11/13/function-coloring.html), but done at the application level instead of the compiler level.
 
@@ -1463,18 +1467,19 @@ first 16 bytes):
 
 The current version is 0x00. The cipher IDs are:
 
-| Algorithm | Cipher ID |
-|-----------|-----------|
-| AES-GCM (128-bit) | 1 |
-| AES-GCM (256-bit) | 2 |
-| AEGIS-256 | 3 |
-| AEGIS-256-X2 | 4 |
-| AEGIS-256-X4 | 5 |
-| AEGIS-128L | 6 |
-| AEGIS-128-X2 | 7 |
-| AEGIS-128-X4 | 8 |
+| Algorithm         | Cipher ID |
+| ----------------- | --------- |
+| AES-GCM (128-bit) | 1         |
+| AES-GCM (256-bit) | 2         |
+| AEGIS-256         | 3         |
+| AEGIS-256-X2      | 4         |
+| AEGIS-256-X4      | 5         |
+| AEGIS-128L        | 6         |
+| AEGIS-128-X2      | 7         |
+| AEGIS-128-X4      | 8         |
 
 #### Future work
+
 1. I have omitted the key derivation aspect. We can later add passphrase and key derivation support.
 2. Pages in memory are unencrypted. We can explore memory enclaves and other mechanisms.
 

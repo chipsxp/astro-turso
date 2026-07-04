@@ -1,1 +1,107 @@
-{"nodes": [{"id": "turso_manual", "label": "Turso Database Manual", "file_type": "document", "source_file": "library/turso-database/manual.md", "source_location": null, "source_url": null, "captured_at": null, "author": null}, {"id": "turso_manual_transactions", "label": "Turso Transactions (deferred lifecycle)", "file_type": "document", "source_file": "library/turso-database/manual.md", "source_location": null, "source_url": null, "captured_at": null, "author": null}, {"id": "turso_manual_sql_shell", "label": "Turso SQL Shell (.tables, shell commands)", "file_type": "document", "source_file": "library/turso-database/manual.md", "source_location": null, "source_url": null, "captured_at": null, "author": null}, {"id": "turso_manual_vector_search", "label": "Turso Vector Search", "file_type": "document", "source_file": "library/turso-database/manual.md", "source_location": null, "source_url": null, "captured_at": null, "author": null}, {"id": "turso_manual_wal", "label": "Turso WAL (Write-Ahead Log)", "file_type": "document", "source_file": "library/turso-database/manual.md", "source_location": null, "source_url": null, "captured_at": null, "author": null}], "edges": [{"source": "turso_manual_transactions", "target": "turso_manual", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library/turso-database/manual.md", "source_location": null, "weight": 1.0}, {"source": "turso_manual_sql_shell", "target": "turso_manual", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library/turso-database/manual.md", "source_location": null, "weight": 1.0}, {"source": "turso_manual_vector_search", "target": "turso_manual", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library/turso-database/manual.md", "source_location": null, "weight": 1.0}, {"source": "turso_manual_wal", "target": "turso_manual", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library/turso-database/manual.md", "source_location": null, "weight": 1.0}, {"source": "turso_fts_doc", "target": "turso_manual", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "library/turso-database/manual.md", "source_location": null, "weight": 1.0}], "hyperedges": []}
+{
+  "nodes": [
+    {
+      "id": "turso_manual",
+      "label": "Turso Database Manual",
+      "file_type": "document",
+      "source_file": "library/turso-database/manual.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null
+    },
+    {
+      "id": "turso_manual_transactions",
+      "label": "Turso Transactions (deferred lifecycle)",
+      "file_type": "document",
+      "source_file": "library/turso-database/manual.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null
+    },
+    {
+      "id": "turso_manual_sql_shell",
+      "label": "Turso SQL Shell (.tables, shell commands)",
+      "file_type": "document",
+      "source_file": "library/turso-database/manual.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null
+    },
+    {
+      "id": "turso_manual_vector_search",
+      "label": "Turso Vector Search",
+      "file_type": "document",
+      "source_file": "library/turso-database/manual.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null
+    },
+    {
+      "id": "turso_manual_wal",
+      "label": "Turso WAL (Write-Ahead Log)",
+      "file_type": "document",
+      "source_file": "library/turso-database/manual.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "turso_manual_transactions",
+      "target": "turso_manual",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library/turso-database/manual.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "turso_manual_sql_shell",
+      "target": "turso_manual",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library/turso-database/manual.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "turso_manual_vector_search",
+      "target": "turso_manual",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library/turso-database/manual.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "turso_manual_wal",
+      "target": "turso_manual",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library/turso-database/manual.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "turso_fts_doc",
+      "target": "turso_manual",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "library/turso-database/manual.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": []
+}

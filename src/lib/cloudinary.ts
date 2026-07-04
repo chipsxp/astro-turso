@@ -1,10 +1,5 @@
 type CloudinaryImagePreset =
-  | "hero"
-  | "inline"
-  | "thumb"
-  | "panel"
-  | "panel-tall"
-  | "panel-wide";
+  "hero" | "inline" | "thumb" | "panel" | "panel-tall" | "panel-wide";
 
 type BuildCloudinaryImageUrlInput = {
   cloudName: string;

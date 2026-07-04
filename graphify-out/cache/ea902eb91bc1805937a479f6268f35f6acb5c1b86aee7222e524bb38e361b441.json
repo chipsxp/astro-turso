@@ -1,1 +1,135 @@
-{"nodes": [{"id": "analyze_db_common_analysis", "label": "Database Analysis Common Patterns", "file_type": "document", "source_file": "devtools/skills/use-railway/references/analyze-db.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "analyze_db_collection_status", "label": "DB Analysis Collection Status Handling", "file_type": "document", "source_file": "devtools/skills/use-railway/references/analyze-db.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "analyze_db_autoscale_rules", "label": "Railway DB Autoscale Rules", "file_type": "document", "source_file": "devtools/skills/use-railway/references/analyze-db.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}, {"id": "analyze_db_ssh_key_handling", "label": "Railway SSH Key Registration Handling", "file_type": "document", "source_file": "devtools/skills/use-railway/references/analyze-db.md", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null}], "edges": [{"source": "analyze_db_common_analysis", "target": "analyze_db_postgres_postgres_analysis", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db.md", "source_location": "line 289", "weight": 1.0}, {"source": "analyze_db_common_analysis", "target": "analyze_db_mysql_mysql_analysis", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db.md", "source_location": "line 291", "weight": 1.0}, {"source": "analyze_db_common_analysis", "target": "analyze_db_redis_redis_analysis", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db.md", "source_location": "line 292", "weight": 1.0}, {"source": "analyze_db_common_analysis", "target": "analyze_db_mongo_mongodb_analysis", "relation": "references", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db.md", "source_location": "line 293", "weight": 1.0}, {"source": "analyze_db_ssh_key_handling", "target": "analyze_db_collection_status", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db.md", "source_location": "line 107", "weight": 1.0}, {"source": "analyze_db_collection_status", "target": "analyze_db_common_analysis", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db.md", "source_location": "line 94", "weight": 1.0}, {"source": "analyze_db_autoscale_rules", "target": "analyze_db_common_analysis", "relation": "implements", "confidence": "EXTRACTED", "confidence_score": 1.0, "source_file": "devtools/skills/use-railway/references/analyze-db.md", "source_location": "line 332", "weight": 1.0}], "hyperedges": [{"id": "railway_db_analysis_ecosystem", "label": "Railway DB Analysis Ecosystem: Common Patterns + DB-Specific References + Autoscale Rules", "nodes": ["analyze_db_common_analysis", "analyze_db_autoscale_rules", "analyze_db_collection_status"], "relation": "form", "confidence": "EXTRACTED", "confidence_score": 0.95, "source_file": "devtools/skills/use-railway/references/analyze-db.md"}]}
+{
+  "nodes": [
+    {
+      "id": "analyze_db_common_analysis",
+      "label": "Database Analysis Common Patterns",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/analyze-db.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "analyze_db_collection_status",
+      "label": "DB Analysis Collection Status Handling",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/analyze-db.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "analyze_db_autoscale_rules",
+      "label": "Railway DB Autoscale Rules",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/analyze-db.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "analyze_db_ssh_key_handling",
+      "label": "Railway SSH Key Registration Handling",
+      "file_type": "document",
+      "source_file": "devtools/skills/use-railway/references/analyze-db.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "analyze_db_common_analysis",
+      "target": "analyze_db_postgres_postgres_analysis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db.md",
+      "source_location": "line 289",
+      "weight": 1.0
+    },
+    {
+      "source": "analyze_db_common_analysis",
+      "target": "analyze_db_mysql_mysql_analysis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db.md",
+      "source_location": "line 291",
+      "weight": 1.0
+    },
+    {
+      "source": "analyze_db_common_analysis",
+      "target": "analyze_db_redis_redis_analysis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db.md",
+      "source_location": "line 292",
+      "weight": 1.0
+    },
+    {
+      "source": "analyze_db_common_analysis",
+      "target": "analyze_db_mongo_mongodb_analysis",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db.md",
+      "source_location": "line 293",
+      "weight": 1.0
+    },
+    {
+      "source": "analyze_db_ssh_key_handling",
+      "target": "analyze_db_collection_status",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db.md",
+      "source_location": "line 107",
+      "weight": 1.0
+    },
+    {
+      "source": "analyze_db_collection_status",
+      "target": "analyze_db_common_analysis",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db.md",
+      "source_location": "line 94",
+      "weight": 1.0
+    },
+    {
+      "source": "analyze_db_autoscale_rules",
+      "target": "analyze_db_common_analysis",
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "devtools/skills/use-railway/references/analyze-db.md",
+      "source_location": "line 332",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "railway_db_analysis_ecosystem",
+      "label": "Railway DB Analysis Ecosystem: Common Patterns + DB-Specific References + Autoscale Rules",
+      "nodes": [
+        "analyze_db_common_analysis",
+        "analyze_db_autoscale_rules",
+        "analyze_db_collection_status"
+      ],
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95,
+      "source_file": "devtools/skills/use-railway/references/analyze-db.md"
+    }
+  ]
+}

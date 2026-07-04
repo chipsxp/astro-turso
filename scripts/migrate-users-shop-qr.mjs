@@ -25,7 +25,7 @@ try {
   // We use a try-catch for the ALTER TABLE in case it already exists
   try {
     await db.execute(
-      "ALTER TABLE users ADD COLUMN shop_qr_code_url TEXT DEFAULT NULL"
+      "ALTER TABLE users ADD COLUMN shop_qr_code_url TEXT DEFAULT NULL",
     );
     console.log("✓ Added shop_qr_code_url to users table.");
   } catch (err) {
