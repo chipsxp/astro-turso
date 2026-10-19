@@ -9,6 +9,7 @@ import "quill-resize-module/dist/resize.css";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import { enableCustomColorPickers } from "./quill-custom-colors";
+import { showToast } from "./admin-toast";
 
 export interface EditorConfig {
   containerId: string;
@@ -224,29 +225,5 @@ export function buildPreviewHtml(options: PreviewOptions): string {
  * Toast notification management.
  */
 export function createToastManager() {
-  let timerHandle: number | undefined;
-
-  function ensureStack(): HTMLDivElement {
-    let stack = document.getElementById("toast-stack") as HTMLDivElement | null;
-    if (!stack) {
-      stack = document.createElement("div");
-      stack.id = "toast-stack";
-      stack.className = "toast-stack";
-      document.body.appendChild(stack);
-    }
-    return stack;
-  }
-
-  function show(message: string, type: "error" | "success") {
-    const stack = ensureStack();
-    stack.innerHTML = `<div class="toast toast--${type}">${message}</div>`;
-    stack.classList.add("is-visible");
-
-    if (timerHandle) window.clearTimeout(timerHandle);
-    timerHandle = window.setTimeout(() => {
-      stack.classList.remove("is-visible");
-    }, 2600);
-  }
-
-  return { show };
+  return { show: showToast };
 }

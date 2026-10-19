@@ -127,34 +127,3 @@
   vertical-align: middle;
 }
 
-/* Toast notification */
-.user-toast {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 200;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 10px 18px;
-  border: 2px solid var(--success);
-  background: var(--surface);
-  color: var(--success);
-  box-shadow: var(--shadow-lg);
-  opacity: 0;
-  transform: translateY(8px);
-  transition:
-    opacity 0.2s,
-    transform 0.2s;
-  pointer-events: none;
-}
-
-.user-toast.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.user-toast--error {
-  border-color: var(--danger);
-  color: var(--danger);
-}

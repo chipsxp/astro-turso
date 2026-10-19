@@ -1,4 +1,4 @@
-import { connect } from "@tursodatabase/serverless";
+import { createClient as connect } from "@tursodatabase/serverless/compat";
 
 const db = connect({
   url: process.env.TURSO_DATABASE_URL,

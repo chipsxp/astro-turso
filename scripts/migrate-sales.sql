@@ -27,6 +27,9 @@ CREATE TABLE IF NOT EXISTS sales_postings (
 
   -- PayPal legacy form HTML (stored raw, sanitized on render)
   paypal_button_html    TEXT,
+  paypal_link           TEXT,
+  venmo_link            TEXT,
+  cashapp_link          TEXT,
 
   -- Link to a related blog article on this site
   linked_article_slug   TEXT,

@@ -91,7 +91,6 @@ if (notFound || !posting) {
     </div>
   </div>
 
-  <div id="toast-container"></div>
 
   <form id="sales-form" novalidate data-slug={posting.slug}>
     <div class="editor-grid">
@@ -170,7 +169,7 @@ if (notFound || !posting) {
               placeholder="0.00"
             />
             <span class="form-hint"
-              >Display price — actual payment is handled by your PayPal button.</span
+              >Display price — buyers can pay using the payment options below.</span
             >
           </div>
 
@@ -245,9 +244,51 @@ if (notFound || !posting) {
         <!-- Section 3: Payment Options -->
         <div class="card" style="margin-bottom: 1.5rem;">
           <p class="panel-heading">Payment Options (Optional)</p>
+          <p class="form-hint" style="margin-bottom: 1rem;">
+            Add plain payment links here. These are different from PayPal button
+            code, and you can offer more than one payment method.
+          </p>
+          <div class="form-group">
+            <label class="form-label" for="paypal-link">PayPal Payment Link</label>
+            <input
+              class="form-input"
+              id="paypal-link"
+              name="paypal_link"
+              type="url"
+              inputmode="url"
+              value={posting.paypal_link ?? ""}
+              placeholder="https://paypal.me/yourname"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="venmo-link">Venmo Payment Link</label>
+            <input
+              class="form-input"
+              id="venmo-link"
+              name="venmo_link"
+              type="url"
+              inputmode="url"
+              value={posting.venmo_link ?? ""}
+              placeholder="https://venmo.com/u/yourname"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cashapp-link">Cash App Payment Link</label>
+            <input
+              class="form-input"
+              id="cashapp-link"
+              name="cashapp_link"
+              type="url"
+              inputmode="url"
+              value={posting.cashapp_link ?? ""}
+              placeholder="https://cash.app/$yourcashtag"
+            />
+            <span class="form-hint">Use the full secure (https://) payment URL for each method.</span>
+          </div>
+
           <div class="form-group" style="margin-bottom: 1.5rem;">
             <label class="form-label" for="paypal-html"
-              >PayPal Buy Button Code</label
+              >PayPal Buy Button Code (Optional)</label
             >
             <textarea
               class="form-input"
@@ -586,6 +627,9 @@ if (notFound || !posting) {
         : null,
       promo_start: getEl<HTMLInputElement>("promo-start").value || null,
       promo_end: getEl<HTMLInputElement>("promo-end").value || null,
+      paypal_link: getEl<HTMLInputElement>("paypal-link").value || null,
+      venmo_link: getEl<HTMLInputElement>("venmo-link").value || null,
+      cashapp_link: getEl<HTMLInputElement>("cashapp-link").value || null,
       paypal_button_html:
         getEl<HTMLTextAreaElement>("paypal-html").value || null,
       linked_article_slug:
@@ -614,24 +658,17 @@ if (notFound || !posting) {
           reader.readAsDataURL(qrFile);
         });
 
-        const uploadRes = await fetch("/api/upload", {
+        const uploadRes = await fetch("/api/admin/sales/upload", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            file_data: dataUri,
-            mime_type: qrFile.type,
-            file_size: qrFile.size,
-            alt_text: title + " QR Code",
-          }),
+          body: JSON.stringify({ file_data: dataUri }),
         });
 
         const uploadData = await uploadRes.json();
         if (!uploadRes.ok) {
           throw new Error(uploadData.error ?? "Failed to upload QR Code");
         }
-        qr_code_url = String(
-          uploadData.media_url ?? uploadData.image_url ?? "",
-        );
+        qr_code_url = String(uploadData.qr_code_url ?? "");
       }
 
       if (qr_code_url) {

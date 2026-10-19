@@ -167,19 +167,37 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
       return json({ error: "Admin accounts cannot be deleted" }, 403);
     }
 
-    // Unlink any articles or events they created so we don't break existing content
-    await db.execute(
+    const adminId = Number(user.id);
+
+    // events.owner_id is NOT NULL ... ON DELETE CASCADE, so hand events (and
+    // sales postings, whose author_id is NOT NULL) to the deleting admin
+    // instead of letting the cascade/constraint remove or block them.
+    const events = await db.execute(
+      "UPDATE events SET owner_id = ? WHERE owner_id = ?",
+      [adminId, targetId],
+    );
+    const listings = await db.execute(
+      "UPDATE sales_postings SET author_id = ? WHERE author_id = ?",
+      [adminId, targetId],
+    );
+    // Unlink articles so existing content remains after account deletion.
+    const articles = await db.execute(
       "UPDATE articles SET author_id = NULL WHERE author_id = ?",
       [targetId],
     );
-    await db.execute("UPDATE events SET owner_id = NULL WHERE owner_id = ?", [
-      targetId,
-    ]);
 
-    // Delete the user
     await db.execute("DELETE FROM users WHERE id = ?", [targetId]);
 
-    return json({ success: true, userId: targetId }, 200);
+    return json(
+      {
+        success: true,
+        userId: targetId,
+        eventsReassigned: Number(events.rowsAffected ?? 0),
+        listingsReassigned: Number(listings.rowsAffected ?? 0),
+        articlesUnlinked: Number(articles.rowsAffected ?? 0),
+      },
+      200,
+    );
   } catch (error) {
     console.error("Failed to delete user:", error);
     return json({ error: "Database error" }, 500);

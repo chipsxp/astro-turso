@@ -7,7 +7,7 @@
  * Safe to re-run: all statements are idempotent (IF NOT EXISTS).
  */
 
-import { connect } from "@tursodatabase/serverless";
+import { createClient as connect } from "@tursodatabase/serverless/compat";
 
 if (!process.env.TURSO_DATABASE_URL || !process.env.TURSO_AUTH_TOKEN) {
   console.error(
@@ -49,6 +49,9 @@ try {
       promo_end             DATETIME,
 
       paypal_button_html    TEXT,
+      paypal_link           TEXT,
+      venmo_link            TEXT,
+      cashapp_link          TEXT,
       linked_article_slug   TEXT,
 
       created_at            DATETIME DEFAULT CURRENT_TIMESTAMP,

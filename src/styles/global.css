@@ -47,8 +47,19 @@
   --nav-hover-bg: rgba(255, 255, 255, 0.12);
 }
 
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+select option,
+select optgroup {
+  background-color: var(--surface);
+  color: var(--text);
+}
+
 /* ─── Light theme — Golden Age Comics ─── */
 [data-theme="light"] {
+  color-scheme: light;
   --bg: #f4ede0;
   --surface: #ece4d4;
   --surface-2: #e1d8c6;

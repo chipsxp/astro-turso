@@ -1,6 +1,12 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
-import { MAX_BODY_BYTES, slugify } from "../../../../lib/sales";
+import {
+  isValidPaymentLink,
+  isValidQrUrl,
+  MAX_BODY_BYTES,
+  normalizePaymentLink,
+  slugify,
+} from "../../../../lib/sales";
 import { sanitizeArticleBodyServer } from "../../../../lib/sanitize-server";
 
 function json(data: unknown, status: number): Response {
@@ -135,6 +141,28 @@ export const PUT: APIRoute = async ({ params, locals, request }) => {
     setField("promo_end", body.promo_end || null);
   if (body.paypal_button_html !== undefined)
     setField("paypal_button_html", body.paypal_button_html || null);
+  const paymentLinkFields = [
+    ["paypal_link", "paypal_link"],
+    ["venmo_link", "venmo_link"],
+    ["cashapp_link", "cashapp_link"],
+  ] as const;
+  for (const [key, column] of paymentLinkFields) {
+    if (body[key] === undefined) continue;
+    const value = body[key] ?? "";
+    if (!isValidPaymentLink(value)) {
+      return json(
+        {
+          error:
+            "Payment links must be valid HTTPS URLs no longer than 2048 characters.",
+        },
+        400,
+      );
+    }
+    setField(column, normalizePaymentLink(value));
+  }
+  if (body.qr_code_url && !isValidQrUrl(body.qr_code_url)) {
+    return json({ error: "Invalid QR code URL" }, 400);
+  }
   if (body.qr_code_url !== undefined)
     setField("qr_code_url", body.qr_code_url || null);
   if (body.linked_article_slug !== undefined)

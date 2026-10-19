@@ -10,9 +10,9 @@ import {
 } from "../lib/cloudinary";
 import { db } from "../lib/db";
 import { getPanelImageMap } from "../lib/panels";
-import { getSetting } from "../lib/settings";
+import { getDonationPlacements } from "../lib/settings";
 
-const donationPlacement = (await getSetting("donation_placement")) || "footer";
+const donationPlacement = await getDonationPlacements();
 
 const PRIMARY_CATEGORY_SLUGS = [
   "for-artists",
@@ -242,7 +242,7 @@ function formatArticleCount(count: number): string {
     style="margin: 2rem auto; max-width: 1200px; padding: 0 1rem;"
   >
     <AdPlacement slotType="homepage_grid" />
-    {donationPlacement === "homepage_grid" && <AdminDonationBlock />}
+    {donationPlacement.includes("homepage_grid") && <AdminDonationBlock />}
   </div>
 
   <!-- ─── Panel grid — three pillars ─── -->

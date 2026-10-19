@@ -1,0 +1,13 @@
+# graphify ignore list — paths excluded from the knowledge graph
+# Matched gitignore-style against path parts (fnmatch).
+
+# Vendored MCP/plugin/skill tooling — not part of the app's architecture
+devtools
+
+# graphify's own generated outputs — don't graph the graph
+graphify-out
+
+# Dependency/build artifacts (belt-and-braces; usually skipped by default)
+node_modules
+dist
+.astro

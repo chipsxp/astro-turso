@@ -1,13 +1,23 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
-import { getSetting } from "../../lib/settings";
+import { getDonationConfig, getDonationPlacements } from "../../lib/settings";
 
 const user = Astro.locals.user;
 if (!user || user.role !== "admin") {
   return Astro.redirect("/admin");
 }
 
-const currentPlacement = (await getSetting("donation_placement")) || "footer";
+const placements = await getDonationPlacements();
+const config = await getDonationConfig();
+const placementOptions = [
+  ["dashboard_sidebar", "Dashboard Sidebar"],
+  ["user_dashboard", "Top of Articles Dashboard"],
+  ["article_index_top", "Top of Article Listings Page"],
+  ["shop_index_top", "Top of Shop Item Posting Listings"],
+  ["footer", "Footer"],
+  ["homepage_grid", "Homepage Grid"],
+  ["event_index_top", "Event Listing Page"],
+];
 ---
 
 <AdminLayout title="Site Settings">
@@ -44,48 +54,70 @@ const currentPlacement = (await getSetting("donation_placement")) || "footer";
 
     <form id="settings-form">
       <div class="form-group">
-        <label class="form-label" for="donation_placement"
-          >Placement Location</label
-        >
-        <select
-          id="donation_placement"
-          name="donation_placement"
+        <label class="form-label" for="donation_link">PayPal Donation Link</label>
+        <input
+          type="url"
+          id="donation_link"
           class="form-input"
           style="width: 100%;"
-        >
-          <option
-            value="dashboard_sidebar"
-            selected={currentPlacement === "dashboard_sidebar"}
-            >Dashboard Sidebar</option
-          >
-          <option
-            value="article_index_top"
-            selected={currentPlacement === "article_index_top"}
-            >Top of Article Listings Page</option
-          >
-          <option
-            value="shop_index_top"
-            selected={currentPlacement === "shop_index_top"}
-            >Top of Shop Item Posting Listings</option
-          >
-          <option value="footer" selected={currentPlacement === "footer"}
-            >Footer</option
-          >
-          <option
-            value="homepage_grid"
-            selected={currentPlacement === "homepage_grid"}
-            >Homepage Grid</option
-          >
-          <option
-            value="event_index_top"
-            selected={currentPlacement === "event_index_top"}
-            >Event Listing Page</option
-          >
-          <option value="hidden" selected={currentPlacement === "hidden"}
-            >Hidden</option
-          >
-        </select>
+          placeholder="https://www.paypal.com/donate/?hosted_button_id=..."
+          value={config.link}
+        />
       </div>
+      <div class="form-group">
+        <label class="form-label" for="donation_title">Block Title</label>
+        <input
+          type="text"
+          id="donation_title"
+          class="form-input"
+          style="width: 100%;"
+          maxlength="120"
+          value={config.title}
+        />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="donation_text">Block Message</label>
+        <textarea
+          id="donation_text"
+          class="form-input"
+          style="width: 100%;"
+          rows="2"
+          maxlength="300">{config.text}</textarea
+        >
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="donation_button_label"
+          >Button Label</label
+        >
+        <input
+          type="text"
+          id="donation_button_label"
+          class="form-input"
+          style="width: 100%;"
+          maxlength="60"
+          value={config.button}
+        />
+      </div>
+
+      <fieldset class="form-group" style="border: 0; padding: 0;">
+        <legend class="form-label">Placement Locations</legend>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0 0 0.5rem;">
+          Select one or more. Leave all unchecked to hide the block.
+        </p>
+        {
+          placementOptions.map(([value, label]) => (
+            <label style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.4rem;">
+              <input
+                type="checkbox"
+                name="donation_placement"
+                value={value}
+                checked={placements.includes(value)}
+              />
+              {label}
+            </label>
+          ))
+        }
+      </fieldset>
 
       <div style="margin-top: 2rem;">
         <button type="submit" id="save-btn" class="btn btn-primary"
@@ -97,6 +129,9 @@ const currentPlacement = (await getSetting("donation_placement")) || "footer";
 </AdminLayout>
 
 <style>
+  .is-hidden {
+    display: none;
+  }
   .form-group {
     margin-bottom: 1.5rem;
   }
@@ -136,19 +171,32 @@ const currentPlacement = (await getSetting("donation_placement")) || "footer";
     saveBtn.disabled = true;
     saveBtn.textContent = "Saving...";
 
-    const placement = (
-      document.getElementById("donation_placement") as HTMLSelectElement
-    ).value;
+    const val = (id: string) =>
+      (document.getElementById(id) as HTMLInputElement).value;
+    const placement = Array.from(
+      document.querySelectorAll<HTMLInputElement>(
+        'input[name="donation_placement"]:checked',
+      ),
+    )
+      .map((c) => c.value)
+      .join(",");
 
     try {
       const res = await fetch("/api/admin/settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ donation_placement: placement }),
+        body: JSON.stringify({
+          donation_placement: placement || "hidden",
+          donation_link: val("donation_link"),
+          donation_title: val("donation_title"),
+          donation_text: val("donation_text"),
+          donation_button_label: val("donation_button_label"),
+        }),
       });
 
       if (!res.ok) {
-        throw new Error("Failed to save settings");
+        const d = await res.json().catch(() => ({}));
+        throw new Error(d.error || "Failed to save settings");
       }
 
       successAlert.classList.remove("is-hidden");
