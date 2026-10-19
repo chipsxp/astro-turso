@@ -5,14 +5,14 @@ export interface Props {
 }
 import "../styles/global.css";
 import ThemeToggle from "../components/ThemeToggle.astro";
-import { getSetting } from "../lib/settings";
+import { getDonationPlacements } from "../lib/settings";
 import AdminDonationBlock from "../components/AdminDonationBlock.astro";
 import AdPlacement from "../components/AdPlacement.astro";
 
 const user = Astro.locals.user;
 if (!user) return Astro.redirect("/admin");
 
-const donationPlacement = (await getSetting("donation_placement")) || "footer";
+const donationPlacement = await getDonationPlacements();
 const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
 ---
 
@@ -130,6 +130,8 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
           </a>
         </div>
 
+        {user.role === "admin" && (
+        <>
         <hr class="nav-divider" />
 
         <div class="nav-section">
@@ -148,6 +150,12 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
             </svg>
             Analytics & Reports
           </a>
+          <a href="/admin/media-audit" class="nav-item" id="nav-media-audit">
+            <svg class="nav-item__icon" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M2 3h12v10H2V3zm1 1v8h10V4H3zm2 6 2-3 1.5 2 1-1.5L12 10H5z"></path>
+            </svg>
+            Media Audit
+          </a>
         </div>
 
         <hr class="nav-divider" />
@@ -162,6 +170,8 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
             Advertisements
           </a>
         </div>
+        </>
+        )}
 
         <hr class="nav-divider" />
 
@@ -180,11 +190,27 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
             </svg>
             View Blog
           </a>
+          {user.role === "admin" && (
+            <a href="/admin/settings" class="nav-item" id="nav-settings">
+              <svg
+                class="nav-item__icon"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.4"
+                stroke-linecap="round"
+              >
+                <circle cx="8" cy="8" r="2.2"></circle>
+                <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M12.6 3.4l-1.4 1.4M4.8 11.2l-1.4 1.4"></path>
+              </svg>
+              Site Settings
+            </a>
+          )}
         </div>
 
         <div class="nav-section" style="margin-top: 1rem;">
           <AdPlacement slotType="dashboard_sidebar" />
-          {donationPlacement === "dashboard_sidebar" && <AdminDonationBlock />}
+          {donationPlacement.includes("dashboard_sidebar") && <AdminDonationBlock />}
         </div>
       </nav>
 
@@ -249,10 +275,12 @@ const { title = "The Happy Feeling Scriptorium", bodyClass = "" } = Astro.props;
     "/admin/sales": "nav-sales",
     "/admin/sales/new": "nav-sales-new",
     "/admin/ads": "nav-ads",
+    "/admin/settings": "nav-settings",
     "/admin/events": "nav-events",
     "/admin/events/new": "nav-events-new",
     "/admin/users": "nav-users",
     "/admin/analytics": "nav-analytics",
+    "/admin/media-audit": "nav-media-audit",
   };
         if (
           path.startsWith("/admin/articles/") &&

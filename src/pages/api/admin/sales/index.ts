@@ -1,6 +1,12 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
-import { MAX_BODY_BYTES, slugify } from "../../../../lib/sales";
+import {
+  isValidPaymentLink,
+  isValidQrUrl,
+  MAX_BODY_BYTES,
+  normalizePaymentLink,
+  slugify,
+} from "../../../../lib/sales";
 import { sanitizeArticleBodyServer } from "../../../../lib/sanitize-server";
 
 function json(data: unknown, status: number): Response {
@@ -77,6 +83,28 @@ export const POST: APIRoute = async ({ locals, request }) => {
   const paypal_button_html = body.paypal_button_html
     ? String(body.paypal_button_html)
     : null;
+  const paypalLinkInput = body.paypal_link ?? "";
+  const venmoLinkInput = body.venmo_link ?? "";
+  const cashappLinkInput = body.cashapp_link ?? "";
+  if (
+    !isValidPaymentLink(paypalLinkInput) ||
+    !isValidPaymentLink(venmoLinkInput) ||
+    !isValidPaymentLink(cashappLinkInput)
+  ) {
+    return json(
+      {
+        error:
+          "Payment links must be valid HTTPS URLs no longer than 2048 characters.",
+      },
+      400,
+    );
+  }
+  const paypal_link = normalizePaymentLink(paypalLinkInput);
+  const venmo_link = normalizePaymentLink(venmoLinkInput);
+  const cashapp_link = normalizePaymentLink(cashappLinkInput);
+  if (body.qr_code_url && !isValidQrUrl(body.qr_code_url)) {
+    return json({ error: "Invalid QR code URL" }, 400);
+  }
   const qr_code_url = body.qr_code_url ? String(body.qr_code_url) : null;
   const linked_article_slug = body.linked_article_slug
     ? String(body.linked_article_slug)
@@ -99,8 +127,9 @@ export const POST: APIRoute = async ({ locals, request }) => {
       `INSERT INTO sales_postings
         (slug, author_id, title, body, status,
          price, tags, promo_label, promo_discount_pct, promo_start, promo_end,
-         paypal_button_html, qr_code_url, linked_article_slug)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+         paypal_button_html, paypal_link, venmo_link, cashapp_link,
+         qr_code_url, linked_article_slug)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         slug,
         Number(user.id),
@@ -114,6 +143,9 @@ export const POST: APIRoute = async ({ locals, request }) => {
         promo_start,
         promo_end,
         paypal_button_html,
+        paypal_link,
+        venmo_link,
+        cashapp_link,
         qr_code_url,
         linked_article_slug,
       ],

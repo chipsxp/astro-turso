@@ -4,9 +4,9 @@ import { ensureCategorySchema, listCategories } from "../../lib/categories";
 import { db } from "../../lib/db";
 import AdPlacement from "../../components/AdPlacement.astro";
 import AdminDonationBlock from "../../components/AdminDonationBlock.astro";
-import { getSetting } from "../../lib/settings";
+import { getDonationPlacements } from "../../lib/settings";
 
-const donationPlacement = (await getSetting("donation_placement")) || "footer";
+const donationPlacement = await getDonationPlacements();
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
 const canonicalUrl = `${siteUrl}/blog`;
 const selectedCategorySlug =
@@ -263,7 +263,7 @@ function formatDate(iso: string): string {
 
     <div style="margin: 2rem 0;">
       <AdPlacement slotType="article_index_top" />
-      {donationPlacement === "article_index_top" && <AdminDonationBlock />}
+      {donationPlacement.includes("article_index_top") && <AdminDonationBlock />}
     </div>
 
     <!-- Horizontal rule -->

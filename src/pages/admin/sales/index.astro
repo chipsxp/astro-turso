@@ -165,6 +165,7 @@ try {
 </AdminLayout>
 
 <script>
+  import { showToast } from "../../../lib/admin-toast";
   document
     .querySelectorAll<HTMLButtonElement>(".js-delete-posting")
     .forEach((btn) => {
@@ -181,11 +182,11 @@ try {
             btn.closest("tr")?.remove();
           } else {
             const data = await res.json().catch(() => ({}));
-            alert(data.error ?? "Failed to delete posting.");
+            showToast(data.error ?? "Failed to delete posting.", "error");
             btn.disabled = false;
           }
         } catch {
-          alert("Network error. Please try again.");
+          showToast("Network error. Please try again.", "error");
           btn.disabled = false;
         }
       });

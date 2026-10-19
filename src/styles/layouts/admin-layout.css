@@ -586,9 +586,20 @@ pre {
   padding: 12px;
 }
 
-.ql-editor.ql-blank::before {
-  color: var(--text-status);
+/* Quill's own placeholder color (rgba(0,0,0,.6)) is lazy-loaded after this sheet and
+   is invisible on dark; the higher-specificity selector wins in both themes. */
+.ql-container.ql-snow .ql-editor.ql-blank::before {
+  color: var(--quill-placeholder);
+  opacity: 1;
   font-style: italic;
+}
+
+html[data-theme="dark"] {
+  --quill-placeholder: #b9a98f;
+}
+
+html[data-theme="light"] {
+  --quill-placeholder: rgba(92, 64, 24, 0.6);
 }
 
 .ql-snow .ql-picker.ql-color .ql-picker-options,
@@ -783,6 +794,21 @@ pre {
   width: 100%;
 }
 
+/* Native form controls and dropdown popups follow the active theme. */
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+select option,
+select optgroup {
+  background-color: var(--surface-2, var(--surface-alt));
+  color: var(--text);
+}
+
 /* Quill toolbar icons need global selectors because the toolbar is generated at runtime. */
 html[data-theme="dark"] {
   --quill-toolbar-icon: #ccc;
@@ -918,6 +944,13 @@ html[data-theme="light"] {
   color: var(--success);
   border: 2px solid var(--success);
   border-left: 4px solid var(--success);
+}
+
+.alert--info {
+  background: rgba(127, 127, 127, 0.08);
+  border: 2px solid var(--border);
+  border-left: 4px solid var(--accent);
+  color: var(--text-muted);
 }
 
 /* ─── Table ─── */
@@ -1175,4 +1208,46 @@ tbody tr:hover {
   color: var(--text);
   box-shadow: 3px 3px 0 var(--comic-black);
   transform: translate(-1px, -1px);
+}
+
+
+/* Global admin toast — single source of truth (see src/lib/admin-toast.ts) */
+.toast-stack {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 200;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  pointer-events: none;
+}
+
+.toast-stack.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast {
+  border: 2px solid var(--comic-black);
+  box-shadow: 3px 3px 0 var(--comic-black);
+  padding: 10px 14px;
+  min-width: 220px;
+  max-width: 340px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.toast--success {
+  background: var(--success);
+  color: var(--comic-black);
+}
+
+.toast--error {
+  background: var(--danger);
+  color: var(--surface-2);
 }

@@ -8,11 +8,11 @@ import {
   type SalesPosting,
   type SalesImage,
 } from "../../lib/sales";
-import { getSetting } from "../../lib/settings";
+import { getDonationPlacements } from "../../lib/settings";
 import AdminDonationBlock from "../../components/AdminDonationBlock.astro";
 import AdPlacement from "../../components/AdPlacement.astro";
 
-const donationPlacement = (await getSetting("donation_placement")) || "footer";
+const donationPlacement = await getDonationPlacements();
 
 // Query published postings directly — never loopback-fetch in SSR (fails on Railway/cPanel)
 let postings: (SalesPosting & {
@@ -74,7 +74,7 @@ try {
       </header>
 
       <AdPlacement slotType="shop_index_top" />
-      {donationPlacement === "shop_index_top" && <AdminDonationBlock />}
+      {donationPlacement.includes("shop_index_top") && <AdminDonationBlock />}
 
       {
         fetchError && (

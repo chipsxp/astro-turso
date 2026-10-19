@@ -1,0 +1,136 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import { db } from "../../lib/db";
+import { ensureMediaTable, LEAKED_MEDIA_WHERE } from "../../lib/media";
+
+if (Astro.locals.user?.role !== "admin") {
+  return Astro.redirect("/admin/dashboard");
+}
+
+await ensureMediaTable();
+const rs = await db.execute(
+  `SELECT m.id, m.url, m.alt_text, m.created_at, m.article_id, a.title AS article_title
+   FROM media m
+   LEFT JOIN articles a ON a.id = m.article_id
+   WHERE ${LEAKED_MEDIA_WHERE}
+   ORDER BY m.id DESC
+   LIMIT 500`,
+);
+const rows = rs.rows.map((r) => ({
+  id: Number(r.id),
+  url: String(r.url),
+  alt: String(r.alt_text ?? ""),
+  created: String(r.created_at ?? "").slice(0, 10),
+  articleTitle: r.article_title ? String(r.article_title) : "(deleted article)",
+}));
+---
+
+<AdminLayout title="Media Audit">
+  <div class="page-header">
+    <div>
+      <p class="page-header__eyebrow">Maintenance</p>
+      <h1 class="page-header__title">Media <em>Audit</em></h1>
+    </div>
+  </div>
+
+  <div class="alert alert--info" style="margin-bottom:1rem">
+    These <code>media</code> rows were copied from inline editor images by an old
+    backfill (no Cloudinary <code>public_id</code>, same id and URL as an
+    <code>images</code> row). Deleting removes only the <code>media</code> row;
+    the inline image and article body are untouched.
+  </div>
+
+  {
+    rows.length === 0 ? (
+      <div class="alert alert--success">No leaked media rows found.</div>
+    ) : (
+      <div class="card">
+        <div style="padding:0.75rem 1rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <label>
+            <input type="checkbox" id="select-all" /> Select all
+          </label>
+          <span id="audit-count">{rows.length} suspect row(s)</span>
+          <button id="delete-selected" class="btn-action btn-action--danger" disabled>
+            Delete selected
+          </button>
+          <span id="audit-status" role="status"></span>
+        </div>
+        <div class="table-wrap">
+          <table id="audit-table">
+            <thead>
+              <tr>
+                <th />
+                <th>Preview</th>
+                <th>Article</th>
+                <th>Alt</th>
+                <th>Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr>
+                  <td>
+                    <input
+                      type="checkbox"
+                      class="row-check"
+                      value={r.id}
+                      aria-label={`Select media ${r.id}`}
+                    />
+                  </td>
+                  <td>
+                    <img src={r.url} alt="" width="56" height="56" loading="lazy" style="object-fit:cover" />
+                  </td>
+                  <td>{r.articleTitle}</td>
+                  <td>{r.alt}</td>
+                  <td>{r.created}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )
+  }
+</AdminLayout>
+
+<script>
+  const checks = () =>
+    Array.from(document.querySelectorAll<HTMLInputElement>(".row-check"));
+  const del = document.getElementById("delete-selected") as HTMLButtonElement | null;
+  const all = document.getElementById("select-all") as HTMLInputElement | null;
+  const status = document.getElementById("audit-status");
+
+  function sync() {
+    if (del) del.disabled = !checks().some((c) => c.checked);
+  }
+
+  all?.addEventListener("change", () => {
+    checks().forEach((c) => (c.checked = all.checked));
+    sync();
+  });
+  checks().forEach((c) => c.addEventListener("change", sync));
+
+  del?.addEventListener("click", async () => {
+    const ids = checks()
+      .filter((c) => c.checked)
+      .map((c) => Number(c.value));
+    if (!ids.length) return;
+    if (!confirm(`Delete ${ids.length} media row(s)? This cannot be undone.`)) return;
+
+    del.disabled = true;
+    try {
+      const res = await fetch("/api/admin/media-audit", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Delete failed");
+      if (status) status.textContent = `Deleted ${data.deleted} row(s).`;
+      location.reload();
+    } catch (err) {
+      if (status) status.textContent = (err as Error).message;
+      sync();
+    }
+  });
+</script>

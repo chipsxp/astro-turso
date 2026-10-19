@@ -3,10 +3,10 @@ import SEOMeta from "../components/SEOMeta.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import AdminDonationBlock from "../components/AdminDonationBlock.astro";
-import { getSetting } from "../lib/settings";
+import { getDonationPlacements } from "../lib/settings";
 import "../styles/global.css";
 
-const donationPlacement = await getSetting("donation_placement") || "footer";
+const donationPlacement = await getDonationPlacements();
 
 export interface Props {
   title?: string;
@@ -99,7 +99,7 @@ const {
     <Header />
     <div class="layout-wrapper" style="display: flex; flex-direction: column; min-height: 100vh;">
       <div class="layout-main" style="flex: 1; display: flex;">
-        {donationPlacement === "sidebar" && (
+        {donationPlacement.includes("sidebar") && (
           <aside class="site-sidebar" style="width: 300px; padding: 2rem 1rem; border-right: 1px solid var(--border);">
             <AdminDonationBlock />
           </aside>

@@ -177,21 +177,16 @@ export async function ensureMediaTable(): Promise<void> {
 
   await db.execute(MEDIA_TABLE_SQL);
   await db.execute(MEDIA_INDEX_SQL);
-  await db.execute(
-    `INSERT OR IGNORE INTO media (
-        id,
-        article_id,
-        resource_type,
-        url,
-        alt_text,
-        created_at
-      )
-      SELECT id, article_id, 'image', url, alt_text, created_at
-      FROM images`,
-  );
 
   mediaSchemaReady = true;
 }
+
+// Rows copied from `images` by the removed ensureMediaTable() backfill: no
+// Cloudinary public_id, and the same id + url exists in the inline images table.
+export const LEAKED_MEDIA_WHERE = `
+  m.public_id IS NULL
+  AND m.resource_type = 'image'
+  AND EXISTS (SELECT 1 FROM images i WHERE i.id = m.id AND i.url = m.url)`;
 
 export async function ensureUploadSessionSchema(): Promise<void> {
   if (uploadSessionSchemaReady) return;

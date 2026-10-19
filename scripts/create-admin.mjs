@@ -8,7 +8,7 @@
  *   node --env-file=.env scripts/create-admin.mjs admin@example.com MyP@ssw0rd
  */
 
-import { connect } from "@tursodatabase/serverless";
+import { createClient as connect } from "@tursodatabase/serverless/compat";
 import bcrypt from "bcryptjs";
 
 const email = process.argv[2];

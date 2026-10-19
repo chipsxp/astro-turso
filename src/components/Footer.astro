@@ -1,10 +1,10 @@
 ---
-import { getSetting } from "../lib/settings";
+import { getDonationPlacements } from "../lib/settings";
 import AdminDonationBlock from "./AdminDonationBlock.astro";
 import AdPlacement from "./AdPlacement.astro";
 
 const user = Astro.locals.user;
-const donationPlacement = (await getSetting("donation_placement")) || "footer";
+const donationPlacement = await getDonationPlacements();
 ---
 
 <footer class="site-footer">
@@ -40,7 +40,7 @@ const donationPlacement = (await getSetting("donation_placement")) || "footer";
     )
   }
   <AdPlacement slotType="footer" />
-  {donationPlacement === "footer" && <AdminDonationBlock />}
+  {donationPlacement.includes("footer") && <AdminDonationBlock />}
   <div class="site-footer__inner">
     <span class="site-footer__copy">
       The Happy Feeling Prints Scriptorium &mdash; &copy; {

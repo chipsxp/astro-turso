@@ -5,13 +5,14 @@ import {
   getUserGamificationStats,
   isTopSharerOfMonth,
 } from "../../lib/monetization";
-import { getSetting } from "../../lib/settings";
+import { getDonationPlacements } from "../../lib/settings";
 import AdminDonationBlock from "../../components/AdminDonationBlock.astro";
 
 const userId = Astro.locals.user ? Number(Astro.locals.user.id) : 0;
 const { totalShares } = await getUserGamificationStats(userId);
 const topSharer = await isTopSharerOfMonth(userId);
-const donationPlacement = (await getSetting("donation_placement")) || "footer";
+const donationPlacement = await getDonationPlacements();
+const isAdmin = Astro.locals.user?.role === "admin";
 
 let gamificationRank = "Novice";
 let badgeColor = "#777";
@@ -45,7 +46,7 @@ if (totalShares >= 101) {
     <a href="/admin/articles/new" class="btn btn-primary">+ New Article</a>
   </div>
 
-  {donationPlacement === "user_dashboard" && <AdminDonationBlock />}
+  {donationPlacement.includes("user_dashboard") && <AdminDonationBlock />}
 
   <!-- Gamification Score Keeper -->
   <div
@@ -136,11 +137,21 @@ if (totalShares >= 101) {
       <h2 class="page-header__title">Homepage <em>Panels</em></h2>
     </div>
   </div>
-  <PanelGallery
-    client:load
-    cloudName={process.env.CLOUDINARY_CLOUD_NAME ??
-      import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME}
-  />
+  {
+    isAdmin ? (
+      <PanelGallery
+        client:load
+        cloudName={
+          process.env.CLOUDINARY_CLOUD_NAME ??
+          import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME
+        }
+      />
+    ) : (
+      <div class="alert alert--info" role="status">
+        Homepage panels are not available for authors.
+      </div>
+    )
+  }
 
   <!-- Article table panel -->
   <div id="state-table" class="card is-hidden">
@@ -168,6 +179,8 @@ if (totalShares >= 101) {
 </style>
 
 <script>
+  import { showToast as sharedShowToast } from "../../lib/admin-toast";
+
   type Article = {
     id: number;
     title: string;
@@ -180,7 +193,6 @@ if (totalShares >= 101) {
 
   let allArticles: Article[] = [];
   let currentFilter = "all";
-  let toastTimer: number | null = null;
   let armedDeleteSlug: string | null = null;
   let armedDeleteBtn: HTMLButtonElement | null = null;
   let armedDeleteTimer: number | null = null;
@@ -194,27 +206,8 @@ if (totalShares >= 101) {
     "cleanup-uploads-btn",
   ) as HTMLButtonElement;
 
-  function ensureToastStack(): HTMLDivElement {
-    let stack = document.getElementById("toast-stack") as HTMLDivElement | null;
-    if (!stack) {
-      stack = document.createElement("div");
-      stack.id = "toast-stack";
-      stack.className = "toast-stack";
-      document.body.appendChild(stack);
-    }
-
-    return stack;
-  }
-
   function showToast(message: string, type: "success" | "error") {
-    const stack = ensureToastStack();
-    stack.innerHTML = `<div class="toast toast--${type}">${message}</div>`;
-    stack.classList.add("is-visible");
-
-    if (toastTimer) window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => {
-      stack.classList.remove("is-visible");
-    }, 2600);
+    sharedShowToast(message, type);
   }
 
   function clearArmedDelete() {

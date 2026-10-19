@@ -11,7 +11,6 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
     <a href="/admin/sales" class="btn btn-ghost">← Back to Postings</a>
   </div>
 
-  <div id="toast-container"></div>
 
   <form id="sales-form" novalidate>
     <div class="editor-grid">
@@ -84,7 +83,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
               placeholder="0.00"
             />
             <span class="form-hint"
-              >Display price — actual payment is handled by your PayPal button.</span
+              >Display price — buyers can pay using the payment options below.</span
             >
           </div>
 
@@ -156,9 +155,48 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
         <!-- Section 3: Payment Options -->
         <div class="card" style="margin-bottom: 1.5rem;">
           <p class="panel-heading">Payment Options (Optional)</p>
+          <p class="form-hint" style="margin-bottom: 1rem;">
+            Add plain payment links here. These are different from PayPal button
+            code, and you can offer more than one payment method.
+          </p>
+          <div class="form-group">
+            <label class="form-label" for="paypal-link">PayPal Payment Link</label>
+            <input
+              class="form-input"
+              id="paypal-link"
+              name="paypal_link"
+              type="url"
+              inputmode="url"
+              placeholder="https://paypal.me/yourname"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="venmo-link">Venmo Payment Link</label>
+            <input
+              class="form-input"
+              id="venmo-link"
+              name="venmo_link"
+              type="url"
+              inputmode="url"
+              placeholder="https://venmo.com/u/yourname"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cashapp-link">Cash App Payment Link</label>
+            <input
+              class="form-input"
+              id="cashapp-link"
+              name="cashapp_link"
+              type="url"
+              inputmode="url"
+              placeholder="https://cash.app/$yourcashtag"
+            />
+            <span class="form-hint">Use the full secure (https://) payment URL for each method.</span>
+          </div>
+
           <div class="form-group" style="margin-bottom: 1.5rem;">
             <label class="form-label" for="paypal-html"
-              >PayPal Buy Button Code</label
+              >PayPal Buy Button Code (Optional)</label
             >
             <textarea
               class="form-input"
@@ -507,6 +545,15 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
         promo_end:
           (document.getElementById("promo-end") as HTMLInputElement).value ||
           null,
+        paypal_link:
+          (document.getElementById("paypal-link") as HTMLInputElement).value ||
+          null,
+        venmo_link:
+          (document.getElementById("venmo-link") as HTMLInputElement).value ||
+          null,
+        cashapp_link:
+          (document.getElementById("cashapp-link") as HTMLInputElement).value ||
+          null,
         paypal_button_html:
           (document.getElementById("paypal-html") as HTMLTextAreaElement)
             .value || null,
@@ -541,24 +588,17 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
             reader.readAsDataURL(qrFile);
           });
 
-          const uploadRes = await fetch("/api/upload", {
+          const uploadRes = await fetch("/api/admin/sales/upload", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              file_data: dataUri,
-              mime_type: qrFile.type,
-              file_size: qrFile.size,
-              alt_text: title + " QR Code",
-            }),
+            body: JSON.stringify({ file_data: dataUri }),
           });
 
           const uploadData = await uploadRes.json();
           if (!uploadRes.ok) {
             throw new Error(uploadData.error ?? "Failed to upload QR Code");
           }
-          qr_code_url = String(
-            uploadData.media_url ?? uploadData.image_url ?? "",
-          );
+          qr_code_url = String(uploadData.qr_code_url ?? "");
         }
 
         if (qr_code_url) {

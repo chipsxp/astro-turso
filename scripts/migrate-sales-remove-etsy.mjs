@@ -7,7 +7,7 @@
  * Safe to re-run: "duplicate column" errors are caught and reported as warnings.
  */
 
-import { connect } from "@tursodatabase/serverless";
+import { createClient as connect } from "@tursodatabase/serverless/compat";
 
 if (!process.env.TURSO_DATABASE_URL || !process.env.TURSO_AUTH_TOKEN) {
   console.error(

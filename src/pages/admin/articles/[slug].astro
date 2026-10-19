@@ -208,6 +208,7 @@ const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
 </style>
 
 <script>
+  import { showToast as sharedShowToast } from "../../../lib/admin-toast";
   import type {
     ApiErrorResponse,
     ArticleData,
@@ -241,7 +242,6 @@ const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
   let articleData: ArticleData | null = null;
   let articleId: number | null = null;
   let currentMedia: MediaRecord[] = [];
-  let toastTimer: number | undefined;
 
   // Lazy-load Quill styles
   function loadQuillStyles() {
@@ -504,26 +504,8 @@ const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
     previewBtn.focus();
   }
 
-  function ensureToastStack(): HTMLDivElement {
-    let stack = document.getElementById("toast-stack");
-    if (!stack) {
-      stack = document.createElement("div");
-      stack.id = "toast-stack";
-      stack.className = "toast-stack";
-      document.body.appendChild(stack);
-    }
-    return stack as HTMLDivElement;
-  }
-
   function showToast(message: string, type: ToastType): void {
-    const stack = ensureToastStack();
-    stack.innerHTML = `<div class="toast toast--${type}">${message}</div>`;
-    stack.classList.add("is-visible");
-
-    if (toastTimer) window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => {
-      stack.classList.remove("is-visible");
-    }, 2600);
+    sharedShowToast(message, type);
   }
 
   function syncMediaGallery(media: MediaRecord[]): void {

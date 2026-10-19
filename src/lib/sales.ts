@@ -19,6 +19,9 @@ export interface SalesPosting {
   promo_start: string | null;
   promo_end: string | null;
   paypal_button_html: string | null;
+  paypal_link: string | null;
+  venmo_link: string | null;
+  cashapp_link: string | null;
   linked_article_slug: string | null;
   qr_code_url: string | null;
   created_at: string;
@@ -71,7 +74,44 @@ export interface SalesReview {
 
 export const MAX_BODY_BYTES = 1_835_008; // 1.75 MB — same limit as articles
 export const MAX_PAYPAL_HTML_BYTES = 4_096; // 4 KB — PayPal buttons are small
+export const MAX_PAYMENT_LINK_LENGTH = 2_048;
 export const MAX_SALES_IMAGES = 4;
+
+export function isValidPaymentLink(value: unknown): value is string {
+  if (typeof value !== "string") return false;
+  const link = value.trim();
+  if (!link) return true;
+  if (link.length > MAX_PAYMENT_LINK_LENGTH) return false;
+
+  try {
+    return new URL(link).protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+export function isValidQrUrl(value: unknown): value is string {
+  if (typeof value !== "string" || value.length > MAX_PAYMENT_LINK_LENGTH) {
+    return false;
+  }
+  try {
+    const url = new URL(value);
+    if (url.protocol !== "https:" || url.hostname !== "res.cloudinary.com") {
+      return false;
+    }
+    const cloudName =
+      (typeof process !== "undefined"
+        ? process.env.CLOUDINARY_CLOUD_NAME
+        : undefined) ?? import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+    return !cloudName || url.pathname.startsWith(`/${cloudName}/`);
+  } catch {
+    return false;
+  }
+}
+
+export function normalizePaymentLink(value: string): string | null {
+  return value.trim() || null;
+}
 
 // ── Slug generation ───────────────────────────────────────────────────────────
 

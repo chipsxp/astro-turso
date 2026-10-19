@@ -1,8 +1,8 @@
-import { connect } from "@tursodatabase/serverless";
+import { createClient } from "@tursodatabase/serverless/compat";
 
-type Client = ReturnType<typeof connect>;
+type Client = ReturnType<typeof createClient>;
 type ResultSet = Awaited<ReturnType<Client["execute"]>>;
-type InArgs = Parameters<Client["execute"]>[1];
+type InArgs = unknown[];
 
 export interface TypedResultSet<T> extends Omit<ResultSet, "rows"> {
   rows: T[];
@@ -27,10 +27,10 @@ function mapRows<T = Record<string, unknown>>(
   };
 }
 
-// @tursodatabase/serverless sessions are single-use HTTP sessions — create a fresh
-// connection per execute() call. This is the correct pattern for HTTP-based serverless drivers.
+// The 1.4 driver removed Connection.execute(); the /compat entry keeps the
+// libsql-style execute() API. Keep creating a fresh client per call.
 function getDb() {
-  return connect({
+  return createClient({
     url: import.meta.env.TURSO_DATABASE_URL,
     authToken: import.meta.env.TURSO_AUTH_TOKEN,
   });
@@ -43,7 +43,7 @@ export const db = {
   ): Promise<TypedResultSet<T>> => {
     const conn = getDb();
     const result = await (args !== undefined
-      ? conn.execute(sql, args)
+      ? conn.execute(sql, args as Parameters<Client["execute"]>[1])
       : conn.execute(sql));
     return mapRows<T>(result);
   },

@@ -9,6 +9,7 @@ const PUBLIC_PATHS = [
   "/api/auth/logout",
   "/api/auth/forgot-password",
   "/api/auth/reset-password",
+  "/api/articles/view",
 ];
 const WRITE_METHODS = new Set(["POST", "PUT", "DELETE", "PATCH"]);
 
@@ -86,8 +87,31 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect("/admin", 302);
   }
 
+  // --- Admin-only sections: authors are limited to articles, sales and events ---
+  if (
+    context.locals.user &&
+    context.locals.user.role !== "admin" &&
+    ADMIN_ONLY_PATHS.some((re) => re.test(pathname))
+  ) {
+    if (pathname.startsWith("/api/")) {
+      return addSecurityHeaders(
+        new Response(JSON.stringify({ error: "Forbidden" }), {
+          status: 403,
+          headers: { "Content-Type": "application/json" },
+        }),
+        pathname,
+      );
+    }
+    return context.redirect("/admin/dashboard", 302);
+  }
+
   return addSecurityHeaders(await next(), pathname);
 });
+
+const ADMIN_ONLY_PATHS = [
+  /^\/admin\/(users|analytics|ads|settings|media-audit)(?:\/|$)/,
+  /^\/api\/admin\/(ads|settings|panels|media-audit)(?:\/|$)/,
+];
 
 function addSecurityHeaders(response: Response, pathname: string): Response {
   response.headers.set("X-Content-Type-Options", "nosniff");

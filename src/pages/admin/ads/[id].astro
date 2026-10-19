@@ -1,0 +1,238 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+import { db } from "../../../lib/db";
+
+if (Astro.locals.user?.role !== "admin") {
+  return Astro.redirect("/admin/ads");
+}
+
+const id = Number(Astro.params.id);
+if (!id || Number.isNaN(id)) {
+  return Astro.redirect("/admin/ads");
+}
+
+const rs = await db.execute(
+  "SELECT id, business_name, description, image_url, target_url, coupon_code, slot_type FROM advertisements WHERE id = ?",
+  [id],
+);
+const row = rs.rows[0];
+if (!row) {
+  return Astro.redirect("/admin/ads");
+}
+
+const ad = {
+  id,
+  business_name: String(row.business_name ?? ""),
+  description: row.description ? String(row.description) : "",
+  image_url: row.image_url ? String(row.image_url) : "",
+  target_url: String(row.target_url ?? ""),
+  coupon_code: row.coupon_code ? String(row.coupon_code) : "",
+  slot_type: String(row.slot_type ?? ""),
+};
+
+const slots = [
+  ["dashboard_sidebar", "Dashboard Sidebar"],
+  ["article_index_top", "Top of Article Listings Page"],
+  ["shop_index_top", "Top of Shop Item Posting Listings"],
+  ["footer", "Footer"],
+  ["homepage_grid", "Homepage Grid"],
+  ["event_index_top", "Event Listing Page"],
+  ["hidden", "Hidden"],
+];
+---
+
+<AdminLayout title="Edit Ad">
+  <div class="page-header">
+    <div>
+      <a
+        href="/admin/ads"
+        class="page-header__eyebrow"
+        style="text-decoration: none;">&larr; Back to Ads</a
+      >
+      <h1 class="page-header__title">Edit <em>Advertisement</em></h1>
+    </div>
+  </div>
+
+  <form
+    id="ad-form"
+    class="card"
+    style="max-width: 600px; padding: 2rem;"
+    data-id={ad.id}
+  >
+    <div class="form-group">
+      <label for="business_name"
+        >Business Name <span class="required">*</span></label
+      >
+      <input
+        type="text"
+        id="business_name"
+        name="business_name"
+        required
+        class="form-input"
+        value={ad.business_name}
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" class="form-input" rows="3"
+        >{ad.description}</textarea
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="image_file">Ad Image</label>
+      {
+        ad.image_url && (
+          <img
+            src={ad.image_url}
+            alt={`${ad.business_name} current ad`}
+            style="max-width: 200px; max-height: 140px; display: block; margin-bottom: 0.5rem; border: 1px solid var(--border);"
+          />
+        )
+      }
+      <p class="form-help">Optional — choose a file only to replace the image.</p>
+      <input
+        type="file"
+        id="image_file"
+        name="image_file"
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        class="form-input"
+        style="padding: 0.5rem;"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="target_url">Target URL <span class="required">*</span></label>
+      <input
+        type="url"
+        id="target_url"
+        name="target_url"
+        required
+        class="form-input"
+        placeholder="https://"
+        value={ad.target_url}
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="coupon_code">Coupon Code</label>
+      <input
+        type="text"
+        id="coupon_code"
+        name="coupon_code"
+        class="form-input"
+        placeholder="e.g. SAVE20"
+        value={ad.coupon_code}
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="slot_type"
+        >Slot Location <span class="required">*</span></label
+      >
+      <select id="slot_type" name="slot_type" class="form-input" required>
+        {
+          slots.map(([value, label]) => (
+            <option value={value} selected={value === ad.slot_type}>
+              {label}
+            </option>
+          ))
+        }
+      </select>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        id="submit-btn"
+        style="width: 100%;">Save Changes</button
+      >
+    </div>
+    <div id="error-msg" style="color: red; margin-top: 1rem; display: none;">
+    </div>
+  </form>
+</AdminLayout>
+
+<script>
+  const form = document.getElementById("ad-form") as HTMLFormElement;
+  const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement;
+  const errorMsg = document.getElementById("error-msg") as HTMLDivElement;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Saving...";
+    errorMsg.style.display = "none";
+
+    const fileInput = document.getElementById("image_file") as HTMLInputElement;
+    const file = fileInput.files?.[0];
+
+    try {
+      const payload: Record<string, unknown> = Object.fromEntries(
+        new FormData(form).entries(),
+      );
+      delete payload.image_file;
+
+      if (file) {
+        if (file.size > 10 * 1024 * 1024) {
+          throw new Error("Image is too large (max 10 MB).");
+        }
+        payload.image_data = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      const res = await fetch(`/api/admin/ads/${form.dataset.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        throw new Error(d.error || "Failed to update ad");
+      }
+
+      window.location.href = "/admin/ads";
+    } catch (err: unknown) {
+      errorMsg.textContent =
+        err instanceof Error ? err.message : "An unknown error occurred.";
+      errorMsg.style.display = "block";
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Save Changes";
+    }
+  });
+</script>
+
+<style>
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  .required {
+    color: var(--accent);
+  }
+  .form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    background: var(--surface-alt);
+    color: var(--text);
+    border-radius: 4px;
+    font-family: inherit;
+  }
+  .form-help {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: -0.25rem 0 0.5rem 0;
+  }
+</style>

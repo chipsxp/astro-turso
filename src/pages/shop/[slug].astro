@@ -7,6 +7,8 @@ import { db } from "../../lib/db";
 import {
   calcSalePrice,
   formatPrice,
+  isValidPaymentLink,
+  normalizePaymentLink,
   parseTags,
   type SalesPosting,
 } from "../../lib/sales";
@@ -94,6 +96,15 @@ const paypalSdkConfig =
   !safePayPal && posting.paypal_button_html
     ? extractPayPalSdkConfig(String(posting.paypal_button_html))
     : null;
+const paymentLinks = [
+  { label: "Pay with PayPal", value: posting.paypal_link },
+  { label: "Pay with Venmo", value: posting.venmo_link },
+  { label: "Pay with Cash App", value: posting.cashapp_link },
+].flatMap(({ label, value }) => {
+  if (!isValidPaymentLink(value)) return [];
+  const href = normalizePaymentLink(value);
+  return href ? [{ label, href }] : [];
+});
 
 const promoEndDate = posting.promo_end
   ? new Date(String(posting.promo_end)).toLocaleDateString("en-US", {
@@ -214,7 +225,28 @@ const galleryImages = images.map((img) => ({
         }
 
         {
-          !safePayPal && !paypalSdkConfig && (
+          paymentLinks.length > 0 && (
+            <div class="sales-payment-links">
+              <p class="sales-paypal-label">Other ways to pay:</p>
+              {paymentLinks.map((payment) => (
+                <a
+                  class="btn btn-primary sales-payment-link"
+                  href={payment.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {payment.label}
+                </a>
+              ))}
+            </div>
+          )
+        }
+
+        {
+          !safePayPal &&
+          !paypalSdkConfig &&
+          paymentLinks.length === 0 &&
+          !posting.qr_code_url && (
             <p class="sales-no-button">
               Contact the artist directly to purchase this item.
             </p>
@@ -495,6 +527,12 @@ const galleryImages = images.map((img) => ({
     font-size: 1.1rem;
     margin: 0 0 0.75rem;
     font-weight: 600;
+  }
+  .sales-payment-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
   }
   .sales-testimonials,
   .sales-reviews {
