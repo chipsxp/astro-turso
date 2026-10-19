@@ -1,6 +1,6 @@
 # The Happy Feeling Scriptorium
 
-![Version](https://img.shields.io/badge/version-1.3.0-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
+![Version](https://img.shields.io/badge/version-1.3.5-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
 
 Astro SSR blog and admin panel for publishing articles, managing events, managing media, and running a small author workflow on top of Turso and Cloudinary.
 
@@ -13,7 +13,7 @@ This repository is meant to be practical for developers who want to learn from i
 | `main`                 | 1.0.0   | Base blog platform — no events module                                                                                              |
 | `feature/events`       | 1.1.0   | Adds the Upcoming Events module (this branch)                                                                                      |
 | `feature/etsy-sales`   | 1.2.0   | Adds Etsy sales module and storefront integration, improves event flow, and raises Lighthouse score via WebP and alt-text delivery |
-| `feature/monetization` | 1.3.0   | Adds gamification scoring for social shares and an advertisement placement module                                                  |
+| `feature/monetization` | 1.3.5   | Adds gamification scoring for social shares and an advertisement placement module                                                  |
 
 Clone the branch that matches what you need:
 
@@ -290,6 +290,16 @@ If you are new to Astro or full-stack content apps, start in this order:
 
 ## Changelog
 
+### [1.3.5] — 2026-10-18 — Stability & Admin UX Fixes (`fix/code-review-hardening` branch)
+
+- Deleting a user now reassigns their events and sales postings to the acting admin and unlinks their articles; the toast shows the counts.
+- Article view dedupe window is 30 minutes.
+- `@tursodatabase/serverless` pinned to 1.4.1; the app and all scripts use `createClient` from `@tursodatabase/serverless/compat`. Run `npm install` on deploy.
+- One shared admin toast (`src/lib/admin-toast.ts` plus a single CSS block); `alert()` calls replaced.
+- Quill editor placeholder text is readable in dark and light mode.
+
+---
+
 ### [1.3.0] — 2026-06-30 — Gamification & Monetization (`feature/monetization` branch)
 
 Adds an Author Score Keeper to gamify social shares and an Advertisement Management system for site monetization.
@@ -412,3 +422,5 @@ Then create your admin user and start the server as usual.
 | **1.1.0** | Upcoming Events page               | Released    |
 | **1.2.0** | Art Sales / Shop page              | In Progress |
 | **1.3.0** | Gamification & Monetization module | Released    |
+| **1.3.5** | Stability & admin UX fixes         | Released    |
+| **1.4.0** | Code review hardening (#2–#16)     | Planned     |
