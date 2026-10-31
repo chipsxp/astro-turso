@@ -423,4 +423,4 @@ Then create your admin user and start the server as usual.
 | **1.2.0** | Art Sales / Shop page              | Released |
 | **1.3.0** | Gamification & Monetization module | Released    |
 | **1.3.5** | Stability & admin UX fixes         | Released    |
-| **1.4.0** | Code review hardening (#2–#16)     | In Progess  |
+| **1.4.0** | Code review hardening (#2–#16)     | In Progress  |
