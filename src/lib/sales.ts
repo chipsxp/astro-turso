@@ -3,6 +3,8 @@
  * Used by API routes and Astro pages for the /shop feature.
  */
 
+import { buildCloudinaryImageUrl, resolveCloudName } from "./cloudinary";
+
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 export interface SalesPosting {
@@ -99,10 +101,7 @@ export function isValidQrUrl(value: unknown): value is string {
     if (url.protocol !== "https:" || url.hostname !== "res.cloudinary.com") {
       return false;
     }
-    const cloudName =
-      (typeof process !== "undefined"
-        ? process.env.CLOUDINARY_CLOUD_NAME
-        : undefined) ?? import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+    const cloudName = resolveCloudName();
     return !cloudName || url.pathname.startsWith(`/${cloudName}/`);
   } catch {
     return false;
@@ -189,11 +188,15 @@ export function parseTransforms(json: string): SalesImageTransforms {
 
 /**
  * Build a Cloudinary delivery URL for a sales image, applying stored transforms.
+ * Delegates to the shared buildCloudinaryImageUrl ("sales" preset) so the
+ * f_auto/q_auto optimization suffix is guaranteed by one builder.
  * Transformation chain:
  *   1. Background removal (optional): e_background_removal
  *   2. Background color fill (optional, only if bgRemoval ON): b_[color]
- *   3. Text overlay (optional): l_text:[font]_[size]:[encoded_text],g_[gravity],[angle]
- *   4. Optimization: f_auto,q_auto,w_800
+ *   3. Resize: w_[width] (default 800) — before the overlay so the text font
+ *      size is relative to the final image, not the high-res original
+ *   4. Text overlay (optional): l_text:[font]_[size]:[encoded_text],g_[gravity],[angle]
+ *   5. Optimization: f_auto/q_auto (appended by the shared builder)
  */
 export function buildSalesImageUrl(
   cloudName: string,
@@ -202,20 +205,17 @@ export function buildSalesImageUrl(
   width = 800,
 ): string {
   const t = parseTransforms(transformsJson);
-  const parts: string[] = [];
+  const preTransforms: string[] = [];
 
   if (t.bgRemoval) {
-    parts.push("e_background_removal");
+    preTransforms.push("e_background_removal");
     if (t.bgColor && t.bgColor !== "transparent") {
       const color = t.bgColor.startsWith("rgb:") ? t.bgColor : `${t.bgColor}`;
-      parts.push(`b_${color}`);
+      preTransforms.push(`b_${color}`);
     }
   }
 
-  // Resize first so text overlay font size is relative to the final 800px image,
-  // not the original high-res upload (which would shrink the text dramatically).
-  parts.push(`w_${width}`);
-
+  const postTransforms: string[] = [];
   if (t.text.trim()) {
     const encoded = encodeURIComponent(t.text.trim()).replace(/%20/g, "%20");
     const gravity =
@@ -231,15 +231,19 @@ export function buildSalesImageUrl(
         ? "rgb:F2C85A"
         : t.textColor;
     //text font size is fixed at 36 for readability, but could be made customizable in the future if needed. Helvetica bold is used as a clean, widely available font that fits the sales image aesthetic.
-    parts.push(
+    postTransforms.push(
       `l_text:Helvetica_36_bold:${encoded},g_${gravity},y_20${t.textPosition !== "corner" ? "" : ",x_20"}${angle},co_${textColor}`,
     );
   }
 
-  parts.push(`f_auto,q_auto`);
-
-  const chain = parts.join("/");
-  return `https://res.cloudinary.com/${cloudName}/image/upload/${chain}/${publicId}`;
+  return buildCloudinaryImageUrl({
+    cloudName,
+    publicId,
+    preset: "sales",
+    width,
+    preTransforms,
+    postTransforms,
+  });
 }
 
 // ── Tags ──────────────────────────────────────────────────────────────────────

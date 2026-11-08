@@ -5,6 +5,7 @@ import BlogLayout from "../layouts/BlogLayout.astro";
 import {
   buildCloudinaryImageSrcset,
   buildCloudinaryImageUrl,
+  resolveCloudName,
 } from "../lib/cloudinary";
 import { db } from "../lib/db";
 import {
@@ -21,7 +22,7 @@ import AdminDonationBlock from "../components/AdminDonationBlock.astro";
 import { getDonationPlacements } from "../lib/settings";
 
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
-const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
+const cloudName = resolveCloudName();
 const canonicalUrl = `${siteUrl}/upcoming-events`;
 const donationPlacement = await getDonationPlacements();
 
