@@ -35,19 +35,22 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
       return json({ error: "Not found" }, 404);
     }
 
-    const publicId = String(row.public_id);
+    const publicId = row.public_id == null ? "" : String(row.public_id);
 
-    // Destroy from Cloudinary (non-fatal if it fails — still delete the DB row)
-    try {
-      await cloudinary.uploader.destroy(publicId, {
-        resource_type: "image",
-        invalidate: true,
-      });
-    } catch (cloudErr) {
-      console.warn(
-        "[panels/media/delete] Cloudinary destroy failed (continuing):",
-        cloudErr,
-      );
+    // Destroy from Cloudinary (non-fatal if it fails — still delete the DB row).
+    // Skip when public_id is falsy so "null" is never sent to the CDN.
+    if (publicId) {
+      try {
+        await cloudinary.uploader.destroy(publicId, {
+          resource_type: "image",
+          invalidate: true,
+        });
+      } catch (cloudErr) {
+        console.warn(
+          "[panels/media/delete] Cloudinary destroy failed (continuing):",
+          cloudErr,
+        );
+      }
     }
 
     await db.execute("DELETE FROM panel_media WHERE id = ?", [mediaId]);

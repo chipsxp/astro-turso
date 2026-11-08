@@ -129,7 +129,10 @@ export const POST: APIRoute = async ({ params, locals, request }) => {
   } catch (err: unknown) {
     // Rollback Cloudinary upload
     try {
-      await cloudinary.uploader.destroy(uploadPublicId, { invalidate: true });
+      await cloudinary.uploader.destroy(uploadPublicId, {
+        resource_type: "image",
+        invalidate: true,
+      });
     } catch {
       /* ignore rollback failure */
     }
@@ -197,7 +200,10 @@ export const DELETE: APIRoute = async ({ params, locals, request }) => {
   // Delete from Cloudinary
   if (publicId) {
     try {
-      await cloudinary.uploader.destroy(publicId, { invalidate: true });
+      await cloudinary.uploader.destroy(publicId, {
+        resource_type: "image",
+        invalidate: true,
+      });
     } catch (err: unknown) {
       console.error("[DELETE sales/images] Cloudinary destroy error:", err);
     }

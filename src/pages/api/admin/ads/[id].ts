@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
-import { cloudinary } from "../../../../lib/cloudinary-server";
+import { cloudinary, destroyCloudinaryAsset } from "../../../../lib/cloudinary-server";
 import { validateAdFields, validateAdImageData } from "../../../../lib/monetization";
 import { json } from "../../../../lib/api-response";
 import { requireAdmin } from "../../../../lib/auth";
@@ -114,6 +114,50 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
   }
 };
 
+/**
+ * Extract a destroyable public_id from a Cloudinary delivery URL
+ * (`.../{cloud}/image/upload/[v{version}/]blog/ads/{id}.{ext}`).
+ * Returns null for non-Cloudinary or unparseable URLs so the caller can
+ * skip the CDN destroy and still delete the row.
+ */
+function parseAdImagePublicId(imageUrl: string): string | null {
+  try {
+    const url = new URL(imageUrl);
+    if (url.hostname !== "res.cloudinary.com") return null;
+
+    const segments = url.pathname.split("/").filter(Boolean);
+    if (
+      segments.length < 4 ||
+      segments[1] !== "image" ||
+      segments[2] !== "upload"
+    ) {
+      return null;
+    }
+
+    let rest = segments.slice(3);
+    if (rest.length > 1 && /^v\d+$/i.test(rest[0])) {
+      rest = rest.slice(1);
+    }
+    // Drop transformation components (they contain "," or "=");
+    // raw upload URLs stored by this route have none.
+    rest = rest.filter(
+      (segment) => !segment.includes(",") && !segment.includes("="),
+    );
+    if (rest.length === 0) return null;
+
+    const last = rest[rest.length - 1];
+    const dot = last.lastIndexOf(".");
+    if (dot > 0) {
+      rest[rest.length - 1] = last.slice(0, dot);
+    }
+
+    const publicId = rest.join("/");
+    return publicId || null;
+  } catch {
+    return null;
+  }
+}
+
 export const DELETE: APIRoute = async ({ params, locals }) => {
   if (!requireAdmin(locals)) {
     return json({ error: "Unauthorized" }, 403);
@@ -125,6 +169,29 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
   }
 
   try {
+    // Fetch image_url first so the Cloudinary asset is destroyed together
+    // with the row (advertisements stores no public_id — parse it from the
+    // delivery URL per D4).
+    const existing = await db.execute(
+      `SELECT image_url FROM advertisements WHERE id = ?`,
+      [id],
+    );
+    const row = existing.rows[0];
+    if (!row) {
+      return json({ error: "Ad not found" }, 404);
+    }
+
+    const imageUrl = typeof row.image_url === "string" ? row.image_url : "";
+    const publicId = parseAdImagePublicId(imageUrl);
+    if (publicId) {
+      try {
+        await destroyCloudinaryAsset(publicId, "image");
+      } catch (err) {
+        console.error("Failed to destroy ad image:", err);
+        return json({ error: "Image delete failed on CDN" }, 502);
+      }
+    }
+
     await db.execute(`DELETE FROM advertisements WHERE id = ?`, [id]);
     return json({ ok: true });
   } catch (err) {
