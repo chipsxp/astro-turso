@@ -11,7 +11,6 @@ import { db } from "../lib/db";
 import {
   EVENT_SELECT_FIELDS,
   type EventRecord,
-  ensureEventsSchema,
   getEventLifecycleLabel,
   isEventArchivable,
   isEventUpcoming,
@@ -25,8 +24,6 @@ const siteUrl = process.env.SITE_URL || Astro.url.origin;
 const cloudName = resolveCloudName();
 const canonicalUrl = `${siteUrl}/upcoming-events`;
 const donationPlacement = await getDonationPlacements();
-
-await ensureEventsSchema();
 
 const result = await db.execute(
   `SELECT ${EVENT_SELECT_FIELDS}

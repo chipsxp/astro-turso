@@ -1,7 +1,6 @@
 import type { APIRoute } from "astro";
 import {
   CategoryInputError,
-  ensureCategorySchema,
   resolveCategoryId,
 } from "../../../lib/categories";
 import { db, type BatchStatement } from "../../../lib/db";
@@ -11,7 +10,6 @@ import {
 } from "../../../lib/inline-images";
 import {
   attachUploadSessionMediaToArticle,
-  ensureUploadSessionSchema,
   getActiveUploadSessionForUser,
   markUploadSessionConsumed,
 } from "../../../lib/media";
@@ -40,8 +38,6 @@ export const GET: APIRoute = async ({ request }) => {
   readLimiter.record(ip);
 
   try {
-    await ensureCategorySchema();
-
     const result = await db.execute(
       `SELECT a.id, a.title, a.slug, a.description, a.created_at,
               u.email AS author_email,
@@ -78,13 +74,6 @@ export const GET: APIRoute = async ({ request }) => {
 export const POST: APIRoute = async ({ request, locals }) => {
   const author = locals.user!;
   let data: Record<string, unknown>;
-
-
-  try {
-    await ensureCategorySchema();
-  } catch {
-    return json({ error: "Database error" }, 500);
-  }
 
   try {
     data = await request.json();
@@ -136,7 +125,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   if (uploadSessionId) {
     try {
-      await ensureUploadSessionSchema();
       const activeSession = await getActiveUploadSessionForUser(
         uploadSessionId,
         Number(author.id),

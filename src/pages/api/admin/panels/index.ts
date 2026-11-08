@@ -1,6 +1,5 @@
 import type { APIRoute } from "astro";
 import {
-  ensurePanelSchema,
   getCurrentPanelAssignments,
   getRecentPanelMedia,
 } from "../../../../lib/panels";
@@ -14,8 +13,6 @@ import { json } from "../../../../lib/api-response";
 
 export const GET: APIRoute = async () => {
   try {
-    await ensurePanelSchema();
-
     const [assignments, gallery] = await Promise.all([
       getCurrentPanelAssignments(),
       getRecentPanelMedia(),

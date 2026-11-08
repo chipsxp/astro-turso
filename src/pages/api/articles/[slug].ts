@@ -1,7 +1,6 @@
 import type { APIRoute } from "astro";
 import {
   CategoryInputError,
-  ensureCategorySchema,
   resolveCategoryId,
 } from "../../../lib/categories";
 import { db, type BatchStatement } from "../../../lib/db";
@@ -42,8 +41,6 @@ export const GET: APIRoute = async ({ params, request }) => {
   readLimiter.record(ip);
 
   try {
-    await ensureCategorySchema();
-
     const articleResult = await db.execute(
       `SELECT a.id, a.title, a.slug, a.body, a.description,
               a.status, a.created_at, a.updated_at,
@@ -108,7 +105,6 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
 
   let data: Partial<ArticleUpdatePayload>;
   try {
-    await ensureCategorySchema();
     data = await request.json();
   } catch (err) {
     if (err instanceof CategoryInputError) {

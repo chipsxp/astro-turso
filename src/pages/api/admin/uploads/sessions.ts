@@ -2,7 +2,6 @@ import type { APIRoute } from "astro";
 import {
   UPLOAD_SESSION_TTL_SECONDS,
   createUploadSession,
-  ensureUploadSessionSchema,
 } from "../../../../lib/media";
 import { json } from "../../../../lib/api-response";
 
@@ -10,7 +9,6 @@ export const POST: APIRoute = async ({ locals }) => {
   const user = locals.user!;
 
   try {
-    await ensureUploadSessionSchema();
     const session = await createUploadSession(Number(user.id));
 
     return json(

@@ -2,14 +2,12 @@ import type { APIRoute } from "astro";
 import { db } from "../../../lib/db";
 import {
   EVENT_SELECT_FIELDS,
-  ensureEventsSchema,
   isValidIsoDate,
   isValidTime24,
   mapEventRow,
   normalizeEventStatus,
   toPublicEvent,
 } from "../../../lib/events";
-import { ensureMediaTable } from "../../../lib/media";
 import { json } from "../../../lib/api-response";
 import { createRateLimiter, getClientIp } from "../../../lib/rate-limit";
 import { requireUser } from "../../../lib/auth";
@@ -49,8 +47,6 @@ export const GET: APIRoute = async ({ params, request }) => {
   readLimiter.record(ip);
 
   try {
-    await ensureEventsSchema();
-
     const result = await db.execute(
       `SELECT ${EVENT_SELECT_FIELDS}
        FROM events e
@@ -76,13 +72,6 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
 
   if (!user) return json({ error: "Unauthorized" }, 401);
   if (!slug) return json({ error: "Missing slug" }, 400);
-
-  try {
-    await ensureEventsSchema();
-    await ensureMediaTable();
-  } catch {
-    return json({ error: "Database error" }, 500);
-  }
 
   let data: Record<string, unknown>;
   try {
@@ -293,8 +282,6 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
   if (!slug) return json({ error: "Missing slug" }, 400);
 
   try {
-    await ensureEventsSchema();
-
     const existing = await db.execute(
       user.role === "admin"
         ? "SELECT id FROM events WHERE slug = ?"

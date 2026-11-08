@@ -2,7 +2,6 @@ import type { APIRoute } from "astro";
 import { db } from "../../../lib/db";
 import {
   EVENT_SELECT_FIELDS,
-  ensureEventsSchema,
   getEventLifecycleLabel,
   isEventPubliclyVisible,
   isValidIsoDate,
@@ -13,7 +12,6 @@ import {
   toPublicEvent,
   type EventRecord,
 } from "../../../lib/events";
-import { ensureMediaTable } from "../../../lib/media";
 import { json } from "../../../lib/api-response";
 import { createRateLimiter, getClientIp } from "../../../lib/rate-limit";
 import { requireUser } from "../../../lib/auth";
@@ -50,8 +48,6 @@ export const GET: APIRoute = async ({ request }) => {
   readLimiter.record(ip);
 
   try {
-    await ensureEventsSchema();
-
     const result = await db.execute(
       `SELECT ${EVENT_SELECT_FIELDS}
        FROM events e
@@ -83,13 +79,6 @@ export const GET: APIRoute = async ({ request }) => {
 export const POST: APIRoute = async ({ request, locals }) => {
   const user = requireUser(locals);
   if (!user) return json({ error: "Unauthorized" }, 401);
-
-  try {
-    await ensureEventsSchema();
-    await ensureMediaTable();
-  } catch {
-    return json({ error: "Database error" }, 500);
-  }
 
   let data: Record<string, unknown>;
   try {

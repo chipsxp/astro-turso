@@ -6,8 +6,6 @@ const DATA_URI_SRC_REGEX =
 const ALT_ATTR_REGEX = /\balt\s*=\s*(["'])(.*?)\1/i;
 const INLINE_IMAGE_ID_REGEX = /\/api\/inline-images\/(\d+)/g;
 
-let inlineImagesSchemaReady = false;
-
 interface InlineImageMatch {
   imgTag: string;
   srcDataUri: string;
@@ -31,53 +29,6 @@ function estimateBase64DecodedBytes(base64Data: string): number {
       : 0;
 
   return Math.max(0, Math.floor((normalized.length * 3) / 4) - padding);
-}
-
-function columnExistsError(err: unknown): boolean {
-  const message = err instanceof Error ? err.message : String(err ?? "");
-  return (
-    message.includes("duplicate column name") ||
-    message.includes("already exists")
-  );
-}
-
-async function ensureColumn(columnSql: string): Promise<void> {
-  try {
-    await db.execute(`ALTER TABLE images ADD COLUMN ${columnSql}`);
-  } catch (err) {
-    if (!columnExistsError(err)) {
-      throw err;
-    }
-  }
-}
-
-export async function ensureInlineImagesSchema(): Promise<void> {
-  if (inlineImagesSchemaReady) return;
-
-  await db.execute(`
-    CREATE TABLE IF NOT EXISTS images (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      article_id INTEGER REFERENCES articles(id) ON DELETE CASCADE,
-      url TEXT NOT NULL,
-      alt_text TEXT NOT NULL,
-      created_at TEXT DEFAULT (datetime('now'))
-    )
-  `);
-
-  await ensureColumn("mime_type TEXT");
-  await ensureColumn("data_base64 TEXT");
-  await ensureColumn("size_bytes INTEGER");
-  await ensureColumn("source_type TEXT NOT NULL DEFAULT 'legacy'");
-  await ensureColumn("updated_at TEXT");
-
-  await db.execute(
-    "CREATE INDEX IF NOT EXISTS idx_images_article_id ON images(article_id)",
-  );
-  await db.execute(
-    "CREATE INDEX IF NOT EXISTS idx_images_source_article ON images(source_type, article_id)",
-  );
-
-  inlineImagesSchemaReady = true;
 }
 
 function extractInlineImageMatches(body: string): InlineImageMatch[] {
@@ -142,7 +93,6 @@ export async function persistInlineImagesInBody(
   articleId: number,
   body: string,
 ): Promise<{ body: string; createdInlineImageIds: number[] }> {
-  await ensureInlineImagesSchema();
 
   const inlineMatches = extractInlineImageMatches(body);
   if (inlineMatches.length === 0) {
@@ -197,7 +147,6 @@ export async function cleanupUnusedInlineImages(
   articleId: number,
   body: string,
 ): Promise<void> {
-  await ensureInlineImagesSchema();
 
   const referencedIds = extractInlineImageIdsFromBody(body);
 
@@ -222,8 +171,6 @@ export async function cleanupUnusedInlineImages(
 export async function deleteInlineImagesByIds(ids: number[]): Promise<void> {
   if (ids.length === 0) return;
 
-  await ensureInlineImagesSchema();
-
   const safeIds = ids.filter((id) => Number.isInteger(id) && id > 0);
   if (safeIds.length === 0) return;
 
@@ -242,7 +189,6 @@ export async function getInlineImageById(id: number): Promise<{
   base64Data: string;
   updatedAt: string;
 } | null> {
-  await ensureInlineImagesSchema();
 
   const result = await db.execute(
     `SELECT id, mime_type, data_base64,

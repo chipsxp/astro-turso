@@ -1,5 +1,4 @@
 import type { APIRoute } from "astro";
-import { ensureCategorySchema } from "../../../../lib/categories";
 import { db } from "../../../../lib/db";
 import { getMediaByArticle } from "../../../../lib/media";
 import { json } from "../../../../lib/api-response";
@@ -15,8 +14,6 @@ export const GET: APIRoute = async ({ params, locals }) => {
   if (!slug) return json({ error: "Missing slug" }, 400);
 
   try {
-    await ensureCategorySchema();
-
     const isAdmin = user.role === "admin";
     const articleResult = await db.execute(
       isAdmin

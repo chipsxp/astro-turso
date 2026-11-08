@@ -57,69 +57,6 @@ export const VIDEO_MIME_TYPES = new Set([
   "video/quicktime",
 ]);
 
-const MEDIA_TABLE_SQL = `
-  CREATE TABLE IF NOT EXISTS media (
-    id INTEGER PRIMARY KEY,
-    article_id INTEGER NOT NULL,
-    resource_type TEXT NOT NULL,
-    public_id TEXT,
-    url TEXT NOT NULL,
-    alt_text TEXT NOT NULL,
-    format TEXT,
-    width INTEGER,
-    height INTEGER,
-    duration REAL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(article_id) REFERENCES articles(id) ON DELETE CASCADE
-  )
-`;
-
-const MEDIA_INDEX_SQL = `
-  CREATE INDEX IF NOT EXISTS idx_media_article_id
-  ON media(article_id)
-`;
-
-const UPLOAD_SESSIONS_TABLE_SQL = `
-  CREATE TABLE IF NOT EXISTS upload_sessions (
-    id TEXT PRIMARY KEY,
-    user_id INTEGER NOT NULL,
-    created_at TEXT DEFAULT (datetime('now')),
-    expires_at TEXT NOT NULL,
-    consumed_at TEXT,
-    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
-  )
-`;
-
-const UPLOAD_SESSIONS_EXPIRES_INDEX_SQL = `
-  CREATE INDEX IF NOT EXISTS idx_upload_sessions_expires_at
-  ON upload_sessions(expires_at)
-`;
-
-const UPLOAD_SESSION_MEDIA_TABLE_SQL = `
-  CREATE TABLE IF NOT EXISTS upload_session_media (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    upload_session_id TEXT NOT NULL,
-    resource_type TEXT NOT NULL,
-    public_id TEXT,
-    url TEXT NOT NULL,
-    alt_text TEXT NOT NULL,
-    format TEXT,
-    width INTEGER,
-    height INTEGER,
-    duration REAL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(upload_session_id) REFERENCES upload_sessions(id) ON DELETE CASCADE
-  )
-`;
-
-const UPLOAD_SESSION_MEDIA_INDEX_SQL = `
-  CREATE INDEX IF NOT EXISTS idx_upload_session_media_session_id
-  ON upload_session_media(upload_session_id)
-`;
-
-let mediaSchemaReady = false;
-let uploadSessionSchemaReady = false;
-
 export function getResourceTypeFromMimeType(
   mimeType: string,
 ): MediaResourceType | null {
@@ -195,15 +132,6 @@ function mapSessionMediaRow(row: Record<string, unknown>): SessionMediaRecord {
   };
 }
 
-export async function ensureMediaTable(): Promise<void> {
-  if (mediaSchemaReady) return;
-
-  await db.execute(MEDIA_TABLE_SQL);
-  await db.execute(MEDIA_INDEX_SQL);
-
-  mediaSchemaReady = true;
-}
-
 // Rows copied from `images` by the removed ensureMediaTable() backfill: no
 // Cloudinary public_id, and the same id + url exists in the inline images table.
 export const LEAKED_MEDIA_WHERE = `
@@ -211,21 +139,9 @@ export const LEAKED_MEDIA_WHERE = `
   AND m.resource_type = 'image'
   AND EXISTS (SELECT 1 FROM images i WHERE i.id = m.id AND i.url = m.url)`;
 
-export async function ensureUploadSessionSchema(): Promise<void> {
-  if (uploadSessionSchemaReady) return;
-
-  await db.execute(UPLOAD_SESSIONS_TABLE_SQL);
-  await db.execute(UPLOAD_SESSIONS_EXPIRES_INDEX_SQL);
-  await db.execute(UPLOAD_SESSION_MEDIA_TABLE_SQL);
-  await db.execute(UPLOAD_SESSION_MEDIA_INDEX_SQL);
-
-  uploadSessionSchemaReady = true;
-}
-
 export async function getMediaByArticle(
   articleId: number,
 ): Promise<MediaRecord[]> {
-  await ensureMediaTable();
 
   const result = await db.execute(
     `SELECT id, article_id, resource_type, public_id, url, alt_text,
@@ -240,14 +156,12 @@ export async function getMediaByArticle(
 }
 
 export async function deleteMediaByArticle(articleId: number): Promise<void> {
-  await ensureMediaTable();
   await db.execute("DELETE FROM media WHERE article_id = ?", [articleId]);
 }
 
 export async function createUploadSession(
   userId: number,
 ): Promise<UploadSessionRecord> {
-  await ensureUploadSessionSchema();
 
   const sessionId = crypto.randomUUID();
   await db.execute(
@@ -268,7 +182,6 @@ export async function getUploadSessionForUser(
   sessionId: string,
   userId: number,
 ): Promise<UploadSessionRecord | null> {
-  await ensureUploadSessionSchema();
 
   const result = await db.execute(
     `SELECT id, user_id, created_at, expires_at, consumed_at
@@ -286,7 +199,6 @@ export async function getActiveUploadSessionForUser(
   sessionId: string,
   userId: number,
 ): Promise<UploadSessionRecord | null> {
-  await ensureUploadSessionSchema();
 
   const result = await db.execute(
     `SELECT id, user_id, created_at, expires_at, consumed_at
@@ -314,7 +226,6 @@ export async function addUploadSessionMedia(input: {
   height?: number | null;
   duration?: number | null;
 }): Promise<SessionMediaRecord> {
-  await ensureUploadSessionSchema();
 
   const result = await db.execute(
     `INSERT INTO upload_session_media (
@@ -355,7 +266,6 @@ export async function addUploadSessionMedia(input: {
 export async function listUploadSessionMedia(
   sessionId: string,
 ): Promise<SessionMediaRecord[]> {
-  await ensureUploadSessionSchema();
 
   const result = await db.execute(
     `SELECT id, upload_session_id, resource_type, public_id, url, alt_text,
@@ -375,8 +285,6 @@ export async function attachUploadSessionMediaToArticle(
   sessionId: string,
   articleId: number,
 ): Promise<number> {
-  await ensureMediaTable();
-  await ensureUploadSessionSchema();
 
   const mediaRows = await listUploadSessionMedia(sessionId);
   if (!mediaRows.length) return 0;
@@ -412,7 +320,6 @@ export async function attachUploadSessionMediaToArticle(
 export async function markUploadSessionConsumed(
   sessionId: string,
 ): Promise<void> {
-  await ensureUploadSessionSchema();
   await db.execute(
     `UPDATE upload_sessions
      SET consumed_at = datetime('now')
@@ -424,7 +331,6 @@ export async function markUploadSessionConsumed(
 export async function listExpiredUnconsumedUploadSessions(): Promise<
   UploadSessionRecord[]
 > {
-  await ensureUploadSessionSchema();
 
   const result = await db.execute(
     `SELECT id, user_id, created_at, expires_at, consumed_at
@@ -442,7 +348,6 @@ export async function listExpiredUnconsumedUploadSessions(): Promise<
 export async function listUnconsumedUploadSessions(): Promise<
   UploadSessionRecord[]
 > {
-  await ensureUploadSessionSchema();
 
   const result = await db.execute(
     `SELECT id, user_id, created_at, expires_at, consumed_at
@@ -457,6 +362,5 @@ export async function listUnconsumedUploadSessions(): Promise<
 }
 
 export async function deleteUploadSession(sessionId: string): Promise<void> {
-  await ensureUploadSessionSchema();
   await db.execute("DELETE FROM upload_sessions WHERE id = ?", [sessionId]);
 }

@@ -3,7 +3,6 @@ import AdPlacement from "../components/AdPlacement.astro";
 import AdminDonationBlock from "../components/AdminDonationBlock.astro";
 import SplashScreen from "../components/SplashScreen";
 import BlogLayout from "../layouts/BlogLayout.astro";
-import { ensureCategorySchema } from "../lib/categories";
 import {
   buildCloudinaryImageSrcset,
   buildCloudinaryImageUrl,
@@ -20,7 +19,6 @@ const PRIMARY_CATEGORY_SLUGS = [
   "comic-creators",
 ];
 
-await ensureCategorySchema();
 const panelImages = await getPanelImageMap();
 
 const CLOUD =

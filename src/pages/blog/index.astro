@@ -1,6 +1,6 @@
 ---
 import BlogLayout from "../../layouts/BlogLayout.astro";
-import { ensureCategorySchema, listCategories } from "../../lib/categories";
+import { listCategories } from "../../lib/categories";
 import { db } from "../../lib/db";
 import AdPlacement from "../../components/AdPlacement.astro";
 import AdminDonationBlock from "../../components/AdminDonationBlock.astro";
@@ -18,8 +18,6 @@ const primaryCategoryLinks = [
   { name: "Comic Creators", slug: "comic-creators" },
   { name: "For Illustrators", slug: "for-illustrators" },
 ];
-
-await ensureCategorySchema();
 
 const categories = await listCategories();
 const activeCategory =

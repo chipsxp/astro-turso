@@ -6,8 +6,6 @@ import {
 import { db } from "../../lib/db";
 import {
   addUploadSessionMedia,
-  ensureMediaTable,
-  ensureUploadSessionSchema,
   estimateBase64DecodedBytes,
   getActiveUploadSessionForUser,
   getResourceTypeFromMimeType,
@@ -157,12 +155,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
   } else {
     try {
-      await ensureUploadSessionSchema();
-    } catch {
-      return json({ error: "Database error" }, 500);
-    }
-
-    try {
       const session = await getActiveUploadSessionForUser(
         uploadSessionId,
         actorUserId,
@@ -171,14 +163,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
         return json({ error: "Upload session is invalid or expired" }, 400);
       }
       targetAuthorId = session.user_id;
-    } catch {
-      return json({ error: "Database error" }, 500);
-    }
-  }
-
-  if (hasArticleId) {
-    try {
-      await ensureMediaTable();
     } catch {
       return json({ error: "Database error" }, 500);
     }
@@ -325,12 +309,6 @@ export const DELETE: APIRoute = async ({ request, locals }) => {
   const mediaId = Number(payload.media_id);
   if (!Number.isInteger(mediaId) || mediaId < 1) {
     return json({ error: "media_id must be a positive integer" }, 400);
-  }
-
-  try {
-    await ensureMediaTable();
-  } catch {
-    return json({ error: "Database error" }, 500);
   }
 
   let mediaRow: Record<string, unknown> | undefined;

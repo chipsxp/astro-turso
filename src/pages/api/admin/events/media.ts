@@ -1,6 +1,5 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
-import { ensureMediaTable } from "../../../../lib/media";
 import { json } from "../../../../lib/api-response";
 import { requireUser } from "../../../../lib/auth";
 
@@ -9,8 +8,6 @@ export const GET: APIRoute = async ({ locals }) => {
   if (!user) return json({ error: "Unauthorized" }, 401);
 
   try {
-    await ensureMediaTable();
-
     const isAdmin = user.role === "admin";
     const result = await db.execute(
       isAdmin

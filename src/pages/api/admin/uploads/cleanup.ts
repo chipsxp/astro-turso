@@ -2,7 +2,6 @@ import type { APIRoute } from "astro";
 import { cloudinary } from "../../../../lib/cloudinary-server";
 import {
   deleteUploadSession,
-  ensureUploadSessionSchema,
   listExpiredUnconsumedUploadSessions,
   listUnconsumedUploadSessions,
   listUploadSessionMedia,
@@ -32,7 +31,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   try {
-    await ensureUploadSessionSchema();
     const expiredSessions =
       cleanupScope === "all_unconsumed"
         ? await listUnconsumedUploadSessions()

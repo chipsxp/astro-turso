@@ -1,7 +1,6 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import {
-  ensureEventsSchema,
   getDaysAgoInNewYork,
 } from "../../../../lib/events";
 import { json } from "../../../../lib/api-response";
@@ -35,8 +34,6 @@ export const POST: APIRoute = async ({ locals }) => {
   }
 
   try {
-    await ensureEventsSchema();
-
     // Get the cutoff date: 14 days ago in New York time
     const fourteenDaysAgoNY = getDaysAgoInNewYork(14);
 

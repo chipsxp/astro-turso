@@ -2,7 +2,6 @@ import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import {
   EVENT_SELECT_FIELDS,
-  ensureEventsSchema,
   mapEventRow,
 } from "../../../../lib/events";
 import { json } from "../../../../lib/api-response";
@@ -13,8 +12,6 @@ export const GET: APIRoute = async ({ locals }) => {
   if (!user) return json({ error: "Unauthorized" }, 401);
 
   try {
-    await ensureEventsSchema();
-
     const isAdmin = user.role === "admin";
     const result = await db.execute(
       isAdmin

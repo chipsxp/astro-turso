@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import type { PanelSlot } from "../../../../lib/panels";
-import { ensurePanelSchema, VALID_SLOTS } from "../../../../lib/panels";
+import { VALID_SLOTS } from "../../../../lib/panels";
 import { json } from "../../../../lib/api-response";
 
 // --- Helper ---
@@ -50,8 +50,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   try {
-    await ensurePanelSchema();
-
     // Unassign path
     if (media_id === null || media_id === undefined) {
       await db.execute(

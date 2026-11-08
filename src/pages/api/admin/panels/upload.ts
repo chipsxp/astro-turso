@@ -2,7 +2,6 @@ import type { APIRoute } from "astro";
 import { cloudinary } from "../../../../lib/cloudinary-server";
 import { db } from "../../../../lib/db";
 import { IMAGE_MIME_TYPES, MAX_IMAGE_BYTES } from "../../../../lib/media";
-import { ensurePanelSchema } from "../../../../lib/panels";
 import { json } from "../../../../lib/api-response";
 
 // --- POST /api/admin/panels/upload ---
@@ -56,8 +55,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
       413,
     );
   }
-
-  await ensurePanelSchema();
 
   let uploadResult: {
     secure_url: string;

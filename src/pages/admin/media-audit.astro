@@ -1,13 +1,12 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import { db } from "../../lib/db";
-import { ensureMediaTable, LEAKED_MEDIA_WHERE } from "../../lib/media";
+import { LEAKED_MEDIA_WHERE } from "../../lib/media";
 
 if (Astro.locals.user?.role !== "admin") {
   return Astro.redirect("/admin/dashboard");
 }
 
-await ensureMediaTable();
 const rs = await db.execute(
   `SELECT m.id, m.url, m.alt_text, m.created_at, m.article_id, a.title AS article_title
    FROM media m

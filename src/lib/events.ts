@@ -1,5 +1,3 @@
-import { db } from "./db";
-
 export type EventStatus = "draft" | "published" | "cancelled";
 
 export interface EventRecord {
@@ -50,68 +48,6 @@ export function toPublicEvent(event: EventRecord): PublicEventRecord {
     ...pub
   } = event;
   return pub;
-}
-
-const EVENTS_TABLE_SQL = `
-  CREATE TABLE IF NOT EXISTS events (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    slug TEXT NOT NULL UNIQUE,
-    description TEXT,
-    body TEXT NOT NULL,
-    owner_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'cancelled')),
-    start_date TEXT NOT NULL,
-    start_time TEXT,
-    end_date TEXT,
-    end_time TEXT,
-    is_all_day INTEGER NOT NULL DEFAULT 0 CHECK (is_all_day IN (0, 1)),
-    venue_name TEXT,
-    venue_address TEXT,
-    city TEXT,
-    region TEXT,
-    postal_code TEXT,
-    event_url TEXT,
-    featured_media_id INTEGER REFERENCES media(id) ON DELETE SET NULL,
-    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-  )
-`;
-
-const EVENTS_INDEXES_SQL = [
-  "CREATE INDEX IF NOT EXISTS idx_events_owner_id ON events(owner_id)",
-  "CREATE INDEX IF NOT EXISTS idx_events_status ON events(status)",
-  "CREATE INDEX IF NOT EXISTS idx_events_start_date ON events(start_date)",
-  "CREATE INDEX IF NOT EXISTS idx_events_featured_media_id ON events(featured_media_id)",
-];
-
-let eventsSchemaReady = false;
-
-export async function ensureEventsSchema(): Promise<void> {
-  if (eventsSchemaReady) return;
-
-  await db.execute(EVENTS_TABLE_SQL);
-  for (const indexSql of EVENTS_INDEXES_SQL) {
-    await db.execute(indexSql);
-  }
-
-  // Idempotent migration: add archive_date column if not present
-  // This column tracks when an event became archivable (after its end date passed).
-  // Used to enforce 14-day retention window for displaying ended events on public listings.
-  try {
-    await db.execute("ALTER TABLE events ADD COLUMN archive_date TEXT");
-  } catch {
-    // Column already exists; safe to continue.
-  }
-
-  // Idempotent migration: add color column for calendar pill display
-  try {
-    await db.execute("ALTER TABLE events ADD COLUMN color TEXT");
-  } catch {
-    // Column already exists; safe to continue.
-  }
-
-  eventsSchemaReady = true;
 }
 
 export function toEventSlug(str: string): string {

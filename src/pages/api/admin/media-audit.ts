@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../lib/db";
-import { ensureMediaTable, LEAKED_MEDIA_WHERE } from "../../../lib/media";
+import { LEAKED_MEDIA_WHERE } from "../../../lib/media";
 import { json } from "../../../lib/api-response";
 import { requireAdmin } from "../../../lib/auth";
 
@@ -22,7 +22,6 @@ export const DELETE: APIRoute = async ({ request, locals }) => {
       return json({ error: "Invalid ids" }, 400);
     }
 
-    await ensureMediaTable();
     const placeholders = ids.map(() => "?").join(",");
     // Re-check the leak condition so a real Cloudinary row can never be removed.
     const result = await db.execute(
