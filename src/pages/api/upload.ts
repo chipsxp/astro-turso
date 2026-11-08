@@ -8,22 +8,18 @@ import {
   addUploadSessionMedia,
   ensureMediaTable,
   ensureUploadSessionSchema,
+  estimateBase64DecodedBytes,
   getActiveUploadSessionForUser,
   getResourceTypeFromMimeType,
   IMAGE_MIME_TYPES,
   MAX_IMAGE_BYTES,
   MAX_VIDEO_BYTES,
+  parseDataUri,
   VIDEO_MIME_TYPES,
 } from "../../lib/media";
+import { json } from "../../lib/api-response";
 
 // --- Helper ---
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 function getFileSizeLimit(resourceType: "image" | "video"): number {
   return resourceType === "video" ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES;
@@ -34,24 +30,6 @@ function getAllowedTypesMessage(resourceType: "image" | "video"): string {
     return "Unsupported video type. Allowed: mp4, webm, ogg, mov";
   }
   return "Unsupported image type. Allowed: jpeg, png, webp, gif, avif";
-}
-
-function parseDataUri(
-  dataUri: string,
-): { mimeType: string; base64Payload: string } | null {
-  const commaIdx = dataUri.indexOf(",");
-  if (!dataUri.startsWith("data:") || commaIdx === -1) return null;
-  const header = dataUri.slice(5, commaIdx);
-  const parts = header.split(";");
-  const mimeType = parts[0].trim();
-  if (!mimeType || !parts.includes("base64")) return null;
-  const base64Payload = dataUri.slice(commaIdx + 1);
-  return base64Payload ? { mimeType, base64Payload } : null;
-}
-
-function estimateBase64DecodedBytes(base64: string): number {
-  const withoutPadding = base64.replace(/=+$/, "");
-  return Math.floor((withoutPadding.length * 3) / 4);
 }
 
 // --- POST /api/upload — upload media to Cloudinary and record in DB (JWT protected) ---

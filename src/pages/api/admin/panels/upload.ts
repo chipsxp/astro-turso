@@ -3,13 +3,7 @@ import { cloudinary } from "../../../../lib/cloudinary-server";
 import { db } from "../../../../lib/db";
 import { IMAGE_MIME_TYPES, MAX_IMAGE_BYTES } from "../../../../lib/media";
 import { ensurePanelSchema } from "../../../../lib/panels";
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../../lib/api-response";
 
 // --- POST /api/admin/panels/upload ---
 // Uploads an image to Cloudinary (folder: scriptorium/panels/) and inserts

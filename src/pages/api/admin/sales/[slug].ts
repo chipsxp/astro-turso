@@ -8,13 +8,7 @@ import {
   slugify,
 } from "../../../../lib/sales";
 import { sanitizeArticleBodyServer } from "../../../../lib/sanitize-server";
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../../lib/api-response";
 
 // ── GET /api/admin/sales/[slug] — single posting with related data ────────────
 export const GET: APIRoute = async ({ params, locals }) => {

@@ -2,18 +2,13 @@ import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import { cloudinary } from "../../../../lib/cloudinary-server";
 import { validateAdFields, validateAdImageData } from "../../../../lib/monetization";
-
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../../lib/api-response";
+import { requireAdmin } from "../../../../lib/auth";
 
 export const POST: APIRoute = async ({ request, locals }) => {
   // Rely on middleware for auth check.
   // If we reach here, locals.user should be an admin (or we enforce it).
-  if (locals.user?.role !== "admin") {
+  if (!requireAdmin(locals)) {
     return json({ error: "Unauthorized" }, 403);
   }
 

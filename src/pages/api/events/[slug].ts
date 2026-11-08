@@ -10,43 +10,12 @@ import {
   toPublicEvent,
 } from "../../../lib/events";
 import { ensureMediaTable } from "../../../lib/media";
+import { json } from "../../../lib/api-response";
+import { createRateLimiter, getClientIp } from "../../../lib/rate-limit";
+import { requireUser } from "../../../lib/auth";
 
 // --- In-memory rate limiter: 120 requests per IP per minute (public read) ---
-const readAttempts = new Map<string, { count: number; resetAt: number }>();
-const READ_MAX = 120;
-const READ_WINDOW_MS = 60 * 1000;
-
-function getClientIp(request: Request): string {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
-    request.headers.get("x-real-ip") ??
-    "unknown"
-  );
-}
-
-function isReadRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const entry = readAttempts.get(ip);
-  if (!entry || now > entry.resetAt) return false;
-  return entry.count >= READ_MAX;
-}
-
-function recordReadAttempt(ip: string): void {
-  const now = Date.now();
-  const entry = readAttempts.get(ip);
-  if (!entry || now > entry.resetAt) {
-    readAttempts.set(ip, { count: 1, resetAt: now + READ_WINDOW_MS });
-  } else {
-    entry.count += 1;
-  }
-}
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+const readLimiter = createRateLimiter({ limit: 120, windowMs: 60 * 1000 });
 
 const MAX_EVENT_BODY_BYTES = 1310720; // 1.25 MB
 
@@ -74,10 +43,10 @@ export const GET: APIRoute = async ({ params, request }) => {
   if (!slug) return json({ error: "Missing slug" }, 400);
 
   const ip = getClientIp(request);
-  if (isReadRateLimited(ip)) {
+  if (readLimiter.limited(ip)) {
     return json({ error: "Too many requests" }, 429);
   }
-  recordReadAttempt(ip);
+  readLimiter.record(ip);
 
   try {
     await ensureEventsSchema();
@@ -102,7 +71,7 @@ export const GET: APIRoute = async ({ params, request }) => {
 };
 
 export const PUT: APIRoute = async ({ params, request, locals }) => {
-  const user = locals.user;
+  const user = requireUser(locals);
   const slug = params.slug;
 
   if (!user) return json({ error: "Unauthorized" }, 401);
@@ -317,7 +286,7 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
 };
 
 export const DELETE: APIRoute = async ({ params, locals }) => {
-  const user = locals.user;
+  const user = requireUser(locals);
   const slug = params.slug;
 
   if (!user) return json({ error: "Unauthorized" }, 401);

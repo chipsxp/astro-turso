@@ -1,48 +1,19 @@
 import type { APIRoute } from "astro";
 import { getInlineImageById } from "../../../lib/inline-images";
+import { json } from "../../../lib/api-response";
+import { createRateLimiter, getClientIp } from "../../../lib/rate-limit";
 
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
-
-const attempts = new Map<string, { count: number; resetAt: number }>();
-const MAX_ATTEMPTS = 240;
-const WINDOW_MS = 60 * 1000;
-
-function getClientIp(request: Request): string {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
-    request.headers.get("x-real-ip") ??
-    "unknown"
-  );
-}
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const current = attempts.get(ip);
-
-  if (!current || now > current.resetAt) {
-    attempts.set(ip, { count: 1, resetAt: now + WINDOW_MS });
-    return false;
-  }
-
-  if (current.count >= MAX_ATTEMPTS) {
-    return true;
-  }
-
-  current.count += 1;
-  attempts.set(ip, current);
-  return false;
-}
+const inlineImageLimiter = createRateLimiter({
+  limit: 240,
+  windowMs: 60 * 1000,
+});
 
 export const GET: APIRoute = async ({ params, request }) => {
   const ip = getClientIp(request);
-  if (isRateLimited(ip)) {
+  if (inlineImageLimiter.limited(ip)) {
     return json({ error: "Too many requests" }, 429);
   }
+  inlineImageLimiter.record(ip);
 
   const rawId = params.id;
   const imageId = Number(rawId);

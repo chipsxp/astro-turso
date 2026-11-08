@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { db } from "../../lib/db";
+import { json } from "../../lib/api-response";
 
 const VALID_PLATFORMS = new Set([
   "facebook",
@@ -13,13 +14,6 @@ const VALID_PLATFORMS = new Set([
   "instagram",
   "medium",
 ]);
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 // POST /api/share — log a social share event
 // Requires: Bearer JWT (handled by middleware; locals.user is guaranteed present)

@@ -6,29 +6,14 @@ import {
   estimateBase64DecodedBytes,
   parseDataUri,
 } from "../../../../lib/media";
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../../lib/api-response";
+import { createRateLimiter } from "../../../../lib/rate-limit";
 
 // Per-user rate limit: 20 uploads / 15 min
-const RATE_LIMIT = 20;
-const RATE_WINDOW_MS = 15 * 60 * 1000;
-const uploadAttempts = new Map<string, { count: number; resetAt: number }>();
-
-function isRateLimited(userId: string): boolean {
-  const now = Date.now();
-  const entry = uploadAttempts.get(userId);
-  if (!entry || entry.resetAt <= now) {
-    uploadAttempts.set(userId, { count: 1, resetAt: now + RATE_WINDOW_MS });
-    return false;
-  }
-  entry.count += 1;
-  return entry.count > RATE_LIMIT;
-}
+const uploadLimiter = createRateLimiter({
+  limit: 20,
+  windowMs: 15 * 60 * 1000,
+});
 
 // ── POST /api/admin/sales/upload — upload a payment QR code image ─────────────
 // Open to admin and author roles. Returns { qr_code_url }; the URL is persisted
@@ -38,9 +23,11 @@ export const POST: APIRoute = async ({ request, locals }) => {
   if (user.role !== "admin" && user.role !== "author") {
     return json({ error: "Forbidden" }, 403);
   }
-  if (isRateLimited(String(user.id))) {
+  const userId = String(user.id);
+  if (uploadLimiter.limited(userId)) {
     return json({ error: "Too many uploads. Try again later." }, 429);
   }
+  uploadLimiter.record(userId);
 
   let body: Record<string, unknown>;
   try {

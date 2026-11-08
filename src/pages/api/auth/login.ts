@@ -3,45 +3,16 @@ import bcrypt from "bcryptjs";
 import { SignJWT } from "jose";
 import { setAuthCookie, type UserRecord } from "../../../lib/auth";
 import { db } from "../../../lib/db";
+import { json } from "../../../lib/api-response";
+import { createRateLimiter, getClientIp } from "../../../lib/rate-limit";
 
 // --- In-memory rate limiter: 10 failed attempts per IP per 15 minutes ---
-const loginAttempts = new Map<string, { count: number; resetAt: number }>();
-const MAX_ATTEMPTS = 10;
-const WINDOW_MS = 15 * 60 * 1000;
-
-function getClientIp(request: Request): string {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
-    request.headers.get("x-real-ip") ??
-    "unknown"
-  );
-}
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const entry = loginAttempts.get(ip);
-  if (!entry || now > entry.resetAt) return false;
-  return entry.count >= MAX_ATTEMPTS;
-}
-
-function recordFailure(ip: string): void {
-  const now = Date.now();
-  const entry = loginAttempts.get(ip);
-  if (!entry || now > entry.resetAt) {
-    loginAttempts.set(ip, { count: 1, resetAt: now + WINDOW_MS });
-  } else {
-    entry.count += 1;
-  }
-}
-
-function clearAttempts(ip: string): void {
-  loginAttempts.delete(ip);
-}
+const loginLimiter = createRateLimiter({ limit: 10, windowMs: 15 * 60 * 1000 });
 
 export const POST: APIRoute = async ({ request }) => {
   const ip = getClientIp(request);
 
-  if (isRateLimited(ip)) {
+  if (loginLimiter.limited(ip)) {
     return json(
       { error: "Too many login attempts. Try again in 15 minutes." },
       429,
@@ -83,7 +54,7 @@ export const POST: APIRoute = async ({ request }) => {
     (await bcrypt.compare(password, user.password_hash as string));
 
   if (!validPassword) {
-    recordFailure(ip);
+    loginLimiter.record(ip);
     return json({ error: "Invalid credentials" }, 401);
   }
 
@@ -96,7 +67,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   // --- Sign JWT ---
-  clearAttempts(ip);
+  loginLimiter.clear(ip);
   const secret = new TextEncoder().encode(import.meta.env.JWT_SECRET);
 
   const token = await new SignJWT({
@@ -119,11 +90,3 @@ export const POST: APIRoute = async ({ request }) => {
 
 // Only POST is handled on this route
 export const GET: APIRoute = () => json({ error: "Method not allowed" }, 405);
-
-// --- Helper ---
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}

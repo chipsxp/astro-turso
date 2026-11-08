@@ -2,16 +2,11 @@ import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import { cloudinary } from "../../../../lib/cloudinary-server";
 import { validateAdFields, validateAdImageData } from "../../../../lib/monetization";
-
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../../lib/api-response";
+import { requireAdmin } from "../../../../lib/auth";
 
 export const PATCH: APIRoute = async ({ params, locals }) => {
-  if (locals.user?.role !== "admin") {
+  if (!requireAdmin(locals)) {
     return json({ error: "Unauthorized" }, 403);
   }
 
@@ -35,7 +30,7 @@ export const PATCH: APIRoute = async ({ params, locals }) => {
 };
 
 export const PUT: APIRoute = async ({ params, request, locals }) => {
-  if (locals.user?.role !== "admin") {
+  if (!requireAdmin(locals)) {
     return json({ error: "Unauthorized" }, 403);
   }
 
@@ -120,7 +115,7 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
 };
 
 export const DELETE: APIRoute = async ({ params, locals }) => {
-  if (locals.user?.role !== "admin") {
+  if (!requireAdmin(locals)) {
     return json({ error: "Unauthorized" }, 403);
   }
 

@@ -1,18 +1,13 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../lib/db";
 import { ensureMediaTable, LEAKED_MEDIA_WHERE } from "../../../lib/media";
-
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../lib/api-response";
+import { requireAdmin } from "../../../lib/auth";
 
 const MAX_IDS = 200;
 
 export const DELETE: APIRoute = async ({ request, locals }) => {
-  if (locals.user?.role !== "admin") {
+  if (!requireAdmin(locals)) {
     return json({ error: "Forbidden" }, 403);
   }
 

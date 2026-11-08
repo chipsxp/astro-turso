@@ -1,12 +1,6 @@
 import type { APIRoute } from "astro";
 import { logAnalyticsEvent } from "../../../lib/monetization";
-
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../lib/api-response";
 
 export const POST: APIRoute = async ({ request, locals }) => {
   try {

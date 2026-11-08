@@ -4,15 +4,9 @@ import {
   getCurrentPanelAssignments,
   getRecentPanelMedia,
 } from "../../../../lib/panels";
+import { json } from "../../../../lib/api-response";
 
 // --- Helper ---
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 // --- GET /api/admin/panels ---
 // Returns all 4 slot assignments and the recent image gallery (last 7 days).

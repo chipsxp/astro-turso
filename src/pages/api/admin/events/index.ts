@@ -5,16 +5,11 @@ import {
   ensureEventsSchema,
   mapEventRow,
 } from "../../../../lib/events";
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../../lib/api-response";
+import { requireUser } from "../../../../lib/auth";
 
 export const GET: APIRoute = async ({ locals }) => {
-  const user = locals.user;
+  const user = requireUser(locals);
   if (!user) return json({ error: "Unauthorized" }, 401);
 
   try {

@@ -1,14 +1,8 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
+import { json } from "../../../../lib/api-response";
 
 // --- Helpers ---
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 // --- GET /api/admin/users — list users (all authenticated users) ---
 // Admin: all users (pending sorted first) + status field.

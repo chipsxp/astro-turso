@@ -1,12 +1,6 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../../lib/db";
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../../../lib/api-response";
 
 async function getPostingId(
   slug: string,

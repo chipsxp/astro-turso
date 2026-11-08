@@ -1,14 +1,8 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
+import { json } from "../../../../lib/api-response";
 
 // --- Helpers ---
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 type Action = "approve" | "suspend" | "reinstate" | "promote";
 

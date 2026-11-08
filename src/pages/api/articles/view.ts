@@ -1,12 +1,6 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../lib/db";
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../lib/api-response";
 
 // Public endpoint: one counted view per IP per article per 30 minutes, plus a
 // per-IP burst cap so it can't be used to spam the DB.

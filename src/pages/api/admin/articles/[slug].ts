@@ -2,15 +2,9 @@ import type { APIRoute } from "astro";
 import { ensureCategorySchema } from "../../../../lib/categories";
 import { db } from "../../../../lib/db";
 import { getMediaByArticle } from "../../../../lib/media";
+import { json } from "../../../../lib/api-response";
 
 // --- Helpers ---
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 // --- GET /api/admin/articles/[slug] — single article any status, JWT protected via middleware ---
 // Admin role: any article. Author role: own articles only.

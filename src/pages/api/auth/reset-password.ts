@@ -1,53 +1,21 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../lib/db";
 import bcrypt from "bcryptjs";
+import { json } from "../../../lib/api-response";
+import { createRateLimiter, getClientIp } from "../../../lib/rate-limit";
 
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
-
-const resetPasswordAttempts = new Map<
-  string,
-  { count: number; resetAt: number }
->();
-const MAX_ATTEMPTS = 5;
-const WINDOW_MS = 60 * 60 * 1000;
-
-function getClientIp(request: Request): string {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
-    request.headers.get("x-real-ip") ??
-    "unknown"
-  );
-}
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const entry = resetPasswordAttempts.get(ip);
-  if (!entry || now > entry.resetAt) return false;
-  return entry.count >= MAX_ATTEMPTS;
-}
-
-function recordAttempt(ip: string): void {
-  const now = Date.now();
-  const entry = resetPasswordAttempts.get(ip);
-  if (!entry || now > entry.resetAt) {
-    resetPasswordAttempts.set(ip, { count: 1, resetAt: now + WINDOW_MS });
-  } else {
-    entry.count += 1;
-  }
-}
+const resetPasswordLimiter = createRateLimiter({
+  limit: 5,
+  windowMs: 60 * 60 * 1000,
+});
 
 export const POST: APIRoute = async ({ request }) => {
   const ip = getClientIp(request);
 
-  if (isRateLimited(ip)) {
+  if (resetPasswordLimiter.limited(ip)) {
     return json({ error: "Too many attempts. Try again in 1 hour." }, 429);
   }
-  recordAttempt(ip);
+  resetPasswordLimiter.record(ip);
 
   let token: string;
   let password: string;

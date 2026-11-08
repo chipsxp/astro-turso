@@ -141,7 +141,14 @@ export function parseDataUri(
 }
 
 export function estimateBase64DecodedBytes(base64: string): number {
-  return Math.floor((base64.replace(/=+$/, "").length * 3) / 4);
+  const normalized = base64.replace(/\s+/g, "");
+  const padding = normalized.endsWith("==")
+    ? 2
+    : normalized.endsWith("=")
+      ? 1
+      : 0;
+
+  return Math.max(0, Math.floor((normalized.length * 3) / 4) - padding);
 }
 
 function mapMediaRow(row: Record<string, unknown>): MediaRecord {

@@ -1,15 +1,10 @@
 import type { APIRoute } from "astro";
 import { getSetting, getDonationConfig, setSetting } from "../../../lib/settings";
-
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../lib/api-response";
+import { requireUser } from "../../../lib/auth";
 
 export const GET: APIRoute = async (context) => {
-  const user = context.locals.user;
+  const user = requireUser(context.locals);
   if (!user || user.role !== "admin") {
     return json({ error: "Unauthorized" }, 401);
   }
@@ -50,7 +45,7 @@ function isSafeHttpsUrl(value: string): boolean {
 }
 
 export const PUT: APIRoute = async (context) => {
-  const user = context.locals.user;
+  const user = requireUser(context.locals);
   if (!user || user.role !== "admin") {
     return json({ error: "Unauthorized" }, 401);
   }

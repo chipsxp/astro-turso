@@ -1,15 +1,9 @@
 import type { APIRoute } from "astro";
 import { cloudinary } from "../../../../../lib/cloudinary-server";
 import { db } from "../../../../../lib/db";
+import { json } from "../../../../../lib/api-response";
 
 // --- Helper ---
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 // --- DELETE /api/admin/panels/media/[id] ---
 // 1. Fetches public_id from panel_media.

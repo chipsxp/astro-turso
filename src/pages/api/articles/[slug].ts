@@ -13,15 +13,11 @@ import {
 import { deleteMediaByArticle, getMediaByArticle } from "../../../lib/media";
 import { destroyCloudinaryAsset } from "../../../lib/cloudinary-server";
 import type { ArticleUpdatePayload } from "../../../lib/article-editor.types";
+import { json } from "../../../lib/api-response";
+import { createRateLimiter, getClientIp } from "../../../lib/rate-limit";
+import { validateArticleBody } from "../../../lib/article-validation";
 
 // --- Helpers ---
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 function toSlug(str: string): string {
   return str
@@ -31,84 +27,8 @@ function toSlug(str: string): string {
     .replace(/^-|-$/g, "");
 }
 
-const MAX_ARTICLE_BODY_BYTES = 1835008; // 1.75 MB
-const MAX_INLINE_IMAGE_COUNT = 4;
-const MAX_INLINE_IMAGE_BYTES = 300 * 1024; // 300 KB per inline image
-const MAX_INLINE_IMAGE_TOTAL_BYTES = 1200 * 1024; // 1200 KB total
-
-function estimateBase64DecodedBytes(base64Data: string): number {
-  const normalized = base64Data.replace(/\s+/g, "");
-  const padding = normalized.endsWith("==")
-    ? 2
-    : normalized.endsWith("=")
-      ? 1
-      : 0;
-
-  return Math.max(0, Math.floor((normalized.length * 3) / 4) - padding);
-}
-
-function validateArticleBody(body: string): string | null {
-  const bodyBytes = new TextEncoder().encode(body).length;
-  if (bodyBytes > MAX_ARTICLE_BODY_BYTES) {
-    return "Article body is too large (max 1.75 MB).";
-  }
-
-  const inlineMatches = Array.from(
-    body.matchAll(/data:image\/[a-z0-9.+-]+;base64,([A-Za-z0-9+/=\r\n]+)/gi),
-  );
-
-  if (inlineMatches.length > MAX_INLINE_IMAGE_COUNT) {
-    return "Too many inline images in article body (max 4). Please use media upload for additional images.";
-  }
-
-  let inlineDecodedTotal = 0;
-  for (const match of inlineMatches) {
-    const base64Data = match[1] ?? "";
-    const decodedSize = estimateBase64DecodedBytes(base64Data);
-
-    if (decodedSize > MAX_INLINE_IMAGE_BYTES) {
-      return "An inline image in article body is too large (max 300 KB decoded per image). Please use media upload instead of large base64 embeds.";
-    }
-
-    inlineDecodedTotal += decodedSize;
-  }
-
-  if (inlineDecodedTotal > MAX_INLINE_IMAGE_TOTAL_BYTES) {
-    return "Inline image payload in article body is too large (max 1200 KB decoded total). Please use media upload instead of large base64 embeds.";
-  }
-
-  return null;
-}
-
 // --- In-memory rate limiter: 120 requests per IP per minute (public read) ---
-const readAttempts = new Map<string, { count: number; resetAt: number }>();
-const READ_MAX = 120;
-const READ_WINDOW_MS = 60 * 1000;
-
-function getClientIp(request: Request): string {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
-    request.headers.get("x-real-ip") ??
-    "unknown"
-  );
-}
-
-function isReadRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const entry = readAttempts.get(ip);
-  if (!entry || now > entry.resetAt) return false;
-  return entry.count >= READ_MAX;
-}
-
-function recordReadAttempt(ip: string): void {
-  const now = Date.now();
-  const entry = readAttempts.get(ip);
-  if (!entry || now > entry.resetAt) {
-    readAttempts.set(ip, { count: 1, resetAt: now + READ_WINDOW_MS });
-  } else {
-    entry.count += 1;
-  }
-}
+const readLimiter = createRateLimiter({ limit: 120, windowMs: 60 * 1000 });
 
 // --- GET /api/articles/[slug] — public, published articles only ---
 // Sequence diagram Flow 4: article → media → tags, assembled server-side
@@ -118,8 +38,8 @@ export const GET: APIRoute = async ({ params, request }) => {
   if (!slug) return json({ error: "Missing slug" }, 400);
 
   const ip = getClientIp(request);
-  if (isReadRateLimited(ip)) return json({ error: "Too many requests" }, 429);
-  recordReadAttempt(ip);
+  if (readLimiter.limited(ip)) return json({ error: "Too many requests" }, 429);
+  readLimiter.record(ip);
 
   try {
     await ensureCategorySchema();
