@@ -55,6 +55,10 @@ export interface MediaSyncEventDetail {
   media: MediaRecord[];
 }
 
+export interface MediaReadyEventDetail {
+  galleryId: string;
+}
+
 export interface MediaDeletedEventDetail {
   galleryId: string;
   mediaId: number;

@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import { cloudinary } from "../../../../lib/cloudinary-server";
+import { validateAdFields, validateAdImageData } from "../../../../lib/monetization";
 
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -33,16 +34,6 @@ export const PATCH: APIRoute = async ({ params, locals }) => {
   }
 };
 
-const SLOT_TYPES = new Set([
-  "dashboard_sidebar",
-  "article_index_top",
-  "shop_index_top",
-  "footer",
-  "homepage_grid",
-  "event_index_top",
-  "hidden",
-]);
-
 export const PUT: APIRoute = async ({ params, request, locals }) => {
   if (locals.user?.role !== "admin") {
     return json({ error: "Unauthorized" }, 403);
@@ -66,8 +57,20 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
     if (!business_name || !target_url || !slot_type) {
       return json({ error: "Missing required fields" }, 400);
     }
-    if (!SLOT_TYPES.has(slot_type)) {
-      return json({ error: "Invalid slot type" }, 400);
+
+    const payload = {
+      business_name,
+      description,
+      target_url,
+      coupon_code,
+      slot_type,
+    };
+    const fieldError = validateAdFields(payload);
+    if (fieldError) return json({ error: fieldError.error }, fieldError.status);
+
+    if (image_data) {
+      const imageError = validateAdImageData(image_data);
+      if (imageError) return json({ error: imageError.error }, imageError.status);
     }
 
     const existing = await db.execute(

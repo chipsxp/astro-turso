@@ -26,6 +26,7 @@ interface Props {
 declare global {
   interface WindowEventMap {
     "admin-media-sync": CustomEvent<{ galleryId: string; media: MediaItem[] }>;
+    "admin-media-ready": CustomEvent<{ galleryId: string }>;
     "admin-media-deleted": CustomEvent<{ galleryId: string; mediaId: number }>;
     "admin-media-toast": CustomEvent<{
       galleryId: string;
@@ -55,6 +56,9 @@ export default function AdminMediaGallery({
     }
 
     window.addEventListener("admin-media-sync", handleSync as EventListener);
+    window.dispatchEvent(
+      new CustomEvent("admin-media-ready", { detail: { galleryId } }),
+    );
     return () => {
       window.removeEventListener(
         "admin-media-sync",

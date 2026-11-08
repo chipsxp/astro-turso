@@ -128,6 +128,22 @@ export function getResourceTypeFromMimeType(
   return null;
 }
 
+export function parseDataUri(
+  dataUri: string,
+): { mimeType: string; base64Payload: string } | null {
+  const commaIdx = dataUri.indexOf(",");
+  if (!dataUri.startsWith("data:") || commaIdx === -1) return null;
+  const parts = dataUri.slice(5, commaIdx).split(";");
+  const mimeType = parts[0].trim();
+  if (!mimeType || !parts.includes("base64")) return null;
+  const base64Payload = dataUri.slice(commaIdx + 1);
+  return base64Payload ? { mimeType, base64Payload } : null;
+}
+
+export function estimateBase64DecodedBytes(base64: string): number {
+  return Math.floor((base64.replace(/=+$/, "").length * 3) / 4);
+}
+
 function mapMediaRow(row: Record<string, unknown>): MediaRecord {
   return {
     id: Number(row.id),

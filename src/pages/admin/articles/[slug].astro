@@ -1,8 +1,11 @@
 ---
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 import AdminMediaGallery from "../../../components/admin/AdminMediaGallery";
+import { MAX_IMAGE_BYTES, MAX_VIDEO_BYTES } from "../../../lib/media";
 const { slug } = Astro.params;
 const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
+const maxImageMb = Math.round(MAX_IMAGE_BYTES / (1024 * 1024));
+const maxVideoMb = Math.round(MAX_VIDEO_BYTES / (1024 * 1024));
 ---
 
 <AdminLayout title={`Edit — ${slug}`}>
@@ -149,7 +152,7 @@ const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
               accept="image/jpeg,image/png,image/webp,image/gif,image/avif,video/mp4,video/webm,video/ogg,video/quicktime"
             />
             <span class="form-hint form-hint--media-size"
-              >Images: max 10 MB. Videos: max 200 MB.</span
+              >Images: max {maxImageMb} MB. Videos: max {maxVideoMb} MB.</span
             >
           </div>
           <div class="form-group">
@@ -209,6 +212,7 @@ const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
 
 <script>
   import { showToast as sharedShowToast } from "../../../lib/admin-toast";
+  import { sanitizeForPreview } from "../../../lib/sanitize";
   import type {
     ApiErrorResponse,
     ArticleData,
@@ -217,6 +221,7 @@ const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
     ArticleUpdatePayload,
     CategoriesResponse,
     MediaDeletedEventDetail,
+    MediaReadyEventDetail,
     MediaRecord,
     MediaToastEventDetail,
     ToastType,
@@ -489,7 +494,7 @@ const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
     const body = bodyInput.value;
     const media = articleData?.media || [];
     const html = buildPreviewHtml(title, description, body, media);
-    previewScroll.innerHTML = html;
+    previewScroll.innerHTML = sanitizeForPreview(html);
     previewScroll.scrollTop = 0;
     draftPreview.classList.remove("is-hidden");
     draftPreview.setAttribute("aria-hidden", "false");
@@ -516,6 +521,12 @@ const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
       }),
     );
   }
+
+  window.addEventListener("admin-media-ready", (event: Event) => {
+    const detail = (event as CustomEvent<MediaReadyEventDetail>).detail;
+    if (detail.galleryId !== "article-edit-media") return;
+    syncMediaGallery(currentMedia);
+  });
 
   window.addEventListener("admin-media-deleted", (event: Event) => {
     const detail = (event as CustomEvent<MediaDeletedEventDetail>).detail;

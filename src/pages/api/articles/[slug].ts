@@ -11,6 +11,7 @@ import {
   persistInlineImagesInBody,
 } from "../../../lib/inline-images";
 import { deleteMediaByArticle, getMediaByArticle } from "../../../lib/media";
+import { destroyCloudinaryAsset } from "../../../lib/cloudinary-server";
 import type { ArticleUpdatePayload } from "../../../lib/article-editor.types";
 
 // --- Helpers ---
@@ -345,6 +346,22 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
     if (!existing.rows[0]) return json({ error: "Article not found" }, 404);
 
     const articleId = Number(existing.rows[0].id);
+
+    // Remove CDN assets before deleting their database records. Already-missing
+    // assets are treated as deleted so a retry can finish after a partial failure.
+    const mediaToDelete = await getMediaByArticle(articleId);
+    for (const media of mediaToDelete) {
+      if (!media.public_id) continue;
+      try {
+        await destroyCloudinaryAsset(media.public_id, media.resource_type);
+      } catch (err) {
+        console.error(
+          `[DELETE /api/articles/:slug] CDN delete failed for media ${media.id}:`,
+          err,
+        );
+        return json({ error: "CDN delete failed" }, 502);
+      }
+    }
 
     // Delete in FK-safe order: junction table → media → legacy images → article.
     // Turso Cloud enforces FKs by default; article_tags has no ON DELETE CASCADE

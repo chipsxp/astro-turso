@@ -311,6 +311,49 @@
   padding: 8px;
 }
 
+/* ─── Short desktop viewports: keep the CTA and skip control reachable ─── */
+@media (max-height: 760px) and (min-width: 601px) {
+  .splash-overlay {
+    overflow-y: auto;
+    justify-content: flex-start;
+    padding: 16px 24px;
+  }
+
+  .splash-diptych {
+    flex: 0 0 auto;
+    width: min(100%, 820px, calc((100dvh - 104px) * 10 / 9));
+  }
+
+  .splash-panel--title {
+    padding: 20px 24px;
+    gap: 12px;
+  }
+
+  .splash-title {
+    font-size: clamp(2rem, 4.2vw, 2.8rem);
+  }
+
+  .splash-tagline {
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .splash-cta {
+    padding: 9px 16px;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+  }
+
+  .splash-bubble {
+    display: none;
+  }
+
+  .splash-skip {
+    flex: 0 0 auto;
+    margin-top: 40px;
+  }
+}
+
 /* ─── Mobile responsive ─── */
 @media (max-width: 600px) {
   .splash-overlay {

@@ -12,3 +12,35 @@ cloudinaryV2.config({
  * Do NOT import this in client-side components or Astro <script> blocks.
  */
 export const cloudinary = cloudinaryV2;
+
+/**
+ * Destroy one Cloudinary asset, treating an already-missing asset as success.
+ * Any other unexpected result or API error is surfaced to the caller.
+ */
+export async function destroyCloudinaryAsset(
+  publicId: string,
+  resourceType: "image" | "video",
+): Promise<void> {
+  try {
+    const destroyResult = await cloudinaryV2.uploader.destroy(publicId, {
+      resource_type: resourceType,
+      invalidate: true,
+    });
+
+    const result = String(destroyResult?.result ?? "").toLowerCase();
+    if (
+      result &&
+      result !== "ok" &&
+      result !== "not found" &&
+      result !== "not_found"
+    ) {
+      throw new Error(`Cloudinary delete returned: ${result}`);
+    }
+  } catch (err) {
+    const message = (
+      err instanceof Error ? err.message : String(err)
+    ).toLowerCase();
+    if (message.includes("not found")) return;
+    throw err;
+  }
+}

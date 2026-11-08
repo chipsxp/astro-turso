@@ -1,5 +1,8 @@
 import type { APIRoute } from "astro";
-import { cloudinary } from "../../lib/cloudinary-server";
+import {
+  cloudinary,
+  destroyCloudinaryAsset,
+} from "../../lib/cloudinary-server";
 import { db } from "../../lib/db";
 import {
   addUploadSessionMedia,
@@ -380,27 +383,9 @@ export const DELETE: APIRoute = async ({ request, locals }) => {
 
   if (publicId) {
     try {
-      const destroyResult = await cloudinary.uploader.destroy(publicId, {
-        resource_type: resourceType,
-        invalidate: true,
-      });
-
-      const result = String(destroyResult?.result ?? "").toLowerCase();
-      if (
-        result &&
-        result !== "ok" &&
-        result !== "not found" &&
-        result !== "not_found"
-      ) {
-        return json({ error: "CDN delete failed" }, 502);
-      }
-    } catch (err) {
-      const message = (
-        err instanceof Error ? err.message : String(err)
-      ).toLowerCase();
-      if (!message.includes("not found")) {
-        return json({ error: "CDN delete failed" }, 502);
-      }
+      await destroyCloudinaryAsset(publicId, resourceType);
+    } catch {
+      return json({ error: "CDN delete failed" }, 502);
     }
   }
 

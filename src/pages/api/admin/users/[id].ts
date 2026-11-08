@@ -169,6 +169,11 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
 
     const adminId = Number(user.id);
 
+    // Media needs no reassignment: the media table is article-scoped
+    // (media.article_id), not user-scoped — there is no media.user_id column.
+    // upload_sessions.user_id cascades on user delete, which only removes
+    // unconsumed staging sessions (intended TTL cleanup), never published media.
+
     // events.owner_id is NOT NULL ... ON DELETE CASCADE, so hand events (and
     // sales postings, whose author_id is NOT NULL) to the deleting admin
     // instead of letting the cascade/constraint remove or block them.

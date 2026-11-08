@@ -1,6 +1,11 @@
 import type { APIRoute } from "astro";
 import { cloudinary } from "../../../../lib/cloudinary-server";
-import { IMAGE_MIME_TYPES, MAX_IMAGE_BYTES } from "../../../../lib/media";
+import {
+  IMAGE_MIME_TYPES,
+  MAX_IMAGE_BYTES,
+  estimateBase64DecodedBytes,
+  parseDataUri,
+} from "../../../../lib/media";
 
 function json(data: unknown, status: number): Response {
   return new Response(JSON.stringify(data), {
@@ -23,22 +28,6 @@ function isRateLimited(userId: string): boolean {
   }
   entry.count += 1;
   return entry.count > RATE_LIMIT;
-}
-
-function parseDataUri(
-  dataUri: string,
-): { mimeType: string; base64Payload: string } | null {
-  const commaIdx = dataUri.indexOf(",");
-  if (!dataUri.startsWith("data:") || commaIdx === -1) return null;
-  const parts = dataUri.slice(5, commaIdx).split(";");
-  const mimeType = parts[0].trim();
-  if (!mimeType || !parts.includes("base64")) return null;
-  const base64Payload = dataUri.slice(commaIdx + 1);
-  return base64Payload ? { mimeType, base64Payload } : null;
-}
-
-function estimateBase64DecodedBytes(base64: string): number {
-  return Math.floor((base64.replace(/=+$/, "").length * 3) / 4);
 }
 
 // ── POST /api/admin/sales/upload — upload a payment QR code image ─────────────

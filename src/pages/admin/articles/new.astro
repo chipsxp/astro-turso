@@ -193,6 +193,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
     createToastManager,
     initializeEditor,
   } from "../../../lib/editor-utils";
+  import { sanitizeForPreview } from "../../../lib/sanitize";
 
   const createdArticleId: number | null = null;
   let uploadSessionId: string | null = null;
@@ -263,7 +264,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
       body,
       media: previewMediaItems,
     });
-    previewScroll.innerHTML = html;
+    previewScroll.innerHTML = sanitizeForPreview(html);
     previewScroll.scrollTop = 0;
     draftPreview.classList.remove("is-hidden");
     draftPreview.setAttribute("aria-hidden", "false");

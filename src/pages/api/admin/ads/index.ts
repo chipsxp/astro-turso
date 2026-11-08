@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import { cloudinary } from "../../../../lib/cloudinary-server";
+import { validateAdFields, validateAdImageData } from "../../../../lib/monetization";
 
 function json(data: unknown, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -30,6 +31,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
     if (!business_name || !image_data || !target_url || !slot_type) {
       return json({ error: "Missing required fields" }, 400);
     }
+
+    const fieldError = validateAdFields(payload);
+    if (fieldError) return json({ error: fieldError.error }, fieldError.status);
+
+    const imageError = validateAdImageData(image_data);
+    if (imageError) return json({ error: imageError.error }, imageError.status);
 
     let image_url = "";
     try {
