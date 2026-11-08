@@ -18,6 +18,7 @@ coverage/
 docs/
 .agents/
 .claude/
+.abacusai/
 .github/
 devtools/
 AGENTS.md
