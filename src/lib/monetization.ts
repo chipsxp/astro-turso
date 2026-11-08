@@ -153,9 +153,13 @@ export async function getActiveAdsForSlot(
     slot_type: string;
     is_active: number;
     created_at: number;
-  }>("SELECT * FROM advertisements WHERE slot_type = ? AND is_active = 1", [
-    slotType,
-  ]);
+  }>(
+    `SELECT id, business_name, description, image_url, target_url, coupon_code,
+            slot_type, is_active, created_at
+     FROM advertisements WHERE slot_type = ? AND is_active = 1
+     LIMIT 50`,
+    [slotType],
+  );
 
   if (rs.rows.length === 0) return [];
 

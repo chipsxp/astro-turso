@@ -18,14 +18,20 @@ export const GET: APIRoute = async ({ locals }) => {
   try {
     const result = isAdmin
       ? await db.execute(
-          `SELECT sp.*, u.email AS author_email
+          `SELECT sp.id, sp.slug, sp.author_id, sp.title, sp.status, sp.price,
+                  sp.tags, sp.promo_label, sp.promo_discount_pct, sp.promo_start,
+                  sp.promo_end, sp.created_at, sp.updated_at,
+                  u.email AS author_email
            FROM sales_postings sp
            LEFT JOIN users u ON u.id = sp.author_id
            ORDER BY sp.created_at DESC`,
           [],
         )
       : await db.execute(
-          `SELECT sp.*, u.email AS author_email
+          `SELECT sp.id, sp.slug, sp.author_id, sp.title, sp.status, sp.price,
+                  sp.tags, sp.promo_label, sp.promo_discount_pct, sp.promo_start,
+                  sp.promo_end, sp.created_at, sp.updated_at,
+                  u.email AS author_email
            FROM sales_postings sp
            LEFT JOIN users u ON u.id = sp.author_id
            WHERE sp.author_id = ?

@@ -35,7 +35,8 @@ export const GET: APIRoute = async ({ params, locals }) => {
 
   try {
     const result = await db.execute(
-      "SELECT * FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC",
+      `SELECT id, posting_id, author_name, quote, rating, sort_order, created_at
+       FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC`,
       [pid],
     );
     return json({ testimonials: result.rows }, 200);

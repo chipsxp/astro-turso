@@ -4,7 +4,7 @@ import {
   ensureCategorySchema,
   resolveCategoryId,
 } from "../../../lib/categories";
-import { db } from "../../../lib/db";
+import { db, type BatchStatement } from "../../../lib/db";
 import {
   cleanupUnusedInlineImages,
   deleteInlineImagesByIds,
@@ -197,35 +197,55 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
       await cleanupUnusedInlineImages(articleId, rewrittenBodyForCleanup);
     }
 
-    // Re-link tags when provided — wipe existing links and rebuild
+    // Re-link tags when provided — wipe existing links and rebuild.
+    // The wipe folds into the first batch, so a full re-link costs two
+    // round trips instead of a wipe plus three awaits per tag.
     if (Array.isArray(data.tags)) {
-      await db.execute("DELETE FROM article_tags WHERE article_id = ?", [
-        articleId,
-      ]);
+      const tagNames = [
+        ...new Set(
+          data.tags.map((tagName) => String(tagName).trim()).filter(Boolean),
+        ),
+      ];
 
-      for (const tagName of data.tags) {
-        const name = String(tagName).trim();
-        if (!name) continue;
-
-        const tagSlug = toSlug(name);
-
-        await db.execute(
-          "INSERT OR IGNORE INTO tags (name, slug) VALUES (?, ?)",
-          [name, tagSlug],
+      if (tagNames.length === 0) {
+        await db.execute("DELETE FROM article_tags WHERE article_id = ?", [
+          articleId,
+        ]);
+      } else {
+        const wipeAndUpsertResults = await db.batch(
+          [
+            {
+              sql: "DELETE FROM article_tags WHERE article_id = ?",
+              args: [articleId],
+            },
+            ...tagNames.map((name) => ({
+              sql: "INSERT OR IGNORE INTO tags (name, slug) VALUES (?, ?)",
+              args: [name, toSlug(name)],
+            })),
+            {
+              sql: `SELECT id, name FROM tags WHERE name IN (${tagNames
+                .map(() => "?")
+                .join(", ")})`,
+              args: tagNames,
+            },
+          ],
+          "write",
         );
 
-        const tagResult = await db.execute(
-          "SELECT id FROM tags WHERE name = ?",
-          [name],
-        );
-
-        const tagId = tagResult.rows[0]?.id;
-        if (tagId != null) {
-          await db.execute(
-            "INSERT OR IGNORE INTO article_tags (article_id, tag_id) VALUES (?, ?)",
-            [articleId, tagId],
-          );
+        const tagIdByName = new Map<string, number>();
+        for (const row of wipeAndUpsertResults[
+          wipeAndUpsertResults.length - 1
+        ].rows) {
+          tagIdByName.set(String(row.name), Number(row.id));
         }
+
+        const linkStmts: BatchStatement[] = tagNames
+          .map((name) => ({
+            sql: "INSERT OR IGNORE INTO article_tags (article_id, tag_id) VALUES (?, ?)",
+            args: [articleId, tagIdByName.get(name)],
+          }))
+          .filter((stmt) => stmt.args?.[1] != null);
+        await db.batch(linkStmts, "write");
       }
     }
 

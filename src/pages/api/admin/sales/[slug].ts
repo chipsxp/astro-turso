@@ -17,7 +17,12 @@ export const GET: APIRoute = async ({ params, locals }) => {
 
   try {
     const result = await db.execute(
-      `SELECT sp.*, u.email AS author_email
+      `SELECT sp.id, sp.slug, sp.author_id, sp.title, sp.body, sp.status,
+              sp.tags, sp.promo_label, sp.promo_discount_pct, sp.promo_start,
+              sp.promo_end, sp.paypal_button_html, sp.linked_article_slug,
+              sp.created_at, sp.updated_at, sp.price, sp.qr_code_url,
+              sp.paypal_link, sp.venmo_link, sp.cashapp_link,
+              u.email AS author_email
        FROM sales_postings sp
        LEFT JOIN users u ON u.id = sp.author_id
        WHERE sp.slug = ?`,
@@ -37,15 +42,20 @@ export const GET: APIRoute = async ({ params, locals }) => {
 
     const [imagesRes, testimonialsRes, reviewsRes] = await Promise.all([
       db.execute(
-        "SELECT * FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC",
+        `SELECT id, posting_id, url, alt_text, source, sort_order, created_at,
+                public_id, transforms
+         FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC`,
         [Number(posting.id)],
       ),
       db.execute(
-        "SELECT * FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC",
+        `SELECT id, posting_id, author_name, quote, rating, sort_order, created_at
+         FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC`,
         [Number(posting.id)],
       ),
       db.execute(
-        "SELECT * FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC",
+        `SELECT id, posting_id, reviewer_name, review_text, rating, is_verified,
+                review_date, sort_order, created_at
+         FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC`,
         [Number(posting.id)],
       ),
     ]);
