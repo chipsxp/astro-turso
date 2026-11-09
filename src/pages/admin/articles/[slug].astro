@@ -588,7 +588,7 @@ const maxVideoMb = Math.round(MAX_VIDEO_BYTES / (1024 * 1024));
       };
       if (slugField) payload.slug = slugField;
       if (description) payload.description = description;
-      if (tags.length) payload.tags = tags;
+      payload.tags = tags;
       if (categoryId) payload.category_id = Number(categoryId);
 
       const res = await fetch(`/api/articles/${slug}`, {

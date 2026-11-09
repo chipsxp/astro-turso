@@ -13,8 +13,8 @@ export interface BatchStatement {
   args?: InArgs;
 }
 
-// @tursodatabase/serverless returns rows as numeric-indexed objects {"0": val, "1": val, ...}.
-// This wrapper maps each row to a named-property object using result.columns.
+// execute() returns positional rows, while batch() can return named row objects.
+// Normalize both shapes to named-property objects using result.columns.
 function mapRows<T = Record<string, unknown>>(
   result: ResultSet,
 ): TypedResultSet<T> {
@@ -26,7 +26,10 @@ function mapRows<T = Record<string, unknown>>(
     rows: result.rows.map((row: unknown) => {
       const r = row as Record<string, unknown>;
       return Object.fromEntries(
-        result.columns.map((col: string, i: number) => [col, r[i]]),
+        result.columns.map((col: string, i: number) => [
+          col,
+          Object.prototype.hasOwnProperty.call(r, col) ? r[col] : r[i],
+        ]),
       ) as T;
     }),
   };
