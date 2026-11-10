@@ -134,45 +134,6 @@
   padding: 3px 7px;
 }
 
-.toast-stack {
-  position: fixed;
-  top: 18px;
-  right: 18px;
-  z-index: 70;
-  opacity: 0;
-  transform: translateY(-6px);
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-  pointer-events: none;
-}
-
-.toast-stack.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.toast {
-  border: 2px solid var(--comic-black);
-  box-shadow: 3px 3px 0 var(--comic-black);
-  padding: 10px 14px;
-  min-width: 220px;
-  max-width: 340px;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.toast--success {
-  background: var(--success);
-  color: var(--comic-black);
-}
-
-.toast--error {
-  background: var(--danger);
-  color: var(--surface-2);
-}
 
 /* Hide Author + Tags columns on small screens */
 @media (max-width: 640px) {

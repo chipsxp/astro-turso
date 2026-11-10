@@ -1,5 +1,3 @@
-import { db } from "./db";
-
 export type EventStatus = "draft" | "published" | "cancelled";
 
 export interface EventRecord {
@@ -50,68 +48,6 @@ export function toPublicEvent(event: EventRecord): PublicEventRecord {
     ...pub
   } = event;
   return pub;
-}
-
-const EVENTS_TABLE_SQL = `
-  CREATE TABLE IF NOT EXISTS events (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    slug TEXT NOT NULL UNIQUE,
-    description TEXT,
-    body TEXT NOT NULL,
-    owner_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'cancelled')),
-    start_date TEXT NOT NULL,
-    start_time TEXT,
-    end_date TEXT,
-    end_time TEXT,
-    is_all_day INTEGER NOT NULL DEFAULT 0 CHECK (is_all_day IN (0, 1)),
-    venue_name TEXT,
-    venue_address TEXT,
-    city TEXT,
-    region TEXT,
-    postal_code TEXT,
-    event_url TEXT,
-    featured_media_id INTEGER REFERENCES media(id) ON DELETE SET NULL,
-    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-  )
-`;
-
-const EVENTS_INDEXES_SQL = [
-  "CREATE INDEX IF NOT EXISTS idx_events_owner_id ON events(owner_id)",
-  "CREATE INDEX IF NOT EXISTS idx_events_status ON events(status)",
-  "CREATE INDEX IF NOT EXISTS idx_events_start_date ON events(start_date)",
-  "CREATE INDEX IF NOT EXISTS idx_events_featured_media_id ON events(featured_media_id)",
-];
-
-let eventsSchemaReady = false;
-
-export async function ensureEventsSchema(): Promise<void> {
-  if (eventsSchemaReady) return;
-
-  await db.execute(EVENTS_TABLE_SQL);
-  for (const indexSql of EVENTS_INDEXES_SQL) {
-    await db.execute(indexSql);
-  }
-
-  // Idempotent migration: add archive_date column if not present
-  // This column tracks when an event became archivable (after its end date passed).
-  // Used to enforce 14-day retention window for displaying ended events on public listings.
-  try {
-    await db.execute("ALTER TABLE events ADD COLUMN archive_date TEXT");
-  } catch {
-    // Column already exists; safe to continue.
-  }
-
-  // Idempotent migration: add color column for calendar pill display
-  try {
-    await db.execute("ALTER TABLE events ADD COLUMN color TEXT");
-  } catch {
-    // Column already exists; safe to continue.
-  }
-
-  eventsSchemaReady = true;
 }
 
 export function toEventSlug(str: string): string {
@@ -214,7 +150,7 @@ export const EVENT_SELECT_FIELDS = `
  * Get the effective end date for an event (falls back to start_date if no end_date).
  * Returns ISO date string (YYYY-MM-DD).
  */
-export function getEventEffectiveEndDate(event: EventRecord): string {
+function getEventEffectiveEndDate(event: EventRecord): string {
   return event.end_date && event.end_date.trim()
     ? event.end_date
     : event.start_date;
@@ -225,7 +161,7 @@ export function getEventEffectiveEndDate(event: EventRecord): string {
  * Uses UTC midnight as the baseline and adjusts by -5/-4 hours depending on EST/EDT.
  * Returns ISO date string (YYYY-MM-DD) in New York local time.
  */
-export function toNewYorkDate(date: Date): string {
+function toNewYorkDate(date: Date): string {
   // Create a formatter for America/New_York
   const formatter = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/New_York",
@@ -270,7 +206,7 @@ export function isEventEnded(event: EventRecord): boolean {
  * Check if an event is within the 14-day archive window.
  * Returns true if the event has ended but is still within 14 days of its end date.
  */
-export function isEventInArchiveWindow(event: EventRecord): boolean {
+function isEventInArchiveWindow(event: EventRecord): boolean {
   const eventEndDate = getEventEffectiveEndDate(event);
   const todayNY = getTodayInNewYork();
   const fourteenDaysAgoNY = getDaysAgoInNewYork(14);

@@ -8,7 +8,7 @@
  * The seed INSERT OR IGNORE is also safe to re-run.
  */
 
-import { connect } from "@tursodatabase/serverless";
+import { createClient as connect } from "@tursodatabase/serverless/compat";
 
 if (!process.env.TURSO_DATABASE_URL || !process.env.TURSO_AUTH_TOKEN) {
   console.error(

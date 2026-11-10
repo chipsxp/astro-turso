@@ -1,4 +1,4 @@
-import { connect } from "@tursodatabase/serverless";
+import { createClient as connect } from "@tursodatabase/serverless/compat";
 
 if (!process.env.TURSO_DATABASE_URL || !process.env.TURSO_AUTH_TOKEN) {
   console.error("Missing TURSO_DATABASE_URL or TURSO_AUTH_TOKEN");

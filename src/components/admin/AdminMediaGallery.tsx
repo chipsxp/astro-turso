@@ -1,21 +1,9 @@
 import { AdvancedImage, lazyload, responsive } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
-import { useEffect, useState } from "react";
-import {
-  buildCloudinaryImageUrl,
-  buildCloudinaryVideoUrl,
-} from "../../lib/cloudinary";
-
-type MediaResourceType = "image" | "video";
-
-interface MediaItem {
-  id: number;
-  resource_type: MediaResourceType;
-  public_id: string | null;
-  url: string;
-  alt_text: string;
-  duration?: number | null;
-}
+import { buildCloudinaryVideoUrl } from "../../lib/cloudinary";
+import { ConfirmDeleteDialog } from "./ConfirmDeleteDialog";
+import { MediaLightbox } from "./MediaLightbox";
+import { useAdminMedia } from "./useAdminMedia";
 
 interface Props {
   cloudName: string;
@@ -23,136 +11,24 @@ interface Props {
   emptyMessage?: string;
 }
 
-declare global {
-  interface WindowEventMap {
-    "admin-media-sync": CustomEvent<{ galleryId: string; media: MediaItem[] }>;
-    "admin-media-deleted": CustomEvent<{ galleryId: string; mediaId: number }>;
-    "admin-media-toast": CustomEvent<{
-      galleryId: string;
-      type: "success" | "error";
-      message: string;
-    }>;
-  }
-}
-
 export default function AdminMediaGallery({
   cloudName,
   galleryId,
   emptyMessage = "No media uploaded yet.",
 }: Props) {
-  const [media, setMedia] = useState<MediaItem[]>([]);
-  const [brokenImageIds, setBrokenImageIds] = useState<Set<number>>(new Set());
-  const [confirmId, setConfirmId] = useState<number | null>(null);
-  const [deletingId, setDeletingId] = useState<number | null>(null);
-  const [activeImage, setActiveImage] = useState<MediaItem | null>(null);
+  const {
+    media,
+    brokenImageIds,
+    setBrokenImageIds,
+    confirmId,
+    setConfirmId,
+    deletingId,
+    activeImage,
+    setActiveImage,
+    handleDelete,
+  } = useAdminMedia(galleryId);
+
   const cloudinary = new Cloudinary({ cloud: { cloudName } });
-
-  useEffect(() => {
-    function handleSync(event: WindowEventMap["admin-media-sync"]) {
-      if (event.detail.galleryId !== galleryId) return;
-      setMedia(event.detail.media ?? []);
-      setBrokenImageIds(new Set());
-    }
-
-    window.addEventListener("admin-media-sync", handleSync as EventListener);
-    return () => {
-      window.removeEventListener(
-        "admin-media-sync",
-        handleSync as EventListener,
-      );
-    };
-  }, [galleryId]);
-
-  async function handleDelete(mediaId: number) {
-    if (confirmId !== mediaId) {
-      setConfirmId(mediaId);
-      window.dispatchEvent(
-        new CustomEvent("admin-media-toast", {
-          detail: {
-            galleryId,
-            type: "error",
-            message: "Click Confirm to permanently delete this media.",
-          },
-        }),
-      );
-      return;
-    }
-
-    setDeletingId(mediaId);
-
-    try {
-      const response = await fetch("/api/upload", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ media_id: mediaId }),
-      });
-
-      if (response.status === 401) {
-        window.location.href = "/admin";
-        return;
-      }
-
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        window.dispatchEvent(
-          new CustomEvent("admin-media-toast", {
-            detail: {
-              galleryId,
-              type: "error",
-              message: payload.error ?? "Failed to delete media.",
-            },
-          }),
-        );
-        return;
-      }
-
-      setMedia((prev) => prev.filter((item) => item.id !== mediaId));
-      setBrokenImageIds((prev) => {
-        if (!prev.has(mediaId)) return prev;
-        const next = new Set(prev);
-        next.delete(mediaId);
-        return next;
-      });
-      setConfirmId(null);
-      window.dispatchEvent(
-        new CustomEvent("admin-media-deleted", {
-          detail: { galleryId, mediaId },
-        }),
-      );
-    } catch {
-      window.dispatchEvent(
-        new CustomEvent("admin-media-toast", {
-          detail: {
-            galleryId,
-            type: "error",
-            message: "Network error while deleting media.",
-          },
-        }),
-      );
-    } finally {
-      setDeletingId(null);
-    }
-  }
-
-  useEffect(() => {
-    function handleEsc(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setActiveImage(null);
-      }
-    }
-
-    if (activeImage) {
-      document.body.classList.add("lightbox-open");
-      window.addEventListener("keydown", handleEsc);
-    }
-
-    return () => {
-      document.body.classList.remove("lightbox-open");
-      window.removeEventListener("keydown", handleEsc);
-    };
-  }, [activeImage]);
 
   if (media.length === 0) {
     return (
@@ -245,75 +121,22 @@ export default function AdminMediaGallery({
               {item.alt_text || item.url}
             </a>
             <span className="admin-media-gallery__id">#{item.id}</span>
-            {confirmId === item.id ? (
-              <>
-                <button
-                  type="button"
-                  className="admin-media-gallery__delete admin-media-gallery__delete--confirm"
-                  onClick={() => handleDelete(item.id)}
-                  disabled={deletingId === item.id}
-                >
-                  {deletingId === item.id ? "Deleting…" : "Confirm"}
-                </button>
-                <button
-                  type="button"
-                  className="admin-media-gallery__delete"
-                  onClick={() => setConfirmId(null)}
-                  disabled={deletingId === item.id}
-                >
-                  Cancel
-                </button>
-              </>
-            ) : (
-              <button
-                type="button"
-                className="admin-media-gallery__delete"
-                onClick={() => handleDelete(item.id)}
-                disabled={deletingId === item.id}
-              >
-                Delete
-              </button>
-            )}
+            <ConfirmDeleteDialog
+              isConfirming={confirmId === item.id}
+              isDeleting={deletingId === item.id}
+              onDelete={() => handleDelete(item.id)}
+              onCancel={() => setConfirmId(null)}
+            />
           </div>
         </div>
       ))}
 
       {activeImage && (
-        <div
-          className="admin-media-lightbox"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Image viewer"
-        >
-          <button
-            type="button"
-            className="admin-media-lightbox__backdrop"
-            onClick={() => setActiveImage(null)}
-            aria-label="Close image viewer"
-          />
-          <div className="admin-media-lightbox__dialog">
-            <button
-              type="button"
-              className="admin-media-lightbox__close"
-              onClick={() => setActiveImage(null)}
-              aria-label="Close image viewer"
-            >
-              ×
-            </button>
-            <img
-              src={
-                activeImage.public_id && cloudName
-                  ? buildCloudinaryImageUrl({
-                      cloudName,
-                      publicId: activeImage.public_id,
-                      preset: "hero",
-                    })
-                  : activeImage.url
-              }
-              alt={activeImage.alt_text}
-            />
-          </div>
-        </div>
+        <MediaLightbox
+          activeImage={activeImage}
+          cloudName={cloudName}
+          onClose={() => setActiveImage(null)}
+        />
       )}
 
       <style>{`

@@ -1,14 +1,14 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
-import { MAX_BODY_BYTES, slugify } from "../../../../lib/sales";
+import {
+  isValidPaymentLink,
+  isValidQrUrl,
+  MAX_BODY_BYTES,
+  normalizePaymentLink,
+  slugify,
+} from "../../../../lib/sales";
 import { sanitizeArticleBodyServer } from "../../../../lib/sanitize-server";
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../../lib/api-response";
 
 // ── GET /api/admin/sales/[slug] — single posting with related data ────────────
 export const GET: APIRoute = async ({ params, locals }) => {
@@ -17,7 +17,12 @@ export const GET: APIRoute = async ({ params, locals }) => {
 
   try {
     const result = await db.execute(
-      `SELECT sp.*, u.email AS author_email
+      `SELECT sp.id, sp.slug, sp.author_id, sp.title, sp.body, sp.status,
+              sp.tags, sp.promo_label, sp.promo_discount_pct, sp.promo_start,
+              sp.promo_end, sp.paypal_button_html, sp.linked_article_slug,
+              sp.created_at, sp.updated_at, sp.price, sp.qr_code_url,
+              sp.paypal_link, sp.venmo_link, sp.cashapp_link,
+              u.email AS author_email
        FROM sales_postings sp
        LEFT JOIN users u ON u.id = sp.author_id
        WHERE sp.slug = ?`,
@@ -37,15 +42,20 @@ export const GET: APIRoute = async ({ params, locals }) => {
 
     const [imagesRes, testimonialsRes, reviewsRes] = await Promise.all([
       db.execute(
-        "SELECT * FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC",
+        `SELECT id, posting_id, url, alt_text, source, sort_order, created_at,
+                public_id, transforms
+         FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC`,
         [Number(posting.id)],
       ),
       db.execute(
-        "SELECT * FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC",
+        `SELECT id, posting_id, author_name, quote, rating, sort_order, created_at
+         FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC`,
         [Number(posting.id)],
       ),
       db.execute(
-        "SELECT * FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC",
+        `SELECT id, posting_id, reviewer_name, review_text, rating, is_verified,
+                review_date, sort_order, created_at
+         FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC`,
         [Number(posting.id)],
       ),
     ]);
@@ -135,6 +145,28 @@ export const PUT: APIRoute = async ({ params, locals, request }) => {
     setField("promo_end", body.promo_end || null);
   if (body.paypal_button_html !== undefined)
     setField("paypal_button_html", body.paypal_button_html || null);
+  const paymentLinkFields = [
+    ["paypal_link", "paypal_link"],
+    ["venmo_link", "venmo_link"],
+    ["cashapp_link", "cashapp_link"],
+  ] as const;
+  for (const [key, column] of paymentLinkFields) {
+    if (body[key] === undefined) continue;
+    const value = body[key] ?? "";
+    if (!isValidPaymentLink(value)) {
+      return json(
+        {
+          error:
+            "Payment links must be valid HTTPS URLs no longer than 2048 characters.",
+        },
+        400,
+      );
+    }
+    setField(column, normalizePaymentLink(value));
+  }
+  if (body.qr_code_url && !isValidQrUrl(body.qr_code_url)) {
+    return json({ error: "Invalid QR code URL" }, 400);
+  }
   if (body.qr_code_url !== undefined)
     setField("qr_code_url", body.qr_code_url || null);
   if (body.linked_article_slug !== undefined)

@@ -3,10 +3,10 @@ import SEOMeta from "../components/SEOMeta.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import AdminDonationBlock from "../components/AdminDonationBlock.astro";
-import { getSetting } from "../lib/settings";
+import { getDonationPlacements } from "../lib/settings";
 import "../styles/global.css";
 
-const donationPlacement = await getSetting("donation_placement") || "footer";
+const donationPlacement = await getDonationPlacements();
 
 export interface Props {
   title?: string;
@@ -83,14 +83,26 @@ const {
     
     {import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
       <>
-        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}></script>
-        <script is:inline define:vars={{ gaId: import.meta.env.PUBLIC_GA_MEASUREMENT_ID }}>
-          window.dataLayer = window.dataLayer || [];
-          // eslint-disable-next-line prefer-rest-params
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', gaId);
+        <script
+          is:inline
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}
+          data-ga-id={import.meta.env.PUBLIC_GA_MEASUREMENT_ID}
+        ></script>
+        <script>
+          const gaLoader = document.querySelector<HTMLScriptElement>(
+            'script[src*="googletagmanager.com/gtag/js"]',
+          );
+          const gaId = gaLoader?.dataset.gaId;
+          if (gaId) {
+            const w = window as unknown as { dataLayer?: unknown[] };
+            w.dataLayer = w.dataLayer || [];
+            function gtag(...args: unknown[]) {
+              w.dataLayer?.push(args);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId);
+          }
         </script>
       </>
     )}
@@ -99,7 +111,7 @@ const {
     <Header />
     <div class="layout-wrapper" style="display: flex; flex-direction: column; min-height: 100vh;">
       <div class="layout-main" style="flex: 1; display: flex;">
-        {donationPlacement === "sidebar" && (
+        {donationPlacement.includes("sidebar") && (
           <aside class="site-sidebar" style="width: 300px; padding: 2rem 1rem; border-right: 1px solid var(--border);">
             <AdminDonationBlock />
           </aside>
@@ -112,9 +124,11 @@ const {
     <Footer />
     
     <!-- Telemetry Tracker -->
-    <script is:inline>
+    <script>
       document.addEventListener("click", function (e) {
-        const target = e.target.closest("[data-track-type]");
+        const target = (e.target as HTMLElement | null)?.closest(
+          "[data-track-type]",
+        );
         if (!target) return;
 
         const eventType = target.getAttribute("data-track-event") || "click";

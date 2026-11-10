@@ -5,12 +5,12 @@ import BlogLayout from "../layouts/BlogLayout.astro";
 import {
   buildCloudinaryImageSrcset,
   buildCloudinaryImageUrl,
+  resolveCloudName,
 } from "../lib/cloudinary";
 import { db } from "../lib/db";
 import {
   EVENT_SELECT_FIELDS,
   type EventRecord,
-  ensureEventsSchema,
   getEventLifecycleLabel,
   isEventArchivable,
   isEventUpcoming,
@@ -18,14 +18,12 @@ import {
 } from "../lib/events";
 import AdPlacement from "../components/AdPlacement.astro";
 import AdminDonationBlock from "../components/AdminDonationBlock.astro";
-import { getSetting } from "../lib/settings";
+import { getDonationPlacements } from "../lib/settings";
 
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
-const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
+const cloudName = resolveCloudName();
 const canonicalUrl = `${siteUrl}/upcoming-events`;
-const donationPlacement = (await getSetting("donation_placement")) || "footer";
-
-await ensureEventsSchema();
+const donationPlacement = await getDonationPlacements();
 
 const result = await db.execute(
   `SELECT ${EVENT_SELECT_FIELDS}
@@ -154,7 +152,7 @@ const featuredEvent = upcomingEvents[0] ?? null;
 
     <div class="page-wrap" style="margin: 2rem auto;">
       <AdPlacement slotType="event_index_top" />
-      {donationPlacement === "event_index_top" && <AdminDonationBlock />}
+      {donationPlacement.includes("event_index_top") && <AdminDonationBlock />}
     </div>
 
     {

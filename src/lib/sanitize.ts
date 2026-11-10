@@ -79,61 +79,7 @@ const ARTICLE_SANITIZE_CONFIG = {
   RETURN_DOM: false,
   RETURN_DOM_FRAGMENT: false,
   RETURN_DOM_IMPORT: false,
-  // Custom filter for safe inline styles
-  CUSTOM_ELEMENT_HANDLER: function (element: Element) {
-    // Allow limited safe inline styles
-    if (element.getAttribute("style")) {
-      const style = element.getAttribute("style") || "";
-      // Only allow safe CSS properties commonly used in articles
-      const safeProperties = [
-        "color",
-        "background-color",
-        "font-size",
-        "font-weight",
-        "font-style",
-        "text-decoration",
-        "text-align",
-        "margin",
-        "padding",
-        "border",
-        "display",
-        "max-width",
-        "height",
-        "width",
-      ];
-
-      const parsedStyle = parseInlineStyle(style);
-      const safeStyle = Object.entries(parsedStyle)
-        .filter(([key]) => safeProperties.includes(key.toLowerCase()))
-        .map(([key, value]) => `${key}: ${value}`)
-        .join("; ");
-
-      if (safeStyle) {
-        element.setAttribute("style", safeStyle);
-      } else {
-        element.removeAttribute("style");
-      }
-    }
-    return false;
-  },
 };
-
-/**
- * Parse inline CSS style string into key-value object.
- */
-function parseInlineStyle(styleStr: string): Record<string, string> {
-  const styles: Record<string, string> = {};
-  const declarations = styleStr.split(";").filter((d) => d.trim());
-
-  for (const decl of declarations) {
-    const [key, value] = decl.split(":").map((s) => s.trim());
-    if (key && value) {
-      styles[key.toLowerCase()] = value;
-    }
-  }
-
-  return styles;
-}
 
 /**
  * Sanitize article body HTML to prevent XSS while preserving formatting.

@@ -1,18 +1,11 @@
 import type { APIRoute } from "astro";
 import {
-  ensurePanelSchema,
   getCurrentPanelAssignments,
   getRecentPanelMedia,
 } from "../../../../lib/panels";
+import { json } from "../../../../lib/api-response";
 
 // --- Helper ---
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 // --- GET /api/admin/panels ---
 // Returns all 4 slot assignments and the recent image gallery (last 7 days).
@@ -20,8 +13,6 @@ function json(data: unknown, status: number): Response {
 
 export const GET: APIRoute = async () => {
   try {
-    await ensurePanelSchema();
-
     const [assignments, gallery] = await Promise.all([
       getCurrentPanelAssignments(),
       getRecentPanelMedia(),

@@ -7,55 +7,27 @@ import {
   type SalesTestimonial,
   type SalesReview,
 } from "../../../lib/sales";
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../lib/api-response";
+import { createRateLimiter, getClientIp } from "../../../lib/rate-limit";
 
 // --- In-memory rate limiter: 120 requests per IP per minute (public read) ---
-const readAttempts = new Map<string, { count: number; resetAt: number }>();
-const READ_MAX = 120;
-const READ_WINDOW_MS = 60 * 1000;
-
-function getClientIp(request: Request): string {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
-    request.headers.get("x-real-ip") ??
-    "unknown"
-  );
-}
-
-function isReadRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const entry = readAttempts.get(ip);
-  if (!entry || now > entry.resetAt) return false;
-  return entry.count >= READ_MAX;
-}
-
-function recordReadAttempt(ip: string): void {
-  const now = Date.now();
-  const entry = readAttempts.get(ip);
-  if (!entry || now > entry.resetAt) {
-    readAttempts.set(ip, { count: 1, resetAt: now + READ_WINDOW_MS });
-  } else {
-    entry.count += 1;
-  }
-}
+const readLimiter = createRateLimiter({ limit: 120, windowMs: 60 * 1000 });
 
 // ── GET /api/sales/[slug] — public single posting detail ─────────────────────
 export const GET: APIRoute = async ({ params, request }) => {
   const { slug } = params;
 
   const ip = getClientIp(request);
-  if (isReadRateLimited(ip)) return json({ error: "Too many requests" }, 429);
-  recordReadAttempt(ip);
+  if (readLimiter.limited(ip)) return json({ error: "Too many requests" }, 429);
+  readLimiter.record(ip);
 
   try {
     const result = await db.execute<SalesPosting>(
-      `SELECT sp.*
+      `SELECT sp.id, sp.slug, sp.author_id, sp.title, sp.body, sp.status,
+              sp.tags, sp.promo_label, sp.promo_discount_pct, sp.promo_start,
+              sp.promo_end, sp.paypal_button_html, sp.linked_article_slug,
+              sp.created_at, sp.updated_at, sp.price, sp.qr_code_url,
+              sp.paypal_link, sp.venmo_link, sp.cashapp_link
        FROM sales_postings sp
        WHERE sp.slug = ? AND sp.status = 'published'`,
       [slug],
@@ -65,15 +37,20 @@ export const GET: APIRoute = async ({ params, request }) => {
 
     const [imagesRes, testimonialsRes, reviewsRes] = await Promise.all([
       db.execute<SalesImage>(
-        "SELECT * FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC",
+        `SELECT id, posting_id, url, alt_text, source, sort_order, created_at,
+                public_id, transforms
+         FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC`,
         [Number(posting.id)],
       ),
       db.execute<SalesTestimonial>(
-        "SELECT * FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC",
+        `SELECT id, posting_id, author_name, quote, rating, sort_order, created_at
+         FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC`,
         [Number(posting.id)],
       ),
       db.execute<SalesReview>(
-        "SELECT * FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC",
+        `SELECT id, posting_id, reviewer_name, review_text, rating, is_verified,
+                review_date, sort_order, created_at
+         FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC`,
         [Number(posting.id)],
       ),
     ]);

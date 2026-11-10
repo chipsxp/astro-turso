@@ -1,6 +1,6 @@
 # The Happy Feeling Scriptorium
 
-![Version](https://img.shields.io/badge/version-1.3.0-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
+![Version](https://img.shields.io/badge/version-1.4.0-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
 
 Astro SSR blog and admin panel for publishing articles, managing events, managing media, and running a small author workflow on top of Turso and Cloudinary.
 
@@ -8,12 +8,13 @@ This repository is meant to be practical for developers who want to learn from i
 
 ## Branches
 
-| Branch                 | Version | Description                                                                                                                        |
-| ---------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `main`                 | 1.0.0   | Base blog platform — no events module                                                                                              |
-| `feature/events`       | 1.1.0   | Adds the Upcoming Events module (this branch)                                                                                      |
-| `feature/etsy-sales`   | 1.2.0   | Adds Etsy sales module and storefront integration, improves event flow, and raises Lighthouse score via WebP and alt-text delivery |
-| `feature/monetization` | 1.3.0   | Adds gamification scoring for social shares and an advertisement placement module                                                  |
+| Branch                      | Version | Description                                                                                                                        |
+| --------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `main`                      | 1.0.0   | Base blog platform — no events module                                                                                              |
+| `feature/events`            | 1.1.0   | Adds the Upcoming Events module (this branch)                                                                                      |
+| `feature/etsy-sales`        | 1.2.0   | Adds Etsy sales module and storefront integration, improves event flow, and raises Lighthouse score via WebP and alt-text delivery |
+| `feature/monetization`      | 1.3.5   | Adds gamification scoring for social shares and an advertisement placement module                                                  |
+| `fix/code-review-hardening` | 1.4.0   | Code review hardening (#2–#16) — security, transactions, modularization, CSP                                                       |
 
 Clone the branch that matches what you need:
 
@@ -290,6 +291,28 @@ If you are new to Astro or full-stack content apps, start in this order:
 
 ## Changelog
 
+### [1.4.0] — 2026-11-09 — Code Review Hardening (`fix/code-review-hardening` branch)
+
+- **Rate limiting & memory bounds (PR 1):** Extracted shared LRU/TTL rate limiter (`src/lib/rate-limit.ts`) with swept expiry across login, register, password reset, contact, public reads, inline images, and sales QR uploads.
+- **Database transactions & DDL removal (PR 2 & PR 3):** Added `db.batch()` to `src/lib/db.ts` for atomic multi-statement writes (tag sync, upload session attach, panel assignments, password reset consume, user delete). Removed runtime `ensure*Schema` DDL calls from hot request paths; added `scripts/migrate-add-indexes.mjs` and `scripts/README.md`.
+- **Shared utilities & dead-code cleanup (PR 4, PR 5, PR 10):** Centralized `requireUser`/`requireAdmin` in `src/lib/auth.ts`, `validateArticleBody` in `src/lib/article-validation.ts`, `escapeHtml`/`formatDate` in `src/lib/format.ts`, and `resolveCloudName()` in `src/lib/cloudinary.ts`. Removed unused exports across `src/lib/`.
+- **Query & asset hygiene (PR 6, PR 8, PR 9, F1, F2):** Narrowed `SELECT *` queries to explicit columns, added pagination caps and `Promise.all` parallelization, fixed `admin/ads` PUT to destroy replaced Cloudinary assets, and sanitized admin preview HTML with `sanitizeForPreview()`.
+- **Frontend & CSS modularization (PR 11, PR 12, PR 13):** Extracted 6 large inline admin `<script>` blocks into typed modules under `src/scripts/admin/`; split `PanelGallery.tsx`, `SalesImageManager.tsx`, and `AdminMediaGallery.tsx` into focused hooks and subcomponents; split `admin-layout.css` and `global.css` into `@import` partials while preserving unscoped `set:html` and React island rules.
+- **Analytics & CSP alignment (PR 14, PR 15):** Converted `BlogLayout.astro` GA config and click-tracker scripts to processed module scripts, added Google Analytics host allowances to public and `/shop` CSP tiers, and synchronized agent/architecture documentation.
+- **Toast accessibility (PR 16):** Added keyboard/pointer dismiss button, hover/focus timer pause, and 8 s error duration to `src/lib/admin-toast.ts`.
+
+---
+
+### [1.3.5] — 2026-10-18 — Stability & Admin UX Fixes (`fix/code-review-hardening` branch)
+
+- Deleting a user now reassigns their events and sales postings to the acting admin and unlinks their articles; the toast shows the counts.
+- Article view dedupe window is 30 minutes.
+- `@tursodatabase/serverless` pinned to 1.4.1; the app and all scripts use `createClient` from `@tursodatabase/serverless/compat`. Run `npm install` on deploy.
+- One shared admin toast (`src/lib/admin-toast.ts` plus a single CSS block); `alert()` calls replaced.
+- Quill editor placeholder text is readable in dark and light mode.
+
+---
+
 ### [1.3.0] — 2026-06-30 — Gamification & Monetization (`feature/monetization` branch)
 
 Adds an Author Score Keeper to gamify social shares and an Advertisement Management system for site monetization.
@@ -410,5 +433,7 @@ Then create your admin user and start the server as usual.
 | Version   | Feature                            | Status      |
 | --------- | ---------------------------------- | ----------- |
 | **1.1.0** | Upcoming Events page               | Released    |
-| **1.2.0** | Art Sales / Shop page              | In Progress |
+| **1.2.0** | Art Sales / Shop page              | Released |
 | **1.3.0** | Gamification & Monetization module | Released    |
+| **1.3.5** | Stability & admin UX fixes         | Released    |
+| **1.4.0** | Code review hardening (#2–#16)     | Released    |

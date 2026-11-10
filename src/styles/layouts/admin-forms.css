@@ -1,0 +1,14 @@
+/* Native form controls and dropdown popups follow the active theme. */
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+select option,
+select optgroup {
+  background-color: var(--surface-2, var(--surface-alt));
+  color: var(--text);
+}

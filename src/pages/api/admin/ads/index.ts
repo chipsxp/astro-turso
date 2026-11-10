@@ -1,18 +1,14 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import { cloudinary } from "../../../../lib/cloudinary-server";
-
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { validateAdFields, validateAdImageData } from "../../../../lib/monetization";
+import { json } from "../../../../lib/api-response";
+import { requireAdmin } from "../../../../lib/auth";
 
 export const POST: APIRoute = async ({ request, locals }) => {
   // Rely on middleware for auth check.
   // If we reach here, locals.user should be an admin (or we enforce it).
-  if (locals.user?.role !== "admin") {
+  if (!requireAdmin(locals)) {
     return json({ error: "Unauthorized" }, 403);
   }
 
@@ -30,6 +26,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
     if (!business_name || !image_data || !target_url || !slot_type) {
       return json({ error: "Missing required fields" }, 400);
     }
+
+    const fieldError = validateAdFields(payload);
+    if (fieldError) return json({ error: fieldError.error }, fieldError.status);
+
+    const imageError = validateAdImageData(image_data);
+    if (imageError) return json({ error: imageError.error }, imageError.status);
 
     let image_url = "";
     try {

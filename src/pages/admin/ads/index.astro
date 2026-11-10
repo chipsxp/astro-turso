@@ -44,7 +44,7 @@ for (const row of statsRs.rows) {
 
   <div class="card">
     <div class="table-wrap">
-      <table>
+      <table id="ads-table">
         <thead>
           <tr>
             <th>Business Name</th>
@@ -84,7 +84,13 @@ for (const row of statsRs.rows) {
                     <strong>{clickStats.get(ad.id) || 0}</strong>
                   </td>
                   <td class="table-actions-col">
-                    <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+                    <div class="ads-actions">
+                      <a
+                        href={`/admin/ads/${ad.id}`}
+                        class="btn btn-ghost btn-sm"
+                      >
+                        Edit
+                      </a>
                       <button
                         class="btn btn-ghost btn-sm toggle-btn"
                         data-id={ad.id}
@@ -112,9 +118,41 @@ for (const row of statsRs.rows) {
 
 <style is:global>
   @import "../../../styles/pages/admin-dashboard.css";
+
+  .ads-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+
+  /* Stack buttons and hide Coupon + Clicks on small screens */
+  @media (max-width: 640px) {
+    .ads-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .ads-actions .btn {
+      text-align: center;
+    }
+    #ads-table th:nth-child(3),
+    #ads-table td:nth-child(3),
+    #ads-table th:nth-child(5),
+    #ads-table td:nth-child(5) {
+      display: none;
+    }
+  }
+
+  /* Also hide Slot on very small screens */
+  @media (max-width: 440px) {
+    #ads-table th:nth-child(2),
+    #ads-table td:nth-child(2) {
+      display: none;
+    }
+  }
 </style>
 
 <script>
+  import { showToast } from "../../../lib/admin-toast";
   const toggleBtns = document.querySelectorAll(".toggle-btn");
   const deleteBtns = document.querySelectorAll(".delete-btn");
 
@@ -130,11 +168,11 @@ for (const row of statsRs.rows) {
         if (res.ok) {
           window.location.reload();
         } else {
-          alert("Failed to toggle ad status.");
+          showToast("Failed to toggle ad status.", "error");
           target.disabled = false;
         }
       } catch (_err) {
-        alert("An error occurred.");
+        showToast("An error occurred.", "error");
         target.disabled = false;
       }
     });
@@ -156,11 +194,11 @@ for (const row of statsRs.rows) {
         if (res.ok) {
           window.location.reload();
         } else {
-          alert("Failed to delete ad.");
+          showToast("Failed to delete ad.", "error");
           target.disabled = false;
         }
       } catch (_err) {
-        alert("An error occurred.");
+        showToast("An error occurred.", "error");
         target.disabled = false;
       }
     });

@@ -1,29 +1,23 @@
 import type { APIRoute } from "astro";
 import {
   CategoryInputError,
-  ensureCategorySchema,
   resolveCategoryId,
 } from "../../../lib/categories";
-import { db } from "../../../lib/db";
+import { db, type BatchStatement } from "../../../lib/db";
 import {
   deleteInlineImagesByIds,
   persistInlineImagesInBody,
 } from "../../../lib/inline-images";
 import {
   attachUploadSessionMediaToArticle,
-  ensureUploadSessionSchema,
   getActiveUploadSessionForUser,
   markUploadSessionConsumed,
 } from "../../../lib/media";
+import { json } from "../../../lib/api-response";
+import { createRateLimiter, getClientIp } from "../../../lib/rate-limit";
+import { validateArticleBody } from "../../../lib/article-validation";
 
 // --- Helpers ---
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 function toSlug(str: string): string {
   return str
@@ -33,95 +27,17 @@ function toSlug(str: string): string {
     .replace(/^-|-$/g, "");
 }
 
-const MAX_ARTICLE_BODY_BYTES = 1835008; // 1.75 MB
-const MAX_INLINE_IMAGE_COUNT = 4;
-const MAX_INLINE_IMAGE_BYTES = 300 * 1024; // 300 KB per inline image
-const MAX_INLINE_IMAGE_TOTAL_BYTES = 1200 * 1024; // 1200 KB total
-
-function estimateBase64DecodedBytes(base64Data: string): number {
-  const normalized = base64Data.replace(/\s+/g, "");
-  const padding = normalized.endsWith("==")
-    ? 2
-    : normalized.endsWith("=")
-      ? 1
-      : 0;
-
-  return Math.max(0, Math.floor((normalized.length * 3) / 4) - padding);
-}
-
-function validateArticleBody(body: string): string | null {
-  const bodyBytes = new TextEncoder().encode(body).length;
-  if (bodyBytes > MAX_ARTICLE_BODY_BYTES) {
-    return "Article body is too large (max 1.75 MB).";
-  }
-
-  const inlineMatches = Array.from(
-    body.matchAll(/data:image\/[a-z0-9.+-]+;base64,([A-Za-z0-9+/=\r\n]+)/gi),
-  );
-
-  if (inlineMatches.length > MAX_INLINE_IMAGE_COUNT) {
-    return "Too many inline images in article body (max 4). Please use media upload for additional images.";
-  }
-
-  let inlineDecodedTotal = 0;
-  for (const match of inlineMatches) {
-    const base64Data = match[1] ?? "";
-    const decodedSize = estimateBase64DecodedBytes(base64Data);
-
-    if (decodedSize > MAX_INLINE_IMAGE_BYTES) {
-      return "An inline image in article body is too large (max 300 KB decoded per image). Please use media upload instead of large base64 embeds.";
-    }
-
-    inlineDecodedTotal += decodedSize;
-  }
-
-  if (inlineDecodedTotal > MAX_INLINE_IMAGE_TOTAL_BYTES) {
-    return "Inline image payload in article body is too large (max 1200 KB decoded total). Please use media upload instead of large base64 embeds.";
-  }
-
-  return null;
-}
-
 // --- In-memory rate limiter: 120 requests per IP per minute (public read) ---
-const readAttempts = new Map<string, { count: number; resetAt: number }>();
-const READ_MAX = 120;
-const READ_WINDOW_MS = 60 * 1000;
-
-function getClientIp(request: Request): string {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
-    request.headers.get("x-real-ip") ??
-    "unknown"
-  );
-}
-
-function isReadRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const entry = readAttempts.get(ip);
-  if (!entry || now > entry.resetAt) return false;
-  return entry.count >= READ_MAX;
-}
-
-function recordReadAttempt(ip: string): void {
-  const now = Date.now();
-  const entry = readAttempts.get(ip);
-  if (!entry || now > entry.resetAt) {
-    readAttempts.set(ip, { count: 1, resetAt: now + READ_WINDOW_MS });
-  } else {
-    entry.count += 1;
-  }
-}
+const readLimiter = createRateLimiter({ limit: 120, windowMs: 60 * 1000 });
 
 // --- GET /api/articles — public list of published articles ---
 
 export const GET: APIRoute = async ({ request }) => {
   const ip = getClientIp(request);
-  if (isReadRateLimited(ip)) return json({ error: "Too many requests" }, 429);
-  recordReadAttempt(ip);
+  if (readLimiter.limited(ip)) return json({ error: "Too many requests" }, 429);
+  readLimiter.record(ip);
 
   try {
-    await ensureCategorySchema();
-
     const result = await db.execute(
       `SELECT a.id, a.title, a.slug, a.description, a.created_at,
               u.email AS author_email,
@@ -158,13 +74,6 @@ export const GET: APIRoute = async ({ request }) => {
 export const POST: APIRoute = async ({ request, locals }) => {
   const author = locals.user!;
   let data: Record<string, unknown>;
-
-
-  try {
-    await ensureCategorySchema();
-  } catch {
-    return json({ error: "Database error" }, 500);
-  }
 
   try {
     data = await request.json();
@@ -216,7 +125,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
   if (uploadSessionId) {
     try {
-      await ensureUploadSessionSchema();
       const activeSession = await getActiveUploadSessionForUser(
         uploadSessionId,
         Number(author.id),
@@ -265,28 +173,39 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     // 2. Upsert tags + link to article (sequence diagram Flow 2, step 3)
-    for (const tagName of tags) {
-      const name = String(tagName).trim();
-      if (!name) continue;
-
-      const tagSlug = toSlug(name);
-
-      await db.execute(
-        "INSERT OR IGNORE INTO tags (name, slug) VALUES (?, ?)",
-        [name, tagSlug],
+    // Two batched round trips instead of three sequential awaits per tag.
+    const tagNames = [
+      ...new Set(tags.map((tagName) => String(tagName).trim()).filter(Boolean)),
+    ];
+    if (tagNames.length > 0) {
+      const upsertResults = await db.batch(
+        [
+          ...tagNames.map((name) => ({
+            sql: "INSERT OR IGNORE INTO tags (name, slug) VALUES (?, ?)",
+            args: [name, toSlug(name)],
+          })),
+          {
+            sql: `SELECT id, name FROM tags WHERE name IN (${tagNames
+              .map(() => "?")
+              .join(", ")})`,
+            args: tagNames,
+          },
+        ],
+        "write",
       );
 
-      const tagResult = await db.execute("SELECT id FROM tags WHERE name = ?", [
-        name,
-      ]);
-
-      const tagId = tagResult.rows[0]?.id;
-      if (tagId != null) {
-        await db.execute(
-          "INSERT OR IGNORE INTO article_tags (article_id, tag_id) VALUES (?, ?)",
-          [articleId, tagId],
-        );
+      const tagIdByName = new Map<string, number>();
+      for (const row of upsertResults[upsertResults.length - 1].rows) {
+        tagIdByName.set(String(row.name), Number(row.id));
       }
+
+      const linkStmts: BatchStatement[] = tagNames
+        .map((name) => ({
+          sql: "INSERT OR IGNORE INTO article_tags (article_id, tag_id) VALUES (?, ?)",
+          args: [articleId, tagIdByName.get(name)],
+        }))
+        .filter((stmt) => stmt.args?.[1] != null);
+      await db.batch(linkStmts, "write");
     }
 
     // 3. Attach staged session uploads when provided

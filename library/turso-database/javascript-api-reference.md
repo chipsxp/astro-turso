@@ -1,5 +1,7 @@
 # JavaScript API reference
 
+> **Project Note (`astro-turso`):** This application uses `createClient({ url, authToken })` from `@tursodatabase/serverless/compat` (driver pinned at `1.4.1`) with a fresh client per call inside `src/lib/db.ts` (`db.execute()` / `db.batch()`), rather than the `connect()` API documented in the vendored reference below (`Connection.execute()` was removed in 1.4).
+
 This document describes the JavaScript API for Turso. The API is implemented in two different packages:
 
 - [@tursodatabase/database](https://www.npmjs.com/package/@tursodatabase/database) (`bindings/javascript`) - Native bindings for the Turso database.

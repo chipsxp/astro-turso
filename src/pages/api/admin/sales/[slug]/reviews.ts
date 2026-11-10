@@ -1,12 +1,6 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../../lib/db";
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../../../lib/api-response";
 
 async function getPostingId(
   slug: string,
@@ -41,7 +35,9 @@ export const GET: APIRoute = async ({ params, locals }) => {
 
   try {
     const result = await db.execute(
-      "SELECT * FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC",
+      `SELECT id, posting_id, reviewer_name, review_text, rating, is_verified,
+              review_date, sort_order, created_at
+       FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC`,
       [pid],
     );
     return json({ reviews: result.rows }, 200);

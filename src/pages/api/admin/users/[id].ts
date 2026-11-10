@@ -1,14 +1,8 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
+import { json } from "../../../../lib/api-response";
 
 // --- Helpers ---
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 type Action = "approve" | "suspend" | "reinstate" | "promote";
 
@@ -167,19 +161,42 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
       return json({ error: "Admin accounts cannot be deleted" }, 403);
     }
 
-    // Unlink any articles or events they created so we don't break existing content
-    await db.execute(
+    const adminId = Number(user.id);
+
+    // Media needs no reassignment: the media table is article-scoped
+    // (media.article_id), not user-scoped — there is no media.user_id column.
+    // upload_sessions.user_id cascades on user delete, which only removes
+    // unconsumed staging sessions (intended TTL cleanup), never published media.
+
+    // events.owner_id is NOT NULL ... ON DELETE CASCADE, so hand events (and
+    // sales postings, whose author_id is NOT NULL) to the deleting admin
+    // instead of letting the cascade/constraint remove or block them.
+    const events = await db.execute(
+      "UPDATE events SET owner_id = ? WHERE owner_id = ?",
+      [adminId, targetId],
+    );
+    const listings = await db.execute(
+      "UPDATE sales_postings SET author_id = ? WHERE author_id = ?",
+      [adminId, targetId],
+    );
+    // Unlink articles so existing content remains after account deletion.
+    const articles = await db.execute(
       "UPDATE articles SET author_id = NULL WHERE author_id = ?",
       [targetId],
     );
-    await db.execute("UPDATE events SET owner_id = NULL WHERE owner_id = ?", [
-      targetId,
-    ]);
 
-    // Delete the user
     await db.execute("DELETE FROM users WHERE id = ?", [targetId]);
 
-    return json({ success: true, userId: targetId }, 200);
+    return json(
+      {
+        success: true,
+        userId: targetId,
+        eventsReassigned: Number(events.rowsAffected ?? 0),
+        listingsReassigned: Number(listings.rowsAffected ?? 0),
+        articlesUnlinked: Number(articles.rowsAffected ?? 0),
+      },
+      200,
+    );
   } catch (error) {
     console.error("Failed to delete user:", error);
     return json({ error: "Database error" }, 500);

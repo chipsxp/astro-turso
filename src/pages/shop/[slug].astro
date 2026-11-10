@@ -7,6 +7,8 @@ import { db } from "../../lib/db";
 import {
   calcSalePrice,
   formatPrice,
+  isValidPaymentLink,
+  normalizePaymentLink,
   parseTags,
   type SalesPosting,
 } from "../../lib/sales";
@@ -31,7 +33,13 @@ let notFound = false;
 
 try {
   const result = await db.execute(
-    `SELECT sp.* FROM sales_postings sp WHERE sp.slug = ? AND sp.status = 'published'`,
+    `SELECT sp.id, sp.slug, sp.author_id, sp.title, sp.body, sp.status,
+            sp.tags, sp.promo_label, sp.promo_discount_pct, sp.promo_start,
+            sp.promo_end, sp.paypal_button_html, sp.linked_article_slug,
+            sp.created_at, sp.updated_at, sp.price, sp.qr_code_url,
+            sp.paypal_link, sp.venmo_link, sp.cashapp_link
+     FROM sales_postings sp
+     WHERE sp.slug = ? AND sp.status = 'published'`,
     [slug],
   );
 
@@ -44,15 +52,15 @@ try {
 
     const [imagesRes, testimonialsRes, reviewsRes] = await Promise.all([
       db.execute(
-        "SELECT * FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC",
+        "SELECT id, posting_id, url, alt_text, source, sort_order, created_at, public_id, transforms FROM sales_images WHERE posting_id = ? ORDER BY sort_order ASC",
         [postingId],
       ),
       db.execute(
-        "SELECT * FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC",
+        "SELECT id, posting_id, author_name, quote, rating, sort_order, created_at FROM sales_testimonials WHERE posting_id = ? ORDER BY sort_order ASC",
         [postingId],
       ),
       db.execute(
-        "SELECT * FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC",
+        "SELECT id, posting_id, reviewer_name, review_text, rating, is_verified, review_date, sort_order, created_at FROM sales_reviews WHERE posting_id = ? ORDER BY sort_order ASC",
         [postingId],
       ),
     ]);
@@ -94,6 +102,15 @@ const paypalSdkConfig =
   !safePayPal && posting.paypal_button_html
     ? extractPayPalSdkConfig(String(posting.paypal_button_html))
     : null;
+const paymentLinks = [
+  { label: "Pay with PayPal", value: posting.paypal_link },
+  { label: "Pay with Venmo", value: posting.venmo_link },
+  { label: "Pay with Cash App", value: posting.cashapp_link },
+].flatMap(({ label, value }) => {
+  if (!isValidPaymentLink(value)) return [];
+  const href = normalizePaymentLink(value);
+  return href ? [{ label, href }] : [];
+});
 
 const promoEndDate = posting.promo_end
   ? new Date(String(posting.promo_end)).toLocaleDateString("en-US", {
@@ -214,7 +231,28 @@ const galleryImages = images.map((img) => ({
         }
 
         {
-          !safePayPal && !paypalSdkConfig && (
+          paymentLinks.length > 0 && (
+            <div class="sales-payment-links">
+              <p class="sales-paypal-label">Other ways to pay:</p>
+              {paymentLinks.map((payment) => (
+                <a
+                  class="btn btn-primary sales-payment-link"
+                  href={payment.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {payment.label}
+                </a>
+              ))}
+            </div>
+          )
+        }
+
+        {
+          !safePayPal &&
+          !paypalSdkConfig &&
+          paymentLinks.length === 0 &&
+          !posting.qr_code_url && (
             <p class="sales-no-button">
               Contact the artist directly to purchase this item.
             </p>
@@ -495,6 +533,12 @@ const galleryImages = images.map((img) => ({
     font-size: 1.1rem;
     margin: 0 0 0.75rem;
     font-weight: 600;
+  }
+  .sales-payment-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
   }
   .sales-testimonials,
   .sales-reviews {

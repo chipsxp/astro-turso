@@ -1,11 +1,15 @@
 type CloudinaryImagePreset =
-  "hero" | "inline" | "thumb" | "panel" | "panel-tall" | "panel-wide";
+  "hero" | "inline" | "thumb" | "panel" | "panel-tall" | "panel-wide" | "sales";
 
 type BuildCloudinaryImageUrlInput = {
   cloudName: string;
   publicId: string;
   preset: CloudinaryImagePreset;
   width?: number;
+  /** Transformations inserted before the resize component (e.g. e_background_removal). */
+  preTransforms?: string[];
+  /** Transformations inserted after the resize component, before f_auto/q_auto (e.g. text overlays). */
+  postTransforms?: string[];
 };
 
 type PresetDimensions = {
@@ -20,6 +24,7 @@ const PRESET_DIMENSIONS: Record<CloudinaryImagePreset, PresetDimensions> = {
   panel: { width: 640, height: 480 },
   "panel-tall": { width: 400, height: 720 }, // 5:9 portrait — panel-01, panel-02, panel-04
   "panel-wide": { width: 800, height: 450 }, // 16:9 landscape — panel-03
+  sales: { width: 800 }, // bare w_N scale (no c_ mode) — sales gallery images
 };
 
 function encodePublicId(publicId: string): string {
@@ -41,6 +46,8 @@ export function buildCloudinaryImageUrl({
   publicId,
   preset,
   width,
+  preTransforms,
+  postTransforms,
 }: BuildCloudinaryImageUrlInput): string {
   const trimmedCloudName = cloudName.trim();
   const trimmedPublicId = publicId.trim();
@@ -64,21 +71,24 @@ export function buildCloudinaryImageUrl({
       : undefined;
 
   const resizeComponent =
-    preset === "thumb" || preset === "panel-tall" || preset === "panel-wide"
-      ? `c_fill,g_auto,h_${scaledHeight ?? 240},w_${targetWidth}`
-      : `c_limit,w_${targetWidth}`;
+    preset === "sales"
+      ? `w_${targetWidth}`
+      : preset === "thumb" || preset === "panel-tall" || preset === "panel-wide"
+        ? `c_fill,g_auto,h_${scaledHeight ?? 240},w_${targetWidth}`
+        : `c_limit,w_${targetWidth}`;
 
-  const transformations = [resizeComponent, "f_auto", "q_auto"].join("/");
+  const transformations = [
+    ...(preTransforms ?? []),
+    resizeComponent,
+    ...(postTransforms ?? []),
+    "f_auto",
+    "q_auto",
+  ].join("/");
   const encodedPublicId = encodePublicId(trimmedPublicId);
 
   return `https://res.cloudinary.com/${trimmedCloudName}/image/upload/${transformations}/${encodedPublicId}`;
 }
 
-export function getCloudinaryPresetWidth(
-  preset: CloudinaryImagePreset,
-): number {
-  return PRESET_DIMENSIONS[preset].width;
-}
 
 export function buildCloudinaryImageSrcset({
   cloudName,
@@ -135,4 +145,20 @@ export function buildCloudinaryVideoPosterUrl({
   if (!trimmedPublicId) throw new Error("publicId is required");
 
   return `https://res.cloudinary.com/${trimmedCloudName}/video/upload/fl_screenshot,pg_1,so_0,f_jpg,q_auto,w_${clampWidth(width)}/${encodePublicId(trimmedPublicId)}.jpg`;
+}
+
+/**
+ * Resolve the Cloudinary cloud name for URL building. Server code prefers
+ * process.env.CLOUDINARY_CLOUD_NAME; client bundles fall back to the inlined
+ * PUBLIC_CLOUDINARY_CLOUD_NAME. Returns "" when neither is configured so
+ * callers can fall back to a raw URL.
+ */
+export function resolveCloudName(): string {
+  const fromServer =
+    typeof process !== "undefined"
+      ? process.env.CLOUDINARY_CLOUD_NAME
+      : undefined;
+  return (
+    (fromServer ?? import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME) ?? ""
+  ).trim();
 }

@@ -11,7 +11,6 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
     <a href="/admin/sales" class="btn btn-ghost">← Back to Postings</a>
   </div>
 
-  <div id="toast-container"></div>
 
   <form id="sales-form" novalidate>
     <div class="editor-grid">
@@ -84,7 +83,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
               placeholder="0.00"
             />
             <span class="form-hint"
-              >Display price — actual payment is handled by your PayPal button.</span
+              >Display price — buyers can pay using the payment options below.</span
             >
           </div>
 
@@ -156,9 +155,48 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
         <!-- Section 3: Payment Options -->
         <div class="card" style="margin-bottom: 1.5rem;">
           <p class="panel-heading">Payment Options (Optional)</p>
+          <p class="form-hint" style="margin-bottom: 1rem;">
+            Add plain payment links here. These are different from PayPal button
+            code, and you can offer more than one payment method.
+          </p>
+          <div class="form-group">
+            <label class="form-label" for="paypal-link">PayPal Payment Link</label>
+            <input
+              class="form-input"
+              id="paypal-link"
+              name="paypal_link"
+              type="url"
+              inputmode="url"
+              placeholder="https://paypal.me/yourname"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="venmo-link">Venmo Payment Link</label>
+            <input
+              class="form-input"
+              id="venmo-link"
+              name="venmo_link"
+              type="url"
+              inputmode="url"
+              placeholder="https://venmo.com/u/yourname"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cashapp-link">Cash App Payment Link</label>
+            <input
+              class="form-input"
+              id="cashapp-link"
+              name="cashapp_link"
+              type="url"
+              inputmode="url"
+              placeholder="https://cash.app/$yourcashtag"
+            />
+            <span class="form-hint">Use the full secure (https://) payment URL for each method.</span>
+          </div>
+
           <div class="form-group" style="margin-bottom: 1.5rem;">
             <label class="form-label" for="paypal-html"
-              >PayPal Buy Button Code</label
+              >PayPal Buy Button Code (Optional)</label
             >
             <textarea
               class="form-input"
@@ -276,335 +314,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
 </AdminLayout>
 
 <script>
-  import {
-    createToastManager,
-    initializeEditor,
-  } from "../../../lib/editor-utils";
-
-  const toast = createToastManager();
-
-  const testimonials: Array<{
-  author_name: string;
-  quote: string;
-  rating: number | null;
-}> = [];
-  const reviews: Array<{
-  reviewer_name: string;
-  review_text: string;
-  rating: number | null;
-  is_verified: boolean;
-  review_date: string;
-}> = [];
-
-  // ── Quill editor ──────────────────────────────────────────────────────────
-  initializeEditor({
-    containerId: "body-editor",
-    placeholder: "Describe this item…",
-    onContentChange: (html) => {
-      (document.getElementById("body-input") as HTMLInputElement).value = html;
-    },
-  });
-
-  // ── Slug auto-generation ──────────────────────────────────────────────────
-  const titleInput = document.getElementById("title") as HTMLInputElement;
-  const slugInput = document.getElementById("slug") as HTMLInputElement;
-  let slugEdited = false;
-  slugInput.addEventListener("input", () => {
-    slugEdited = true;
-  });
-  titleInput.addEventListener("input", () => {
-    if (!slugEdited) {
-      slugInput.value = titleInput.value
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-|-$/g, "");
-    }
-  });
-
-  // ── Sale price preview ────────────────────────────────────────────────────
-  const priceInput = document.getElementById("price") as HTMLInputElement;
-  const discountInput = document.getElementById(
-    "promo-discount",
-  ) as HTMLInputElement;
-  const salePricePreview = document.getElementById(
-    "sale-price-preview",
-  ) as HTMLInputElement;
-
-  function updateSalePricePreview() {
-    const price = parseFloat(priceInput.value);
-    const pct = parseFloat(discountInput.value);
-    if (isNaN(price) || isNaN(pct) || pct <= 0) {
-      salePricePreview.value = "";
-      return;
-    }
-    const saleVal = price * (1 - pct / 100);
-    salePricePreview.value = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(saleVal);
-  }
-  priceInput.addEventListener("input", updateSalePricePreview);
-  discountInput.addEventListener("input", updateSalePricePreview);
-
-  // ── Testimonials ──────────────────────────────────────────────────────────
-  function escAttr(s: string): string {
-    return String(s)
-      .replace(/&/g, "&amp;")
-      .replace(/"/g, "&quot;")
-      .replace(/</g, "&lt;");
-  }
-  function escHtml(s: string): string {
-    return String(s)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
-  }
-
-  function renderTestimonials() {
-    const list = document.getElementById("testimonials-list")!;
-    list.innerHTML = testimonials
-      .map(
-        (t, i) => `
-      <div class="sub-item" data-index="${i}">
-        <input class="form-input" placeholder="Name" value="${escAttr(t.author_name)}" data-field="author_name" data-idx="${i}" />
-        <textarea class="form-input" placeholder="Quote" rows="2" data-field="quote" data-idx="${i}">${escHtml(t.quote)}</textarea>
-        <input class="form-input" type="number" min="1" max="5" placeholder="Rating (1-5)" value="${t.rating ?? ""}" data-field="rating" data-idx="${i}" />
-        <button type="button" class="btn btn-ghost btn--sm js-remove-testimonial" data-idx="${i}">Remove</button>
-      </div>
-    `,
-      )
-      .join("");
-    (document.getElementById("testimonials-json") as HTMLInputElement).value =
-      JSON.stringify(testimonials);
-
-    list
-      .querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[data-field]")
-      .forEach((el) => {
-        el.addEventListener("input", () => {
-          const idx = Number(el.dataset.idx);
-          const field = el.dataset.field as string;
-          if (field === "rating")
-            (testimonials[idx] as Record<string, string | number | null>)[
-              field
-            ] = el.value ? Number(el.value) : null;
-          else
-            (testimonials[idx] as Record<string, string | number | null>)[
-              field
-            ] = el.value;
-          (
-            document.getElementById("testimonials-json") as HTMLInputElement
-          ).value = JSON.stringify(testimonials);
-        });
-      });
-    list
-      .querySelectorAll<HTMLButtonElement>(".js-remove-testimonial")
-      .forEach((btn) => {
-        btn.addEventListener("click", () => {
-          testimonials.splice(Number(btn.dataset.idx), 1);
-          renderTestimonials();
-        });
-      });
-  }
-  document
-    .getElementById("add-testimonial-btn")!
-    .addEventListener("click", () => {
-      testimonials.push({ author_name: "", quote: "", rating: null });
-      renderTestimonials();
-    });
-
-  // ── Reviews ───────────────────────────────────────────────────────────────
-  function renderReviews() {
-    const list = document.getElementById("reviews-list")!;
-    list.innerHTML = reviews
-      .map(
-        (r, i) => `
-      <div class="sub-item" data-index="${i}">
-        <input class="form-input" placeholder="Reviewer Name" value="${escAttr(r.reviewer_name)}" data-field="reviewer_name" data-idx="${i}" />
-        <textarea class="form-input" placeholder="Review text" rows="2" data-field="review_text" data-idx="${i}">${escHtml(r.review_text)}</textarea>
-        <input class="form-input" type="number" min="1" max="5" placeholder="Rating (1-5)" value="${r.rating ?? ""}" data-field="rating" data-idx="${i}" />
-        <label><input type="checkbox" data-field="is_verified" data-idx="${i}" ${r.is_verified ? "checked" : ""} /> Verified Buyer</label>
-        <input class="form-input" type="date" placeholder="Review date" value="${r.review_date ?? ""}" data-field="review_date" data-idx="${i}" />
-        <button type="button" class="btn btn-ghost btn--sm js-remove-review" data-idx="${i}">Remove</button>
-      </div>
-    `,
-      )
-      .join("");
-    (document.getElementById("reviews-json") as HTMLInputElement).value =
-      JSON.stringify(reviews);
-
-    list
-      .querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[data-field]")
-      .forEach((el) => {
-        const evtType = el.type === "checkbox" ? "change" : "input";
-        el.addEventListener(evtType, () => {
-          const idx = Number(el.dataset.idx);
-          const field = el.dataset.field as string;
-          if (field === "rating")
-            (reviews[idx] as Record<string, string | number | boolean | null>)[
-              field
-            ] = (el as HTMLInputElement).value
-              ? Number((el as HTMLInputElement).value)
-              : null;
-          else if (field === "is_verified")
-            (reviews[idx] as Record<string, string | number | boolean | null>)[
-              field
-            ] = (el as HTMLInputElement).checked;
-          else
-            (reviews[idx] as Record<string, string | number | boolean | null>)[
-              field
-            ] = (el as HTMLInputElement).value;
-          (document.getElementById("reviews-json") as HTMLInputElement).value =
-            JSON.stringify(reviews);
-        });
-      });
-    list
-      .querySelectorAll<HTMLButtonElement>(".js-remove-review")
-      .forEach((btn) => {
-        btn.addEventListener("click", () => {
-          reviews.splice(Number(btn.dataset.idx), 1);
-          renderReviews();
-        });
-      });
-  }
-  document.getElementById("add-review-btn")!.addEventListener("click", () => {
-    reviews.push({
-      reviewer_name: "",
-      review_text: "",
-      rating: null,
-      is_verified: false,
-      review_date: "",
-    });
-    renderReviews();
-  });
-
-  // ── Form submission ───────────────────────────────────────────────────────
-  document
-    .getElementById("sales-form")!
-    .addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const title = titleInput.value.trim();
-      if (!title) {
-        toast.show("Title is required.", "error");
-        return;
-      }
-
-      const body: Record<string, unknown> = {
-        title,
-        slug: slugInput.value.trim() || undefined,
-        status: (document.getElementById("status") as HTMLSelectElement).value,
-        body: (document.getElementById("body-input") as HTMLInputElement).value,
-        price: priceInput.value ? parseFloat(priceInput.value) : null,
-        promo_label:
-          (document.getElementById("promo-label") as HTMLInputElement).value ||
-          null,
-        promo_discount_pct: discountInput.value
-          ? Number(discountInput.value)
-          : null,
-        promo_start:
-          (document.getElementById("promo-start") as HTMLInputElement).value ||
-          null,
-        promo_end:
-          (document.getElementById("promo-end") as HTMLInputElement).value ||
-          null,
-        paypal_button_html:
-          (document.getElementById("paypal-html") as HTMLTextAreaElement)
-            .value || null,
-        linked_article_slug:
-          (document.getElementById("linked-article") as HTMLInputElement)
-            .value || null,
-      };
-
-      const submitBtn = document.getElementById(
-        "submit-btn",
-      ) as HTMLButtonElement;
-      submitBtn.disabled = true;
-      submitBtn.textContent = "Saving…";
-
-      try {
-        let qr_code_url = null;
-        const qrFileInput = document.getElementById(
-          "qr-code-file",
-        ) as HTMLInputElement;
-        const qrFile = qrFileInput.files?.[0];
-
-        if (qrFile) {
-          if (qrFile.size > 10 * 1024 * 1024) {
-            throw new Error("QR Code image is too large (max 10 MB).");
-          }
-          submitBtn.textContent = "Uploading QR Code…";
-
-          const dataUri = await new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = reject;
-            reader.readAsDataURL(qrFile);
-          });
-
-          const uploadRes = await fetch("/api/upload", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              file_data: dataUri,
-              mime_type: qrFile.type,
-              file_size: qrFile.size,
-              alt_text: title + " QR Code",
-            }),
-          });
-
-          const uploadData = await uploadRes.json();
-          if (!uploadRes.ok) {
-            throw new Error(uploadData.error ?? "Failed to upload QR Code");
-          }
-          qr_code_url = String(
-            uploadData.media_url ?? uploadData.image_url ?? "",
-          );
-        }
-
-        if (qr_code_url) {
-          body.qr_code_url = qr_code_url;
-        }
-
-        submitBtn.textContent = "Saving Posting…";
-
-        const res = await fetch("/api/admin/sales", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        });
-        const data = await res.json();
-        if (!res.ok) {
-          toast.show(data.error ?? "Failed to create posting.", "error");
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Create Posting";
-          return;
-        }
-
-        const slug = data.slug;
-        for (const t of testimonials) {
-          if (!t.author_name || !t.quote) continue;
-          await fetch(`/api/admin/sales/${slug}/testimonials`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(t),
-          });
-        }
-        for (const r of reviews) {
-          if (!r.reviewer_name || !r.review_text) continue;
-          await fetch(`/api/admin/sales/${slug}/reviews`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(r),
-          });
-        }
-
-        window.location.href = `/admin/sales/${slug}`;
-      } catch {
-        toast.show("Network error. Please try again.", "error");
-        submitBtn.disabled = false;
-        submitBtn.textContent = "Create Posting";
-      }
-    });
+  import "../../../scripts/admin/sales-new.ts";
 </script>
 
 <style>

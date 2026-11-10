@@ -1,4 +1,4 @@
-import { connect } from "@tursodatabase/serverless";
+import { createClient as connect } from "@tursodatabase/serverless/compat";
 
 /**
  * Creates the `password_resets` table in Turso.

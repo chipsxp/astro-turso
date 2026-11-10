@@ -7,7 +7,7 @@
  * Safe to re-run: all statements are idempotent.
  */
 
-import { connect } from "@tursodatabase/serverless";
+import { createClient as connect } from "@tursodatabase/serverless/compat";
 
 if (!process.env.TURSO_DATABASE_URL || !process.env.TURSO_AUTH_TOKEN) {
   console.error(
@@ -101,6 +101,37 @@ try {
     err.message,
   );
   process.exit(1);
+}
+
+// Moved from the removed ensureEventsSchema() in src/lib/events.ts:
+// archive_date tracks when an event became archivable (after its end date
+// passed) for the 14-day retention window on public listings.
+try {
+  const db6 = getDb();
+  await db6.execute("ALTER TABLE events ADD COLUMN archive_date TEXT");
+  console.log("Column ready: events.archive_date");
+} catch (err) {
+  if (err.message && err.message.includes("duplicate column name")) {
+    console.log("Column 'archive_date' already exists. Skipping.");
+  } else {
+    console.error("ALTER TABLE events (archive_date) failed:", err.message);
+    process.exit(1);
+  }
+}
+
+// Moved from the removed ensureEventsSchema() in src/lib/events.ts:
+// color is used for the calendar pill display.
+try {
+  const db7 = getDb();
+  await db7.execute("ALTER TABLE events ADD COLUMN color TEXT");
+  console.log("Column ready: events.color");
+} catch (err) {
+  if (err.message && err.message.includes("duplicate column name")) {
+    console.log("Column 'color' already exists. Skipping.");
+  } else {
+    console.error("ALTER TABLE events (color) failed:", err.message);
+    process.exit(1);
+  }
 }
 
 console.log("Migration complete.");

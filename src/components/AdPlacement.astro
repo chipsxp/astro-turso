@@ -15,6 +15,14 @@ const ad = ads.length > 0 ? ads[Math.floor(Math.random() * ads.length)] : null;
 
 // Track the impression via a script block or rely on click tracking
 // For now we rely on the click tracking via data attributes
+
+// Defense-in-depth: API routes validate target_url on write, but never emit an
+// unsafe href even if a legacy/invalid row slips through. Without an href the
+// anchor is inert, so unsafe ads render as plain content instead of a link.
+const safeTargetUrl =
+  ad?.target_url && ad.target_url.trim().startsWith("https://")
+    ? ad.target_url
+    : null;
 ---
 
 {
@@ -22,11 +30,11 @@ const ad = ads.length > 0 ? ads[Math.floor(Math.random() * ads.length)] : null;
     <div class="ad-container">
       <div class="ad-label">Sponsored</div>
       <a
-        href={ad.target_url || "#"}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-track-type="ad"
-        data-track-id={ad.id}
+        href={safeTargetUrl ?? undefined}
+        target={safeTargetUrl ? "_blank" : undefined}
+        rel={safeTargetUrl ? "noopener noreferrer" : undefined}
+        data-track-type={safeTargetUrl ? "ad" : undefined}
+        data-track-id={safeTargetUrl ? ad.id : undefined}
         class="ad-link"
       >
         {ad.image_url && (

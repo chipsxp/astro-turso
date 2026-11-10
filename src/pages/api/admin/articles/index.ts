@@ -1,15 +1,8 @@
 import type { APIRoute } from "astro";
-import { ensureCategorySchema } from "../../../../lib/categories";
 import { db } from "../../../../lib/db";
+import { json } from "../../../../lib/api-response";
 
 // --- Helpers ---
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 // --- GET /api/admin/articles — return articles (JWT protected via middleware) ---
 // Admin role: all articles. Author role: own articles only.
@@ -18,8 +11,6 @@ export const GET: APIRoute = async ({ locals }) => {
   const user = locals.user!;
 
   try {
-    await ensureCategorySchema();
-
     const isAdmin = user.role === "admin";
     const result = await db.execute(
       isAdmin

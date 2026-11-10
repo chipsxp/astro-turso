@@ -1,6 +1,10 @@
 # Dependencies
 node_modules/
 package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.git/
+.
 
 # Build output
 dist/
@@ -14,11 +18,16 @@ coverage/
 docs/
 .agents/
 .claude/
+.abacusai/
 .github/
 devtools/
 AGENTS.md
 CLAUDE.md
 dist.zip
+
+# Memory files and Libraries
+graphify-out/
+library/
 
 # Environment variables
 .env
@@ -44,4 +53,4 @@ npm-debug.log*
 *.log
 
 # Editor
-.vscode/settings.json
+.vscode/

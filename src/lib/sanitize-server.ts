@@ -97,27 +97,3 @@ function sanitizeInlineStyles(html: string): string {
   );
 }
 
-/**
- * Validate a URL to ensure it uses safe protocols.
- */
-export function isValidUrlForAttribute(
-  url: string,
-  attributeName: string,
-): boolean {
-  if (!url) return true; // Empty is OK
-  const lower = url.toLowerCase().trim();
-
-  const dangerousProtocols = ["javascript:", "data:", "vbscript:", "file://"];
-  for (const protocol of dangerousProtocols) {
-    if (lower.startsWith(protocol)) return false;
-  }
-
-  // If href attribute specifically, allow most URLs
-  if (attributeName === "href") {
-    return true;
-  }
-
-  // For src, poster, etc., be more restrictive
-  const safePrefixes = ["http://", "https://", "/", "#", "data:image/"];
-  return safePrefixes.some((prefix) => lower.startsWith(prefix));
-}

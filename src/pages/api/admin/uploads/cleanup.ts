@@ -2,18 +2,11 @@ import type { APIRoute } from "astro";
 import { cloudinary } from "../../../../lib/cloudinary-server";
 import {
   deleteUploadSession,
-  ensureUploadSessionSchema,
   listExpiredUnconsumedUploadSessions,
   listUnconsumedUploadSessions,
   listUploadSessionMedia,
 } from "../../../../lib/media";
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
+import { json } from "../../../../lib/api-response";
 
 export const POST: APIRoute = async ({ request, locals }) => {
   const user = locals.user!;
@@ -38,7 +31,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   try {
-    await ensureUploadSessionSchema();
     const expiredSessions =
       cleanupScope === "all_unconsumed"
         ? await listUnconsumedUploadSessions()

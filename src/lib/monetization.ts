@@ -1,4 +1,10 @@
 import { db } from "./db";
+import {
+  IMAGE_MIME_TYPES,
+  MAX_IMAGE_BYTES,
+  estimateBase64DecodedBytes,
+  parseDataUri,
+} from "./media";
 
 export interface Advertisement {
   id: number;
@@ -10,6 +16,115 @@ export interface Advertisement {
   slot_type: string;
   is_active: number; // 0 or 1
   created_at: number;
+}
+
+// ── Advertisement validation ────────────────────────────────────────────────
+
+export const AD_SLOT_TYPES = new Set([
+  "dashboard_sidebar",
+  "article_index_top",
+  "shop_index_top",
+  "footer",
+  "homepage_grid",
+  "event_index_top",
+  "hidden",
+]);
+
+export const MAX_AD_TARGET_URL_LENGTH = 2_048;
+export const AD_TEXT_LIMITS = {
+  business_name: 120,
+  description: 500,
+  coupon_code: 64,
+} as const;
+
+export interface AdValidationError {
+  error: string;
+  status: number;
+}
+
+// Ads render target_url as a public href, so only HTTPS URLs are acceptable.
+export function isValidAdTargetUrl(value: unknown): value is string {
+  if (typeof value !== "string") return false;
+  const link = value.trim();
+  if (!link || link.length > MAX_AD_TARGET_URL_LENGTH) return false;
+  try {
+    return new URL(link).protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+// Shared field validation for POST /api/admin/ads and PUT /api/admin/ads/[id].
+// Required-field presence stays in the routes; this checks values and lengths.
+export function validateAdFields(payload: {
+  business_name?: unknown;
+  description?: unknown;
+  target_url?: unknown;
+  coupon_code?: unknown;
+  slot_type?: unknown;
+}): AdValidationError | null {
+  if (
+    typeof payload.business_name !== "string" ||
+    payload.business_name.trim().length > AD_TEXT_LIMITS.business_name
+  ) {
+    return {
+      error: "business_name must be a string of 120 characters or fewer",
+      status: 400,
+    };
+  }
+  if (
+    payload.description != null &&
+    (typeof payload.description !== "string" ||
+      payload.description.length > AD_TEXT_LIMITS.description)
+  ) {
+    return {
+      error: "description must be a string of 500 characters or fewer",
+      status: 400,
+    };
+  }
+  if (
+    payload.coupon_code != null &&
+    (typeof payload.coupon_code !== "string" ||
+      payload.coupon_code.length > AD_TEXT_LIMITS.coupon_code)
+  ) {
+    return {
+      error: "coupon_code must be a string of 64 characters or fewer",
+      status: 400,
+    };
+  }
+  if (!isValidAdTargetUrl(payload.target_url)) {
+    return {
+      error: "target_url must be a valid HTTPS URL (max 2048 characters)",
+      status: 400,
+    };
+  }
+  if (
+    typeof payload.slot_type !== "string" ||
+    !AD_SLOT_TYPES.has(payload.slot_type)
+  ) {
+    return { error: "Invalid slot type", status: 400 };
+  }
+  return null;
+}
+
+// Ad images arrive as base64 data URIs; enforce the same limits as other uploads.
+export function validateAdImageData(
+  imageData: unknown,
+): AdValidationError | null {
+  const parsed = typeof imageData === "string" ? parseDataUri(imageData) : null;
+  if (!parsed) {
+    return { error: "image_data must be a valid base64 data URI", status: 400 };
+  }
+  if (!IMAGE_MIME_TYPES.has(parsed.mimeType)) {
+    return {
+      error: "Unsupported image type. Allowed: jpeg, png, webp, gif, avif",
+      status: 415,
+    };
+  }
+  if (estimateBase64DecodedBytes(parsed.base64Payload) > MAX_IMAGE_BYTES) {
+    return { error: "Ad image is too large (max 10 MB).", status: 413 };
+  }
+  return null;
 }
 
 export interface AnalyticsEvent {
@@ -38,9 +153,13 @@ export async function getActiveAdsForSlot(
     slot_type: string;
     is_active: number;
     created_at: number;
-  }>("SELECT * FROM advertisements WHERE slot_type = ? AND is_active = 1", [
-    slotType,
-  ]);
+  }>(
+    `SELECT id, business_name, description, image_url, target_url, coupon_code,
+            slot_type, is_active, created_at
+     FROM advertisements WHERE slot_type = ? AND is_active = 1
+     LIMIT 50`,
+    [slotType],
+  );
 
   if (rs.rows.length === 0) return [];
 

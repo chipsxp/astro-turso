@@ -15,14 +15,6 @@ export class CategoryInputError extends Error {
   }
 }
 
-const DEFAULT_CATEGORY_NAMES = [
-  "For Artists",
-  "For Illustrators",
-  "Comic Creators",
-];
-
-let categorySchemaReady = false;
-
 export function toSlug(str: string): string {
   return str
     .toLowerCase()
@@ -39,49 +31,7 @@ function mapCategoryRow(row: Record<string, unknown>): CategoryRecord {
   };
 }
 
-export async function ensureCategorySchema(): Promise<void> {
-  if (categorySchemaReady) return;
-
-  await db.execute(`
-    CREATE TABLE IF NOT EXISTS categories (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT UNIQUE NOT NULL,
-      slug TEXT UNIQUE NOT NULL,
-      created_at TEXT DEFAULT (datetime('now'))
-    )
-  `);
-
-  await db.execute(
-    "CREATE INDEX IF NOT EXISTS idx_categories_slug ON categories(slug)",
-  );
-
-  const tableInfo = await db.execute("PRAGMA table_info(articles)");
-  const hasCategoryId = tableInfo.rows.some(
-    (row: Record<string, unknown>) => String(row.name) === "category_id",
-  );
-
-  if (!hasCategoryId) {
-    await db.execute(
-      "ALTER TABLE articles ADD COLUMN category_id INTEGER REFERENCES categories(id)",
-    );
-  }
-
-  await db.execute(
-    "CREATE INDEX IF NOT EXISTS idx_articles_category_id ON articles(category_id)",
-  );
-
-  for (const name of DEFAULT_CATEGORY_NAMES) {
-    await db.execute(
-      "INSERT OR IGNORE INTO categories (name, slug) VALUES (?, ?)",
-      [name, toSlug(name)],
-    );
-  }
-
-  categorySchemaReady = true;
-}
-
 export async function listCategories(): Promise<CategoryRecord[]> {
-  await ensureCategorySchema();
 
   const result = await db.execute(
     "SELECT id, name, slug FROM categories ORDER BY name ASC",
@@ -90,10 +40,9 @@ export async function listCategories(): Promise<CategoryRecord[]> {
   return result.rows.map((row: Record<string, unknown>) => mapCategoryRow(row));
 }
 
-export async function findCategoryById(
+async function findCategoryById(
   id: number,
 ): Promise<CategoryRecord | null> {
-  await ensureCategorySchema();
 
   const result = await db.execute(
     "SELECT id, name, slug FROM categories WHERE id = ?",
@@ -104,10 +53,9 @@ export async function findCategoryById(
   return row ? mapCategoryRow(row) : null;
 }
 
-export async function findCategoryByNameOrSlug(
+async function findCategoryByNameOrSlug(
   value: string,
 ): Promise<CategoryRecord | null> {
-  await ensureCategorySchema();
 
   const normalized = value.trim();
   if (!normalized) return null;
@@ -123,8 +71,7 @@ export async function findCategoryByNameOrSlug(
   return row ? mapCategoryRow(row) : null;
 }
 
-export async function createCategory(name: string): Promise<CategoryRecord> {
-  await ensureCategorySchema();
+async function createCategory(name: string): Promise<CategoryRecord> {
 
   const normalizedName = name.trim();
   if (!normalizedName) {

@@ -1,16 +1,10 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import type { PanelSlot } from "../../../../lib/panels";
-import { ensurePanelSchema, VALID_SLOTS } from "../../../../lib/panels";
+import { VALID_SLOTS } from "../../../../lib/panels";
+import { json } from "../../../../lib/api-response";
 
 // --- Helper ---
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 // --- POST /api/admin/panels/assign ---
 // Assigns or unassigns a panel_media image to a slot.
@@ -56,8 +50,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
   }
 
   try {
-    await ensurePanelSchema();
-
     // Unassign path
     if (media_id === null || media_id === undefined) {
       await db.execute(

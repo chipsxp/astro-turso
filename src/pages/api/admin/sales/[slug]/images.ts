@@ -1,28 +1,14 @@
 import type { APIRoute } from "astro";
 import { cloudinary } from "../../../../../lib/cloudinary-server";
 import { db } from "../../../../../lib/db";
-import { IMAGE_MIME_TYPES, MAX_IMAGE_BYTES } from "../../../../../lib/media";
+import {
+  estimateBase64DecodedBytes,
+  IMAGE_MIME_TYPES,
+  MAX_IMAGE_BYTES,
+  parseDataUri,
+} from "../../../../../lib/media";
 import { MAX_SALES_IMAGES } from "../../../../../lib/sales";
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
-
-function parseDataUri(
-  dataUri: string,
-): { mimeType: string; base64Payload: string } | null {
-  const commaIdx = dataUri.indexOf(",");
-  if (!dataUri.startsWith("data:") || commaIdx === -1) return null;
-  const header = dataUri.slice(5, commaIdx);
-  const parts = header.split(";");
-  const mimeType = parts[0].trim();
-  if (!mimeType || !parts.includes("base64")) return null;
-  const base64Payload = dataUri.slice(commaIdx + 1);
-  return base64Payload ? { mimeType, base64Payload } : null;
-}
+import { json } from "../../../../../lib/api-response";
 
 // ── POST /api/admin/sales/[slug]/images — upload a new sales image ────────────
 export const POST: APIRoute = async ({ params, locals, request }) => {
@@ -89,9 +75,7 @@ export const POST: APIRoute = async ({ params, locals, request }) => {
     );
   }
 
-  const byteSize = Math.floor(
-    (base64Payload.replace(/=+$/, "").length * 3) / 4,
-  );
+  const byteSize = estimateBase64DecodedBytes(base64Payload);
   if (byteSize > MAX_IMAGE_BYTES) {
     return json({ error: "Image exceeds 10 MB limit" }, 400);
   }
@@ -145,7 +129,10 @@ export const POST: APIRoute = async ({ params, locals, request }) => {
   } catch (err: unknown) {
     // Rollback Cloudinary upload
     try {
-      await cloudinary.uploader.destroy(uploadPublicId, { invalidate: true });
+      await cloudinary.uploader.destroy(uploadPublicId, {
+        resource_type: "image",
+        invalidate: true,
+      });
     } catch {
       /* ignore rollback failure */
     }
@@ -213,7 +200,10 @@ export const DELETE: APIRoute = async ({ params, locals, request }) => {
   // Delete from Cloudinary
   if (publicId) {
     try {
-      await cloudinary.uploader.destroy(publicId, { invalidate: true });
+      await cloudinary.uploader.destroy(publicId, {
+        resource_type: "image",
+        invalidate: true,
+      });
     } catch (err: unknown) {
       console.error("[DELETE sales/images] Cloudinary destroy error:", err);
     }

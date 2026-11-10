@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./article-prose.css";
 
 @theme {
   --color-accent: #f2c85a;
@@ -47,8 +48,19 @@
   --nav-hover-bg: rgba(255, 255, 255, 0.12);
 }
 
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+select option,
+select optgroup {
+  background-color: var(--surface);
+  color: var(--text);
+}
+
 /* ─── Light theme — Golden Age Comics ─── */
 [data-theme="light"] {
+  color-scheme: light;
   --bg: #f4ede0;
   --surface: #ece4d4;
   --surface-2: #e1d8c6;
@@ -100,148 +112,6 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
-}
-
-/* ─── Reset overrides ─── */
-/* Restore list markers for rendered article prose (Tailwind preflight sets list-style: none). */
-.article-body .prose ul,
-.article-body .prose ol {
-  margin: 0 0 1.4em;
-  padding-left: 1.5em;
-  list-style: revert;
-}
-
-.article-body .prose ul {
-  list-style-type: disc;
-  list-style-position: outside;
-}
-
-.article-body .prose ol {
-  list-style-type: decimal;
-  list-style-position: outside;
-}
-
-.article-body .prose li {
-  display: list-item;
-  margin-bottom: 0.45em;
-}
-
-.article-body .prose li::marker {
-  color: var(--text);
-}
-
-/* Quill stores bullet lists as ol > li[data-list="bullet"], so restore bullet semantics on published pages. */
-.article-body .prose ol li[data-list="bullet"] {
-  list-style-type: disc;
-}
-
-.article-body .prose ol li[data-list="ordered"] {
-  list-style-type: decimal;
-}
-
-.article-body .prose h1,
-.article-body .prose h2,
-.article-body .prose h3,
-.article-body .prose h4,
-.article-body .prose h5,
-.article-body .prose h6 {
-  font-family: var(--font-display);
-  color: var(--text);
-  line-height: 1.2;
-  font-weight: 500;
-  margin: 1.6em 0 0.65em;
-}
-
-.article-body .prose h1:first-child,
-.article-body .prose h2:first-child,
-.article-body .prose h3:first-child,
-.article-body .prose h4:first-child,
-.article-body .prose h5:first-child,
-.article-body .prose h6:first-child {
-  margin-top: 0;
-}
-
-.article-body .prose h1 {
-  font-size: clamp(2rem, 4vw, 2.6rem);
-}
-
-.article-body .prose h2 {
-  font-size: clamp(1.6rem, 3vw, 2.05rem);
-}
-
-.article-body .prose h3 {
-  font-size: clamp(1.35rem, 2.3vw, 1.7rem);
-}
-
-.article-body .prose h4 {
-  font-size: 1.3rem;
-}
-
-.article-body .prose h5 {
-  font-size: 1.1rem;
-}
-
-.article-body .prose h6 {
-  font-size: 0.98rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.article-body .prose p {
-  margin-bottom: 1.4em;
-}
-
-.article-body .prose p:last-child {
-  margin-bottom: 0;
-}
-
-/* Restore visible blockquote border for rendered article prose (preflight resets borders). */
-.article-body .prose blockquote {
-  margin: 0 0 1.4em;
-  padding: 0.15em 0 0.15em 1em;
-  border: 2px solid var(--border);
-}
-
-.article-body .prose pre {
-  margin: 0 0 1.4em;
-  padding: 0.85em 1em;
-  border: 1px solid var(--border);
-  background: var(--surface-2);
-  overflow-x: auto;
-}
-
-.article-body .prose code {
-  font-family: var(--font-mono);
-  font-size: 0.92em;
-}
-
-.article-body .prose :not(pre) > code {
-  padding: 0.12em 0.34em;
-  border: 1px solid var(--border);
-  background: var(--surface-2);
-}
-
-.article-body .prose pre code {
-  padding: 0;
-  border: 0;
-  background: transparent;
-}
-
-.article-body .prose table {
-  width: 100%;
-  margin: 0 0 1.4em;
-  border-collapse: collapse;
-}
-
-.article-body .prose th,
-.article-body .prose td {
-  border: 1px solid var(--border);
-  padding: 0.5em 0.65em;
-  text-align: left;
-}
-
-.article-body .prose th {
-  background: var(--surface-2);
 }
 
 /* ─── Site header ─── */

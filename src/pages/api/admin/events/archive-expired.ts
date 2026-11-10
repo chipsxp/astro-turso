@@ -1,9 +1,10 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import {
-  ensureEventsSchema,
   getDaysAgoInNewYork,
 } from "../../../../lib/events";
+import { json } from "../../../../lib/api-response";
+import { requireUser } from "../../../../lib/auth";
 
 type EventCandidate = {
   id: number;
@@ -13,13 +14,6 @@ type EventCandidate = {
   end_date: string | null;
   start_date: string;
 };
-
-function json(data: unknown, status: number): Response {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 /**
  * Admin-only endpoint to transition events through their archive lifecycle.
@@ -32,7 +26,7 @@ function json(data: unknown, status: number): Response {
  * Response: { transitioned: number, expired: number, message: string }
  */
 export const POST: APIRoute = async ({ locals }) => {
-  const user = locals.user;
+  const user = requireUser(locals);
 
   // Require admin role for this maintenance endpoint
   if (!user || user.role !== "admin") {
@@ -40,8 +34,6 @@ export const POST: APIRoute = async ({ locals }) => {
   }
 
   try {
-    await ensureEventsSchema();
-
     // Get the cutoff date: 14 days ago in New York time
     const fourteenDaysAgoNY = getDaysAgoInNewYork(14);
 

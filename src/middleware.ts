@@ -9,6 +9,7 @@ const PUBLIC_PATHS = [
   "/api/auth/logout",
   "/api/auth/forgot-password",
   "/api/auth/reset-password",
+  "/api/articles/view",
 ];
 const WRITE_METHODS = new Set(["POST", "PUT", "DELETE", "PATCH"]);
 
@@ -86,8 +87,31 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect("/admin", 302);
   }
 
+  // --- Admin-only sections: authors are limited to articles, sales and events ---
+  if (
+    context.locals.user &&
+    context.locals.user.role !== "admin" &&
+    ADMIN_ONLY_PATHS.some((re) => re.test(pathname))
+  ) {
+    if (pathname.startsWith("/api/")) {
+      return addSecurityHeaders(
+        new Response(JSON.stringify({ error: "Forbidden" }), {
+          status: 403,
+          headers: { "Content-Type": "application/json" },
+        }),
+        pathname,
+      );
+    }
+    return context.redirect("/admin/dashboard", 302);
+  }
+
   return addSecurityHeaders(await next(), pathname);
 });
+
+const ADMIN_ONLY_PATHS = [
+  /^\/admin\/(users|analytics|ads|settings|media-audit)(?:\/|$)/,
+  /^\/api\/admin\/(ads|settings|panels|media-audit)(?:\/|$)/,
+];
 
 function addSecurityHeaders(response: Response, pathname: string): Response {
   response.headers.set("X-Content-Type-Options", "nosniff");
@@ -123,15 +147,16 @@ function addSecurityHeaders(response: Response, pathname: string): Response {
       })
     : isShop
       ? buildCsp({
-          "script-src": `'self' ${fouc} https://www.paypal.com`,
+          "script-src": `'self' ${fouc} https://www.paypal.com https://www.googletagmanager.com`,
           "style-src": "'self' 'unsafe-inline'",
           "connect-src":
-            "'self' https://www.paypal.com https://api.paypal.com https://api-m.paypal.com",
+            "'self' https://www.paypal.com https://api.paypal.com https://api-m.paypal.com https://*.google-analytics.com https://*.analytics.google.com",
           "form-action": "'self' https://www.paypal.com",
         })
       : buildCsp({
-          "script-src": `'self' ${fouc}`,
+          "script-src": `'self' ${fouc} https://www.googletagmanager.com`,
           "style-src": "'self' 'unsafe-inline'",
+          "connect-src": "'self' https://*.google-analytics.com https://*.analytics.google.com",
           "form-action": "'self' https://www.paypal.com",
         });
   response.headers.set("Content-Security-Policy-Report-Only", csp);

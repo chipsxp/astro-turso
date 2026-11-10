@@ -9,7 +9,6 @@ import {
 import { db } from "../../lib/db";
 import {
   EVENT_SELECT_FIELDS,
-  ensureEventsSchema,
   getEventLifecycleLabel,
   isEventEnded,
   mapEventRow,
@@ -23,8 +22,6 @@ const slug = Astro.params.slug;
 if (!slug) {
   return Astro.redirect("/upcoming-events", 302);
 }
-
-await ensureEventsSchema();
 
 const result = await db.execute(
   `SELECT ${EVENT_SELECT_FIELDS}

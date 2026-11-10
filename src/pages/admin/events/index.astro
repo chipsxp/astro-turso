@@ -59,6 +59,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
 </style>
 
 <script>
+  import { showToast } from "../../../lib/admin-toast";
   type EventItem = {
     id: number;
     title: string;
@@ -204,7 +205,7 @@ import AdminLayout from "../../../layouts/AdminLayout.astro";
         });
         if (!response.ok) {
           const data = await response.json().catch(() => ({}));
-          alert(data.error ?? "Delete failed.");
+          showToast(data.error ?? "Delete failed.", "error");
           return;
         }
 
