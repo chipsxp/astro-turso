@@ -1,6 +1,6 @@
 # The Happy Feeling Scriptorium
 
-![Version](https://img.shields.io/badge/version-1.3.5-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
+![Version](https://img.shields.io/badge/version-1.4.0-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
 
 Astro SSR blog and admin panel for publishing articles, managing events, managing media, and running a small author workflow on top of Turso and Cloudinary.
 
@@ -8,12 +8,13 @@ This repository is meant to be practical for developers who want to learn from i
 
 ## Branches
 
-| Branch                 | Version | Description                                                                                                                        |
-| ---------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `main`                 | 1.0.0   | Base blog platform — no events module                                                                                              |
-| `feature/events`       | 1.1.0   | Adds the Upcoming Events module (this branch)                                                                                      |
-| `feature/etsy-sales`   | 1.2.0   | Adds Etsy sales module and storefront integration, improves event flow, and raises Lighthouse score via WebP and alt-text delivery |
-| `feature/monetization` | 1.3.5   | Adds gamification scoring for social shares and an advertisement placement module                                                  |
+| Branch                      | Version | Description                                                                                                                        |
+| --------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `main`                      | 1.0.0   | Base blog platform — no events module                                                                                              |
+| `feature/events`            | 1.1.0   | Adds the Upcoming Events module (this branch)                                                                                      |
+| `feature/etsy-sales`        | 1.2.0   | Adds Etsy sales module and storefront integration, improves event flow, and raises Lighthouse score via WebP and alt-text delivery |
+| `feature/monetization`      | 1.3.5   | Adds gamification scoring for social shares and an advertisement placement module                                                  |
+| `fix/code-review-hardening` | 1.4.0   | Code review hardening (#2–#16) — security, transactions, modularization, CSP                                                       |
 
 Clone the branch that matches what you need:
 
@@ -435,4 +436,4 @@ Then create your admin user and start the server as usual.
 | **1.2.0** | Art Sales / Shop page              | Released |
 | **1.3.0** | Gamification & Monetization module | Released    |
 | **1.3.5** | Stability & admin UX fixes         | Released    |
-| **1.4.0** | Code review hardening (#2–#16)     | In Progress  |
+| **1.4.0** | Code review hardening (#2–#16)     | Released    |
