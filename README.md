@@ -290,6 +290,18 @@ If you are new to Astro or full-stack content apps, start in this order:
 
 ## Changelog
 
+### [1.4.0] — 2026-11-09 — Code Review Hardening (`fix/code-review-hardening` branch)
+
+- **Rate limiting & memory bounds (PR 1):** Extracted shared LRU/TTL rate limiter (`src/lib/rate-limit.ts`) with swept expiry across login, register, password reset, contact, public reads, inline images, and sales QR uploads.
+- **Database transactions & DDL removal (PR 2 & PR 3):** Added `db.batch()` to `src/lib/db.ts` for atomic multi-statement writes (tag sync, upload session attach, panel assignments, password reset consume, user delete). Removed runtime `ensure*Schema` DDL calls from hot request paths; added `scripts/migrate-add-indexes.mjs` and `scripts/README.md`.
+- **Shared utilities & dead-code cleanup (PR 4, PR 5, PR 10):** Centralized `requireUser`/`requireAdmin` in `src/lib/auth.ts`, `validateArticleBody` in `src/lib/article-validation.ts`, `escapeHtml`/`formatDate` in `src/lib/format.ts`, and `resolveCloudName()` in `src/lib/cloudinary.ts`. Removed unused exports across `src/lib/`.
+- **Query & asset hygiene (PR 6, PR 8, PR 9, F1, F2):** Narrowed `SELECT *` queries to explicit columns, added pagination caps and `Promise.all` parallelization, fixed `admin/ads` PUT to destroy replaced Cloudinary assets, and sanitized admin preview HTML with `sanitizeForPreview()`.
+- **Frontend & CSS modularization (PR 11, PR 12, PR 13):** Extracted 6 large inline admin `<script>` blocks into typed modules under `src/scripts/admin/`; split `PanelGallery.tsx`, `SalesImageManager.tsx`, and `AdminMediaGallery.tsx` into focused hooks and subcomponents; split `admin-layout.css` and `global.css` into `@import` partials while preserving unscoped `set:html` and React island rules.
+- **Analytics & CSP alignment (PR 14, PR 15):** Converted `BlogLayout.astro` GA config and click-tracker scripts to processed module scripts, added Google Analytics host allowances to public and `/shop` CSP tiers, and synchronized agent/architecture documentation.
+- **Toast accessibility (PR 16):** Added keyboard/pointer dismiss button, hover/focus timer pause, and 8 s error duration to `src/lib/admin-toast.ts`.
+
+---
+
 ### [1.3.5] — 2026-10-18 — Stability & Admin UX Fixes (`fix/code-review-hardening` branch)
 
 - Deleting a user now reassigns their events and sales postings to the acting admin and unlinks their articles; the toast shows the counts.
