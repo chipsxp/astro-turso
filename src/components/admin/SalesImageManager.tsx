@@ -1,15 +1,11 @@
-import { useCallback, useRef, useState } from "react";
-import type { SalesImageTransforms } from "../../lib/sales";
-import { buildSalesImageUrl } from "../../lib/sales";
-
-interface SalesImageRecord {
-  id: number;
-  url: string;
-  public_id: string;
-  alt_text: string;
-  transforms: string;
-  sort_order: number;
-}
+import { useRef } from "react";
+import {
+  defaultTransforms,
+  MAX_IMAGES,
+  type SalesImageRecord,
+} from "./sales-transforms";
+import { SalesImageRow } from "./SalesImageRow";
+import { useSalesImageUploads } from "./useSalesImageUploads";
 
 interface Props {
   postingSlug: string;
@@ -17,205 +13,29 @@ interface Props {
   cloudName: string;
 }
 
-const BG_COLORS = [
-  { label: "White", value: "white" },
-  { label: "Black", value: "black" },
-  { label: "Cream", value: "rgb:F5F0E8" },
-  { label: "Beige", value: "rgb:E8D9C5" },
-  { label: "Gray", value: "rgb:CCCCCC" },
-  { label: "Transparent", value: "transparent" },
-];
-
-const TEXT_COLORS = [
-  { label: "White", value: "white" },
-  { label: "Black", value: "black" },
-  { label: "Gold", value: "gold" },
-];
-
-const MAX_IMAGES = 4;
-
-function defaultTransforms(): SalesImageTransforms {
-  return {
-    bgRemoval: false,
-    bgColor: "white",
-    text: "",
-    textPosition: "bottom",
-    textColor: "white",
-  };
-}
-
-function parseTransforms(json: string): SalesImageTransforms {
-  try {
-    return { ...defaultTransforms(), ...JSON.parse(json) };
-  } catch {
-    return defaultTransforms();
-  }
-}
-
 export default function SalesImageManager({
   postingSlug,
   initialImages = [],
   cloudName,
 }: Props) {
-  const [images, setImages] = useState<SalesImageRecord[]>(
-    [...initialImages].sort((a, b) => a.sort_order - b.sort_order),
-  );
-  const [expanded, setExpanded] = useState<number | null>(null);
-  const [transforms, setTransforms] = useState<
-    Record<number, SalesImageTransforms>
-  >(
-    Object.fromEntries(
-      initialImages.map((img) => [img.id, parseTransforms(img.transforms)]),
-    ),
-  );
-  const [uploading, setUploading] = useState(false);
-  const [status, setStatus] = useState("");
-  const [dragging, setDragging] = useState<number | null>(null);
+  const {
+    images,
+    expanded,
+    setExpanded,
+    transforms,
+    uploading,
+    status,
+    dragging,
+    handleFiles,
+    handleDelete,
+    updateTransform,
+    applyTransforms,
+    handleDragStart,
+    handleDragOver,
+    handleDragEnd,
+  } = useSalesImageUploads(postingSlug, initialImages);
+
   const fileRef = useRef<HTMLInputElement>(null);
-
-  const toast = (msg: string) => {
-    setStatus(msg);
-    setTimeout(() => setStatus(""), 4000);
-  };
-
-  // ── File upload ──────────────────────────────────────────────────────────────
-
-  const handleFiles = useCallback(
-    async (files: FileList | null) => {
-      if (!files || files.length === 0) return;
-      if (images.length >= MAX_IMAGES) {
-        toast(`Maximum of ${MAX_IMAGES} images allowed`);
-        return;
-      }
-      const remaining = MAX_IMAGES - images.length;
-      const toUpload = Array.from(files).slice(0, remaining);
-
-      setUploading(true);
-      for (const file of toUpload) {
-        const reader = new FileReader();
-        const dataUri = await new Promise<string>((resolve) => {
-          reader.onload = (e) => resolve(e.target!.result as string);
-          reader.readAsDataURL(file);
-        });
-
-        const res = await fetch(`/api/admin/sales/${postingSlug}/images`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            file_data: dataUri,
-            alt_text: file.name.replace(/\.[^.]+$/, ""),
-            transforms: defaultTransforms(),
-          }),
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          const newImg: SalesImageRecord = {
-            id: data.id,
-            url: data.url,
-            public_id: data.public_id,
-            alt_text: data.alt_text,
-            transforms: data.transforms,
-            sort_order: data.sort_order,
-          };
-          setImages((prev) => [...prev, newImg]);
-          setTransforms((prev) => ({
-            ...prev,
-            [data.id]: defaultTransforms(),
-          }));
-          toast(`Uploaded ${file.name}`);
-        } else {
-          const err = await res.json().catch(() => ({}));
-          toast(`Upload failed: ${err.error ?? res.statusText}`);
-        }
-      }
-      setUploading(false);
-    },
-    [images.length, postingSlug],
-  );
-
-  // ── Delete ───────────────────────────────────────────────────────────────────
-
-  const handleDelete = async (imageId: number) => {
-    if (!confirm("Remove this image?")) return;
-    const res = await fetch(`/api/admin/sales/${postingSlug}/images`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image_id: imageId }),
-    });
-    if (res.ok) {
-      setImages((prev) => prev.filter((i) => i.id !== imageId));
-      setTransforms((prev) => {
-        const next = { ...prev };
-        delete next[imageId];
-        return next;
-      });
-      if (expanded === imageId) setExpanded(null);
-      toast("Image removed");
-    } else {
-      toast("Delete failed");
-    }
-  };
-
-  // ── Transforms ───────────────────────────────────────────────────────────────
-
-  const updateTransform = (
-    imageId: number,
-    key: keyof SalesImageTransforms,
-    value: SalesImageTransforms[typeof key],
-  ) => {
-    setTransforms((prev) => ({
-      ...prev,
-      [imageId]: { ...(prev[imageId] ?? defaultTransforms()), [key]: value },
-    }));
-  };
-
-  const applyTransforms = async (img: SalesImageRecord) => {
-    const t = transforms[img.id] ?? defaultTransforms();
-    const res = await fetch(`/api/admin/sales/${postingSlug}/images`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image_id: img.id, transforms: t }),
-    });
-    if (res.ok) {
-      setImages((prev) =>
-        prev.map((i) =>
-          i.id === img.id ? { ...i, transforms: JSON.stringify(t) } : i,
-        ),
-      );
-      toast("Transforms saved");
-    } else {
-      toast("Save failed");
-    }
-  };
-
-  // ── Drag-to-reorder ──────────────────────────────────────────────────────────
-
-  const handleDragStart = (id: number) => setDragging(id);
-  const handleDragOver = (e: React.DragEvent, overId: number) => {
-    e.preventDefault();
-    if (dragging === null || dragging === overId) return;
-    setImages((prev) => {
-      const list = [...prev];
-      const fromIdx = list.findIndex((i) => i.id === dragging);
-      const toIdx = list.findIndex((i) => i.id === overId);
-      if (fromIdx === -1 || toIdx === -1) return prev;
-      const [item] = list.splice(fromIdx, 1);
-      list.splice(toIdx, 0, item);
-      return list.map((img, idx) => ({ ...img, sort_order: idx }));
-    });
-  };
-  const handleDragEnd = async () => {
-    setDragging(null);
-    const order = images.map((img, idx) => ({ id: img.id, sort_order: idx }));
-    await fetch(`/api/admin/sales/${postingSlug}/images`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ order }),
-    });
-  };
-
-  // ── Render ───────────────────────────────────────────────────────────────────
 
   return (
     <div className="sim-root">
@@ -262,194 +82,26 @@ export default function SalesImageManager({
       <div className="sim-list">
         {images.map((img) => {
           const t = transforms[img.id] ?? defaultTransforms();
-          const previewUrl = img.public_id
-            ? buildSalesImageUrl(
-                cloudName,
-                img.public_id,
-                JSON.stringify(t),
-                400,
-              )
-            : img.url;
           const isOpen = expanded === img.id;
 
           return (
-            <div
+            <SalesImageRow
               key={img.id}
-              className={`sim-item${dragging === img.id ? " sim-item--dragging" : ""}`}
-              draggable
+              img={img}
+              transforms={t}
+              cloudName={cloudName}
+              isOpen={isOpen}
+              isDragging={dragging === img.id}
+              onToggleExpand={() => setExpanded(isOpen ? null : img.id)}
+              onDelete={() => handleDelete(img.id)}
+              onUpdateTransform={(key, value) =>
+                updateTransform(img.id, key, value)
+              }
+              onApplyTransforms={() => applyTransforms(img)}
               onDragStart={() => handleDragStart(img.id)}
               onDragOver={(e) => handleDragOver(e, img.id)}
               onDragEnd={handleDragEnd}
-            >
-              <div className="sim-item__row">
-                <span className="sim-drag-handle" title="Drag to reorder">
-                  ⠿
-                </span>
-                <img
-                  className="sim-thumb"
-                  src={img.url}
-                  alt={img.alt_text}
-                  width={64}
-                  height={64}
-                />
-                <div className="sim-item__meta">
-                  <span className="sim-item__name">
-                    {img.alt_text || "Image"}
-                  </span>
-                  <span className="sim-item__order">#{img.sort_order + 1}</span>
-                </div>
-                <div className="sim-item__actions">
-                  <button
-                    type="button"
-                    className="sim-btn sim-btn--sm"
-                    onClick={() => setExpanded(isOpen ? null : img.id)}
-                  >
-                    {isOpen ? "Close" : "Edit"}
-                  </button>
-                  <button
-                    type="button"
-                    className="sim-btn sim-btn--danger sim-btn--sm"
-                    onClick={() => handleDelete(img.id)}
-                  >
-                    ✕
-                  </button>
-                </div>
-              </div>
-
-              {/* Transform panel */}
-              {isOpen && (
-                <div className="sim-transforms">
-                  {/* Background removal */}
-                  <div className="sim-field">
-                    <label className="sim-label">
-                      <input
-                        type="checkbox"
-                        checked={t.bgRemoval}
-                        onChange={(e) =>
-                          updateTransform(img.id, "bgRemoval", e.target.checked)
-                        }
-                      />{" "}
-                      Remove Background (AI)
-                    </label>
-                  </div>
-
-                  {t.bgRemoval && (
-                    <div className="sim-field">
-                      <span className="sim-label">Background Color</span>
-                      <div className="sim-swatches">
-                        {BG_COLORS.map((c) => (
-                          <button
-                            key={c.value}
-                            type="button"
-                            title={c.label}
-                            className={`sim-swatch${t.bgColor === c.value ? " sim-swatch--active" : ""}`}
-                            style={
-                              c.value === "transparent"
-                                ? {
-                                    background:
-                                      "repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0/12px 12px",
-                                  }
-                                : {
-                                    background: c.value.startsWith("rgb:")
-                                      ? `#${c.value.slice(4)}`
-                                      : c.value,
-                                    border:
-                                      c.value === "white"
-                                        ? "1px solid #ccc"
-                                        : undefined,
-                                  }
-                            }
-                            onClick={() =>
-                              updateTransform(img.id, "bgColor", c.value)
-                            }
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Text overlay */}
-                  <div className="sim-field">
-                    <label className="sim-label" htmlFor={`text-${img.id}`}>
-                      Text Overlay
-                    </label>
-                    <input
-                      id={`text-${img.id}`}
-                      type="text"
-                      className="sim-input"
-                      maxLength={60}
-                      value={t.text}
-                      placeholder="Optional text on image (max 60 chars)"
-                      onChange={(e) =>
-                        updateTransform(img.id, "text", e.target.value)
-                      }
-                    />
-                  </div>
-
-                  {t.text.trim() && (
-                    <>
-                      <div className="sim-field">
-                        <span className="sim-label">Text Position</span>
-                        <div className="sim-radio-group">
-                          {(["top", "bottom", "corner"] as const).map((pos) => (
-                            <label key={pos} className="sim-radio">
-                              <input
-                                type="radio"
-                                name={`pos-${img.id}`}
-                                value={pos}
-                                checked={t.textPosition === pos}
-                                onChange={() =>
-                                  updateTransform(img.id, "textPosition", pos)
-                                }
-                              />
-                              {pos.charAt(0).toUpperCase() + pos.slice(1)}
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="sim-field">
-                        <span className="sim-label">Text Color</span>
-                        <div className="sim-radio-group">
-                          {TEXT_COLORS.map((c) => (
-                            <label key={c.value} className="sim-radio">
-                              <input
-                                type="radio"
-                                name={`tc-${img.id}`}
-                                value={c.value}
-                                checked={t.textColor === c.value}
-                                onChange={() =>
-                                  updateTransform(img.id, "textColor", c.value)
-                                }
-                              />
-                              {c.label}
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-                    </>
-                  )}
-
-                  {/* Live preview */}
-                  <div className="sim-preview">
-                    <span className="sim-label">Preview</span>
-                    <img
-                      src={previewUrl}
-                      alt="Preview"
-                      className="sim-preview__img"
-                    />
-                  </div>
-
-                  <button
-                    type="button"
-                    className="sim-btn sim-btn--primary"
-                    onClick={() => applyTransforms(img)}
-                  >
-                    Apply Transforms
-                  </button>
-                </div>
-              )}
-            </div>
+            />
           );
         })}
       </div>
