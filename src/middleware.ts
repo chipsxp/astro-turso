@@ -147,15 +147,16 @@ function addSecurityHeaders(response: Response, pathname: string): Response {
       })
     : isShop
       ? buildCsp({
-          "script-src": `'self' ${fouc} https://www.paypal.com`,
+          "script-src": `'self' ${fouc} https://www.paypal.com https://www.googletagmanager.com`,
           "style-src": "'self' 'unsafe-inline'",
           "connect-src":
-            "'self' https://www.paypal.com https://api.paypal.com https://api-m.paypal.com",
+            "'self' https://www.paypal.com https://api.paypal.com https://api-m.paypal.com https://*.google-analytics.com https://*.analytics.google.com",
           "form-action": "'self' https://www.paypal.com",
         })
       : buildCsp({
-          "script-src": `'self' ${fouc}`,
+          "script-src": `'self' ${fouc} https://www.googletagmanager.com`,
           "style-src": "'self' 'unsafe-inline'",
+          "connect-src": "'self' https://*.google-analytics.com https://*.analytics.google.com",
           "form-action": "'self' https://www.paypal.com",
         });
   response.headers.set("Content-Security-Policy-Report-Only", csp);

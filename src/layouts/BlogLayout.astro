@@ -83,14 +83,26 @@ const {
     
     {import.meta.env.PUBLIC_GA_MEASUREMENT_ID && (
       <>
-        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}></script>
-        <script is:inline define:vars={{ gaId: import.meta.env.PUBLIC_GA_MEASUREMENT_ID }}>
-          window.dataLayer = window.dataLayer || [];
-          // eslint-disable-next-line prefer-rest-params
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', gaId);
+        <script
+          is:inline
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.PUBLIC_GA_MEASUREMENT_ID}`}
+          data-ga-id={import.meta.env.PUBLIC_GA_MEASUREMENT_ID}
+        ></script>
+        <script>
+          const gaLoader = document.querySelector<HTMLScriptElement>(
+            'script[src*="googletagmanager.com/gtag/js"]',
+          );
+          const gaId = gaLoader?.dataset.gaId;
+          if (gaId) {
+            const w = window as unknown as { dataLayer?: unknown[] };
+            w.dataLayer = w.dataLayer || [];
+            function gtag(...args: unknown[]) {
+              w.dataLayer?.push(args);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId);
+          }
         </script>
       </>
     )}
@@ -112,9 +124,11 @@ const {
     <Footer />
     
     <!-- Telemetry Tracker -->
-    <script is:inline>
+    <script>
       document.addEventListener("click", function (e) {
-        const target = e.target.closest("[data-track-type]");
+        const target = (e.target as HTMLElement | null)?.closest(
+          "[data-track-type]",
+        );
         if (!target) return;
 
         const eventType = target.getAttribute("data-track-event") || "click";
