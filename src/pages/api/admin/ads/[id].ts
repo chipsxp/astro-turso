@@ -69,12 +69,17 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
     }
 
     const existing = await db.execute(
-      `SELECT id FROM advertisements WHERE id = ?`,
+      `SELECT id, image_url FROM advertisements WHERE id = ?`,
       [id],
     );
     if (existing.rows.length === 0) {
       return json({ error: "Ad not found" }, 404);
     }
+
+    const previousImageUrl =
+      typeof existing.rows[0].image_url === "string"
+        ? existing.rows[0].image_url
+        : "";
 
     // Only replace the image when a new one was provided
     let imageUrl: string | null = null;
@@ -106,6 +111,28 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
         id,
       ],
     );
+
+    // Destroy the replaced Cloudinary asset, if any. The database write is
+    // committed; a cleanup failure returns 502 partial success so the row is
+    // not lost and the old asset can be reconciled manually.
+    const previousPublicId =
+      imageUrl != null && imageUrl !== previousImageUrl
+        ? parseAdImagePublicId(previousImageUrl)
+        : null;
+    if (previousPublicId) {
+      try {
+        await destroyCloudinaryAsset(previousPublicId, "image");
+      } catch (err) {
+        console.error("Failed to destroy replaced ad image:", err);
+        return json(
+          {
+            updated: true,
+            error: "Ad updated, but previous image cleanup failed on CDN",
+          },
+          502,
+        );
+      }
+    }
 
     return json({ ok: true });
   } catch (err) {
