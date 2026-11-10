@@ -24,7 +24,7 @@ export async function getDonationPlacements(): Promise<string[]> {
     .filter(Boolean);
 }
 
-export const DONATION_DEFAULTS = {
+const DONATION_DEFAULTS = {
   title: "Support the Scriptorium",
   text: "If you enjoy our work, please consider supporting us!",
   button: "Donate via PayPal",

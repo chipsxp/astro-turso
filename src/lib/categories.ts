@@ -40,7 +40,7 @@ export async function listCategories(): Promise<CategoryRecord[]> {
   return result.rows.map((row: Record<string, unknown>) => mapCategoryRow(row));
 }
 
-export async function findCategoryById(
+async function findCategoryById(
   id: number,
 ): Promise<CategoryRecord | null> {
 
@@ -53,7 +53,7 @@ export async function findCategoryById(
   return row ? mapCategoryRow(row) : null;
 }
 
-export async function findCategoryByNameOrSlug(
+async function findCategoryByNameOrSlug(
   value: string,
 ): Promise<CategoryRecord | null> {
 
@@ -71,7 +71,7 @@ export async function findCategoryByNameOrSlug(
   return row ? mapCategoryRow(row) : null;
 }
 
-export async function createCategory(name: string): Promise<CategoryRecord> {
+async function createCategory(name: string): Promise<CategoryRecord> {
 
   const normalizedName = name.trim();
   if (!normalizedName) {

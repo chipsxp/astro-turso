@@ -178,7 +178,7 @@ export async function createUploadSession(
   return session;
 }
 
-export async function getUploadSessionForUser(
+async function getUploadSessionForUser(
   sessionId: string,
   userId: number,
 ): Promise<UploadSessionRecord | null> {

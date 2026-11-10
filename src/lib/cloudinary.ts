@@ -89,11 +89,6 @@ export function buildCloudinaryImageUrl({
   return `https://res.cloudinary.com/${trimmedCloudName}/image/upload/${transformations}/${encodedPublicId}`;
 }
 
-export function getCloudinaryPresetWidth(
-  preset: CloudinaryImagePreset,
-): number {
-  return PRESET_DIMENSIONS[preset].width;
-}
 
 export function buildCloudinaryImageSrcset({
   cloudName,

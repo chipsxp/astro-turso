@@ -76,7 +76,7 @@ function rewriteInlineImageSrcs(
   });
 }
 
-export function extractInlineImageIdsFromBody(body: string): number[] {
+function extractInlineImageIdsFromBody(body: string): number[] {
   const ids = new Set<number>();
 
   for (const match of body.matchAll(INLINE_IMAGE_ID_REGEX)) {

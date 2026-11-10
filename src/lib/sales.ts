@@ -75,8 +75,7 @@ export interface SalesReview {
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 export const MAX_BODY_BYTES = 1_835_008; // 1.75 MB — same limit as articles
-export const MAX_PAYPAL_HTML_BYTES = 4_096; // 4 KB — PayPal buttons are small
-export const MAX_PAYMENT_LINK_LENGTH = 2_048;
+const MAX_PAYMENT_LINK_LENGTH = 2_048;
 export const MAX_SALES_IMAGES = 4;
 
 export function isValidPaymentLink(value: unknown): value is string {
@@ -157,12 +156,6 @@ export function calcSalePrice(posting: SalesPosting): number | null {
   return null;
 }
 
-/**
- * Returns true if a posting currently has an active promotion.
- */
-export function isPromoActive(posting: SalesPosting): boolean {
-  return calcSalePrice(posting) !== null;
-}
 
 // ── Cloudinary URL builder for sales images ───────────────────────────────────
 

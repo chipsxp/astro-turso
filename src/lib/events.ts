@@ -150,7 +150,7 @@ export const EVENT_SELECT_FIELDS = `
  * Get the effective end date for an event (falls back to start_date if no end_date).
  * Returns ISO date string (YYYY-MM-DD).
  */
-export function getEventEffectiveEndDate(event: EventRecord): string {
+function getEventEffectiveEndDate(event: EventRecord): string {
   return event.end_date && event.end_date.trim()
     ? event.end_date
     : event.start_date;
@@ -161,7 +161,7 @@ export function getEventEffectiveEndDate(event: EventRecord): string {
  * Uses UTC midnight as the baseline and adjusts by -5/-4 hours depending on EST/EDT.
  * Returns ISO date string (YYYY-MM-DD) in New York local time.
  */
-export function toNewYorkDate(date: Date): string {
+function toNewYorkDate(date: Date): string {
   // Create a formatter for America/New_York
   const formatter = new Intl.DateTimeFormat("en-US", {
     timeZone: "America/New_York",
@@ -206,7 +206,7 @@ export function isEventEnded(event: EventRecord): boolean {
  * Check if an event is within the 14-day archive window.
  * Returns true if the event has ended but is still within 14 days of its end date.
  */
-export function isEventInArchiveWindow(event: EventRecord): boolean {
+function isEventInArchiveWindow(event: EventRecord): boolean {
   const eventEndDate = getEventEffectiveEndDate(event);
   const todayNY = getTodayInNewYork();
   const fourteenDaysAgoNY = getDaysAgoInNewYork(14);
