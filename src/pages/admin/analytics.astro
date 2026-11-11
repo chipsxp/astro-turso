@@ -1,21 +1,57 @@
 ---
 import AdminLayout from "../../layouts/AdminLayout.astro";
 import { db } from "../../lib/db";
-import { getTopSharerOfMonth } from "../../lib/monetization";
 
-// Global Platform Metrics
-const usersRs = await db.execute("SELECT COUNT(*) as count FROM users");
-const totalUsers = Number(usersRs.rows[0]?.count || 0);
-
-const articlesRs = await db.execute("SELECT COUNT(*) as count FROM articles");
-const totalArticles = Number(articlesRs.rows[0]?.count || 0);
-
-const eventsRs = await db.execute("SELECT COUNT(*) as count FROM events");
-const totalEvents = Number(eventsRs.rows[0]?.count || 0);
-
-const topArticlesRs = await db.execute(
-  "SELECT id, title, slug, views FROM articles WHERE status = 'published' ORDER BY views DESC LIMIT 10",
+// Batch all global metrics, rankings, and analytics queries into a single round trip
+const [
+  countsRs,
+  topArticlesRs,
+  sharesByPlatformRs,
+  topSharerRs,
+  adsRs,
+  statsRs,
+] = await db.batch(
+  [
+    {
+      sql: `SELECT 
+              (SELECT COUNT(*) FROM users) AS total_users,
+              (SELECT COUNT(*) FROM articles) AS total_articles,
+              (SELECT COUNT(*) FROM events) AS total_events,
+              (SELECT COUNT(*) FROM sales_postings) AS total_sales,
+              (SELECT COUNT(*) FROM shares) AS total_shares`,
+    },
+    {
+      sql: "SELECT id, title, slug, views FROM articles WHERE status = 'published' ORDER BY views DESC LIMIT 10",
+    },
+    {
+      sql: "SELECT platform, COUNT(*) as count FROM shares GROUP BY platform ORDER BY count DESC",
+    },
+    {
+      sql: `SELECT u.id, u.email, COUNT(s.id) as share_count 
+            FROM shares s 
+            JOIN users u ON s.user_id = u.id 
+            WHERE datetime(s.shared_at, 'unixepoch') >= datetime('now', 'start of month') 
+            GROUP BY u.id 
+            ORDER BY share_count DESC 
+            LIMIT 1`,
+    },
+    {
+      sql: "SELECT id, business_name, slot_type, is_active FROM advertisements",
+    },
+    {
+      sql: "SELECT target_id, COUNT(*) as click_count FROM analytics_events WHERE event_type = 'click' AND target_type = 'ad' GROUP BY target_id",
+    },
+  ],
+  "read",
 );
+
+const countsRow = countsRs.rows[0] ?? {};
+const totalUsers = Number(countsRow.total_users || 0);
+const totalArticles = Number(countsRow.total_articles || 0);
+const totalEvents = Number(countsRow.total_events || 0);
+const totalSales = Number(countsRow.total_sales || 0);
+const totalShares = Number(countsRow.total_shares || 0);
+
 const topArticles = topArticlesRs.rows.map((r) => ({
   id: Number(r.id),
   title: String(r.title),
@@ -23,42 +59,17 @@ const topArticles = topArticlesRs.rows.map((r) => ({
   views: Number(r.views || 0),
 }));
 
-const salesRs = await db.execute(
-  "SELECT COUNT(*) as count FROM sales_postings",
-);
-const totalSales = Number(salesRs.rows[0]?.count || 0);
-
-// Social Engagement
-const sharesRs = await db.execute("SELECT COUNT(*) as count FROM shares");
-const totalShares = Number(sharesRs.rows[0]?.count || 0);
-
-const sharesByPlatformRs = await db.execute<{
-  platform: string;
-  count: number;
-}>(
-  "SELECT platform, COUNT(*) as count FROM shares GROUP BY platform ORDER BY count DESC",
-);
 const sharesByPlatform = sharesByPlatformRs.rows.map((r) => ({
   platform: String(r.platform),
   count: Number(r.count),
 }));
 
-const topSharer = await getTopSharerOfMonth();
-const topSharerNickname = topSharer
-  ? topSharer.email.split("@")[0]
+const topSharerRow = topSharerRs.rows[0];
+const topSharerNickname = topSharerRow
+  ? String(topSharerRow.email).split("@")[0]
   : "None yet";
-const topSharerCount = topSharer ? topSharer.shareCount : 0;
+const topSharerCount = topSharerRow ? Number(topSharerRow.share_count) : 0;
 
-// Ad Performance
-const adsRs = await db.execute<{
-  id: number;
-  business_name: string;
-  slot_type: string;
-  is_active: number;
-}>("SELECT id, business_name, slot_type, is_active FROM advertisements");
-const statsRs = await db.execute<{ target_id: number; click_count: number }>(
-  "SELECT target_id, COUNT(*) as click_count FROM analytics_events WHERE event_type = 'click' AND target_type = 'ad' GROUP BY target_id",
-);
 const clickStats = new Map<number, number>();
 for (const row of statsRs.rows) {
   clickStats.set(Number(row.target_id), Number(row.click_count));

@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { AdvancedImage, lazyload, responsive } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { buildCloudinaryVideoUrl } from "../../lib/cloudinary";
@@ -28,7 +29,8 @@ export default function AdminMediaGallery({
     handleDelete,
   } = useAdminMedia(galleryId);
 
-  const cloudinary = new Cloudinary({ cloud: { cloudName } });
+  const cloudinary = useMemo(() => new Cloudinary({ cloud: { cloudName } }), [cloudName]);
+  const imagePlugins = useMemo(() => [lazyload(), responsive()], []);
 
   if (media.length === 0) {
     return (
@@ -65,7 +67,7 @@ export default function AdminMediaGallery({
                   <AdvancedImage
                     alt={item.alt_text}
                     cldImg={cloudinary.image(item.public_id)}
-                    plugins={[lazyload(), responsive()]}
+                    plugins={imagePlugins}
                     onError={() =>
                       setBrokenImageIds((prev) => {
                         if (prev.has(item.id)) return prev;

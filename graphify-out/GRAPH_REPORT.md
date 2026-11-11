@@ -1,12 +1,12 @@
-# Graph Report - C:\Users\manag\Github-repo\astro-turso  (2026-11-10)
+# Graph Report - C:\Users\manag\Github-repo\astro-turso  (2026-11-11)
 
 ## Corpus Check
-- 110 files · ~495,352 words
+- 111 files · ~501,542 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 844 nodes · 995 edges · 220 communities detected
-- Extraction: 73% EXTRACTED · 27% INFERRED · 0% AMBIGUOUS · INFERRED: 268 edges (avg confidence: 0.8)
+- 845 nodes · 1002 edges · 220 communities detected
+- Extraction: 72% EXTRACTED · 28% INFERRED · 0% AMBIGUOUS · INFERRED: 279 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
@@ -234,13 +234,13 @@
 ## God Nodes (most connected - your core abstractions)
 1. `execute()` - 60 edges
 2. `json()` - 49 edges
-3. `POST()` - 32 edges
-4. `PUT()` - 22 edges
-5. `GET()` - 18 edges
+3. `POST()` - 33 edges
+4. `GET()` - 22 edges
+5. `PUT()` - 22 edges
 6. `EventFormManager` - 17 edges
 7. `GET()` - 16 edges
-8. `POST()` - 12 edges
-9. `DELETE()` - 11 edges
+8. `DELETE()` - 13 edges
+9. `POST()` - 12 edges
 10. `Project Memory Skill (SKILL.md)` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
@@ -248,12 +248,12 @@
   library/social-share-plan.md → docs/diagrams/architecture-eraser-diagram.png
 - `PanelGallery React Island (admin dashboard)` --semantically_similar_to--> `Frontend Layer (Admin Dashboard, Article Editor, Blog Pages, SEO/OG, Social Share)`  [INFERRED] [semantically similar]
   library/panel-gallery-plan.md → docs/diagrams/architecture-eraser-diagram.png
-- `json()` --calls--> `GET()`  [INFERRED]
-  C:\Users\manag\Github-repo\astro-turso\src\lib\api-response.ts → C:\Users\manag\Github-repo\astro-turso\src\pages\api\admin\panels\upload.ts
-- `buildPreviewHtml()` --calls--> `openPreview()`  [INFERRED]
-  C:\Users\manag\Github-repo\astro-turso\src\scripts\admin\articles-edit.ts → C:\Users\manag\Github-repo\astro-turso\src\scripts\admin\events-new.ts
-- `Turso Fresh Connection Per Call Rule` --semantically_similar_to--> `Turso Query Conventions (parameterized, mapRows, batch)`  [INFERRED] [semantically similar]
-  CLAUDE.md → devtools/skills/code-development/skill.md
+- `setAuthCookie()` --calls--> `POST()`  [INFERRED]
+  C:\Users\manag\Github-repo\astro-turso\src\lib\auth.ts → C:\Users\manag\Github-repo\astro-turso\src\pages\api\auth\login.ts
+- `toPublicEvent()` --calls--> `GET()`  [INFERRED]
+  C:\Users\manag\Github-repo\astro-turso\src\lib\events.ts → C:\Users\manag\Github-repo\astro-turso\src\pages\api\sales\[slug].ts
+- `getActiveAdsForSlot()` --calls--> `GET()`  [INFERRED]
+  C:\Users\manag\Github-repo\astro-turso\src\lib\monetization.ts → C:\Users\manag\Github-repo\astro-turso\src\pages\api\sales\[slug].ts
 
 ## Hyperedges (group relationships)
 - **Three-Agent Sync Contract (Claude + Copilot + Cursor/Windsurf)** — claude_md, agents_md, github_copilot_instructions [EXTRACTED 1.00]
@@ -273,111 +273,111 @@
 
 ### Community 0 - "Community 0"
 Cohesion: 0.05
-Nodes (51): convertArticleInlineImages(), ensureInlineSchema(), estimateBase64DecodedBytes(), execute(), extractInlineMatches(), getDb(), main(), rewriteBodyWithUrls() (+43 more)
+Nodes (47): listCategories(), resolveCloudName(), getArchiveBadgeLabel(), getDaysAgoInNewYork(), getEventEffectiveEndDate(), getEventLifecycleLabel(), getTodayInNewYork(), isEventArchivable() (+39 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.05
-Nodes (37): json(), createUploadSession(), loadCategories(), uploadLocalEditorImage(), validateImageUploadSize(), validateImageUploadType(), GET(), POST() (+29 more)
+Cohesion: 0.07
+Nodes (44): validateArticleBody(), convertArticleInlineImages(), ensureInlineSchema(), estimateBase64DecodedBytes(), execute(), extractInlineMatches(), getDb(), main() (+36 more)
 
 ### Community 2 - "Community 2"
 Cohesion: 0.06
-Nodes (36): validateArticleBody(), listCategories(), isValidIsoDate(), isValidTime24(), normalizeEventStatus(), toEventSlug(), GET(), normalizeBooleanFlag() (+28 more)
+Nodes (33): json(), createUploadSession(), loadCategories(), uploadLocalEditorImage(), validateImageUploadSize(), validateImageUploadType(), GET(), POST() (+25 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.06
 Nodes (45): AGENTS.md — Cursor/Windsurf Agent Instructions, Astro SSR Framework (output: server), Base64 JSON Upload Pattern (WAF-safe alternative to multipart), Bug Log Template, Chat Customization Diagnostics, CLAUDE.md — Claude Code Project Instructions, Cloudinary Media Storage Integration, Code Development Skill (+37 more)
 
 ### Community 4 - "Community 4"
-Cohesion: 0.09
-Nodes (25): buildPreviewHtml(), escapeAttr(), escapeHtml(), handleDelete(), initializeEditor(), loadArticle(), loadCategories(), loadQuillStyles() (+17 more)
+Cohesion: 0.08
+Nodes (24): POST(), requireUser(), run(), sleep(), timeRequest(), waitForServer(), mapEventRow(), GET() (+16 more)
 
 ### Community 5 - "Community 5"
-Cohesion: 0.1
-Nodes (29): API Layer (JWT Middleware, /api/auth/login, /api/articles, /api/upload), CDN / Image Storage (external), System Architecture Diagram (Cloud Architecture), Frontend Layer (Admin Dashboard, Article Editor, Blog Pages, SEO/OG, Social Share), Social Platforms (external share targets), Turso Layer (Turso Cloud, users/articles/images/tags tables), Panel Gallery Slot Picker Clipping Fix (2026-03-20), Session 1: Project Architecture Planning (2026-02-27) (+21 more)
+Cohesion: 0.08
+Nodes (22): handleDelete(), loadArticle(), loadCategories(), openPreview(), populateForm(), requireElement(), showToast(), syncMediaGallery() (+14 more)
 
 ### Community 6 - "Community 6"
 Cohesion: 0.1
-Nodes (17): mapEventRow(), loadMediaLibrary(), openPreview(), payloadFromForm(), renderMediaPicker(), toPublicEvent(), deleteMediaByArticle(), getMediaByArticle() (+9 more)
+Nodes (29): API Layer (JWT Middleware, /api/auth/login, /api/articles, /api/upload), CDN / Image Storage (external), System Architecture Diagram (Cloud Architecture), Frontend Layer (Admin Dashboard, Article Editor, Blog Pages, SEO/OG, Social Share), Social Platforms (external share targets), Turso Layer (Turso Cloud, users/articles/images/tags tables), Panel Gallery Slot Picker Clipping Fix (2026-03-20), Session 1: Project Architecture Planning (2026-02-27) (+21 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.1
 Nodes (26): Railway DB Autoscale Rules, DB Analysis Collection Status Handling, Database Analysis Common Patterns, MongoDB Connection Saturation Pattern, MongoDB Analysis Reference, MongoDB Oplog Pressure Pattern, MongoDB Query Efficiency Pattern, WiredTiger Cache Performance Pattern (+18 more)
 
 ### Community 8 - "Community 8"
+Cohesion: 0.12
+Nodes (16): clearAuthCookie(), requireAdmin(), setAuthCookie(), destroyCloudinaryAsset(), DELETE(), parseAdImagePublicId(), PATCH(), PUT() (+8 more)
+
+### Community 9 - "Community 9"
 Cohesion: 0.1
 Nodes (22): Session 2: WSL + Turso DB Setup (2026-02-28), Session 3: Astro Bootstrap + Turso DB Client (2026-03-01), Turso Driver: connect() Single-Use HTTP Session, FTS DDL: CREATE INDEX USING fts, Full-Text Search in tursodb (Tantivy-based), FTS Query Functions (fts_score, fts_match, fts_highlight), HybridBTreeDirectory (memory-bounded FTS storage), OPTIMIZE INDEX (FTS segment merging) (+14 more)
 
-### Community 9 - "Community 9"
+### Community 10 - "Community 10"
 Cohesion: 0.11
 Nodes (20): Astro Framework, Client Islands, Fast by Default, Islands Architecture, Jason Miller Islands Architecture Post (2020), Katie Sylor-Miller 'component island' origin (2019), Multi-Page App (MPA) Model, Rationale: Less client JavaScript yields better performance and conversion outcomes (+12 more)
 
-### Community 10 - "Community 10"
+### Community 11 - "Community 11"
 Cohesion: 0.12
 Nodes (19): Bug: 403 CSRF checkOrigin False Positive on Railway, Bug: Facebook OG Scraper Blocked by ModSecurity, ADR-004: Admin JWT HttpOnly Cookie Auth, ADR-012: In-Memory Rate Limiting on Public API Endpoints, ADR-013: HSTS + CSP Report-Only Headers, cPanel Deployment Guide, cPanel Environment Variable Configuration, cPanel SSL/HTTPS Requirements (+11 more)
 
-### Community 11 - "Community 11"
+### Community 12 - "Community 12"
 Cohesion: 0.22
 Nodes (1): EventFormManager
 
-### Community 12 - "Community 12"
+### Community 13 - "Community 13"
 Cohesion: 0.26
 Nodes (14): buildSafeForm(), buildSafeInput(), buildSafePaypalImg(), escAttr(), extractAttr(), extractPayPalSdkConfig(), hasSdkScript(), parseAttrs() (+6 more)
 
-### Community 13 - "Community 13"
+### Community 14 - "Community 14"
 Cohesion: 0.14
 Nodes (15): Edge Confidence Labels (EXTRACTED/INFERRED), Interactive Graph Visualization Page, RAW_EDGES Dataset, RAW_NODES Dataset, Inline Image Pipeline Hyperedge, PayPal Sanitizer Concept, Rationale: Separate images (inline/base64) vs media (Cloudinary) tables, Rationale: Server-Side Inline Image Interception on Save (+7 more)
 
-### Community 14 - "Community 14"
-Cohesion: 0.21
-Nodes (8): buildCloudinaryImageUrl(), buildCloudinaryVideoPosterUrl(), buildCloudinaryVideoUrl(), clampWidth(), encodePublicId(), resolveCloudName(), MediaLightbox(), thumbUrl()
-
 ### Community 15 - "Community 15"
-Cohesion: 0.21
-Nodes (10): POST(), requireUser(), GET(), GET(), getDonationConfig(), getDonationPlacements(), getSetting(), isSafeHttpsUrl() (+2 more)
-
-### Community 16 - "Community 16"
 Cohesion: 0.16
 Nodes (14): @astrojs/node Adapter Options (standalone/middleware mode), Railway + checkOrigin False Positive (TLS Termination), security.allowedDomains (X-Forwarded-Host Validation), security.checkOrigin (CSRF Origin Check), security.csp (Content Security Policy), Astro Security Configuration Reference, CSRF 403 Fixed + Railway Deploy (2026-03-28), Facebook OG Social Share Fixed on cPanel LAMP (2026-03-30) (+6 more)
 
+### Community 16 - "Community 16"
+Cohesion: 0.23
+Nodes (7): buildCloudinaryImageUrl(), buildCloudinaryVideoPosterUrl(), buildCloudinaryVideoUrl(), clampWidth(), encodePublicId(), MediaLightbox(), thumbUrl()
+
 ### Community 17 - "Community 17"
-Cohesion: 0.37
-Nodes (12): getArchiveBadgeLabel(), getDaysAgoInNewYork(), getEventEffectiveEndDate(), getEventLifecycleLabel(), getTodayInNewYork(), isEventArchivable(), isEventArchivedPermanently(), isEventEnded() (+4 more)
-
-### Community 18 - "Community 18"
-Cohesion: 0.22
-Nodes (3): getItemsForDay(), getTodayStr(), toDateStr()
-
-### Community 19 - "Community 19"
 Cohesion: 0.22
 Nodes (6): handlePricePreview(), bindReviewsSection(), bindTestimonialsSection(), getEl(), updateSalePricePreview(), handlePricePreview()
 
-### Community 20 - "Community 20"
-Cohesion: 0.24
-Nodes (6): getTopSharerOfMonth(), isTopSharerOfMonth(), isValidAdTargetUrl(), logAnalyticsEvent(), validateAdFields(), POST()
+### Community 18 - "Community 18"
+Cohesion: 0.22
+Nodes (2): getTodayStr(), toDateStr()
 
-### Community 21 - "Community 21"
+### Community 19 - "Community 19"
+Cohesion: 0.4
+Nodes (8): CategoryInputError, createCategory(), findCategoryById(), findCategoryByNameOrSlug(), invalidateCategoriesCache(), mapCategoryRow(), resolveCategoryId(), toSlug()
+
+### Community 20 - "Community 20"
 Cohesion: 0.22
 Nodes (10): Bug: Cloudinary Text Overlay Resize Order, ADR-021: Remove Etsy Integration Replace with Cloudinary+PayPal, Etsy Browse API Route Design, Etsy Section Cache Pattern, Etsy Product Browser Implementation Plan, Sales Postings Database Schema, Etsy Open API v3 Integration Research, Sales Page Feature Plan v2 (+2 more)
 
-### Community 22 - "Community 22"
+### Community 21 - "Community 21"
 Cohesion: 0.25
 Nodes (9): Bug: SocialShare Panel Hidden Due to Middleware Early Return, Bug: @tursodatabase/serverless Numeric-Indexed Rows, Bug: @tursodatabase/serverless Single-Use HTTP Session, Phase 2: Astro Project Bootstrap, Phase 4: Auth API Route, Phase 5: JWT Middleware, Build Plan Phase Tracker, Phase 1: Turso Database Schema (+1 more)
 
-### Community 23 - "Community 23"
+### Community 22 - "Community 22"
 Cohesion: 0.43
 Nodes (6): clearTimer(), ensureStack(), hideStack(), resumeTimer(), showToast(), startTimer()
 
-### Community 24 - "Community 24"
+### Community 23 - "Community 23"
 Cohesion: 0.29
 Nodes (7): Etsy Removal → Cloudinary Sales System (2026-04-23), Event Calendar React Island (2026-04-19), Inline Images Persisted to images Table (2026-04-05), Issues / Work Log, Database Should Know About Its Own Images (2026-04-05), Rationale: Separate images (inline/base64) vs media (Cloudinary) tables, Rationale: Server-Side Inline Image Interception on Save (transparent to author, clean DB storage)
+
+### Community 24 - "Community 24"
+Cohesion: 0.4
+Nodes (3): getCurrentPanelAssignments(), getPanelImageMap(), getRecentPanelMedia()
 
 ### Community 25 - "Community 25"
 Cohesion: 0.47
 Nodes (6): cPanel/LiteSpeed Production Deployment (happyfeelingprints.com), No Self-Fetch in Astro SSR Frontmatter Rule, Railway Deployment Target, Railway Resource Model (Workspace/Project/Environment/Service), Rationale: No Self-Fetch (Railway/LiteSpeed TLS termination breaks loopback), Use Railway Skill
 
 ### Community 26 - "Community 26"
-Cohesion: 0.83
-Nodes (3): addSecurityHeaders(), buildCsp(), unauthorized()
+Cohesion: 0.67
+Nodes (2): addSecurityHeaders(), unauthorized()
 
 ### Community 27 - "Community 27"
 Cohesion: 0.5
@@ -533,19 +533,19 @@ Nodes (2): Bug: Multi-User Privacy Gap in Admin Routes, ADR-006: Per-User Articl
 
 ### Community 65 - "Community 65"
 Cohesion: 1.0
-Nodes (2): CSS Dead Code Removal + Admin-Layout Quill Cleanup (2026-04-17), Rationale: Global CSS for set:html containers (Astro scoped CSS never matches set:html children)
+Nodes (2): Astro + TypeScript Error Resolution (2026-04-06), Astro + TypeScript Framework Boundaries (2026-04-06)
 
 ### Community 66 - "Community 66"
 Cohesion: 1.0
-Nodes (2): Astro + TypeScript Error Resolution (2026-04-06), Astro + TypeScript Framework Boundaries (2026-04-06)
+Nodes (2): Article Body Guardrails Relaxed After Author Feedback (2026-04-05), Body Guardrails: Protecting the Database (2026-04-03)
 
 ### Community 67 - "Community 67"
 Cohesion: 1.0
-Nodes (2): Quill Image Resize Restored (2026-04-05), Giving the Editor Real Hands: In-Editor Image Resize (2026-04-05)
+Nodes (2): Cloudinary Transformation + Validation Sweep (2026-04-03), Cloudinary Transformation Validator Sweep (2026-04-03)
 
 ### Community 68 - "Community 68"
 Cohesion: 1.0
-Nodes (2): Cloudinary Transformation + Validation Sweep (2026-04-03), Cloudinary Transformation Validator Sweep (2026-04-03)
+Nodes (2): CSS Dead Code Removal + Admin-Layout Quill Cleanup (2026-04-17), Rationale: Global CSS for set:html containers (Astro scoped CSS never matches set:html children)
 
 ### Community 69 - "Community 69"
 Cohesion: 1.0
@@ -553,7 +553,7 @@ Nodes (2): Development Journal, The Bug That Wasn't a Network Error (2026-03-29)
 
 ### Community 70 - "Community 70"
 Cohesion: 1.0
-Nodes (2): Article Body Guardrails Relaxed After Author Feedback (2026-04-05), Body Guardrails: Protecting the Database (2026-04-03)
+Nodes (2): Quill Image Resize Restored (2026-04-05), Giving the Editor Real Hands: In-Editor Image Resize (2026-04-05)
 
 ### Community 71 - "Community 71"
 Cohesion: 1.0
@@ -1204,17 +1204,17 @@ Nodes (1): Favicon SVG (yellow smiley face icon)
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 64`** (2 nodes): `Bug: Multi-User Privacy Gap in Admin Routes`, `ADR-006: Per-User Article Ownership Enforcement`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 65`** (2 nodes): `CSS Dead Code Removal + Admin-Layout Quill Cleanup (2026-04-17)`, `Rationale: Global CSS for set:html containers (Astro scoped CSS never matches set:html children)`
+- **Thin community `Community 65`** (2 nodes): `Astro + TypeScript Error Resolution (2026-04-06)`, `Astro + TypeScript Framework Boundaries (2026-04-06)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 66`** (2 nodes): `Astro + TypeScript Error Resolution (2026-04-06)`, `Astro + TypeScript Framework Boundaries (2026-04-06)`
+- **Thin community `Community 66`** (2 nodes): `Article Body Guardrails Relaxed After Author Feedback (2026-04-05)`, `Body Guardrails: Protecting the Database (2026-04-03)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 67`** (2 nodes): `Quill Image Resize Restored (2026-04-05)`, `Giving the Editor Real Hands: In-Editor Image Resize (2026-04-05)`
+- **Thin community `Community 67`** (2 nodes): `Cloudinary Transformation + Validation Sweep (2026-04-03)`, `Cloudinary Transformation Validator Sweep (2026-04-03)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 68`** (2 nodes): `Cloudinary Transformation + Validation Sweep (2026-04-03)`, `Cloudinary Transformation Validator Sweep (2026-04-03)`
+- **Thin community `Community 68`** (2 nodes): `CSS Dead Code Removal + Admin-Layout Quill Cleanup (2026-04-17)`, `Rationale: Global CSS for set:html containers (Astro scoped CSS never matches set:html children)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 69`** (2 nodes): `Development Journal`, `The Bug That Wasn't a Network Error (2026-03-29)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 70`** (2 nodes): `Article Body Guardrails Relaxed After Author Feedback (2026-04-05)`, `Body Guardrails: Protecting the Database (2026-04-03)`
+- **Thin community `Community 70`** (2 nodes): `Quill Image Resize Restored (2026-04-05)`, `Giving the Editor Real Hands: In-Editor Image Resize (2026-04-05)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 71`** (2 nodes): `Cloudinary Delivery Optimization Rollout (2026-03-19)`, `Cloudinary Image Delivery Optimization + Upload Guardrails (2026-03-19)`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
@@ -1520,15 +1520,15 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **What is the exact relationship between `PayPal Buy Button Code PDF` and `PayPal Buy Button Snippet Content`?**
   _Edge tagged AMBIGUOUS (relation: references) - confidence is low._
-- **Why does `json()` connect `Community 1` to `Community 0`, `Community 2`, `Community 4`, `Community 6`, `Community 11`, `Community 15`, `Community 20`?**
-  _High betweenness centrality (0.067) - this node is a cross-community bridge._
-- **Why does `execute()` connect `Community 0` to `Community 1`, `Community 2`, `Community 6`, `Community 15`, `Community 20`?**
-  _High betweenness centrality (0.042) - this node is a cross-community bridge._
-- **Why does `POST()` connect `Community 2` to `Community 0`, `Community 1`, `Community 20`, `Community 15`?**
+- **Why does `json()` connect `Community 2` to `Community 0`, `Community 1`, `Community 4`, `Community 5`, `Community 8`, `Community 12`?**
+  _High betweenness centrality (0.064) - this node is a cross-community bridge._
+- **Why does `execute()` connect `Community 1` to `Community 0`, `Community 2`, `Community 4`, `Community 8`, `Community 19`, `Community 24`?**
+  _High betweenness centrality (0.043) - this node is a cross-community bridge._
+- **Why does `POST()` connect `Community 0` to `Community 1`, `Community 2`, `Community 4`, `Community 8`, `Community 19`?**
   _High betweenness centrality (0.027) - this node is a cross-community bridge._
 - **Are the 55 inferred relationships involving `execute()` (e.g. with `run()` and `run()`) actually correct?**
   _`execute()` has 55 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 48 inferred relationships involving `json()` (e.g. with `.loadMediaLibrary()` and `.loadEvent()`) actually correct?**
   _`json()` has 48 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 22 inferred relationships involving `POST()` (e.g. with `requireAdmin()` and `json()`) actually correct?**
-  _`POST()` has 22 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 23 inferred relationships involving `POST()` (e.g. with `requireAdmin()` and `json()`) actually correct?**
+  _`POST()` has 23 INFERRED edges - model-reasoned connections that need verification._

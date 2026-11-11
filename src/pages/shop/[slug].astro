@@ -17,12 +17,11 @@ import {
   extractPayPalSdkConfig,
 } from "../../lib/sanitize-paypal";
 import { sanitizeArticleBodyServer } from "../../lib/sanitize-server";
+import { resolveCloudName } from "../../lib/cloudinary";
 const { slug } = Astro.params;
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
 const canonicalUrl = `${siteUrl}/shop/${slug}`;
-const cloudName =
-  process.env.CLOUDINARY_CLOUD_NAME ??
-  import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+const cloudName = resolveCloudName();
 
 let posting: Record<string, unknown> | null = null;
 let images: Record<string, unknown>[] = [];

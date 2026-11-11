@@ -1,15 +1,80 @@
 import { db } from "./db";
 
+interface CacheEntry {
+  value: string | null;
+  expiresAt: number;
+}
+
+const SETTING_TTL_MS = 30_000; // 30 seconds
+const settingCache = new Map<string, CacheEntry>();
+
 /**
- * Get a site setting by key.
+ * Invalidate a cached setting or all settings if no key provided.
+ */
+export function invalidateSettingCache(key?: string): void {
+  if (key) {
+    settingCache.delete(key);
+  } else {
+    settingCache.clear();
+  }
+}
+
+/**
+ * Get a site setting by key with a 30s module-level cache.
  */
 export async function getSetting(key: string): Promise<string | null> {
+  const now = Date.now();
+  const cached = settingCache.get(key);
+  if (cached && now < cached.expiresAt) {
+    return cached.value;
+  }
+
   const rs = await db.execute<{ value: string }>(
     "SELECT value FROM site_settings WHERE key = ?",
     [key],
   );
-  if (rs.rows.length === 0) return null;
-  return String(rs.rows[0].value);
+  const value = rs.rows.length === 0 ? null : String(rs.rows[0].value);
+  settingCache.set(key, { value, expiresAt: now + SETTING_TTL_MS });
+  return value;
+}
+
+/**
+ * Fetch multiple settings in a single query, reusing cached values when valid.
+ */
+export async function getSettings(
+  keys: string[],
+): Promise<Record<string, string | null>> {
+  const now = Date.now();
+  const result: Record<string, string | null> = {};
+  const missingKeys: string[] = [];
+
+  for (const key of keys) {
+    const cached = settingCache.get(key);
+    if (cached && now < cached.expiresAt) {
+      result[key] = cached.value;
+    } else {
+      missingKeys.push(key);
+    }
+  }
+
+  if (missingKeys.length > 0) {
+    const placeholders = missingKeys.map(() => "?").join(", ");
+    const rs = await db.execute<{ key: string; value: string }>(
+      `SELECT key, value FROM site_settings WHERE key IN (${placeholders})`,
+      missingKeys,
+    );
+    const found = new Map<string, string>();
+    for (const row of rs.rows) {
+      found.set(String(row.key), String(row.value));
+    }
+    for (const key of missingKeys) {
+      const value = found.has(key) ? found.get(key)! : null;
+      settingCache.set(key, { value, expiresAt: now + SETTING_TTL_MS });
+      result[key] = value;
+    }
+  }
+
+  return result;
 }
 
 /**
@@ -31,12 +96,17 @@ const DONATION_DEFAULTS = {
 };
 
 export async function getDonationConfig() {
-  const [link, title, text, button] = await Promise.all([
-    getSetting("donation_link"),
-    getSetting("donation_title"),
-    getSetting("donation_text"),
-    getSetting("donation_button_label"),
+  const settings = await getSettings([
+    "donation_link",
+    "donation_title",
+    "donation_text",
+    "donation_button_label",
   ]);
+  const link = settings["donation_link"];
+  const title = settings["donation_title"];
+  const text = settings["donation_text"];
+  const button = settings["donation_button_label"];
+
   return {
     link:
       link || process.env.PAYPAL_DONATION_LINK || "https://www.paypal.com/donate",
@@ -55,4 +125,5 @@ export async function setSetting(key: string, value: string): Promise<void> {
      ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = unixepoch()`,
     [key, value],
   );
+  invalidateSettingCache(key);
 }

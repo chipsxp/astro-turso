@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../lib/db";
 import {
-  EVENT_SELECT_FIELDS,
+  EVENT_LIST_FIELDS,
   getEventLifecycleLabel,
   isEventPubliclyVisible,
   isValidIsoDate,
@@ -49,7 +49,7 @@ export const GET: APIRoute = async ({ request }) => {
 
   try {
     const result = await db.execute(
-      `SELECT ${EVENT_SELECT_FIELDS}
+      `SELECT ${EVENT_LIST_FIELDS}
        FROM events e
        LEFT JOIN users u ON u.id = e.owner_id
        LEFT JOIN media m ON m.id = e.featured_media_id

@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import {
-  EVENT_SELECT_FIELDS,
+  EVENT_LIST_FIELDS,
   mapEventRow,
 } from "../../../../lib/events";
 import { json } from "../../../../lib/api-response";
@@ -15,12 +15,12 @@ export const GET: APIRoute = async ({ locals }) => {
     const isAdmin = user.role === "admin";
     const result = await db.execute(
       isAdmin
-        ? `SELECT ${EVENT_SELECT_FIELDS}
+        ? `SELECT ${EVENT_LIST_FIELDS}
            FROM events e
            LEFT JOIN users u ON u.id = e.owner_id
            LEFT JOIN media m ON m.id = e.featured_media_id
            ORDER BY date(e.start_date) DESC, e.created_at DESC`
-        : `SELECT ${EVENT_SELECT_FIELDS}
+        : `SELECT ${EVENT_LIST_FIELDS}
            FROM events e
            LEFT JOIN users u ON u.id = e.owner_id
            LEFT JOIN media m ON m.id = e.featured_media_id

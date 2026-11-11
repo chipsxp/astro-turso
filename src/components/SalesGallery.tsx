@@ -51,6 +51,14 @@ export default function SalesGallery({ images, cloudName }: Props) {
     ? buildSalesImageUrl(cloudName, img.public_id, img.transforms, 800)
     : img.url;
 
+  const nextIdx = total > 1 ? (current + 1) % total : -1;
+  const nextImg = nextIdx >= 0 ? images[nextIdx] : null;
+  const nextDisplayUrl = nextImg
+    ? nextImg.public_id
+      ? buildSalesImageUrl(cloudName, nextImg.public_id, nextImg.transforms, 800)
+      : nextImg.url
+    : null;
+
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -75,7 +83,6 @@ export default function SalesGallery({ images, cloudName }: Props) {
         onTouchEnd={handleTouchEnd}
       >
         <img
-          key={current}
           className="sg-img"
           src={displayUrl}
           alt={img.alt_text || "Product image"}
@@ -140,11 +147,27 @@ export default function SalesGallery({ images, cloudName }: Props) {
                 onClick={() => setCurrent(i)}
                 aria-label={`View image ${i + 1}`}
               >
-                <img src={thumbUrl} alt={thumb.alt_text || `Image ${i + 1}`} />
+                <img
+                  src={thumbUrl}
+                  alt={thumb.alt_text || `Image ${i + 1}`}
+                  loading="lazy"
+                  width={64}
+                  height={64}
+                />
               </button>
             );
           })}
         </div>
+      )}
+
+      {/* Preload next image for instant slide transition */}
+      {nextDisplayUrl && (
+        <img
+          src={nextDisplayUrl}
+          style={{ display: "none" }}
+          aria-hidden="true"
+          alt=""
+        />
       )}
 
       <style>{`

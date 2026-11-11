@@ -1,7 +1,11 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import { cloudinary } from "../../../../lib/cloudinary-server";
-import { validateAdFields, validateAdImageData } from "../../../../lib/monetization";
+import {
+  invalidateAdSlotCache,
+  validateAdFields,
+  validateAdImageData,
+} from "../../../../lib/monetization";
 import { json } from "../../../../lib/api-response";
 import { requireAdmin } from "../../../../lib/auth";
 
@@ -59,6 +63,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       ],
     );
 
+    invalidateAdSlotCache(slot_type);
     return json({ ok: true }, 201);
   } catch (err: unknown) {
     console.error(

@@ -33,6 +33,7 @@ diagnostic/migration files.
 ## Diagnostic
 
 - `diagnose-sales.mjs` — verifies `sales_postings` table and `GET /api/admin/sales` query (one-off diagnostic)
+- `e2e-smoke.mjs` — standalone server smoke test and performance timing runner (read-only verification of Matrix A, C, D, and E)
 
 All scripts require `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` via `.env`.
 Run with: `node --env-file=.env scripts/<name>.mjs`

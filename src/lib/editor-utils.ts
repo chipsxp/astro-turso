@@ -3,11 +3,6 @@
  * Centralizes editor initialization, serialization, and preview rendering.
  */
 
-import Quill from "quill";
-import QuillResize from "quill-resize-module";
-import "quill-resize-module/dist/resize.css";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
 import { enableCustomColorPickers } from "./quill-custom-colors";
 import { showToast } from "./admin-toast";
 
@@ -17,6 +12,7 @@ export interface EditorConfig {
   onContentChange?: (html: string) => void;
   toolbar?: unknown[];
   placeholder?: string;
+  ariaLabel?: string;
 }
 
 /**
@@ -39,14 +35,20 @@ const COMIC_PALETTE = [
 
 let resizeModuleRegistered = false;
 
-function ensureResizeModuleRegistered() {
-  if (resizeModuleRegistered) return;
-  Quill.register("modules/resize", QuillResize, true);
-  resizeModuleRegistered = true;
-}
+export async function initializeEditor(config: EditorConfig): Promise<any> {
+  // Dynamically load Quill, resize module, and styles only when an editor mounts
+  const [{ default: Quill }, { default: QuillResize }] = await Promise.all([
+    import("quill"),
+    import("quill-resize-module"),
+    import("quill-resize-module/dist/resize.css"),
+    import("quill/dist/quill.core.css"),
+    import("quill/dist/quill.snow.css"),
+  ]);
 
-export function initializeEditor(config: EditorConfig): Quill {
-  ensureResizeModuleRegistered();
+  if (!resizeModuleRegistered) {
+    Quill.register("modules/resize", QuillResize, true);
+    resizeModuleRegistered = true;
+  }
 
   const toolbar = config.toolbar ?? [
     ["bold", "italic", "underline"],
@@ -84,10 +86,11 @@ export function initializeEditor(config: EditorConfig): Quill {
 
   // Preserve palette swatches and add a custom color control for both pickers.
   enableCustomColorPickers(editor);
+  editor.root.setAttribute("aria-label", config.ariaLabel ?? "Article body");
 
   // Strip background and text colors when pasting
-  editor.clipboard.addMatcher(Node.ELEMENT_NODE, (_node, delta) => {
-    delta.ops.forEach((op: { attributes?: Record<string, unknown> }) => {
+  editor.clipboard.addMatcher(Node.ELEMENT_NODE, (_node: any, delta: any) => {
+    delta.ops.forEach((op: any) => {
       if (op.attributes) {
         delete op.attributes.color;
         delete op.attributes.background;
@@ -96,12 +99,16 @@ export function initializeEditor(config: EditorConfig): Quill {
     return delta;
   });
 
-  // Handle content changes
+  // Handle content changes with 200ms debounce
   if (config.onContentChange) {
+    let debounceTimer: ReturnType<typeof setTimeout> | undefined;
     editor.on("text-change", () => {
-      const html = editor.root.innerHTML;
-      const cleanHtml = html === "<p><br></p>" ? "" : html;
-      config.onContentChange!(cleanHtml);
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        const html = editor.root.innerHTML;
+        const cleanHtml = html === "<p><br></p>" ? "" : html;
+        config.onContentChange!(cleanHtml);
+      }, 200);
     });
   }
 
@@ -146,8 +153,8 @@ export function previewBodyToHtml(text: string): string {
 
 export interface MediaItem {
   url: string;
-  alt_text: string;
-  resource_type: "image" | "video";
+  alt_text?: string;
+  resource_type?: "image" | "video" | string;
 }
 
 export interface PreviewOptions {
@@ -188,7 +195,7 @@ export function buildPreviewHtml(options: PreviewOptions): string {
     if (heroMedia.resource_type === "video") {
       html += `<video controls preload="metadata" src="${escapeAttr(heroMedia.url)}"></video>`;
     } else {
-      html += `<img src="${escapeAttr(heroMedia.url)}" alt="${escapeAttr(heroMedia.alt_text)}" />`;
+      html += `<img src="${escapeAttr(heroMedia.url)}" alt="${escapeAttr(heroMedia.alt_text ?? "")}" />`;
     }
     if (heroMedia.alt_text) {
       html += `<figcaption class="hero-image__caption">${escapeHtml(heroMedia.alt_text)}</figcaption>`;
@@ -210,9 +217,12 @@ export function buildPreviewHtml(options: PreviewOptions): string {
       if (m.resource_type === "video") {
         html += `<video controls preload="metadata" src="${escapeAttr(m.url)}"></video>`;
       } else {
-        html += `<img src="${escapeAttr(m.url)}" alt="${escapeAttr(m.alt_text)}" loading="lazy" />`;
+        html += `<img src="${escapeAttr(m.url)}" alt="${escapeAttr(m.alt_text ?? "")}" loading="lazy" />`;
       }
-      html += `<figcaption>${escapeHtml(m.alt_text)}</figcaption></figure>`;
+      if (m.alt_text) {
+        html += `<figcaption>${escapeHtml(m.alt_text)}</figcaption>`;
+      }
+      html += `</figure>`;
     }
     html += `</div></div></div>`;
   }

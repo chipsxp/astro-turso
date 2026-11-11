@@ -7,11 +7,14 @@ import {
 } from "../../lib/monetization";
 import { getDonationPlacements } from "../../lib/settings";
 import AdminDonationBlock from "../../components/AdminDonationBlock.astro";
+import { resolveCloudName } from "../../lib/cloudinary";
 
 const userId = Astro.locals.user ? Number(Astro.locals.user.id) : 0;
-const { totalShares } = await getUserGamificationStats(userId);
-const topSharer = await isTopSharerOfMonth(userId);
-const donationPlacement = await getDonationPlacements();
+const [{ totalShares }, topSharer, donationPlacement] = await Promise.all([
+  getUserGamificationStats(userId),
+  isTopSharerOfMonth(userId),
+  getDonationPlacements(),
+]);
 const isAdmin = Astro.locals.user?.role === "admin";
 
 let gamificationRank = "Novice";
@@ -141,10 +144,7 @@ if (totalShares >= 101) {
     isAdmin ? (
       <PanelGallery
         client:load
-        cloudName={
-          process.env.CLOUDINARY_CLOUD_NAME ??
-          import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME
-        }
+        cloudName={resolveCloudName()}
       />
     ) : (
       <div class="alert alert--info" role="status">

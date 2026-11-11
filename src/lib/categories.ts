@@ -31,13 +31,25 @@ function mapCategoryRow(row: Record<string, unknown>): CategoryRecord {
   };
 }
 
+let categoriesCache: { data: CategoryRecord[]; expiresAt: number } | null = null;
+
+export function invalidateCategoriesCache(): void {
+  categoriesCache = null;
+}
+
 export async function listCategories(): Promise<CategoryRecord[]> {
+  const now = Date.now();
+  if (categoriesCache && now < categoriesCache.expiresAt) {
+    return categoriesCache.data;
+  }
 
   const result = await db.execute(
     "SELECT id, name, slug FROM categories ORDER BY name ASC",
   );
 
-  return result.rows.map((row: Record<string, unknown>) => mapCategoryRow(row));
+  const data = result.rows.map((row: Record<string, unknown>) => mapCategoryRow(row));
+  categoriesCache = { data, expiresAt: now + 60_000 };
+  return data;
 }
 
 async function findCategoryById(
@@ -93,6 +105,7 @@ async function createCategory(name: string): Promise<CategoryRecord> {
     throw new CategoryInputError("Unable to resolve category", 500);
   }
 
+  invalidateCategoriesCache();
   return existing;
 }
 

@@ -1,8 +1,18 @@
 import type { APIRoute } from "astro";
 import { logAnalyticsEvent } from "../../../lib/monetization";
 import { json } from "../../../lib/api-response";
+import { createRateLimiter, getClientIp } from "../../../lib/rate-limit";
+
+// Rate limit: 120 track beacons per IP per minute
+const trackLimiter = createRateLimiter({ limit: 120, windowMs: 60_000 });
 
 export const POST: APIRoute = async ({ request, locals }) => {
+  const ip = getClientIp(request);
+  if (trackLimiter.limited(ip)) {
+    return json({ ok: false, error: "Too many requests" }, 429);
+  }
+  trackLimiter.record(ip);
+
   try {
     const rawBody = await request.text();
     if (!rawBody) return json({ ok: false, error: "Empty body" }, 400);

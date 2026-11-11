@@ -6,12 +6,11 @@ import BlogLayout from "../layouts/BlogLayout.astro";
 import {
   buildCloudinaryImageSrcset,
   buildCloudinaryImageUrl,
+  resolveCloudName,
 } from "../lib/cloudinary";
 import { db } from "../lib/db";
 import { getPanelImageMap } from "../lib/panels";
 import { getDonationPlacements } from "../lib/settings";
-
-const donationPlacement = await getDonationPlacements();
 
 const PRIMARY_CATEGORY_SLUGS = [
   "for-artists",
@@ -19,11 +18,21 @@ const PRIMARY_CATEGORY_SLUGS = [
   "comic-creators",
 ];
 
-const panelImages = await getPanelImageMap();
+// Parallelize all independent SSR queries
+const [donationPlacement, panelImages, categoryCountResult] = await Promise.all([
+  getDonationPlacements(),
+  getPanelImageMap(),
+  db.execute(
+    `SELECT c.slug, COUNT(a.id) AS article_count
+     FROM categories c
+     LEFT JOIN articles a ON a.category_id = c.id AND a.status = 'published'
+     WHERE c.slug IN (?, ?, ?)
+     GROUP BY c.slug`,
+    PRIMARY_CATEGORY_SLUGS,
+  ),
+]);
 
-const CLOUD =
-  process.env.CLOUDINARY_CLOUD_NAME ??
-  import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME;
+const CLOUD = resolveCloudName();
 
 type PanelSlotKey = "panel-01" | "panel-02" | "panel-03" | "panel-04";
 
@@ -81,15 +90,6 @@ function panelAlt(slot: PanelSlotKey): string {
   return candidate && candidate.length > 0 ? candidate : fallbackBySlot[slot];
 }
 
-const categoryCountResult = await db.execute(
-  `SELECT c.slug, COUNT(a.id) AS article_count
-   FROM categories c
-   LEFT JOIN articles a ON a.category_id = c.id AND a.status = 'published'
-   WHERE c.slug IN (?, ?, ?)
-   GROUP BY c.slug`,
-  PRIMARY_CATEGORY_SLUGS,
-);
-
 const publishedCountByCategory = Object.fromEntries(
   PRIMARY_CATEGORY_SLUGS.map((slug) => [slug, 0]),
 ) as Record<string, number>;
@@ -127,8 +127,8 @@ function formatArticleCount(count: number): string {
         <img
           src="/images/PPS-logo.jpg"
           alt="Pixel Prime Studio Logo"
-          width="24"
-          height="24"
+          width="48"
+          height="48"
           style="margin-right: 8px;"
         />
         Pixel Prime Studio Proudly Presents

@@ -250,11 +250,15 @@ export const PATCH: APIRoute = async ({ params, locals, request }) => {
   // Reorder: expects { order: [{ id, sort_order }] }
   if (Array.isArray(body.order)) {
     const order = body.order as Array<{ id: number; sort_order: number }>;
-    for (const item of order) {
-      await db.execute("UPDATE sales_images SET sort_order = ? WHERE id = ?", [
-        Number(item.sort_order),
-        Number(item.id),
-      ]);
+    if (order.length > 50) {
+      return json({ error: "Order array exceeds maximum of 50 items" }, 400);
+    }
+    if (order.length > 0) {
+      const stmts = order.map((item) => ({
+        sql: "UPDATE sales_images SET sort_order = ? WHERE id = ?",
+        args: [Number(item.sort_order), Number(item.id)],
+      }));
+      await db.batch(stmts, "write");
     }
     return json({ reordered: true }, 200);
   }

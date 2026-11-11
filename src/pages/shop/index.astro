@@ -2,17 +2,20 @@
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import { db } from "../../lib/db";
 import {
+  buildSalesImageUrl,
   calcSalePrice,
   formatPrice,
   parseTags,
   type SalesPosting,
   type SalesImage,
 } from "../../lib/sales";
+import { resolveCloudName } from "../../lib/cloudinary";
 import { getDonationPlacements } from "../../lib/settings";
 import AdminDonationBlock from "../../components/AdminDonationBlock.astro";
 import AdPlacement from "../../components/AdPlacement.astro";
 
 const donationPlacement = await getDonationPlacements();
+const cloudName = resolveCloudName();
 
 // Query published postings directly — never loopback-fetch in SSR (fails on Railway/cPanel)
 let postings: (SalesPosting & {
@@ -33,7 +36,7 @@ try {
     const ids = result.rows.map((p) => Number(p.id));
     const placeholders = ids.map(() => "?").join(", ");
     const imagesRes = await db.execute<SalesImage>(
-      `SELECT posting_id, url, alt_text
+      `SELECT posting_id, public_id, url, alt_text, transforms
        FROM sales_images
        WHERE posting_id IN (${placeholders})
        ORDER BY sort_order ASC`,
@@ -43,11 +46,24 @@ try {
     const coverMap: Record<number, { url: string; alt_text: string }> = {};
     for (const img of imagesRes.rows) {
       const pid = Number(img.posting_id);
-      if (!coverMap[pid])
+      if (!coverMap[pid]) {
+        const publicId = img.public_id ? String(img.public_id) : null;
+        const rawUrl = String(img.url);
+        const deliveredUrl =
+          publicId && cloudName
+            ? buildSalesImageUrl(
+                cloudName,
+                publicId,
+                String(img.transforms ?? "{}"),
+                400,
+              )
+            : rawUrl;
+
         coverMap[pid] = {
-          url: String(img.url),
+          url: deliveredUrl,
           alt_text: String(img.alt_text ?? ""),
         };
+      }
     }
 
     postings = result.rows.map((p) => ({

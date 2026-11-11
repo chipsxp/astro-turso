@@ -23,17 +23,47 @@ const categories = await listCategories();
 const activeCategory =
   categories.find((category) => category.slug === selectedCategorySlug) ?? null;
 
-const availableTagsResult = await db.execute(
-  `SELECT DISTINCT t.name, t.slug AS tag_slug
-   FROM tags t
-   JOIN article_tags at ON at.tag_id = t.id
-   JOIN articles a ON a.id = at.article_id
-   LEFT JOIN categories c ON c.id = a.category_id
-   WHERE a.status = 'published'
-   ${activeCategory ? "AND c.slug = ?" : ""}
-   ORDER BY t.name ASC`,
-  activeCategory ? [activeCategory.slug] : undefined,
-);
+const articleQueryParams: string[] = [];
+if (activeCategory) {
+  articleQueryParams.push(activeCategory.slug);
+}
+if (selectedTagSlug) {
+  articleQueryParams.push(selectedTagSlug);
+}
+
+// ── Run independent queries in parallel ──
+const [availableTagsResult, articlesResult] = await Promise.all([
+  db.execute(
+    `SELECT DISTINCT t.name, t.slug AS tag_slug
+     FROM tags t
+     JOIN article_tags at ON at.tag_id = t.id
+     JOIN articles a ON a.id = at.article_id
+     LEFT JOIN categories c ON c.id = a.category_id
+     WHERE a.status = 'published'
+     ${activeCategory ? "AND c.slug = ?" : ""}
+     ORDER BY t.name ASC`,
+    activeCategory ? [activeCategory.slug] : undefined,
+  ),
+  db.execute(
+    `SELECT a.id, a.title, a.slug, a.description, a.created_at,
+            u.email AS author_email,
+            c.id AS category_id,
+            c.name AS category_name,
+            c.slug AS category_slug
+     FROM articles a
+     LEFT JOIN users u ON u.id = a.author_id
+     LEFT JOIN categories c ON c.id = a.category_id
+     WHERE a.status = 'published'
+     ${activeCategory ? "AND c.slug = ?" : ""}
+     ${
+       selectedTagSlug
+         ? "AND EXISTS (SELECT 1 FROM article_tags at2 JOIN tags t2 ON t2.id = at2.tag_id WHERE at2.article_id = a.id AND t2.slug = ?)"
+         : ""
+     }
+     ORDER BY a.created_at DESC`,
+    articleQueryParams.length > 0 ? articleQueryParams : undefined,
+  ),
+]);
 
 type AvailableTag = { name: string; slug: string };
 
@@ -56,47 +86,25 @@ const activeTagLabel = activeTag
         .join(" ")
     : null;
 
-const articleQueryParams: string[] = [];
-if (activeCategory) {
-  articleQueryParams.push(activeCategory.slug);
-}
-if (selectedTagSlug) {
-  articleQueryParams.push(selectedTagSlug);
-}
-
-// ── Server-side DB query — published articles only ──
-const articlesResult = await db.execute(
-  `SELECT a.id, a.title, a.slug, a.description, a.created_at,
-          u.email AS author_email,
-          c.id AS category_id,
-          c.name AS category_name,
-          c.slug AS category_slug
-   FROM articles a
-   LEFT JOIN users u ON u.id = a.author_id
-   LEFT JOIN categories c ON c.id = a.category_id
-   WHERE a.status = 'published'
-   ${activeCategory ? "AND c.slug = ?" : ""}
-   ${
-     selectedTagSlug
-       ? "AND EXISTS (SELECT 1 FROM article_tags at2 JOIN tags t2 ON t2.id = at2.tag_id WHERE at2.article_id = a.id AND t2.slug = ?)"
-       : ""
-   }
-   ORDER BY a.created_at DESC`,
-  articleQueryParams.length > 0 ? articleQueryParams : undefined,
-);
-
-// Fetch all tags in one query and group by article_id
-const tagsResult = await db.execute(
-  `SELECT at.article_id, t.name, t.slug AS tag_slug
-   FROM article_tags at
-   JOIN tags t ON t.id = at.tag_id`,
-);
-
+// Fetch tags ONLY for the published articles returned (scoped instead of full-table scan)
 const tagMap: Record<number, { name: string; slug: string }[]> = {};
-for (const row of tagsResult.rows) {
-  const aid = Number(row.article_id);
-  if (!tagMap[aid]) tagMap[aid] = [];
-  tagMap[aid].push({ name: String(row.name), slug: String(row.tag_slug) });
+const displayedArticleIds = articlesResult.rows.map((row) => Number(row.id));
+
+if (displayedArticleIds.length > 0) {
+  const placeholders = displayedArticleIds.map(() => "?").join(", ");
+  const tagsResult = await db.execute(
+    `SELECT at.article_id, t.name, t.slug AS tag_slug
+     FROM article_tags at
+     JOIN tags t ON t.id = at.tag_id
+     WHERE at.article_id IN (${placeholders})`,
+    displayedArticleIds,
+  );
+
+  for (const row of tagsResult.rows) {
+    const aid = Number(row.article_id);
+    if (!tagMap[aid]) tagMap[aid] = [];
+    tagMap[aid].push({ name: String(row.name), slug: String(row.tag_slug) });
+  }
 }
 
 type Article = {

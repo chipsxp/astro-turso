@@ -1,6 +1,6 @@
 # The Happy Feeling Scriptorium
 
-![Version](https://img.shields.io/badge/version-1.4.0-gold) ![Astro](https://img.shields.io/badge/Astro-5-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
+![Version](https://img.shields.io/badge/version-1.4.0-gold) ![Astro](https://img.shields.io/badge/Astro-7-orange) ![Turso](https://img.shields.io/badge/Turso-serverless-teal) ![License](https://img.shields.io/badge/license-MIT-blue)
 
 Astro SSR blog and admin panel for publishing articles, managing events, managing media, and running a small author workflow on top of Turso and Cloudinary.
 
@@ -15,6 +15,7 @@ This repository is meant to be practical for developers who want to learn from i
 | `feature/etsy-sales`        | 1.2.0   | Adds Etsy sales module and storefront integration, improves event flow, and raises Lighthouse score via WebP and alt-text delivery |
 | `feature/monetization`      | 1.3.5   | Adds gamification scoring for social shares and an advertisement placement module                                                  |
 | `fix/code-review-hardening` | 1.4.0   | Code review hardening (#2–#16) — security, transactions, modularization, CSP                                                       |
+| `feature/performance-v1.4.0`| 1.4.0   | Performance overhaul (Phases 1–4): query caching, atomic write batching, dynamic Quill lazy-loading, and E2E verification (this branch) |
 
 Clone the branch that matches what you need:
 
@@ -39,11 +40,11 @@ git clone -b feature/events https://github.com/chipsxp/astro-turso.git
 ## Who Composed The Code
 
 Primary author: Jimmy Burns (pluckcode)  
-Website: https://chipsxp.com
+Website: https://happyfeelingprints.com
 
 ## Tech Stack
 
-- Astro 5
+- Astro 7
 - TypeScript
 - React 19 for interactive admin components
 - Tailwind CSS 4

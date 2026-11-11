@@ -5,6 +5,7 @@ import BlogLayout from "../../layouts/BlogLayout.astro";
 import {
   buildCloudinaryImageSrcset,
   buildCloudinaryImageUrl,
+  resolveCloudName,
 } from "../../lib/cloudinary";
 import { db } from "../../lib/db";
 import {
@@ -16,7 +17,7 @@ import {
 import { sanitizeArticleBodyServer } from "../../lib/sanitize-server";
 
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
-const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
+const cloudName = resolveCloudName();
 const slug = Astro.params.slug;
 
 if (!slug) {

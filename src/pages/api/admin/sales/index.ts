@@ -160,12 +160,13 @@ export const POST: APIRoute = async ({ locals, request }) => {
       alt_text?: string;
       sort_order?: number;
     }> = Array.isArray(body.images) ? body.images : [];
-    for (const img of images) {
-      if (!img.url) continue;
-      await db.execute(
-        `INSERT INTO sales_images (posting_id, url, public_id, alt_text, source, sort_order)
-         VALUES (?, ?, ?, ?, ?, ?)`,
-        [
+
+    const validImages = images.filter((img) => Boolean(img.url));
+    if (validImages.length > 0) {
+      const imageStmts = validImages.map((img) => ({
+        sql: `INSERT INTO sales_images (posting_id, url, public_id, alt_text, source, sort_order)
+              VALUES (?, ?, ?, ?, ?, ?)`,
+        args: [
           newId,
           String(img.url),
           String(img.public_id ?? ""),
@@ -173,7 +174,8 @@ export const POST: APIRoute = async ({ locals, request }) => {
           "cloudinary",
           Number(img.sort_order ?? 0),
         ],
-      );
+      }));
+      await db.batch(imageStmts, "write");
     }
 
     return json({ slug, id: newId }, 201);

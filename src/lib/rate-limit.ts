@@ -33,12 +33,26 @@ interface LimiterEntry {
 export function createRateLimiter(options: {
   limit: number;
   windowMs: number;
+  maxEntries?: number;
 }): RateLimiter {
-  const { limit, windowMs } = options;
+  const { limit, windowMs, maxEntries = 5000 } = options;
   const attempts = new Map<string, LimiterEntry>();
+  let lastSweep = Date.now();
+  const SWEEP_INTERVAL_MS = 60_000;
+
+  function sweep(now: number): void {
+    if (now - lastSweep < SWEEP_INTERVAL_MS) return;
+    lastSweep = now;
+    for (const [key, entry] of attempts.entries()) {
+      if (now > entry.resetAt) {
+        attempts.delete(key);
+      }
+    }
+  }
 
   function limited(key: string): boolean {
     const now = Date.now();
+    sweep(now);
     const entry = attempts.get(key);
     if (!entry || now > entry.resetAt) return false;
     return entry.count >= limit;
@@ -46,8 +60,13 @@ export function createRateLimiter(options: {
 
   function record(key: string): void {
     const now = Date.now();
+    sweep(now);
     const entry = attempts.get(key);
     if (!entry || now > entry.resetAt) {
+      if (attempts.size >= maxEntries) {
+        const oldestKey = attempts.keys().next().value;
+        if (oldestKey) attempts.delete(oldestKey);
+      }
       attempts.set(key, { count: 1, resetAt: now + windowMs });
     } else {
       entry.count += 1;

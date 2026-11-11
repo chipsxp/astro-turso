@@ -9,7 +9,7 @@ import {
 } from "../lib/cloudinary";
 import { db } from "../lib/db";
 import {
-  EVENT_SELECT_FIELDS,
+  EVENT_LIST_FIELDS,
   type EventRecord,
   getEventLifecycleLabel,
   isEventArchivable,
@@ -26,7 +26,7 @@ const canonicalUrl = `${siteUrl}/upcoming-events`;
 const donationPlacement = await getDonationPlacements();
 
 const result = await db.execute(
-  `SELECT ${EVENT_SELECT_FIELDS}
+  `SELECT ${EVENT_LIST_FIELDS}
    FROM events e
    LEFT JOIN users u ON u.id = e.owner_id
    LEFT JOIN media m ON m.id = e.featured_media_id
@@ -240,7 +240,7 @@ const featuredEvent = upcomingEvents[0] ?? null;
       {
         (calendarEvents.length > 0 || calendarSales.length > 0) && (
           <EventCalendar
-            client:only="react"
+            client:visible
             events={calendarEvents}
             sales={calendarSales}
             siteUrl={siteUrl}

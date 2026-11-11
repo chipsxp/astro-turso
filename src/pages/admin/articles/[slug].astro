@@ -2,8 +2,9 @@
 import AdminLayout from "../../../layouts/AdminLayout.astro";
 import AdminMediaGallery from "../../../components/admin/AdminMediaGallery";
 import { MAX_IMAGE_BYTES, MAX_VIDEO_BYTES } from "../../../lib/media";
+import { resolveCloudName } from "../../../lib/cloudinary";
 const { slug } = Astro.params;
-const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME;
+const cloudName = resolveCloudName();
 const maxImageMb = Math.round(MAX_IMAGE_BYTES / (1024 * 1024));
 const maxVideoMb = Math.round(MAX_VIDEO_BYTES / (1024 * 1024));
 ---

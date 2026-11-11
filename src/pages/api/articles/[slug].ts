@@ -9,7 +9,7 @@ import {
   deleteInlineImagesByIds,
   persistInlineImagesInBody,
 } from "../../../lib/inline-images";
-import { deleteMediaByArticle, getMediaByArticle } from "../../../lib/media";
+import { getMediaByArticle } from "../../../lib/media";
 import { destroyCloudinaryAsset } from "../../../lib/cloudinary-server";
 import type { ArticleUpdatePayload } from "../../../lib/article-editor.types";
 import { json } from "../../../lib/api-response";
@@ -286,28 +286,49 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
     // Remove CDN assets before deleting their database records. Already-missing
     // assets are treated as deleted so a retry can finish after a partial failure.
     const mediaToDelete = await getMediaByArticle(articleId);
-    for (const media of mediaToDelete) {
-      if (!media.public_id) continue;
-      try {
-        await destroyCloudinaryAsset(media.public_id, media.resource_type);
-      } catch (err) {
-        console.error(
-          `[DELETE /api/articles/:slug] CDN delete failed for media ${media.id}:`,
-          err,
-        );
-        return json({ error: "CDN delete failed" }, 502);
-      }
+    const cdnDeletes = mediaToDelete
+      .filter((media) => Boolean(media.public_id))
+      .map((media) =>
+        destroyCloudinaryAsset(media.public_id!, media.resource_type).catch(
+          (err) => {
+            console.error(
+              `[DELETE /api/articles/:slug] CDN delete failed for media ${media.id}:`,
+              err,
+            );
+            throw err;
+          },
+        ),
+      );
+
+    try {
+      await Promise.all(cdnDeletes);
+    } catch {
+      return json({ error: "CDN delete failed" }, 502);
     }
 
-    // Delete in FK-safe order: junction table → media → legacy images → article.
-    // Turso Cloud enforces FKs by default; article_tags has no ON DELETE CASCADE
-    // so we must remove those rows before deleting the parent article row.
-    await db.execute("DELETE FROM article_tags WHERE article_id = ?", [
-      articleId,
-    ]);
-    await deleteMediaByArticle(articleId);
-    await db.execute("DELETE FROM images WHERE article_id = ?", [articleId]);
-    await db.execute("DELETE FROM articles WHERE id = ?", [articleId]);
+    // Delete in FK-safe order inside a single atomic batch transaction:
+    // junction table → media → legacy images → article.
+    await db.batch(
+      [
+        {
+          sql: "DELETE FROM article_tags WHERE article_id = ?",
+          args: [articleId],
+        },
+        {
+          sql: "DELETE FROM media WHERE article_id = ?",
+          args: [articleId],
+        },
+        {
+          sql: "DELETE FROM images WHERE article_id = ?",
+          args: [articleId],
+        },
+        {
+          sql: "DELETE FROM articles WHERE id = ?",
+          args: [articleId],
+        },
+      ],
+      "write",
+    );
 
     return json({ deleted: true }, 200);
   } catch (err) {

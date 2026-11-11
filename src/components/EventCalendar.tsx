@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 export interface CalendarEvent {
   id: number;
@@ -131,25 +131,36 @@ export default function EventCalendar({ events, sales, siteUrl }: Props) {
   }
 
   // Build calendar grid cells
-  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
-  const firstDayOfWeek = new Date(viewYear, viewMonth, 1).getDay();
+  const { daysInMonth, cells } = useMemo(() => {
+    const days = new Date(viewYear, viewMonth + 1, 0).getDate();
+    const firstDayOfWeek = new Date(viewYear, viewMonth, 1).getDay();
 
-  const cells: (number | null)[] = [];
-  for (let i = 0; i < firstDayOfWeek; i++) cells.push(null);
-  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
-  while (cells.length % 7 !== 0) cells.push(null);
+    const gridCells: (number | null)[] = [];
+    for (let i = 0; i < firstDayOfWeek; i++) gridCells.push(null);
+    for (let d = 1; d <= days; d++) gridCells.push(d);
+    while (gridCells.length % 7 !== 0) gridCells.push(null);
 
-  function getItemsForDay(day: number) {
-    const dateStr = toDateStr(viewYear, viewMonth, day);
-    const dayEvents = events.filter((e) => {
-      const end = e.end_date ?? e.start_date;
-      return dateStr >= e.start_date && dateStr <= end;
-    });
-    const daySales = sales.filter(
-      (s) => dateStr >= s.promo_start && dateStr <= s.promo_end,
-    );
-    return { dayEvents, daySales };
-  }
+    return { daysInMonth: days, cells: gridCells };
+  }, [viewYear, viewMonth]);
+
+  const itemsByDay = useMemo(() => {
+    const map = new Map<number, { dayEvents: CalendarEvent[]; daySales: SaleItem[] }>();
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = toDateStr(viewYear, viewMonth, d);
+      const dayEvents = events.filter((e) => {
+        const start = e.start_date ? e.start_date.slice(0, 10) : "";
+        const end = (e.end_date ?? e.start_date ?? "").slice(0, 10);
+        return dateStr >= start && dateStr <= end;
+      });
+      const daySales = sales.filter((s) => {
+        const start = s.promo_start ? s.promo_start.slice(0, 10) : "";
+        const end = s.promo_end ? s.promo_end.slice(0, 10) : "";
+        return dateStr >= start && dateStr <= end;
+      });
+      map.set(d, { dayEvents, daySales });
+    }
+    return map;
+  }, [viewYear, viewMonth, daysInMonth, events, sales]);
 
   function selectEvent(e: CalendarEvent) {
     setSelected((prev) =>
@@ -210,7 +221,10 @@ export default function EventCalendar({ events, sales, siteUrl }: Props) {
 
             const dateStr = toDateStr(viewYear, viewMonth, day);
             const isToday = dateStr === todayStr;
-            const { dayEvents, daySales } = getItemsForDay(day);
+            const { dayEvents, daySales } = itemsByDay.get(day) ?? {
+              dayEvents: [],
+              daySales: [],
+            };
 
             const allItems: SelectedItem[] = [
               ...dayEvents.map((e) => ({ kind: "event" as const, data: e })),

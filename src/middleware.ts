@@ -10,11 +10,21 @@ const PUBLIC_PATHS = [
   "/api/auth/forgot-password",
   "/api/auth/reset-password",
   "/api/articles/view",
+  "/api/analytics/track",
 ];
 const WRITE_METHODS = new Set(["POST", "PUT", "DELETE", "PATCH"]);
 
 // Module-level secret key — TextEncoder is only called once at startup
 const JWT_SECRET_KEY = new TextEncoder().encode(import.meta.env.JWT_SECRET);
+
+// Bounded in-memory user lookup cache to eliminate DB round trip on every authenticated request
+interface UserCacheEntry {
+  user: { id: string; role: string } | null;
+  expiresAt: number;
+}
+const userCache = new Map<number, UserCacheEntry>();
+const USER_CACHE_TTL_MS = 30_000; // 30 seconds
+const MAX_USER_CACHE_ENTRIES = 1_000;
 
 // ── CSP builder ───────────────────────────────────────────────────────────────
 // Directives shared across every CSP tier (admin / shop / public)
@@ -35,6 +45,30 @@ function buildCsp(overrides: Record<string, string>): string {
     .map(([k, v]) => `${k} ${v}`)
     .join("; ");
 }
+
+// Hoist static CSP tiers to avoid rebuilding per request
+const FOUC_HASH = "'sha256-HPPfxiskdCPpqDyDMT/Cc9sakRhGIC0x+o5OZyk+BdM='";
+
+const ADMIN_CSP = buildCsp({
+  "script-src": "'self' 'unsafe-inline'",
+  "style-src": "'self' 'unsafe-inline'",
+  "form-action": "'self' https://www.paypal.com",
+});
+
+const SHOP_CSP = buildCsp({
+  "script-src": `'self' ${FOUC_HASH} https://www.paypal.com https://www.googletagmanager.com`,
+  "style-src": "'self' 'unsafe-inline'",
+  "connect-src":
+    "'self' https://www.paypal.com https://api.paypal.com https://api-m.paypal.com https://*.google-analytics.com https://*.analytics.google.com",
+  "form-action": "'self' https://www.paypal.com",
+});
+
+const PUBLIC_CSP = buildCsp({
+  "script-src": `'self' ${FOUC_HASH} https://www.googletagmanager.com`,
+  "style-src": "'self' 'unsafe-inline'",
+  "connect-src": "'self' https://*.google-analytics.com https://*.analytics.google.com",
+  "form-action": "'self' https://www.paypal.com",
+});
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const { pathname } = new URL(context.request.url);
@@ -63,16 +97,36 @@ export const onRequest = defineMiddleware(async (context, next) => {
       const { payload } = await jwtVerify(token, JWT_SECRET_KEY);
       const userId = Number(String(payload.sub ?? ""));
       if (Number.isInteger(userId) && userId >= 1) {
-        const userResult = await db.execute(
-          "SELECT id, role, status FROM users WHERE id = ?",
-          [userId],
-        );
-        const userRow = userResult.rows[0];
-        if (userRow && String(userRow.status) === "active") {
-          context.locals.user = {
-            id: String(userRow.id),
-            role: String(userRow.role),
-          };
+        const now = Date.now();
+        const cached = userCache.get(userId);
+        if (cached && now < cached.expiresAt) {
+          if (cached.user) context.locals.user = cached.user;
+        } else {
+          const userResult = await db.execute(
+            "SELECT id, role, status FROM users WHERE id = ?",
+            [userId],
+          );
+          const userRow = userResult.rows[0];
+          const activeUser =
+            userRow && String(userRow.status) === "active"
+              ? {
+                  id: String(userRow.id),
+                  role: String(userRow.role),
+                }
+              : null;
+
+          if (userCache.size >= MAX_USER_CACHE_ENTRIES) {
+            const oldest = userCache.keys().next().value;
+            if (oldest !== undefined) userCache.delete(oldest);
+          }
+          userCache.set(userId, {
+            user: activeUser,
+            expiresAt: now + USER_CACHE_TTL_MS,
+          });
+
+          if (activeUser) {
+            context.locals.user = activeUser;
+          }
         }
       }
     } catch {
@@ -137,28 +191,7 @@ function addSecurityHeaders(response: Response, pathname: string): Response {
   // Anchored regex avoids false matches: /admin-panel → not admin, /shopify → not shop
   const isAdmin = /^\/admin(?:\/|$)/.test(pathname);
   const isShop = /^\/shop(?:\/|$)/.test(pathname);
-  // sha256 hash of the anti-FOUC is:inline script in BlogLayout.astro
-  const fouc = "'sha256-HPPfxiskdCPpqDyDMT/Cc9sakRhGIC0x+o5OZyk+BdM='";
-  const csp = isAdmin
-    ? buildCsp({
-        "script-src": "'self' 'unsafe-inline'",
-        "style-src": "'self' 'unsafe-inline'",
-        "form-action": "'self' https://www.paypal.com",
-      })
-    : isShop
-      ? buildCsp({
-          "script-src": `'self' ${fouc} https://www.paypal.com https://www.googletagmanager.com`,
-          "style-src": "'self' 'unsafe-inline'",
-          "connect-src":
-            "'self' https://www.paypal.com https://api.paypal.com https://api-m.paypal.com https://*.google-analytics.com https://*.analytics.google.com",
-          "form-action": "'self' https://www.paypal.com",
-        })
-      : buildCsp({
-          "script-src": `'self' ${fouc} https://www.googletagmanager.com`,
-          "style-src": "'self' 'unsafe-inline'",
-          "connect-src": "'self' https://*.google-analytics.com https://*.analytics.google.com",
-          "form-action": "'self' https://www.paypal.com",
-        });
+  const csp = isAdmin ? ADMIN_CSP : isShop ? SHOP_CSP : PUBLIC_CSP;
   response.headers.set("Content-Security-Policy-Report-Only", csp);
 
   return response;

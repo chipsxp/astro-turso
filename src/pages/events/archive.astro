@@ -1,20 +1,20 @@
 ---
 import BlogLayout from "../../layouts/BlogLayout.astro";
-import { buildCloudinaryImageUrl } from "../../lib/cloudinary";
+import { buildCloudinaryImageUrl, resolveCloudName } from "../../lib/cloudinary";
 import { db } from "../../lib/db";
 import {
-  EVENT_SELECT_FIELDS,
+  EVENT_LIST_FIELDS,
   getArchiveBadgeLabel,
   isEventArchivedPermanently,
   mapEventRow,
 } from "../../lib/events";
 
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
-const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
+const cloudName = resolveCloudName();
 const canonicalUrl = `${siteUrl}/events/archive`;
 
 const result = await db.execute(
-  `SELECT ${EVENT_SELECT_FIELDS}
+  `SELECT ${EVENT_LIST_FIELDS}
    FROM events e
    LEFT JOIN users u ON u.id = e.owner_id
    LEFT JOIN media m ON m.id = e.featured_media_id

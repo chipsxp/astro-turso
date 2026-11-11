@@ -88,7 +88,7 @@ export function estimateBase64DecodedBytes(base64: string): number {
   return Math.max(0, Math.floor((normalized.length * 3) / 4) - padding);
 }
 
-function mapMediaRow(row: Record<string, unknown>): MediaRecord {
+export function mapMediaRow(row: Record<string, unknown>): MediaRecord {
   return {
     id: Number(row.id),
     article_id: Number(row.article_id),
@@ -289,30 +289,30 @@ export async function attachUploadSessionMediaToArticle(
   const mediaRows = await listUploadSessionMedia(sessionId);
   if (!mediaRows.length) return 0;
 
-  for (const item of mediaRows) {
-    await db.execute(
-      `INSERT INTO media (
-         article_id, resource_type, public_id, url, alt_text,
-         format, width, height, duration
-       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        articleId,
-        item.resource_type,
-        item.public_id,
-        item.url,
-        item.alt_text,
-        item.format,
-        item.width,
-        item.height,
-        item.duration,
-      ],
-    );
-  }
+  const stmts = mediaRows.map((item) => ({
+    sql: `INSERT INTO media (
+            article_id, resource_type, public_id, url, alt_text,
+            format, width, height, duration
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    args: [
+      articleId,
+      item.resource_type,
+      item.public_id,
+      item.url,
+      item.alt_text,
+      item.format,
+      item.width,
+      item.height,
+      item.duration,
+    ],
+  }));
 
-  await db.execute(
-    "DELETE FROM upload_session_media WHERE upload_session_id = ?",
-    [sessionId],
-  );
+  stmts.push({
+    sql: "DELETE FROM upload_session_media WHERE upload_session_id = ?",
+    args: [sessionId],
+  });
+
+  await db.batch(stmts, "write");
 
   return mediaRows.length;
 }

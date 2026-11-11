@@ -102,39 +102,48 @@ export async function persistInlineImagesInBody(
   const replacements: StoredInlineImage[] = [];
   const createdInlineImageIds: number[] = [];
 
-  for (const match of inlineMatches) {
-    const insertResult = await db.execute(
-      `INSERT INTO images (
-         article_id,
-         url,
-         alt_text,
-         mime_type,
-         data_base64,
-         size_bytes,
-         source_type,
-         created_at,
-         updated_at
-       ) VALUES (?, ?, ?, ?, ?, ?, 'inline', datetime('now'), datetime('now'))`,
-      [
-        articleId,
-        "pending-inline-url",
-        match.altText,
-        match.mimeType,
-        match.base64Data,
-        match.decodedBytes,
-      ],
-    );
+  const insertStatements = inlineMatches.map((match) => ({
+    sql: `INSERT INTO images (
+            article_id,
+            url,
+            alt_text,
+            mime_type,
+            data_base64,
+            size_bytes,
+            source_type,
+            created_at,
+            updated_at
+          ) VALUES (?, ?, ?, ?, ?, ?, 'inline', datetime('now'), datetime('now'))`,
+    args: [
+      articleId,
+      "pending-inline-url",
+      match.altText,
+      match.mimeType,
+      match.base64Data,
+      match.decodedBytes,
+    ],
+  }));
 
+  const insertResults = await db.batch(insertStatements, "write");
+
+  const updateStatements: Array<{ sql: string; args: unknown[] }> = [];
+
+  for (let i = 0; i < insertResults.length; i++) {
+    const insertResult = insertResults[i];
     const imageId = Number(insertResult.lastInsertRowid);
     const inlineUrl = `/api/inline-images/${imageId}`;
 
-    await db.execute(
-      "UPDATE images SET url = ?, updated_at = datetime('now') WHERE id = ?",
-      [inlineUrl, imageId],
-    );
+    updateStatements.push({
+      sql: "UPDATE images SET url = ?, updated_at = datetime('now') WHERE id = ?",
+      args: [inlineUrl, imageId],
+    });
 
     replacements.push({ id: imageId, url: inlineUrl });
     createdInlineImageIds.push(imageId);
+  }
+
+  if (updateStatements.length > 0) {
+    await db.batch(updateStatements, "write");
   }
 
   return {

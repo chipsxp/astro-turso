@@ -1,5 +1,6 @@
 import { showToast as sharedShowToast } from "../../lib/admin-toast";
 import { sanitizeForPreview } from "../../lib/sanitize";
+import { initializeEditor, buildPreviewHtml } from "../../lib/editor-utils";
 import type {
   ApiErrorResponse,
   ArticleData,
@@ -15,37 +16,10 @@ import type {
   UploadResponse,
 } from "../../lib/article-editor.types";
 import { MAX_IMAGE_BYTES, MAX_VIDEO_BYTES } from "../../lib/media";
-import { enableCustomColorPickers } from "../../lib/quill-custom-colors";
 
-type QuillEditor = {
-  root: HTMLElement;
-  on: (eventName: string, handler: () => void) => void;
-  getModule: (name: string) => unknown;
-  getSelection: (focus?: boolean) => unknown;
-  format: (
-    name: "color" | "background",
-    value: string | false,
-    source?: "user" | "api" | "silent",
-  ) => void;
-  focus: () => void;
-};
-
-let quillEditor: QuillEditor | null = null;
 let articleData: ArticleData | null = null;
 let articleId: number | null = null;
 let currentMedia: MediaRecord[] = [];
-
-// Lazy-load Quill styles
-function loadQuillStyles() {
-  const core = document.createElement("link");
-  core.rel = "stylesheet";
-  core.href = "https://cdn.quilljs.com/1.3.6/quill.core.css";
-  const snow = document.createElement("link");
-  snow.rel = "stylesheet";
-  snow.href = "https://cdn.quilljs.com/1.3.6/quill.snow.css";
-  document.head.appendChild(core);
-  document.head.appendChild(snow);
-}
 
 function requireElement<T extends HTMLElement>(id: string): T {
   const element = document.getElementById(id) as T | null;
@@ -82,7 +56,13 @@ async function loadArticle() {
     articleData = data;
     articleId = Number(data.id) || null;
     populateForm(data);
-    await initializeEditor(data.body || "");
+    await initializeEditor({
+      containerId: "body-editor",
+      initialContent: data.body || "",
+      onContentChange: (html: string) => {
+        bodyInput.value = html;
+      },
+    });
     syncMediaGallery(data.media ?? data.images ?? []);
     form.classList.remove("is-hidden");
     loading.classList.add("is-hidden");
@@ -119,168 +99,18 @@ function populateForm(article: ArticleData): void {
   bodyInput.value = article.body || "";
 }
 
-const COMIC_PALETTE = [
-  "#080808",
-  "#1c1008",
-  "#ffffff",
-  "#f3e9db",
-  "#e04030",
-  "#1c4268",
-  "#f2c85a",
-  "#f8e040",
-  "#fffef0",
-  "#f4ede0",
-  "#34c070",
-  "#c09838",
-];
-
-async function initializeEditor(initialHtml: string): Promise<void> {
-  // Lazy-load Quill only when editor is needed
-  const [{ default: Quill }, { default: QuillResize }] = await Promise.all([
-    import("quill"),
-    import("quill-resize-module"),
-  ]);
-  loadQuillStyles();
-
-  Quill.register("modules/resize", QuillResize, true);
-
-  quillEditor = new Quill("#body-editor", {
-    theme: "snow",
-    modules: {
-      toolbar: [
-        ["bold", "italic", "underline"],
-        [{ color: COMIC_PALETTE }, { background: COMIC_PALETTE }],
-        ["blockquote", "code-block"],
-        [{ header: 2 }, { header: 3 }],
-        [{ list: "ordered" }, { list: "bullet" }],
-        ["link", "image"],
-      ],
-      resize: {
-        modules: ["Resize", "DisplaySize", "Toolbar", "Keyboard"],
-        keyboardSelect: true,
-        parchment: {
-          image: {
-            attribute: ["width"],
-            limit: {
-              minWidth: 100,
-            },
-          },
-        },
-      },
-    },
-    placeholder: "Write your article content here…",
-  });
-
-  // Set initial content
-  if (initialHtml && quillEditor) {
-    quillEditor.root.innerHTML = initialHtml;
-  }
-
-  if (!quillEditor) return;
-
-  const editor = quillEditor;
-  enableCustomColorPickers(editor);
-  editor.root.setAttribute("aria-label", "Article body");
-
-  // Serialize on change
-  editor.on("text-change", () => {
-    const html = editor.root.innerHTML;
-    bodyInput.value = html === "<p><br></p>" ? "" : html;
-  });
-}
-
-function escapeHtml(str: string): string {
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-}
-
-function escapeAttr(str: string): string {
-  return String(str).replace(/"/g, "&quot;");
-}
-
-function previewBodyToHtml(text: string): string {
-  const blockTagPattern =
-    /^\s*<(ul|ol|li|figure|img|h1|h2|h3|h4|h5|h6|blockquote|pre|table|hr|p|div|section|article|blockquote)\b/i;
-  return text
-    .split(/\n{2,}/)
-    .map((para: string) => para.trim())
-    .filter(Boolean)
-    .map((para: string) =>
-      blockTagPattern.test(para)
-        ? para
-        : `<p>${para.replace(/\n/g, "<br>")}</p>`,
-    )
-    .join("\n");
-}
-
-function buildPreviewHtml(
-  title: string,
-  description: string,
-  body: string,
-  media: MediaRecord[],
-): string {
-  const bodyHtml = previewBodyToHtml(body);
-  const heroMedia = media?.[0] ?? null;
-  const inlineMedia = media?.slice(1) ?? [];
-  const today = new Date().toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-
-  let html = `<article class="article-wrap">`;
-
-  html += `<header class="article-header page-wrap"><div class="content-col">`;
-  html += `<h1 class="article-title">${escapeHtml(title || "(Untitled)")}</h1>`;
-  if (description) {
-    html += `<p class="article-lede">${escapeHtml(description)}</p>`;
-  }
-  html += `<div class="article-byline"><time class="article-byline__date">${today}</time></div>`;
-  html += `</div></header>`;
-
-  if (heroMedia) {
-    html += `<div class="hero-image-wrap page-wrap"><div class="content-col"><figure class="hero-image">`;
-    if (heroMedia.resource_type === "video") {
-      html += `<video controls preload="metadata" src="${escapeAttr(heroMedia.url)}"></video>`;
-    } else {
-      html += `<img src="${escapeAttr(heroMedia.url)}" alt="${escapeAttr(heroMedia.alt_text)}" />`;
-    }
-    if (heroMedia.alt_text) {
-      html += `<figcaption class="hero-image__caption">${escapeHtml(heroMedia.alt_text)}</figcaption>`;
-    }
-    html += `</figure></div></div>`;
-  }
-
-  html += `<div class="rule-wrap page-wrap" aria-hidden="true"><div class="content-col"><div class="rule-inner"><span class="rule-line"></span><span class="rule-glyph">✦</span><span class="rule-line"></span></div></div></div>`;
-  html += `<div class="article-body page-wrap"><div class="content-col"><div class="prose">${bodyHtml}</div></div></div>`;
-
-  if (inlineMedia.length > 0) {
-    html += `<div class="article-images page-wrap"><div class="content-col"><div class="image-grid">`;
-    for (const m of inlineMedia) {
-      html += `<figure class="image-grid__item">`;
-      if (m.resource_type === "video") {
-        html += `<video controls preload="metadata" src="${escapeAttr(m.url)}"></video>`;
-      } else {
-        html += `<img src="${escapeAttr(m.url)}" alt="${escapeAttr(m.alt_text)}" loading="lazy" />`;
-      }
-      html += `<figcaption>${escapeHtml(m.alt_text)}</figcaption></figure>`;
-    }
-    html += `</div></div></div>`;
-  }
-
-  html += `</article>`;
-  return html;
-}
-
 function openPreview(): void {
   const title = requireElement<HTMLInputElement>("title").value;
   const description =
     requireElement<HTMLTextAreaElement>("description").value;
   const body = bodyInput.value;
-  const media = articleData?.media || [];
-  const html = buildPreviewHtml(title, description, body, media);
+  const media = (articleData?.media || []) as any;
+  const html = buildPreviewHtml({
+    title,
+    description,
+    body,
+    media,
+  });
   previewScroll.innerHTML = sanitizeForPreview(html);
   previewScroll.scrollTop = 0;
   draftPreview.classList.remove("is-hidden");

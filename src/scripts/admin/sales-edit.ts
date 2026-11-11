@@ -26,14 +26,14 @@ const currentReviews: SalesReview[] = JSON.parse(
 );
 
 // ── Quill ─────────────────────────────────────────────────────────────────
-const editor = initializeEditor({
+await initializeEditor({
   containerId: "body-editor",
+  initialContent: initialBody ?? "",
   placeholder: "Describe this item…",
   onContentChange: (html: string) => {
     getEl<HTMLInputElement>("body-input").value = html;
   },
 });
-editor.root.innerHTML = initialBody ?? "";
 getEl<HTMLInputElement>("body-input").value = initialBody ?? "";
 
 // ── Sale price preview ────────────────────────────────────────────────────

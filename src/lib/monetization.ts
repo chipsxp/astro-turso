@@ -137,12 +137,37 @@ export interface AnalyticsEvent {
   created_at: number;
 }
 
+interface AdCacheEntry {
+  ads: Advertisement[];
+  expiresAt: number;
+}
+
+const AD_CACHE_TTL_MS = 30_000; // 30 seconds
+const adSlotCache = new Map<string, AdCacheEntry>();
+
 /**
- * Gets all active ads for a specific slot.
+ * Invalidate cached ads for a specific slot, or all slots.
+ */
+export function invalidateAdSlotCache(slotType?: string): void {
+  if (slotType) {
+    adSlotCache.delete(slotType);
+  } else {
+    adSlotCache.clear();
+  }
+}
+
+/**
+ * Gets all active ads for a specific slot with a 30s module-level cache.
  */
 export async function getActiveAdsForSlot(
   slotType: string,
 ): Promise<Advertisement[]> {
+  const now = Date.now();
+  const cached = adSlotCache.get(slotType);
+  if (cached && now < cached.expiresAt) {
+    return cached.ads;
+  }
+
   const rs = await db.execute<{
     id: number;
     business_name: string;
@@ -161,9 +186,12 @@ export async function getActiveAdsForSlot(
     [slotType],
   );
 
-  if (rs.rows.length === 0) return [];
+  if (rs.rows.length === 0) {
+    adSlotCache.set(slotType, { ads: [], expiresAt: now + AD_CACHE_TTL_MS });
+    return [];
+  }
 
-  return rs.rows.map((row) => ({
+  const ads = rs.rows.map((row) => ({
     id: Number(row.id),
     business_name: String(row.business_name),
     description: row.description ? String(row.description) : null,
@@ -174,6 +202,9 @@ export async function getActiveAdsForSlot(
     is_active: Number(row.is_active),
     created_at: Number(row.created_at),
   }));
+
+  adSlotCache.set(slotType, { ads, expiresAt: now + AD_CACHE_TTL_MS });
+  return ads;
 }
 
 /**

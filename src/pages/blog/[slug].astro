@@ -3,32 +3,52 @@ import BlogLayout from "../../layouts/BlogLayout.astro";
 import SocialShare from "../../components/SocialShare.astro";
 import ShareScrollPill from "../../components/ShareScrollPill.astro";
 import { db } from "../../lib/db";
-import { getMediaByArticle } from "../../lib/media";
+import { mapMediaRow } from "../../lib/media";
 import {
   buildCloudinaryImageUrl,
   buildCloudinaryVideoUrl,
   buildCloudinaryVideoPosterUrl,
+  resolveCloudName,
 } from "../../lib/cloudinary";
 import { sanitizeArticleBodyServer } from "../../lib/sanitize-server";
 
 const siteUrl = process.env.SITE_URL || Astro.url.origin;
-const cloudName = import.meta.env.CLOUDINARY_CLOUD_NAME ?? "";
+const cloudName = resolveCloudName();
 
 const { slug } = Astro.params;
 
-// ── Sequence diagram Flow 4: 3 sequential DB calls ──
-
-// 1. SELECT article WHERE slug + status = published
-const articleResult = await db.execute(
-  `SELECT a.id, a.title, a.slug, a.body, a.description,
-          a.created_at, a.updated_at, a.author_id,
-          u.email AS author_email,
-          c.name AS category_name
-   FROM articles a
-   LEFT JOIN users u ON u.id = a.author_id
-   LEFT JOIN categories c ON c.id = a.category_id
-   WHERE a.slug = ? AND a.status = 'published'`,
-  [slug],
+// ── Batch article, media, and tags in a single round trip ──
+const [articleResult, mediaResult, tagsResult] = await db.batch(
+  [
+    {
+      sql: `SELECT a.id, a.title, a.slug, a.body, a.description,
+                   a.created_at, a.updated_at, a.author_id,
+                   u.email AS author_email,
+                   c.name AS category_name
+            FROM articles a
+            LEFT JOIN users u ON u.id = a.author_id
+            LEFT JOIN categories c ON c.id = a.category_id
+            WHERE a.slug = ? AND a.status = 'published'`,
+      args: [slug],
+    },
+    {
+      sql: `SELECT id, article_id, resource_type, public_id, url, alt_text,
+                   format, width, height, duration, created_at
+            FROM media
+            WHERE article_id = (SELECT id FROM articles WHERE slug = ? AND status = 'published')
+            ORDER BY id ASC`,
+      args: [slug],
+    },
+    {
+      sql: `SELECT t.name, t.slug AS tag_slug
+            FROM tags t
+            JOIN article_tags at ON at.tag_id = t.id
+            WHERE at.article_id = (SELECT id FROM articles WHERE slug = ? AND status = 'published')
+            ORDER BY t.name ASC`,
+      args: [slug],
+    },
+  ],
+  "read",
 );
 
 const articleRow = articleResult.rows[0];
@@ -38,19 +58,7 @@ if (!articleRow) {
 }
 
 const articleId = Number(articleRow.id);
-
-// 2. SELECT media WHERE article_id
-const media = await getMediaByArticle(articleId);
-
-// 3. SELECT tags JOIN article_tags WHERE article_id
-const tagsResult = await db.execute(
-  `SELECT t.name, t.slug AS tag_slug
-   FROM tags t
-   JOIN article_tags at ON at.tag_id = t.id
-   WHERE at.article_id = ?
-   ORDER BY t.name ASC`,
-  [articleId],
-);
+const media = mediaResult.rows.map((row: Record<string, unknown>) => mapMediaRow(row));
 
 // ── Shape the data ──
 type Media = {

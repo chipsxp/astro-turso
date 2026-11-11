@@ -36,17 +36,27 @@ export type PublicEventRecord = Omit<
   | "owner_email"
   | "featured_media_id"
   | "featured_media_public_id"
->;
+  | "body"
+> & {
+  body?: string;
+};
 
-export function toPublicEvent(event: EventRecord): PublicEventRecord {
+export function toPublicEvent(
+  event: EventRecord,
+  options?: { includeBody?: boolean },
+): PublicEventRecord {
   const {
     id: _id,
     owner_id: _ownerId,
     owner_email: _ownerEmail,
     featured_media_id: _fmId,
     featured_media_public_id: _fmPubId,
+    body,
     ...pub
   } = event;
+  if (options?.includeBody && body) {
+    return { ...pub, body };
+  }
   return pub;
 }
 
@@ -123,6 +133,38 @@ export const EVENT_SELECT_FIELDS = `
   e.slug,
   e.description,
   e.body,
+  e.owner_id,
+  e.status,
+  e.start_date,
+  e.start_time,
+  e.end_date,
+  e.end_time,
+  e.is_all_day,
+  e.venue_name,
+  e.venue_address,
+  e.city,
+  e.region,
+  e.postal_code,
+  e.event_url,
+  e.color,
+  e.featured_media_id,
+  e.created_at,
+  e.updated_at,
+  u.email AS owner_email,
+  m.url AS featured_media_url,
+  m.public_id AS featured_media_public_id,
+  m.alt_text AS featured_media_alt_text
+`;
+
+/**
+ * Event select fields for list queries (excludes large body HTML).
+ * Saves significant wire transfer and payload size on list pages.
+ */
+export const EVENT_LIST_FIELDS = `
+  e.id,
+  e.title,
+  e.slug,
+  e.description,
   e.owner_id,
   e.status,
   e.start_date,

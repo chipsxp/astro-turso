@@ -1,7 +1,11 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../../lib/db";
 import { cloudinary, destroyCloudinaryAsset } from "../../../../lib/cloudinary-server";
-import { validateAdFields, validateAdImageData } from "../../../../lib/monetization";
+import {
+  invalidateAdSlotCache,
+  validateAdFields,
+  validateAdImageData,
+} from "../../../../lib/monetization";
 import { json } from "../../../../lib/api-response";
 import { requireAdmin } from "../../../../lib/auth";
 
@@ -22,6 +26,7 @@ export const PATCH: APIRoute = async ({ params, locals }) => {
       [id],
     );
 
+    invalidateAdSlotCache();
     return json({ ok: true });
   } catch (err) {
     console.error("Failed to toggle ad status:", err);
@@ -134,6 +139,7 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
       }
     }
 
+    invalidateAdSlotCache();
     return json({ ok: true });
   } catch (err) {
     console.error("Failed to update ad:", err);
@@ -220,6 +226,7 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
     }
 
     await db.execute(`DELETE FROM advertisements WHERE id = ?`, [id]);
+    invalidateAdSlotCache();
     return json({ ok: true });
   } catch (err) {
     console.error("Failed to delete ad:", err);

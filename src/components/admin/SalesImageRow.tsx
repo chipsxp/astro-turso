@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import type { SalesImageTransforms } from "../../lib/sales";
 import { buildSalesImageUrl } from "../../lib/sales";
 import {
@@ -38,6 +39,26 @@ export function SalesImageRow({
   onDragOver,
   onDragEnd,
 }: Props) {
+  const [localText, setLocalText] = useState(t.text);
+
+  useEffect(() => {
+    setLocalText(t.text);
+  }, [t.text]);
+
+  useEffect(() => {
+    if (localText === t.text) return;
+    const timer = setTimeout(() => {
+      onUpdateTransform("text", localText);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [localText, t.text, onUpdateTransform]);
+
+  const flushText = () => {
+    if (localText !== t.text) {
+      onUpdateTransform("text", localText);
+    }
+  };
+
   const previewUrl = img.public_id
     ? buildSalesImageUrl(cloudName, img.public_id, JSON.stringify(t), 400)
     : img.url;
@@ -143,9 +164,10 @@ export function SalesImageRow({
               type="text"
               className="sim-input"
               maxLength={60}
-              value={t.text}
+              value={localText}
               placeholder="Optional text on image (max 60 chars)"
-              onChange={(e) => onUpdateTransform("text", e.target.value)}
+              onChange={(e) => setLocalText(e.target.value)}
+              onBlur={flushText}
             />
           </div>
 
@@ -198,7 +220,10 @@ export function SalesImageRow({
           <button
             type="button"
             className="sim-btn sim-btn--primary"
-            onClick={onApplyTransforms}
+            onClick={() => {
+              flushText();
+              onApplyTransforms();
+            }}
           >
             Apply Transforms
           </button>
