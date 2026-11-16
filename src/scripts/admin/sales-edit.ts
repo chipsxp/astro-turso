@@ -26,7 +26,7 @@ const currentReviews: SalesReview[] = JSON.parse(
 );
 
 // ── Quill ─────────────────────────────────────────────────────────────────
-await initializeEditor({
+initializeEditor({
   containerId: "body-editor",
   initialContent: initialBody ?? "",
   placeholder: "Describe this item…",

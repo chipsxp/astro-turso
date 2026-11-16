@@ -3,6 +3,11 @@
  * Centralizes editor initialization, serialization, and preview rendering.
  */
 
+import Quill from "quill";
+import QuillResize from "quill-resize-module";
+import "quill-resize-module/dist/resize.css";
+import "quill/dist/quill.core.css";
+import "quill/dist/quill.snow.css";
 import { enableCustomColorPickers } from "./quill-custom-colors";
 import { showToast } from "./admin-toast";
 
@@ -35,20 +40,14 @@ const COMIC_PALETTE = [
 
 let resizeModuleRegistered = false;
 
-export async function initializeEditor(config: EditorConfig): Promise<any> {
-  // Dynamically load Quill, resize module, and styles only when an editor mounts
-  const [{ default: Quill }, { default: QuillResize }] = await Promise.all([
-    import("quill"),
-    import("quill-resize-module"),
-    import("quill-resize-module/dist/resize.css"),
-    import("quill/dist/quill.core.css"),
-    import("quill/dist/quill.snow.css"),
-  ]);
+function ensureResizeModuleRegistered() {
+  if (resizeModuleRegistered) return;
+  Quill.register("modules/resize", QuillResize, true);
+  resizeModuleRegistered = true;
+}
 
-  if (!resizeModuleRegistered) {
-    Quill.register("modules/resize", QuillResize, true);
-    resizeModuleRegistered = true;
-  }
+export function initializeEditor(config: EditorConfig): Quill {
+  ensureResizeModuleRegistered();
 
   const toolbar = config.toolbar ?? [
     ["bold", "italic", "underline"],

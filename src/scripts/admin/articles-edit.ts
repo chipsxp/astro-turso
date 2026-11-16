@@ -56,7 +56,7 @@ async function loadArticle() {
     articleData = data;
     articleId = Number(data.id) || null;
     populateForm(data);
-    await initializeEditor({
+    initializeEditor({
       containerId: "body-editor",
       initialContent: data.body || "",
       onContentChange: (html: string) => {
